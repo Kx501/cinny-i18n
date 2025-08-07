@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   Avatar,
@@ -287,6 +288,7 @@ function SpaceHeader() {
 export function Space() {
   const mx = useMatrixClient();
   const space = useSpace();
+  const { t } = useTranslation();
   useNavToActivePathMapper(space.roomId);
   const spaceIdOrAlias = getCanonicalAliasOrRoomId(mx, space.roomId);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -361,7 +363,7 @@ export function Space() {
                     </Avatar>
                     <Box as="span" grow="Yes">
                       <Text as="span" size="Inherit" truncate>
-                        Lobby
+                        {t('navigation.lobby')}
                       </Text>
                     </Box>
                   </Box>
@@ -376,9 +378,9 @@ export function Space() {
                       <Icon src={Icons.Search} size="100" filled={searchSelected} />
                     </Avatar>
                     <Box as="span" grow="Yes">
-                      <Text as="span" size="Inherit" truncate>
-                        Message Search
-                      </Text>
+                                          <Text as="span" size="Inherit" truncate>
+                      {t('navigation.messageSearch')}
+                    </Text>
                     </Box>
                   </Box>
                 </NavItemContent>

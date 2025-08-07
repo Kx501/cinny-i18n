@@ -13,6 +13,7 @@ import {
 } from 'folds';
 import { IPushRule } from 'matrix-js-sdk';
 import React, { MouseEventHandler, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import FocusTrap from 'focus-trap-react';
 import { NotificationMode, useNotificationActionsMode } from '../../../hooks/useNotificationMode';
 import { stopPropagation } from '../../../utils/keyboard';
@@ -21,15 +22,17 @@ import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 export const useNotificationModes = (): NotificationMode[] =>
   useMemo(() => [NotificationMode.NotifyLoud, NotificationMode.Notify, NotificationMode.OFF], []);
 
-const useNotificationModeStr = (): Record<NotificationMode, string> =>
-  useMemo(
+const useNotificationModeStr = (): Record<NotificationMode, string> => {
+  const { t } = useTranslation();
+  return useMemo(
     () => ({
-      [NotificationMode.OFF]: 'Disable',
-      [NotificationMode.Notify]: 'Notify Silent',
-      [NotificationMode.NotifyLoud]: 'Notify Loud',
+      [NotificationMode.OFF]: t('notifications.modes.disable'),
+      [NotificationMode.Notify]: t('notifications.modes.notifySilent'),
+      [NotificationMode.NotifyLoud]: t('notifications.modes.notifyLoud'),
     }),
-    []
+    [t]
   );
+};
 
 type NotificationModeSwitcherProps = {
   pushRule: IPushRule;

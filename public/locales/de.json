@@ -1,7 +1,84 @@
 {
   "Organisms": {
     "RoomCommon": {
-      "changed_room_name": " hat den Raum Name geändert"
+      "changed_room_name": " hat den Raumnamen geändert"
     }
+  },
+  "auth": {
+    "login": {
+      "title": "Anmelden",
+      "username": "Benutzername",
+      "password": "Passwort",
+      "loginButton": "Anmelden",
+      "forgotPassword": "Passwort vergessen?",
+      "noAccount": "Kein Konto?",
+      "register": "Registrieren",
+      "hint": {
+        "title": "Hinweis",
+        "username": "Benutzername:",
+        "matrixId": "Matrix ID:",
+        "email": "E-Mail:"
+      },
+      "errors": {
+        "serverNotSupported": "Dieser Client unterstützt keine Anmeldung auf dem \"{server}\" Homeserver. Passwort- und SSO-basierte Anmeldemethode nicht gefunden.",
+        "serverNotAllowed": "Anmeldung mit benutzerdefiniertem Server ist durch Ihre Client-Instanz nicht erlaubt.",
+        "invalidServer": "Fehler beim Finden Ihres Matrix ID Servers.",
+        "invalidCredentials": "Ungültiger Benutzername oder Passwort.",
+        "accountDeactivated": "Dieses Konto wurde deaktiviert.",
+        "invalidRequest": "Anmeldung fehlgeschlagen. Ein Teil Ihrer Anfragedaten ist ungültig.",
+        "rateLimited": "Anmeldung fehlgeschlagen. Ihre Anmeldeanfrage wurde vom Server gedrosselt, bitte versuchen Sie es später erneut.",
+        "unknown": "Anmeldung fehlgeschlagen. Unbekannter Grund.",
+        "invalidToken": "Ungültiges Anmeldetoken."
+      }
+    }
+  },
+  "settings": {
+    "general": {
+      "language": "Sprache",
+      "languageDescription": "Wählen Sie Ihre bevorzugte Sprache für die Benutzeroberfläche."
+    },
+    "appearance": {
+      "title": "Erscheinungsbild",
+      "systemTheme": {
+        "title": "Systemthema",
+        "description": "Wählen Sie zwischen hellem und dunklem Thema basierend auf der Systemeinstellung."
+      },
+      "theme": {
+        "title": "Thema",
+        "description": "Thema, das verwendet wird, wenn das Systemthema nicht aktiviert ist."
+      },
+      "twitterEmoji": {
+        "title": "Twitter Emoji"
+      },
+      "pageZoom": {
+        "title": "Seitenzoom"
+      }
+    },
+    "messages": {
+      "title": "Nachrichten",
+      "messageLayout": "Nachrichtenlayout",
+      "messageSpacing": "Nachrichtenabstand",
+      "legacyUsernameColor": "Legacy Benutzername Farbe",
+      "hideMembershipChange": "Mitgliedschaftsänderungen ausblenden",
+      "hideProfileChange": "Profiländerungen ausblenden",
+      "disableMediaAutoLoad": "Medien-Auto-Load deaktivieren",
+      "urlPreview": "URL-Vorschau",
+      "urlPreviewEncrypted": "URL-Vorschau in verschlüsseltem Raum",
+      "showHiddenEvents": "Versteckte Ereignisse anzeigen"
+    },
+    "devices": {
+      "other": {
+        "deviceDashboard": {
+          "title": "Geräte -Armaturenbrett"
+        }
+      }
+    }
+  },
+  "navigation": {
+    "search": "Suchen",
+    "inbox": "Posteingang",
+    "notifications": "Benachrichtigungen",
+    "lobby": "Lobby",
+    "messageSearch": "Nachrichtensuche"
   }
 }

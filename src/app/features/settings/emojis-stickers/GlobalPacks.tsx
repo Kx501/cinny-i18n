@@ -1,4 +1,5 @@
 import React, { MouseEventHandler, useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Text,
@@ -53,6 +54,7 @@ function GlobalPackSelector({
   useAuthentication: boolean;
   onSelect: (addresses: PackAddress[]) => void;
 }) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const roomToPacks = useMemo(() => {
     const rToP = new Map<string, ImagePack[]>();
@@ -107,7 +109,7 @@ function GlobalPackSelector({
       <Header size="400" variant="Surface" style={{ padding: `0 ${config.space.S300}` }}>
         <Box grow="Yes">
           <Text size="L400" truncate>
-            Room Packs
+            {t('settings.emojisStickers.globalPacks.title')}
           </Text>
         </Box>
         <Box shrink="No">
@@ -117,7 +119,7 @@ function GlobalPackSelector({
             outlined={hasSelected}
             onClick={() => onSelect(selected)}
           >
-            <Text size="B300">{hasSelected ? 'Save' : 'Close'}</Text>
+            <Text size="B300">{hasSelected ? t('settings.emojisStickers.globalPacks.save') : t('settings.emojisStickers.globalPacks.close')}</Text>
           </Chip>
         </Box>
       </Header>
@@ -162,7 +164,7 @@ function GlobalPackSelector({
                           addSelected(roomPackAddresses);
                         }}
                       >
-                        <Text size="B300">{allSelected ? 'Unselect All' : 'Select All'}</Text>
+                        <Text size="B300">{allSelected ? t('settings.emojisStickers.globalPacks.unselectAll') : t('settings.emojisStickers.globalPacks.selectAll')}</Text>
                       </Chip>
                     </Box>
                   </Box>
@@ -184,7 +186,7 @@ function GlobalPackSelector({
                         gap="400"
                       >
                         <SettingTile
-                          title={pack.meta.name ?? 'Unknown'}
+                          title={pack.meta.name ?? t('common.unknown')}
                           description={<span className={LineClamp2}>{pack.meta.attribution}</span>}
                           before={
                             <Box alignItems="Center" gap="300">
@@ -232,10 +234,10 @@ function GlobalPackSelector({
                   }}
                 >
                   <Text size="H5" align="Center">
-                    No Packs
+                    {t('settings.emojisStickers.globalPacks.noPacks.title')}
                   </Text>
                   <Text size="T200" align="Center">
-                    Pack from rooms will appear here. You do not have any room with packs yet.
+                    {t('settings.emojisStickers.globalPacks.noPacks.description')}
                   </Text>
                 </Box>
               </SequenceCard>
@@ -251,6 +253,7 @@ type GlobalPacksProps = {
   onViewPack: (imagePack: ImagePack) => void;
 };
 export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
   const globalPacks = useGlobalImagePacks();
@@ -303,7 +306,7 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
   const [applyState, applyChanges] = useAsyncCallback(
     useCallback(async () => {
       const content =
-        mx.getAccountData(AccountDataEvent.PoniesEmoteRooms)?.getContent<EmoteRoomsContent>() ?? {};
+        mx.getAccountData(AccountDataEvent.PoniesEmoteRooms as any)?.getContent<EmoteRoomsContent>() ?? {};
       const updatedContent: EmoteRoomsContent = JSON.parse(JSON.stringify(content));
 
       selectedPacks.forEach((addr) => {
@@ -320,7 +323,8 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
         }
       });
 
-      await mx.setAccountData(AccountDataEvent.PoniesEmoteRooms, updatedContent);
+      await mx.setAccountData(AccountDataEvent.PoniesEmoteRooms as any, updatedContent as any);
+      await mx.setAccountData(AccountDataEvent.PoniesEmoteRooms as any, updatedContent as any);
     }, [mx, selectedPacks, removedPacks])
   );
 
@@ -360,7 +364,7 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
         <SettingTile
           title={
             <span style={{ textDecoration: removed ? 'line-through' : undefined }}>
-              {pack.meta.name ?? 'Unknown'}
+              {pack.meta.name ?? t('common.unknown')}
             </span>
           }
           description={<span className={LineClamp2}>{pack.meta.attribution}</span>}
@@ -408,7 +412,7 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
                 outlined
                 onClick={() => onViewPack(pack)}
               >
-                <Text size="B300">View</Text>
+                <Text size="B300">{t('settings.emojisStickers.userPack.view')}</Text>
               </Button>
             )
           }
@@ -420,7 +424,7 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
   return (
     <>
       <Box direction="Column" gap="100">
-        <Text size="L400">Favorite Packs</Text>
+        <Text size="L400">{t('settings.emojisStickers.globalPacks.favoritePacks')}</Text>
         <SequenceCard
           className={SequenceCardStyle}
           variant="SurfaceVariant"
@@ -428,8 +432,8 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
           gap="400"
         >
           <SettingTile
-            title="Select Pack"
-            description="Pick emojis and stickers pack from rooms to use in all rooms."
+            title={t('settings.emojisStickers.globalPacks.selectPack.title')}
+            description={t('settings.emojisStickers.globalPacks.selectPack.description')}
             after={
               <>
                 <Button
@@ -440,7 +444,7 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
                   radii="300"
                   outlined
                 >
-                  <Text size="B300">Select</Text>
+                  <Text size="B300">{t('settings.emojisStickers.globalPacks.select')}</Text>
                 </Button>
                 <PopOut
                   anchor={menuCords}
@@ -502,11 +506,11 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
             <Box grow="Yes" direction="Column">
               {applyState.status === AsyncStatus.Error ? (
                 <Text size="T200">
-                  <b>Failed to apply changes! Please try again.</b>
+                  <b>{t('settings.emojisStickers.globalPacks.applyError')}</b>
                 </Text>
               ) : (
                 <Text size="T200">
-                  <b>Changes saved! Apply when ready.</b>
+                  <b>{t('settings.emojisStickers.globalPacks.applyReady')}</b>
                 </Text>
               )}
             </Box>
@@ -519,7 +523,7 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
                 disabled={applyingChanges}
                 onClick={resetChanges}
               >
-                <Text size="B300">Reset</Text>
+                <Text size="B300">{t('settings.emojisStickers.globalPacks.reset')}</Text>
               </Button>
               <Button
                 size="300"
@@ -529,7 +533,7 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
                 before={applyingChanges && <Spinner variant="Success" fill="Solid" size="100" />}
                 onClick={applyChanges}
               >
-                <Text size="B300">Apply Changes</Text>
+                <Text size="B300">{t('settings.emojisStickers.globalPacks.applyChanges')}</Text>
               </Button>
             </Box>
           </Box>

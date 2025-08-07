@@ -1,111 +1,154 @@
-# Cinny
-<p>
-    <a href="https://github.com/ajbura/cinny/releases">
-        <img alt="GitHub release downloads" src="https://img.shields.io/github/downloads/ajbura/cinny/total?logo=github&style=social"></a>
-    <a href="https://hub.docker.com/r/ajbura/cinny">
-        <img alt="DockerHub downloads" src="https://img.shields.io/docker/pulls/ajbura/cinny?logo=docker&style=social"></a>
-    <a href="https://fosstodon.org/@cinnyapp">
-        <img alt="Follow on Mastodon" src="https://img.shields.io/mastodon/follow/106845779685925461?domain=https%3A%2F%2Ffosstodon.org&logo=mastodon&style=social"></a>
-    <a href="https://twitter.com/intent/follow?screen_name=cinnyapp">
-        <img alt="Follow on Twitter" src="https://img.shields.io/twitter/follow/cinnyapp?logo=twitter&style=social"></a>
-    <a href="https://cinny.in/#sponsor">
-        <img alt="Sponsor Cinny" src="https://img.shields.io/opencollective/all/cinny?logo=opencollective&style=social"></a>
-</p>
+# Cinny i18n
 
-A Matrix client focusing primarily on simple, elegant and secure interface. The main goal is to have an instant messaging application that is easy on people and has a modern touch.
-- [Roadmap](https://github.com/orgs/cinnyapp/projects/1)
-- [Contributing](./CONTRIBUTING.md)
+## 📚 文档概览
 
-<img align="center" src="https://raw.githubusercontent.com/cinnyapp/cinny-site/main/assets/preview2-light.png" height="380">
+本项目包含i18n国际化实施计划和相关文档，系统性地将Cinny Matrix客户端从英文硬编码转换为多语言支持。
 
-## Getting started
-The web app is available at [app.cinny.in](https://app.cinny.in/) and gets updated on each new release. The `dev` branch is continuously deployed at [dev.cinny.in](https://dev.cinny.in) but keep in mind that it could have things broken.
+---
 
-You can also download our desktop app from the [cinny-desktop repository](https://github.com/cinnyapp/cinny-desktop).
+## 📋 文档列表
 
-## Self-hosting
-To host Cinny on your own, simply download the tarball from [GitHub releases](https://github.com/cinnyapp/cinny/releases/latest), and serve the files from `dist/` using your preferred webserver. Alternatively, you can just pull the docker image from [DockerHub](https://hub.docker.com/r/ajbura/cinny) or [GitHub Container Registry](https://github.com/cinnyapp/cinny/pkgs/container/cinny).
+### 1. [I18N_IMPLEMENTATION_PLAN.md](./I18N_IMPLEMENTATION_PLAN.md)
 
-* The default homeservers and explore pages are defined in [`config.json`](config.json).
+**详细实施计划**
 
-* You need to set up redirects to serve the assests. Example configurations; [netlify](netlify.toml), [nginx](contrib/nginx/cinny.domain.tld.conf), [caddy](contrib/caddy/caddyfile).
-    * If you have trouble configuring redirects you can [enable hash routing](config.json#L35) — the url in the browser will have a `/#/` between the domain and open channel (ie. `app.cinny.in/#/home/` instead of `app.cinny.in/home/`) but you won't have to configure your webserver.
+- 完整的项目概述和现状分析
+- 分阶段的工作流程 (5个阶段，8-12周)
+- 技术实现细节和代码示例
+- 测试策略和资源链接
 
-* To deploy on subdirectory, you need to rebuild the app youself after updating the `base` path in [`build.config.ts`](build.config.ts).
-    * For example, if you want to deploy on `https://cinny.in/app`, then set `base: '/app'`.
+### 2. [I18N_PROGRESS_TRACKER.md](./I18N_PROGRESS_TRACKER.md)
 
-<details><summary><b>PGP Public Key to verify tarball</b></summary>
+**进度跟踪**
 
-```
------BEGIN PGP PUBLIC KEY BLOCK-----
+- 任务完成状态
+- 里程碑跟踪
+- 每阶段任务计划
 
-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
-mxFo+ioe/ABCufSmyqFye0psX3Sp
-=WtqZ
------END PGP PUBLIC KEY BLOCK-----
-```
-</details>
+### 3. [I18N_QUICK_REFERENCE.md](./I18N_QUICK_REFERENCE.md)
 
-## Local development
-> [!TIP]
-> We recommend using a version manager as versions change very quickly. You will likely need to switch between multiple Node.js versions based on the needs of different projects you're working on. [NVM on windows](https://github.com/coreybutler/nvm-windows#installation--upgrades) on Windows and [nvm](https://github.com/nvm-sh/nvm) on Linux/macOS are pretty good choices. Recommended nodejs version is Iron LTS (v20).
+**快速参考指南**
 
-Execute the following commands to start a development server:
-```sh
-npm ci # Installs all dependencies
-npm start # Serve a development version
-```
+- 常用代码示例
+- 翻译键模板
+- 高级用法说明
+- 常见问题解答
 
-To build the app:
-```sh
-npm run build # Compiles the app into the dist/ directory
-```
+---
 
-### Running with Docker
-This repository includes a Dockerfile, which builds the application from source and serves it with Nginx on port 80. To
-use this locally, you can build the container like so:
-```
-docker build -t cinny:latest .
-```
+## 🎯 项目现状
 
-You can then run the container you've built with a command similar to this:
-```
-docker run -p 8080:80 cinny:latest
-```
+### ✅ 已完成
 
-This will forward your `localhost` port 8080 to the container's port 80. You can visit the app in your browser by navigating to `http://localhost:8080`.
+- i18n框架配置完整
+- 支持3种语言 (英语、中文、德语)
+- 基础翻译文件结构
+- 1个翻译键实现
+
+### ❌ 待完成
+
+- 语言选择器功能
+- 95%+的UI文本翻译
+- 完整的翻译键体系
+- 多语言测试
+
+### 📊 关键数据
+
+- **总文件数**: 736个
+- **当前翻译覆盖率**: 0.14%
+- **目标翻译键**: 500-1000个
+- **预期完成时间**: 8-12周
+
+---
+
+## 🚀 快速开始
+
+### 1. 了解现状
+
+阅读 [I18N_IMPLEMENTATION_PLAN.md](./I18N_IMPLEMENTATION_PLAN.md) 了解项目背景和整体计划。
+
+### 2. 查看进度
+
+查看 [I18N_PROGRESS_TRACKER.md](./I18N_PROGRESS_TRACKER.md) 了解当前进度和下一步任务。
+
+### 3. 开始开发
+
+参考 [I18N_QUICK_REFERENCE.md](./I18N_QUICK_REFERENCE.md) 获取代码示例和最佳实践。
+
+---
+
+## 📝 使用指南
+
+### 翻译人员
+
+1. **翻译文件**: 在 `public/locales/` 目录下添加翻译
+2. **翻译键**: 遵循命名规范 `{模块}.{组件}.{功能}`
+3. **质量检查**: 确保翻译的准确性和一致性
+4. **现有代码修改**: 逐步替换硬编码文本
+5. **测试**: 确保多语言环境下的正确显示
+
+---
+
+## 🔄 更新流程
+
+### 阶段更新
+
+1. 更新 [I18N_PROGRESS_TRACKER.md](./I18N_PROGRESS_TRACKER.md) 中的进度
+2. 记录完成的任务和遇到的问题
+3. 调整下次的任务计划
+
+### 里程碑更新
+
+1. 在实施计划中标记完成的里程碑
+2. 更新进度跟踪表中的完成度
+3. 调整后续阶段的计划
+
+### 文档维护
+
+1. 根据实际开发情况更新快速参考指南
+2. 添加新的代码示例和最佳实践
+3. 更新常见问题解答
+
+---
+
+## 📚 相关资源
+
+### 技术文档
+
+- [i18next 官方文档](https://www.i18next.com/)
+- [react-i18next 文档](https://react.i18next.com/)
+- [Cinny 项目文档](https://github.com/ajbura/cinny)
+
+### 工具推荐
+
+- i18next-parser: 自动提取翻译键
+- i18next-browser-languagedetector: 语言检测
+- i18next-http-backend: 翻译文件加载
+
+---
+
+## 📈 预期计划
+
+### 短期目标 (1-2个月)
+
+- [ ] 语言选择器功能完成
+- [ ] 核心UI组件翻译完成
+- [ ] 翻译覆盖率 > 50%
+
+### 中期目标 (3-6个月)
+
+- [ ] 聊天界面翻译完成
+- [ ] 错误处理翻译完成
+- [ ] 翻译覆盖率 > 80%
+
+### 长期目标 (6个月+)
+
+- [ ] 完整翻译覆盖率 > 95%
+- [ ] 支持更多语言
+- [ ] 性能优化完成
+
+---
+
+**最后更新**: 2025年8月
+**文档版本**: v1.0.0
+**状态**: 计划中

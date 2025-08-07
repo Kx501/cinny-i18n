@@ -3,5 +3,397 @@
     "RoomCommon": {
       "changed_room_name": " changed room name"
     }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "username": "Username",
+      "password": "Password",
+      "loginButton": "Login",
+      "forgotPassword": "Forget Password?",
+      "noAccount": "Do not have an account?",
+      "register": "Register",
+      "hint": {
+        "title": "Hint",
+        "username": "Username:",
+        "matrixId": "Matrix ID:",
+        "email": "Email:"
+      },
+      "errors": {
+        "serverNotSupported": "This client does not support login on \"{server}\" homeserver. Password and SSO based login method not found.",
+        "serverNotAllowed": "Login with custom server not allowed by your client instance.",
+        "invalidServer": "Failed to find your Matrix ID server.",
+        "invalidCredentials": "Invalid Username or Password.",
+        "accountDeactivated": "This account has been deactivated.",
+        "invalidRequest": "Failed to login. Part of your request data is invalid.",
+        "rateLimited": "Failed to login. Your login request has been rate-limited by server, Please try after some time.",
+        "unknown": "Failed to login. Unknown reason.",
+        "invalidToken": "Invalid login token."
+      }
+    }
+  },
+  "settings": {
+    "general": {
+      "title": "General",
+      "language": "Language",
+      "languageDescription": "Choose your preferred language for the interface."
+    },
+    "appearance": {
+      "title": "Appearance",
+      "systemTheme": {
+        "title": "System Theme",
+        "description": "Choose between light and dark theme based on system preference."
+      },
+      "theme": {
+        "title": "Theme",
+        "description": "Theme to use when system theme is not enabled."
+      },
+      "lightThemeTitle": "Light Theme:",
+      "darkThemeTitle": "Dark Theme:",
+      "twitterEmoji": {
+        "title": "Twitter Emoji"
+      },
+      "pageZoom": {
+        "title": "Page Zoom"
+      }
+    },
+    "dateAndTime": {
+      "title": "Date & Time",
+      "hour24Format": "24-Hour Time Format",
+      "dateFormat": "Date Format",
+      "custom": "Custom",
+      "save": "Save",
+      "formatting": "Formatting",
+      "year": "Year",
+      "month": "Month",
+      "dayOfMonth": "Day of the Month",
+      "dayOfWeek": "Day of the Week",
+      "twoDigitYear": "Two-digit year",
+      "fourDigitYear": "Four-digit year",
+      "theMonth": "The month",
+      "twoDigitMonth": "Two-digit month",
+      "shortMonthName": "Short month name",
+      "fullMonthName": "Full month name",
+      "dayOfMonthDesc": "Day of the month",
+      "twoDigitDayOfMonth": "Two-digit day of the month",
+      "dayOfWeekDesc": "Day of the week (Sunday = 0)",
+      "twoLetterDayName": "Two-letter day name",
+      "shortDayName": "Short day name",
+      "fullDayName": "Full day name"
+    },
+    "editor": {
+      "title": "Editor",
+      "enterForNewline": "ENTER for Newline",
+      "enterForNewlineDescription": "Use {key} + ENTER to send message and ENTER for newline.",
+      "markdownFormatting": "Markdown Formatting",
+      "hideTypingReadReceipts": "Hide Typing & Read Receipts",
+      "hideTypingReadReceiptsDescription": "Turn off both typing status and read receipts to keep your activity private."
+    },
+    "messages": {
+      "title": "Messages",
+      "messageLayout": "Message Layout",
+      "messageSpacing": "Message Spacing",
+      "layoutOptions": {
+        "Modern": "Modern",
+        "Compact": "Compact",
+        "Bubble": "Bubble"
+      },
+      "spacingOptions": {
+        "None": "None",
+        "Ultra Small": "Ultra Small",
+        "Extra Small": "Extra Small",
+        "Small": "Small",
+        "Normal": "Normal",
+        "Large": "Large"
+      },
+      "legacyUsernameColor": "Legacy Username Color",
+      "hideMembershipChange": "Hide Membership Change",
+      "hideProfileChange": "Hide Profile Change",
+      "disableMediaAutoLoad": "Disable Media Auto Load",
+      "urlPreview": "Url Preview",
+      "urlPreviewEncrypted": "Url Preview in Encrypted Room",
+      "showHiddenEvents": "Show Hidden Events"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "system": {
+        "title": "System",
+        "desktopNotifications": "Desktop Notifications",
+        "desktopNotificationsDescription": "Show desktop notifications when message arrive.",
+        "notificationPermissionBlocked": "Notification permission is blocked. Please allow notification permission from browser address bar.",
+        "notificationsNotSupported": "Notifications are not supported by the system.",
+        "notificationSound": "Notification Sound",
+        "notificationSoundDescription": "Play sound when new message arrive.",
+        "enable": "Enable",
+        "emailNotification": "Email Notification",
+        "emailNotificationDescription": "Send notification to your email.",
+        "emailNotificationWithEmail": "Send notification to your email. (\"{email}\")",
+        "noEmailAttached": "Your account does not have any email attached.",
+        "unexpectedError": "Unexpected Error!"
+      },
+      "allMessages": {
+        "title": "All Messages",
+        "badge": "Badge",
+        "oneToOneChats": "1-to-1 Chats",
+        "oneToOneChatsEncrypted": "1-to-1 Chats (Encrypted)",
+        "rooms": "Rooms",
+        "roomsEncrypted": "Rooms (Encrypted)"
+      },
+      "specialMessages": {
+        "title": "Special Messages",
+        "badge": "Badge",
+        "mentionUserId": "Mention User ID (\"{userId}\")",
+        "containsDisplayName": "Contains Displayname {displayName}",
+        "containsDisplayNameWithName": "Contains Displayname (\"{displayName}\")",
+        "containsUsername": "Contains Username (\"{username}\")",
+        "mentionRoom": "Mention @room",
+        "containsRoom": "Contains @room"
+      },
+      "keywordMessages": {
+        "title": "Keyword Messages",
+        "badge": "Badge",
+        "selectKeyword": "Select Keyword",
+        "selectKeywordDescription": "Set a notification preference for message containing given keyword.",
+        "keywordPattern": "\"{pattern}\"",
+        "save": "Save"
+      },
+      "blockMessages": {
+        "title": "Block Messages",
+        "description": "This option has been moved to \"Account > Block Users\" section."
+      }
+    },
+    "developerTools": {
+      "title": "Developer Tools",
+      "options": "Options",
+      "enable": "Enable Developer Tools",
+      "accessToken": {
+        "title": "Access Token",
+        "description": "Copy access token to clipboard."
+      },
+      "copy": "Copy",
+      "accountData": {
+        "title": "Account Data",
+        "global": {
+          "title": "Global Account Data",
+          "description": "View and edit account data stored on your account."
+        },
+        "events": "Events",
+        "total": "Total: {{count}}",
+        "addNew": "Add New Event"
+      }
+    },
+    "devices": {
+      "title": "Devices",
+      "security": "Security",
+      "verification": {
+        "title": "Device Verification",
+        "description": "To verify device identity and grant access to encrypted messages.",
+        "steps": {
+          "title": "Steps to verify from other device.",
+          "openDevice": "Open your other verified device.",
+          "openSettings": "Open Settings.",
+          "findDevice": "Find this device in Devices/Sessions section.",
+          "initiate": "Initiate verification.",
+          "noVerifiedDevice": "If you do not have any verified device press the \"Verify Manually\" button."
+        }
+      },
+      "current": "Current Device",
+      "other": {
+        "title": "Other Devices",
+        "deviceDashboard": {
+          "title": "Device Dashboard",
+          "open": "Open",
+          "description": "Open device dashboard to manage your devices."
+        },
+        "deleteError": "Failed to logout devices!",
+        "deleteConfirm": "Logout from selected devices.",
+        "authNotSupported": "Authentication steps to perform this action are not supported by client.",
+        "cancel": "Cancel",
+        "logout": "Logout"
+      },
+      "lastActivity": "Last activity",
+      "deviceId": "Device ID",
+      "ipAddress": "IP Address",
+      "deviceKey": "Device Key",
+      "deviceName": "Device Name",
+      "deviceNamePublic": "Device names are visible to public.",
+      "edit": "Edit",
+      "undo": "Undo",
+      "logout": "Logout",
+      "unverified": {
+        "title": "Unverified",
+        "description": "Start verification from other device or verify manually.",
+        "learnMore": "Learn More",
+        "viewLess": "View Less",
+        "verifyManually": "Verify Manually"
+      },
+      "verificationStatus": {
+        "verified": "Verified",
+        "unverified": "Unverified"
+      },
+      "backup": {
+        "title": "Local Backup",
+        "export": {
+          "title": "Export Messages Data",
+          "newPassword": "New Password",
+          "confirmPassword": "Confirm Password",
+          "export": "Export",
+          "description": "Save password protected copy of encryption data on your device to decrypt messages later."
+        },
+        "import": {
+          "title": "Import Messages Data",
+          "password": "Password",
+          "import": "Import",
+          "description": "Load password protected copy of encryption data from device to decrypt your messages."
+        }
+      }
+    },
+    "about": {
+      "title": "About",
+      "description": "Yet another matrix client.",
+      "options": "Options",
+      "clearCache": {
+        "title": "Clear Cache & Reload",
+        "description": "Clear all cached data and reload the app.",
+        "button": "Clear Cache"
+      },
+      "sourceCode": "Source Code",
+      "support": "Support",
+      "cinnyName": "Cinny",
+      "version": "v{{version}}",
+      "credits": "Credits"
+    },
+    "account": {
+      "title": "Account",
+      "profile": {
+        "title": "Profile"
+      },
+      "avatar": {
+        "title": "Avatar",
+        "upload": "Upload",
+        "remove": "Remove",
+        "removeDialog": {
+          "title": "Remove Avatar",
+          "message": "Are you sure you want to remove profile avatar?",
+          "confirm": "Remove"
+        }
+      },
+      "displayName": {
+        "title": "Display Name",
+        "save": "Save"
+      },
+      "contactInfo": {
+        "title": "Contact Information",
+        "email": {
+          "title": "Email Address",
+          "description": "Email address attached to your account."
+        }
+      },
+      "matrixId": {
+        "title": "Matrix ID",
+        "copy": "Copy"
+      },
+      "blockedUsers": {
+        "title": "Blocked Users",
+        "selectUser": {
+          "title": "Select User",
+          "description": "Prevent receiving messages or invites from user by adding their userId."
+        },
+        "users": "Users",
+        "block": "Block"
+      }
+    },
+    "emojisStickers": {
+      "title": "Emojis & Stickers",
+      "imagesUsage": {
+        "title": "Images Usage",
+        "description": "Select how the images are being used: as emojis, as stickers, or as both."
+      },
+      "uploadImages": {
+        "title": "Upload Images",
+        "description": "Select images from your storage to upload them in pack."
+      },
+      "pack": "Pack",
+      "images": "Images",
+      "reset": "Reset",
+      "applyChanges": "Apply Changes",
+      "select": "Select",
+      "applyError": "Failed to apply changes! Please try again.",
+      "applySuccess": "Changes saved! Apply when ready.",
+      "packAvatar": "Pack Avatar",
+      "name": "Name",
+      "attribution": "Attribution",
+      "shortcode": "Shortcode:",
+      "body": "Body:",
+      "undo": "Undo",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "upload": "Upload",
+      "remove": "Remove",
+      "usageOptions": {
+        "both": "Both",
+        "sticker": "Sticker",
+        "emoji": "Emoji"
+      },
+      "globalPacks": {
+        "applyError": "Failed to apply changes! Please try again.",
+        "applyReady": "Changes saved! Apply when ready.",
+        "title": "Room Packs",
+        "save": "Save",
+        "close": "Close",
+        "selectAll": "Select All",
+        "unselectAll": "Unselect All",
+        "noPacks": {
+          "title": "No Packs",
+          "description": "Pack from rooms will appear here. You do not have any room with packs yet."
+        },
+        "favoritePacks": "Favorite Packs",
+        "selectPack": {
+          "title": "Select Pack",
+          "description": "Pick emojis and stickers pack from rooms to use in all rooms."
+        },
+        "select": "Select",
+        "reset": "Reset",
+        "applyChanges": "Apply Changes"
+      },
+      "userPack": {
+        "title": "Default Pack",
+        "view": "View"
+      }
+    }
+  },
+  "navigation": {
+    "search": "Search",
+    "inbox": "Inbox",
+    "notifications": "Notifications",
+    "lobby": "Lobby",
+    "messageSearch": "Message Search"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "logout": "Logout",
+    "unknown": "Unknown",
+    "settings": "Settings"
+  },
+  "notifications": {
+    "modes": {
+      "disable": "Disable",
+      "notifySilent": "Notify Silent",
+      "notifyLoud": "Notify Loud"
+    }
+  },
+  "accountData": {
+    "title": "Account Data",
+    "jsonContent": "JSON Content"
+  },
+  "themes": {
+    "light": "Light",
+    "silver": "Silver",
+    "dark": "Dark",
+    "butter": "Butter"
   }
 }

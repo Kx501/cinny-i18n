@@ -1,0 +1,399 @@
+{
+  "Organisms": {
+    "RoomCommon": {
+      "changed_room_name": " 更改了房间名称"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "登录",
+      "username": "用户名",
+      "password": "密码",
+      "loginButton": "登录",
+      "forgotPassword": "忘记密码？",
+      "noAccount": "还没有账户？",
+      "register": "注册",
+      "hint": {
+        "title": "提示",
+        "username": "用户名：",
+        "matrixId": "Matrix ID：",
+        "email": "邮箱："
+      },
+      "errors": {
+        "serverNotSupported": "此客户端不支持在 \"{server}\" 服务器上登录。未找到基于密码和SSO的登录方法。",
+        "serverNotAllowed": "您的客户端实例不允许使用自定义服务器登录。",
+        "invalidServer": "无法找到您的Matrix ID服务器。",
+        "invalidCredentials": "用户名或密码无效。",
+        "accountDeactivated": "此账户已被停用。",
+        "invalidRequest": "登录失败。您的请求数据部分无效。",
+        "rateLimited": "登录失败。您的登录请求已被服务器限流，请稍后重试。",
+        "unknown": "登录失败。未知原因。",
+        "invalidToken": "登录令牌无效。"
+      }
+    }
+  },
+  "settings": {
+    "general": {
+      "title": "通用",
+      "language": "语言",
+      "languageDescription": "选择您偏好的界面语言。"
+    },
+    "appearance": {
+      "title": "外观",
+      "systemTheme": {
+        "title": "系统主题",
+        "description": "根据系统偏好选择浅色或深色主题。"
+      },
+      "theme": {
+        "title": "主题",
+        "description": "未启用系统主题时使用的主题。"
+      },
+      "lightThemeTitle": "浅色主题：",
+      "darkThemeTitle": "深色主题：",
+      "twitterEmoji": {
+        "title": "Twitter 表情"
+      },
+      "pageZoom": {
+        "title": "页面缩放"
+      }
+    },
+    "dateAndTime": {
+      "title": "日期与时间",
+      "hour24Format": "24小时制",
+      "dateFormat": "日期格式",
+      "custom": "自定义",
+      "save": "保存",
+      "formatting": "格式化",
+      "year": "年份",
+      "month": "月份",
+      "dayOfMonth": "月中的天",
+      "dayOfWeek": "星期几",
+      "twoDigitYear": "两位数年份",
+      "fourDigitYear": "四位数年份",
+      "theMonth": "月份",
+      "twoDigitMonth": "两位数月份",
+      "shortMonthName": "月份简称",
+      "fullMonthName": "月份全称",
+      "dayOfMonthDesc": "月中的天",
+      "twoDigitDayOfMonth": "两位数的月中天",
+      "dayOfWeekDesc": "星期几 (星期日 = 0)",
+      "twoLetterDayName": "两字母星期名称",
+      "shortDayName": "星期简称",
+      "fullDayName": "星期全称"
+    },
+    "editor": {
+      "title": "编辑器",
+      "enterForNewline": "按Enter换行",
+      "enterForNewlineDescription": "使用 {key} + Enter 发送消息，Enter 键用于换行。",
+      "markdownFormatting": "Markdown格式化",
+      "hideTypingReadReceipts": "隐藏输入状态和已读回执",
+      "hideTypingReadReceiptsDescription": "关闭输入状态和已读回执，保持您的活动私密。"
+    },
+    "messages": {
+      "title": "消息",
+      "messageLayout": "消息布局",
+      "messageSpacing": "消息间距",
+      "layoutOptions": {
+        "Modern": "现代",
+        "Compact": "紧凑",
+        "Bubble": "气泡"
+      },
+      "spacingOptions": {
+        "None": "无",
+        "Ultra Small": "极小",
+        "Extra Small": "超小",
+        "Small": "小",
+        "Normal": "正常",
+        "Large": "大"
+      },
+      "legacyUsernameColor": "传统用户名颜色",
+      "hideMembershipChange": "隐藏成员变更",
+      "hideProfileChange": "隐藏个人资料变更",
+      "disableMediaAutoLoad": "禁用媒体自动加载",
+      "urlPreview": "链接预览",
+      "urlPreviewEncrypted": "加密房间中的链接预览",
+      "showHiddenEvents": "显示隐藏事件"
+    },
+    "notifications": {
+      "title": "通知",
+      "system": {
+        "title": "系统",
+        "desktopNotifications": "桌面通知",
+        "desktopNotificationsDescription": "消息到达时显示桌面通知。",
+        "notificationPermissionBlocked": "通知权限被阻止。请从浏览器地址栏允许通知权限。",
+        "notificationsNotSupported": "系统不支持通知。",
+        "notificationSound": "通知声音",
+        "notificationSoundDescription": "新消息到达时播放声音。",
+        "enable": "启用",
+        "emailNotification": "邮件通知",
+        "emailNotificationDescription": "发送通知到您的邮箱。",
+        "emailNotificationWithEmail": "发送通知到您的邮箱。(\"{email}\")",
+        "noEmailAttached": "您的账户没有关联任何邮箱。",
+        "unexpectedError": "意外错误！"
+      },
+      "allMessages": {
+        "title": "所有消息",
+        "badge": "徽章",
+        "oneToOneChats": "一对一聊天",
+        "oneToOneChatsEncrypted": "一对一聊天(加密)",
+        "rooms": "房间",
+        "roomsEncrypted": "房间(加密)"
+      },
+      "specialMessages": {
+        "title": "特殊消息",
+        "badge": "徽章",
+        "mentionUserId": "提及用户ID(\"{userId}\")",
+        "containsDisplayName": "包含显示名称 {displayName}",
+        "containsDisplayNameWithName": "包含显示名称(\"{displayName}\")",
+        "containsUsername": "包含用户名(\"{username}\")",
+        "mentionRoom": "提及@room",
+        "containsRoom": "包含@room"
+      },
+      "keywordMessages": {
+        "title": "关键词消息",
+        "badge": "徽章",
+        "selectKeyword": "选择关键词",
+        "selectKeywordDescription": "为包含指定关键词的消息设置通知偏好。",
+        "keywordPattern": "\"{pattern}\"",
+        "save": "保存"
+      },
+      "blockMessages": {
+        "title": "屏蔽消息",
+        "description": "此选项已移至\"账户 > 屏蔽用户\"部分。"
+      }
+    },
+    "developerTools": {
+      "title": "开发者工具",
+      "options": "选项",
+      "enable": "启用开发者工具",
+      "accessToken": {
+        "title": "访问令牌",
+        "description": "复制访问令牌到剪贴板。"
+      },
+      "copy": "复制",
+      "accountData": {
+        "title": "账户数据",
+        "global": {
+          "title": "全局账户数据",
+          "description": "查看和编辑存储在您账户上的账户数据。"
+        },
+        "events": "事件",
+        "total": "总计: {{count}}",
+        "addNew": "添加新事件"
+      }
+    },
+    "devices": {
+      "title": "设备",
+      "security": "安全",
+      "verification": {
+        "title": "设备验证",
+        "description": "验证设备身份并授予访问加密消息的权限。",
+        "steps": {
+          "title": "从其他设备验证的步骤。",
+          "openDevice": "打开您的其他已验证设备。",
+          "openSettings": "打开设置。",
+          "findDevice": "在设备/会话部分找到此设备。",
+          "initiate": "启动验证。",
+          "noVerifiedDevice": "如果您没有任何已验证的设备，请按\"手动验证\"按钮。"
+        }
+      },
+      "current": "当前设备",
+      "other": {
+        "title": "其他设备",
+        "deviceDashboard": {
+          "title": "设备仪表板",
+          "open": "打开",
+          "description": "打开设备仪表板来管理您的设备。"
+        },
+        "deleteError": "注销设备失败！",
+        "deleteConfirm": "注销选中的设备。",
+        "authNotSupported": "客户端不支持执行此操作的认证步骤。",
+        "cancel": "取消",
+        "logout": "注销"
+      },
+      "lastActivity": "最后活动时间",
+      "deviceId": "设备ID",
+      "ipAddress": "IP地址",
+      "deviceKey": "设备密钥",
+      "deviceName": "设备名称",
+      "deviceNamePublic": "设备名称对公众可见。",
+      "edit": "编辑",
+      "undo": "撤销",
+      "logout": "登出",
+      "unverified": {
+        "title": "未验证",
+        "description": "从其他设备开始验证或手动验证。",
+        "learnMore": "了解更多",
+        "viewLess": "查看更少",
+        "verifyManually": "手动验证"
+      },
+      "verificationStatus": {
+        "verified": "已验证",
+        "unverified": "未验证"
+      },
+      "backup": {
+        "title": "本地备份",
+        "export": {
+          "title": "导出消息数据",
+          "newPassword": "新密码",
+          "confirmPassword": "确认密码",
+          "export": "导出",
+          "description": "在您的设备上保存受密码保护的加密数据副本，以便稍后解密消息。"
+        },
+        "import": {
+          "title": "导入消息数据",
+          "password": "密码",
+          "import": "导入",
+          "description": "从设备加载受密码保护的加密数据副本以解密您的消息。"
+        }
+      }
+    },
+    "about": {
+      "title": "关于",
+      "description": "又一个Matrix客户端。",
+      "options": "选项",
+      "clearCache": {
+        "title": "清除缓存并重新加载",
+        "description": "清除所有本地存储的数据并从服务器重新加载。",
+        "button": "清除缓存"
+      },
+      "sourceCode": "源代码",
+      "support": "支持",
+      "cinnyName": "Cinny",
+      "version": "v{{version}}",
+      "credits": "致谢"
+    },
+    "account": {
+      "title": "账户",
+      "profile": {
+        "title": "个人资料"
+      },
+      "avatar": {
+        "title": "头像",
+        "upload": "上传",
+        "remove": "移除",
+        "removeDialog": {
+          "title": "移除头像",
+          "message": "确定要移除个人资料头像吗？",
+          "confirm": "移除"
+        }
+      },
+      "displayName": {
+        "title": "显示名称",
+        "save": "保存"
+      },
+      "contactInfo": {
+        "title": "联系信息",
+        "email": {
+          "title": "电子邮箱",
+          "description": "关联到您账户的电子邮箱地址。"
+        }
+      },
+      "matrixId": {
+        "title": "Matrix ID",
+        "copy": "复制"
+      },
+      "blockedUsers": {
+        "title": "已屏蔽用户",
+        "selectUser": {
+          "title": "选择用户",
+          "description": "通过添加用户ID来阻止接收其消息或邀请。"
+        },
+        "users": "用户",
+        "block": "屏蔽"
+      }
+    },
+    "emojisStickers": {
+      "title": "表情和贴纸",
+      "packAvatar": "包头像",
+      "name": "名称",
+      "attribution": "归属",
+      "shortcode": "短代码：",
+      "body": "内容：",
+      "undo": "撤销",
+      "edit": "编辑",
+      "save": "保存",
+      "cancel": "取消",
+      "upload": "上传",
+      "remove": "移除",
+      "usageOptions": {
+        "both": "两者",
+        "sticker": "贴纸",
+        "emoji": "表情"
+      },
+      "imagesUsage": {
+        "title": "图片用途",
+        "description": "选择图片的使用方式：作为表情、作为贴纸或两者皆是。"
+      },
+      "uploadImages": {
+        "title": "上传图片",
+        "description": "从您的存储中选择图片以上传到包中。"
+      },
+      "pack": "包",
+      "images": "图片",
+      "reset": "重置",
+      "applyChanges": "应用更改",
+      "select": "选择",
+      "applyError": "应用更改失败！请重试。",
+      "applySuccess": "更改已保存！准备就绪后应用。",
+      "globalPacks": {
+        "applyError": "应用更改失败！请重试。",
+        "applyReady": "更改已保存！准备就绪后应用。",
+        "title": "房间表情包",
+        "save": "保存",
+        "close": "关闭",
+        "selectAll": "全选",
+        "unselectAll": "取消全选",
+        "noPacks": {
+          "title": "无表情包",
+          "description": "房间表情包将显示在此处。您目前没有任何包含表情包的房间。"
+        },
+        "favoritePacks": "收藏表情包",
+        "selectPack": {
+          "title": "选择表情包",
+          "description": "从房间中选择表情和贴纸包，以便在所有房间中使用。"
+        },
+        "select": "选择",
+        "reset": "重置",
+        "applyChanges": "应用更改"
+      },
+      "userPack": {
+        "title": "默认表情包",
+        "view": "查看"
+      }
+    }
+  },
+  "navigation": {
+    "search": "搜索",
+    "inbox": "收件箱",
+    "notifications": "通知",
+    "lobby": "大厅",
+    "messageSearch": "消息搜索"
+  },
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "edit": "编辑",
+    "loading": "加载中...",
+    "logout": "登出",
+    "unknown": "未知",
+    "settings": "设置"
+  },
+  "notifications": {
+    "modes": {
+      "disable": "禁用",
+      "notifySilent": "静音通知",
+      "notifyLoud": "大声通知"
+    }
+  },
+  "accountData": {
+    "title": "账户数据",
+    "jsonContent": "JSON内容"
+  },
+  "themes": {
+    "light": "浅色",
+    "silver": "银色",
+    "dark": "深色",
+    "butter": "黄油色"
+  }
+}

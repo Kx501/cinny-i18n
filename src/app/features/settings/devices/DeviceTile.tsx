@@ -1,4 +1,5 @@
-import React, { FormEventHandler, ReactNode, useCallback, useEffect, useState } from 'react';
+import React, { FormEventHandler, ReactNode, useCallback, useEffect, useState, useTransition } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Text,
@@ -31,6 +32,7 @@ import { useSetting } from '../../../state/hooks/settings';
 import { settingsAtom } from '../../../state/settings';
 
 export function DeviceTilePlaceholder() {
+  const { t } = useTranslation();
   return (
     <SequenceCard
       className={SequenceCardStyle}
@@ -43,13 +45,14 @@ export function DeviceTilePlaceholder() {
 }
 
 function DeviceActiveTime({ ts }: { ts: number }) {
+  const { t } = useTranslation();
   const [hour24Clock] = useSetting(settingsAtom, 'hour24Clock');
   const [dateFormatString] = useSetting(settingsAtom, 'dateFormatString');
 
   return (
     <Text className={BreakWord} size="T200">
       <Text size="Inherit" as="span" priority="300">
-        {'Last activity: '}
+        {t('settings.devices.lastActivity')}
       </Text>
       <>
         {today(ts) && 'Today'}
@@ -62,16 +65,17 @@ function DeviceActiveTime({ ts }: { ts: number }) {
 }
 
 function DeviceDetails({ device }: { device: IMyDevice }) {
+  const { t } = useTranslation();
   return (
     <>
       {typeof device.device_id === 'string' && (
         <Text className={BreakWord} size="T200" priority="300">
-          Device ID: <i>{device.device_id}</i>
+          {t('settings.devices.deviceId')}: <i>{device.device_id}</i>
         </Text>
       )}
       {typeof device.last_seen_ip === 'string' && (
         <Text className={BreakWord} size="T200" priority="300">
-          IP Address: <i>{device.last_seen_ip}</i>
+          {t('settings.devices.ipAddress')}: <i>{device.last_seen_ip}</i>
         </Text>
       )}
     </>
@@ -82,6 +86,7 @@ type DeviceKeyDetailsProps = {
   crypto: CryptoApi;
 };
 export function DeviceKeyDetails({ crypto }: DeviceKeyDetailsProps) {
+  const { t } = useTranslation();
   const [keysState, loadKeys] = useAsyncCallback(
     useCallback(() => {
       const keys = crypto.getOwnDeviceKeys();
@@ -97,8 +102,8 @@ export function DeviceKeyDetails({ crypto }: DeviceKeyDetailsProps) {
 
   return (
     <Text className={BreakWord} size="T200" priority="300">
-      Device Key:{' '}
-      <i>{keysState.status === AsyncStatus.Success ? keysState.data.ed25519 : 'loading...'}</i>
+      {t('settings.devices.deviceKey')}:
+      <i>{keysState.status === AsyncStatus.Success ? keysState.data.ed25519 : t('common.loading')}</i>
     </Text>
   );
 }
@@ -110,6 +115,7 @@ type DeviceRenameProps = {
   refreshDeviceList: () => Promise<void>;
 };
 function DeviceRename({ device, onCancel, onRename, refreshDeviceList }: DeviceRenameProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
 
   const [renameState, rename] = useAsyncCallback<void, MatrixError, [string]>(
@@ -145,7 +151,7 @@ function DeviceRename({ device, onCancel, onRename, refreshDeviceList }: DeviceR
 
   return (
     <Box as="form" onSubmit={handleSubmit} direction="Column" gap="100">
-      <Text size="L400">Device Name</Text>
+      <Text size="L400">{t('settings.devices.deviceName')}</Text>
       <Box gap="200">
         <Box grow="Yes" direction="Column">
           <Input
@@ -169,7 +175,7 @@ function DeviceRename({ device, onCancel, onRename, refreshDeviceList }: DeviceR
             disabled={renaming}
             before={renaming && <Spinner size="100" variant="Success" fill="Solid" />}
           >
-            <Text size="B300">Save</Text>
+            <Text size="B300">{t('common.save')}</Text>
           </Button>
           <Button
             type="button"
@@ -180,7 +186,7 @@ function DeviceRename({ device, onCancel, onRename, refreshDeviceList }: DeviceR
             onClick={onCancel}
             disabled={renaming}
           >
-            <Text size="B300">Cancel</Text>
+            <Text size="B300">{t('common.cancel')}</Text>
           </Button>
         </Box>
       </Box>
@@ -189,13 +195,14 @@ function DeviceRename({ device, onCancel, onRename, refreshDeviceList }: DeviceR
           {renameState.error.message}
         </Text>
       ) : (
-        <Text size="T200">Device names are visible to public.</Text>
+        <Text size="T200">{t('settings.devices.deviceNamePublic')}</Text>
       )}
     </Box>
   );
 }
 
 export function DeviceLogoutBtn() {
+  const { t } = useTranslation();
   const [prompt, setPrompt] = useState(false);
 
   const handleClose = () => setPrompt(false);
@@ -203,7 +210,7 @@ export function DeviceLogoutBtn() {
   return (
     <>
       <Chip variant="Secondary" fill="Soft" radii="Pill" onClick={() => setPrompt(true)}>
-        <Text size="B300">Logout</Text>
+        <Text size="B300">{t('settings.devices.logout')}</Text>
       </Chip>
       {prompt && (
         <Overlay open backdrop={<OverlayBackdrop />}>
@@ -236,6 +243,7 @@ export function DeviceDeleteBtn({
   onDeleteToggle,
   disabled,
 }: DeviceDeleteBtnProps) {
+  const { t } = useTranslation();
   return deleted ? (
     <Chip
       variant="Critical"
@@ -244,7 +252,7 @@ export function DeviceDeleteBtn({
       onClick={() => onDeleteToggle(deviceId)}
       disabled={disabled}
     >
-      <Text size="B300">Undo</Text>
+      <Text size="B300">{t('settings.devices.undo')}</Text>
     </Chip>
   ) : (
     <Chip
@@ -275,6 +283,7 @@ export function DeviceTile({
   options,
   children,
 }: DeviceTileProps) {
+  const { t } = useTranslation();
   const activeTs = device.last_seen_ts;
   const [details, setDetails] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -307,7 +316,7 @@ export function DeviceTile({
                   onClick={() => setEdit(true)}
                   disabled={disabled}
                 >
-                  <Text size="B300">Edit</Text>
+                  <Text size="B300">{t('settings.devices.edit')}</Text>
                 </Chip>
               )}
             </Box>

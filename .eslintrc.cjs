@@ -25,7 +25,8 @@ module.exports = {
   },
   plugins: [
     'react',
-    '@typescript-eslint'
+    '@typescript-eslint',
+    'i18n'
   ],
   rules: {
     'linebreak-style': 0,
@@ -59,7 +60,9 @@ module.exports = {
     "react-hooks/exhaustive-deps": "error",
 
     "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-shadow": "error"
+    "@typescript-eslint/no-shadow": "error",
+    "i18n/no-chinese-character": "error",
+    "i18n/no-english": "error"
   },
   overrides: [
     {

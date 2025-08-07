@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Icon, Icons, Scroll } from 'folds';
+import { useTranslation } from 'react-i18next';
 
 import {
   Sidebar,
@@ -24,6 +25,7 @@ import { CreateTab } from './sidebar/CreateTab';
 
 export function SidebarNav() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   return (
     <Sidebar>
@@ -47,7 +49,7 @@ export function SidebarNav() {
             <SidebarStackSeparator />
             <SidebarStack>
               <SidebarItem>
-                <SidebarItemTooltip tooltip="Search">
+                <SidebarItemTooltip tooltip={t('navigation.search')}>
                   {(triggerRef) => (
                     <SidebarAvatar
                       as="button"

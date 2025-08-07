@@ -1,18 +1,20 @@
 import React, { MouseEventHandler, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Button, config, Icon, Icons, Menu, MenuItem, PopOut, RectCords, Text } from 'folds';
 import FocusTrap from 'focus-trap-react';
 import { ImageUsage } from '../../plugins/custom-emoji';
 import { stopPropagation } from '../../utils/keyboard';
 
 export const useUsageStr = (): ((usage: ImageUsage[]) => string) => {
+  const { t } = useTranslation();
   const getUsageStr = (usage: ImageUsage[]): string => {
     const sticker = usage.includes(ImageUsage.Sticker);
     const emoticon = usage.includes(ImageUsage.Emoticon);
 
-    if (sticker && emoticon) return 'Both';
-    if (sticker) return 'Sticker';
-    if (emoticon) return 'Emoji';
-    return 'Both';
+    if (sticker && emoticon) return t('settings.emojisStickers.usageOptions.both');
+    if (sticker) return t('settings.emojisStickers.usageOptions.sticker');
+    if (emoticon) return t('settings.emojisStickers.usageOptions.emoji');
+    return t('settings.emojisStickers.usageOptions.both');
   };
   return getUsageStr;
 };

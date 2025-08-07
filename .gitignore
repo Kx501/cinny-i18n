@@ -2,7 +2,6 @@ experiment
 dist
 node_modules
 devAssets
-public
 
 .DS_Store
 .idea

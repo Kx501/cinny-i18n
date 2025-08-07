@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Avatar, AvatarFallback, AvatarImage, Box, Button, Icon, Icons, Text } from 'folds';
 import { useUserImagePack } from '../../../hooks/useImagePacks';
 import { SequenceCard } from '../../../components/sequence-card';
@@ -13,6 +14,7 @@ type UserPackProps = {
   onViewPack: (imagePack: ImagePack) => void;
 };
 export function UserPack({ onViewPack }: UserPackProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
 
@@ -31,7 +33,7 @@ export function UserPack({ onViewPack }: UserPackProps) {
 
   return (
     <Box direction="Column" gap="100">
-      <Text size="L400">Default Pack</Text>
+      <Text size="L400">{t('settings.emojisStickers.userPack.title')}</Text>
       <SequenceCard
         className={SequenceCardStyle}
         variant="SurfaceVariant"
@@ -39,7 +41,7 @@ export function UserPack({ onViewPack }: UserPackProps) {
         gap="400"
       >
         <SettingTile
-          title={userPack?.meta.name ?? 'Unknown'}
+          title={userPack?.meta.name ?? t('common.unknown')}
           description={userPack?.meta.attribution}
           before={
             <Avatar size="300" radii="300">
@@ -61,7 +63,7 @@ export function UserPack({ onViewPack }: UserPackProps) {
               outlined
               onClick={handleView}
             >
-              <Text size="B300">View</Text>
+              <Text size="B300">{t('settings.emojisStickers.userPack.view')}</Text>
             </Button>
           }
         />

@@ -298,9 +298,9 @@ const useTimelinePagination = (
         range:
           offsetRange > 0
             ? {
-                start: currentTimeline.range.start + offsetRange,
-                end: currentTimeline.range.end + offsetRange,
-              }
+              start: currentTimeline.range.start + offsetRange,
+              end: currentTimeline.range.end + offsetRange,
+            }
             : { ...currentTimeline.range },
       }));
     };
@@ -319,7 +319,7 @@ const useTimelinePagination = (
       if (
         !paginationToken &&
         getTimelinesEventsCount(lTimelines) !==
-          getTimelinesEventsCount(getLinkedTimelines(timelineToPaginate))
+        getTimelinesEventsCount(getLinkedTimelines(timelineToPaginate))
       ) {
         recalibratePagination(lTimelines, timelinesEventsCount, backwards);
         return;
@@ -494,10 +494,10 @@ export function RoomTimeline({
 
   const [focusItem, setFocusItem] = useState<
     | {
-        index: number;
-        scrollTo: boolean;
-        highlight: boolean;
-      }
+      index: number;
+      scrollTo: boolean;
+      highlight: boolean;
+    }
     | undefined
   >();
   const alive = useAlive();
@@ -982,7 +982,7 @@ export function RoomTimeline({
         (reactions.find(eventWithShortcode)?.getContent().shortcode as string | undefined);
       mx.sendEvent(
         room.roomId,
-        MessageEvent.Reaction,
+        MessageEvent.Reaction as any,
         getReactionContent(targetEventId, key, rShortcode)
       );
     },
@@ -1597,14 +1597,14 @@ export function RoomTimeline({
     const eventJSX = reactionOrEditEvent(mEvent)
       ? null
       : renderMatrixEvent(
-          mEvent.getType(),
-          typeof mEvent.getStateKey() === 'string',
-          mEventId,
-          mEvent,
-          item,
-          timelineSet,
-          collapsed
-        );
+        mEvent.getType(),
+        typeof mEvent.getStateKey() === 'string',
+        mEventId,
+        mEvent,
+        item,
+        timelineSet,
+        collapsed
+      );
     prevEvent = mEvent;
     isPrevRendered = !!eventJSX;
 
@@ -1686,9 +1686,8 @@ export function RoomTimeline({
           {!canPaginateBack && rangeAtStart && getItems().length > 0 && (
             <div
               style={{
-                padding: `${config.space.S700} ${config.space.S400} ${config.space.S600} ${
-                  messageLayout === MessageLayout.Compact ? config.space.S400 : toRem(64)
-                }`,
+                padding: `${config.space.S700} ${config.space.S400} ${config.space.S600} ${messageLayout === MessageLayout.Compact ? config.space.S400 : toRem(64)
+                  }`,
               }}
             >
               <RoomIntro room={room} />

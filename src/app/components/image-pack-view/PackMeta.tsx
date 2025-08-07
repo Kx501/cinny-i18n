@@ -1,4 +1,5 @@
 import React, { FormEventHandler, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Text,
@@ -31,13 +32,14 @@ type ImagePackAvatarProps = {
   name?: string;
 };
 function ImagePackAvatar({ url, name }: ImagePackAvatarProps) {
+  const { t } = useTranslation();
   return (
     <Avatar size="500" className={ContainerColor({ variant: 'Secondary' })}>
       {url ? (
-        <AvatarImage src={url} alt={name ?? 'Unknown'} />
+        <AvatarImage src={url} alt={name ?? t('common.unknown')} />
       ) : (
         <AvatarFallback>
-          <Text size="H2">{nameInitials(name ?? 'Unknown')}</Text>
+          <Text size="H2">{nameInitials(name ?? t('common.unknown'))}</Text>
         </AvatarFallback>
       )}
     </Avatar>
@@ -50,6 +52,7 @@ type ImagePackProfileProps = {
   onEdit?: () => void;
 };
 export function ImagePackProfile({ meta, canEdit, onEdit }: ImagePackProfileProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
   const avatarUrl = meta.avatar
@@ -61,7 +64,7 @@ export function ImagePackProfile({ meta, canEdit, onEdit }: ImagePackProfileProp
       <Box grow="Yes" direction="Column" gap="300">
         <Box direction="Column" gap="100">
           <Text className={BreakWord} size="H5">
-            {meta.name ?? 'Unknown'}
+            {meta.name ?? t('common.unknown')}
           </Text>
           {meta.attribution && (
             <Text className={BreakWord} size="T200">
@@ -79,7 +82,7 @@ export function ImagePackProfile({ meta, canEdit, onEdit }: ImagePackProfileProp
               onClick={onEdit}
               outlined
             >
-              <Text size="B300">Edit</Text>
+              <Text size="B300">{t('settings.emojisStickers.edit')}</Text>
             </Chip>
           </Box>
         )}
@@ -97,6 +100,7 @@ type ImagePackProfileEditProps = {
   onSave: (meta: PackMetaReader) => void;
 };
 export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfileEditProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
   const [avatar, setAvatar] = useState(meta.avatar);
@@ -147,7 +151,7 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
     <Box as="form" onSubmit={handleSubmit} direction="Column" gap="400">
       <Box gap="400">
         <Box grow="Yes" direction="Column" gap="100">
-          <Text size="L400">Pack Avatar</Text>
+          <Text size="L400">{t('settings.emojisStickers.packAvatar')}</Text>
           {uploadAtom ? (
             <Box gap="200" direction="Column">
               <CompactUploadCardRenderer
@@ -166,7 +170,7 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
                 radii="300"
                 onClick={() => pickFile('image/*')}
               >
-                <Text size="B300">Upload</Text>
+                <Text size="B300">{t('settings.emojisStickers.upload')}</Text>
               </Button>
               {!avatar && meta.avatar && (
                 <Button
@@ -177,7 +181,7 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
                   radii="300"
                   onClick={() => setAvatar(meta.avatar)}
                 >
-                  <Text size="B300">Reset</Text>
+                  <Text size="B300">{t('settings.emojisStickers.reset')}</Text>
                 </Button>
               )}
               {avatar && (
@@ -189,7 +193,7 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
                   radii="300"
                   onClick={() => setAvatar(undefined)}
                 >
-                  <Text size="B300">Remove</Text>
+                  <Text size="B300">{t('settings.emojisStickers.remove')}</Text>
                 </Button>
               )}
             </Box>
@@ -200,11 +204,11 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
         </Box>
       </Box>
       <Box direction="Inherit" gap="100">
-        <Text size="L400">Name</Text>
+        <Text size="L400">{t('settings.emojisStickers.name')}</Text>
         <Input name="nameInput" defaultValue={meta.name} variant="Secondary" radii="300" required />
       </Box>
       <Box direction="Inherit" gap="100">
-        <Text size="L400">Attribution</Text>
+        <Text size="L400">{t('settings.emojisStickers.attribution')}</Text>
         <TextArea
           name="attributionTextArea"
           defaultValue={meta.attribution}
@@ -214,7 +218,7 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
       </Box>
       <Box gap="300">
         <Button type="submit" variant="Success" size="300" radii="300" disabled={uploadingAvatar}>
-          <Text size="B300">Save</Text>
+          <Text size="B300">{t('settings.emojisStickers.save')}</Text>
         </Button>
         <Button
           type="reset"
@@ -224,7 +228,7 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
           size="300"
           radii="300"
         >
-          <Text size="B300">Cancel</Text>
+          <Text size="B300">{t('settings.emojisStickers.cancel')}</Text>
         </Button>
       </Box>
     </Box>

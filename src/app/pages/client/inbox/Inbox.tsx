@@ -1,5 +1,6 @@
 import React from 'react';
 import { Avatar, Box, Icon, Icons, Text } from 'folds';
+import { useTranslation } from 'react-i18next';
 import { useAtomValue } from 'jotai';
 import { NavCategory, NavItem, NavItemContent, NavLink } from '../../../components/nav';
 import { getInboxInvitesPath, getInboxNotificationsPath } from '../../pathUtils';
@@ -46,6 +47,7 @@ function InvitesNavItem() {
 export function Inbox() {
   useNavToActivePathMapper('inbox');
   const notificationsSelected = useInboxNotificationsSelected();
+  const { t } = useTranslation();
 
   return (
     <PageNav>
@@ -53,7 +55,7 @@ export function Inbox() {
         <Box grow="Yes" gap="300">
           <Box grow="Yes">
             <Text size="H4" truncate>
-              Inbox
+              {t('navigation.inbox')}
             </Text>
           </Box>
         </Box>
@@ -70,9 +72,9 @@ export function Inbox() {
                       <Icon src={Icons.MessageUnread} size="100" filled={notificationsSelected} />
                     </Avatar>
                     <Box as="span" grow="Yes">
-                      <Text as="span" size="Inherit" truncate>
-                        Notifications
-                      </Text>
+                                          <Text as="span" size="Inherit" truncate>
+                      {t('navigation.notifications')}
+                    </Text>
                     </Box>
                   </Box>
                 </NavItemContent>
