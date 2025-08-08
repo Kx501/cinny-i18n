@@ -25,7 +25,7 @@ export function MatrixId() {
           title={userId}
           after={
             <Chip variant="Secondary" radii="Pill" onClick={() => copyToClipboard(userId)}>
-              <Text size="T200">{t('settings.account.matrixId.copy')}</Text>
+              <Text size="T200">{t('common.copy')}</Text>
             </Chip>
           }
         />

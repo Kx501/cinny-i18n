@@ -73,7 +73,7 @@ export function ImageTile({
               radii="Pill"
               onClick={() => onDeleteToggle?.(defaultShortcode)}
             >
-              {deleted ? <Text size="B300">{t('settings.emojisStickers.undo')}</Text> : <Icon size="50" src={Icons.Delete} />}
+              {deleted ? <Text size="B300">{t('common.undo')}</Text> : <Icon size="50" src={Icons.Delete} />}
             </Chip>
             {!deleted && (
               <Chip
@@ -81,7 +81,7 @@ export function ImageTile({
                 radii="Pill"
                 onClick={() => onEdit?.(defaultShortcode, image)}
               >
-                <Text size="B300">{t('settings.emojisStickers.edit')}</Text>
+                <Text size="B300">{t('common.edit')}</Text>
               </Chip>
             )}
           </Box>
@@ -198,7 +198,7 @@ export function ImageTileEdit({
           </Box>
           <Box grow="Yes" />
           <Button type="submit" variant="Success" size="300" radii="300">
-            <Text size="B300">{t('settings.emojisStickers.save')}</Text>
+            <Text size="B300">{t('common.save')}</Text>
           </Button>
           <Button
             type="reset"
@@ -208,7 +208,7 @@ export function ImageTileEdit({
             radii="300"
             onClick={() => onCancel(defaultShortcode)}
           >
-            <Text size="B300">{t('settings.emojisStickers.cancel')}</Text>
+            <Text size="B300">{t('common.cancel')}</Text>
           </Button>
         </Box>
       </Box>

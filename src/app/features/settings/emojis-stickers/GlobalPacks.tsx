@@ -119,7 +119,7 @@ function GlobalPackSelector({
             outlined={hasSelected}
             onClick={() => onSelect(selected)}
           >
-            <Text size="B300">{hasSelected ? t('settings.emojisStickers.globalPacks.save') : t('settings.emojisStickers.globalPacks.close')}</Text>
+            <Text size="B300">{hasSelected ? t('common.save') : t('common.close')}</Text>
           </Chip>
         </Box>
       </Header>
@@ -164,7 +164,7 @@ function GlobalPackSelector({
                           addSelected(roomPackAddresses);
                         }}
                       >
-                        <Text size="B300">{allSelected ? t('settings.emojisStickers.globalPacks.unselectAll') : t('settings.emojisStickers.globalPacks.selectAll')}</Text>
+                        <Text size="B300">{allSelected ? t('common.unselectAll') : t('common.selectAll')}</Text>
                       </Chip>
                     </Box>
                   </Box>
@@ -412,14 +412,14 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
                 outlined
                 onClick={() => onViewPack(pack)}
               >
-                <Text size="B300">{t('settings.emojisStickers.userPack.view')}</Text>
+                <Text size="B300">{t('common.view')}</Text>
               </Button>
             )
           }
         />
       </SequenceCard>
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -444,7 +444,7 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
                   radii="300"
                   outlined
                 >
-                  <Text size="B300">{t('settings.emojisStickers.globalPacks.select')}</Text>
+                  <Text size="B300">{t('common.select')}</Text>
                 </Button>
                 <PopOut
                   anchor={menuCords}
@@ -523,7 +523,7 @@ export function GlobalPacks({ onViewPack }: GlobalPacksProps) {
                 disabled={applyingChanges}
                 onClick={resetChanges}
               >
-                <Text size="B300">{t('settings.emojisStickers.globalPacks.reset')}</Text>
+                <Text size="B300">{t('common.reset')}</Text>
               </Button>
               <Button
                 size="300"

@@ -63,7 +63,7 @@ export function UserPack({ onViewPack }: UserPackProps) {
               outlined
               onClick={handleView}
             >
-              <Text size="B300">{t('settings.emojisStickers.userPack.view')}</Text>
+              <Text size="B300">{t('common.view')}</Text>
             </Button>
           }
         />

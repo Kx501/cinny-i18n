@@ -12,6 +12,7 @@ import {
   TextArea,
 } from 'folds';
 import React, { FormEventHandler, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAtomValue } from 'jotai';
 import Linkify from 'linkify-react';
 import classNames from 'classnames';
@@ -59,6 +60,7 @@ export function RoomProfileEdit({
   topic,
   onClose,
 }: RoomProfileEditProps) {
+  const { t } = useTranslation();
   const room = useRoom();
   const mx = useMatrixClient();
   const alive = useAlive();
@@ -185,7 +187,7 @@ export function RoomProfileEdit({
                   disabled={!canEditAvatar || submitting}
                   onClick={() => setRoomAvatar(undefined)}
                 >
-                  <Text size="B300">Remove</Text>
+                  <Text size="B300">{t('common.remove')}</Text>
                 </Button>
               )}
             </Box>
@@ -243,7 +245,7 @@ export function RoomProfileEdit({
           disabled={uploadingAvatar || submitting}
           before={submitting && <Spinner size="100" variant="Success" fill="Solid" />}
         >
-          <Text size="B300">Save</Text>
+          <Text size="B300">{t('common.save')}</Text>
         </Button>
         <Button
           type="reset"
@@ -253,7 +255,7 @@ export function RoomProfileEdit({
           size="300"
           radii="300"
         >
-          <Text size="B300">Cancel</Text>
+          <Text size="B300">{t('common.cancel')}</Text>
         </Button>
       </Box>
     </Box>

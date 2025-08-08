@@ -3,5 +3,9 @@ dist
 node_modules
 devAssets
 
+
 .DS_Store
 .idea
+.vscode
+build.config.ts
+config.json

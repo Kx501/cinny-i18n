@@ -45,6 +45,7 @@ import { getMxIdServer } from '../../../utils/matrix';
 import { stopPropagation } from '../../../utils/keyboard';
 import { ScreenSize, useScreenSizeContext } from '../../../hooks/useScreenSize';
 import { BackRouteHandler } from '../../../components/BackRouteHandler';
+import { useTranslation } from 'react-i18next';
 
 const useServerSearchParams = (searchParams: URLSearchParams): ExploreServerPathSearchParams =>
   useMemo(
@@ -62,24 +63,26 @@ type RoomTypeFilter = {
   title: string;
   value: string | undefined;
 };
-const useRoomTypeFilters = (): RoomTypeFilter[] =>
-  useMemo(
+const useRoomTypeFilters = (): RoomTypeFilter[] => {
+  const { t } = useTranslation();
+  return useMemo(
     () => [
       {
-        title: 'All',
+        title: t('common.all'),
         value: undefined,
       },
       {
-        title: 'Spaces',
+        title: t('common.spaces'),
         value: RoomType.Space,
       },
       {
-        title: 'Rooms',
+        title: t('common.rooms'),
         value: 'null',
       },
     ],
-    []
+    [t]
   );
+}
 
 const FALLBACK_ROOMS_LIMIT = 24;
 
@@ -91,6 +94,7 @@ type SearchProps = {
   onReset: () => void;
 };
 function Search({ active, loading, searchInputRef, onSearch, onReset }: SearchProps) {
+  const { t } = useTranslation();
   const handleSearchSubmit: FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
     const { searchInput } = evt.target as HTMLFormElement & {
@@ -106,14 +110,14 @@ function Search({ active, loading, searchInputRef, onSearch, onReset }: SearchPr
   return (
     <Box as="form" direction="Column" gap="100" onSubmit={handleSearchSubmit}>
       <span data-spacing-node />
-      <Text size="L400">Search</Text>
+      <Text size="L400">{t('common.search')}</Text>
       <Input
         ref={searchInputRef}
         style={{ paddingRight: config.space.S300 }}
         name="searchInput"
         size="500"
         variant="Background"
-        placeholder="Search for keyword"
+        placeholder={t('exploreServer.searchPlaceholder')}
         before={
           active && loading ? (
             <Spinner variant="Secondary" size="200" />
@@ -132,11 +136,11 @@ function Search({ active, loading, searchInputRef, onSearch, onReset }: SearchPr
               after={<Icon size="50" src={Icons.Cross} />}
               onClick={onReset}
             >
-              <Text size="B300">Clear</Text>
+              <Text size="B300">{t('exploreServer.clear')}</Text>
             </Chip>
           ) : (
             <Chip type="submit" variant="Primary" size="400" radii="Pill" outlined>
-              <Text size="B300">Enter</Text>
+              <Text size="B300">{t('exploreServer.enter')}</Text>
             </Chip>
           )
         }
@@ -154,6 +158,7 @@ function ThirdPartyProtocolsSelector({
   onChange: (instanceId?: string) => void;
 }) {
   const mx = useMatrixClient();
+  const { t } = useTranslation();
   const [menuAnchor, setMenuAnchor] = useState<RectCords>();
 
   const { data } = useQuery({
@@ -196,7 +201,7 @@ function ThirdPartyProtocolsSelector({
               style={{ padding: config.space.S100, minWidth: toRem(100) }}
             >
               <Text style={{ padding: config.space.S100 }} size="L400" truncate>
-                Protocols
+                {t('exploreServer.protocols')}
               </Text>
               <Box direction="Column">
                 <MenuItem
@@ -341,6 +346,7 @@ function LimitButton({ limit, onLimitChange }: LimitButtonProps) {
 }
 
 export function PublicRooms() {
+  const { t } = useTranslation();
   const { server } = useParams();
   const mx = useMatrixClient();
   const userId = mx.getUserId();
@@ -488,7 +494,7 @@ export function PublicRooms() {
             <Box grow="No" justifyContent="Center" alignItems="Center" gap="200">
               {screenSize !== ScreenSize.Mobile && <Icon size="400" src={Icons.Search} />}
               <Text size="H3" truncate>
-                Search
+                {t('common.search')}
               </Text>
             </Box>
             <Box grow="Yes" basis="No" />
@@ -534,7 +540,7 @@ export function PublicRooms() {
                     {isSearch ? (
                       <Text size="H4">{`Results for "${serverSearchParams.term}"`}</Text>
                     ) : (
-                      <Text size="H4">Popular Communities</Text>
+                      <Text size="H4">{t('client.explore.popularCommunities')}</Text>
                     )}
                     <Box gap="200">
                       {roomTypeFilters.map((filter) => (
@@ -624,7 +630,7 @@ export function PublicRooms() {
                               disabled={!data.prev_batch}
                             >
                               <Text size="B300" truncate>
-                                Previous Page
+                                {t('client.explore.previousPage')}
                               </Text>
                             </Button>
                             <Box data-spacing-node grow="Yes" />
@@ -635,7 +641,7 @@ export function PublicRooms() {
                               disabled={!data.next_batch}
                             >
                               <Text size="B300" truncate>
-                                Next Page
+                                {t('client.explore.nextPage')}
                               </Text>
                             </Button>
                           </Box>
@@ -651,7 +657,7 @@ export function PublicRooms() {
                       >
                         <Icon size="400" src={Icons.Info} />
                         <Text size="T300" align="Center">
-                          No communities found!
+                          {t('client.explore.noCommunitiesFound')}
                         </Text>
                       </Box>
                     ))}
@@ -663,4 +669,5 @@ export function PublicRooms() {
       </Box>
     </Page>
   );
+
 }

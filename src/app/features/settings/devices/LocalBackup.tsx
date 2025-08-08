@@ -109,7 +109,7 @@ function ExportKeys() {
             before={exporting ? <Spinner size="200" variant="Secondary" fill="Soft" /> : undefined}
           >
             <Text as="span" size="B400">
-              {t('settings.devices.backup.export.export')}
+              {t('common.export')}
             </Text>
           </Button>
         </Box>
@@ -147,7 +147,7 @@ function ExportKeysTile() {
               }
             >
               <Text as="span" size="B300" truncate>
-                {expand ? 'Collapse' : 'Expand'}
+                {t(expand ? 'common.collapse' : 'common.expand')}
               </Text>
             </Button>
           </Box>
@@ -213,7 +213,7 @@ function ImportKeys({ file, onDone }: ImportKeysProps) {
       <Box as="form" onSubmit={handleSubmit} direction="Column" gap="100">
         <Box gap="200" alignItems="End">
           <Box grow="Yes" direction="Column" gap="100">
-            <Text size="L400">{t('settings.devices.backup.import.password')}</Text>
+            <Text size="L400">{t('common.password')}</Text>
             <PasswordInput
               name="passwordInput"
               size="400"
@@ -235,7 +235,7 @@ function ImportKeys({ file, onDone }: ImportKeysProps) {
             before={decrypting ? <Spinner size="200" variant="Secondary" fill="Soft" /> : undefined}
           >
             <Text as="span" size="B400">
-              {t('settings.devices.backup.import.import')}
+              {t('common.import')}
             </Text>
           </Button>
         </Box>
@@ -293,7 +293,7 @@ function ImportKeysTile() {
                 before={<Icon size="100" src={Icons.ArrowRight} />}
               >
                 <Text as="span" size="B300">
-                  {t('settings.devices.backup.import.import')}
+                  {t('common.import')}
                 </Text>
               </Button>
             )}

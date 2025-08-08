@@ -126,7 +126,7 @@ export function OtherDevices({ devices, refreshDeviceList, showVerification }: O
                   outlined
                   onClick={handleDashboardOIDC}
                 >
-                  <Text size="B300">{t('settings.devices.other.deviceDashboard.open')}</Text>
+                  <Text size="B300">{t('common.open')}</Text>
                 </Button>
               }
             />
@@ -236,7 +236,7 @@ export function OtherDevices({ devices, refreshDeviceList, showVerification }: O
                 disabled={deleting}
                 onClick={handleCancelDelete}
               >
-                <Text size="B300">{t('settings.devices.other.cancel')}</Text>
+                <Text size="B300">{t('common.cancel')}</Text>
               </Button>
               <Button
                 size="300"
@@ -246,7 +246,7 @@ export function OtherDevices({ devices, refreshDeviceList, showVerification }: O
                 before={deleting && <Spinner variant="Critical" fill="Solid" size="100" />}
                 onClick={() => deleteDevices()}
               >
-                <Text size="B300">{t('settings.devices.other.logout')}</Text>
+                <Text size="B300">{t('common.logout')}</Text>
               </Button>
             </Box>
           </Box>

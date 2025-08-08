@@ -14,7 +14,7 @@ export const useMessageSpacingItems = (): MessageSpacingItem[] => {
     () => [
       {
         spacing: '0',
-        name: t('settings.messages.spacingOptions.None'),
+        name: t('common.none'),
       },
       {
         spacing: '100',

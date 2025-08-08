@@ -1,21 +1,103 @@
 {
-  "Organisms": {
-    "RoomCommon": {
-      "changed_room_name": " 更改了房间名称"
+  "organisms": {
+    "search": {
+      "footer": "输入 # 搜索房间，@ 搜索私聊，* 搜索空间。快捷键：Ctrl + k"
+    },
+    "joinAlias": {
+      "title": "通过地址加入",
+      "address": "地址",
+      "join": "加入",
+      "lookingForAddress": "正在查找地址...",
+      "joining": "正在加入 {alias}...",
+      "invalidAddress": "无效地址。",
+      "unableToFind": "无法找到房间/空间 {alias}。房间/空间可能是私有的或不存在。",
+      "unableToJoin": "无法加入 {alias}。房间/空间可能是私有的或不存在。"
+    },
+    "profileViewer": {
+      "role": "角色",
+      "member": "成员",
+      "kickReason": "踢出原因",
+      "kick": "踢出",
+      "banReason": "封禁原因",
+      "ban": "封禁",
+      "unban": "解封",
+      "loadingSessions": "正在加载会话...",
+      "noSessionFound": "未找到会话。",
+      "viewSessions": "查看 {count} 个会话",
+      "viewSessionsNoCount": "查看会话",
+      "message": "消息",
+      "creatingRoom": "正在创建房间...",
+      "invite": "邀请",
+      "inviting": "正在邀请...",
+      "disinvite": "取消邀请",
+      "disinviting": "正在取消邀请...",
+      "ignore": "忽略",
+      "ignoring": "正在忽略...",
+      "unignore": "取消忽略",
+      "unignoring": "正在取消忽略...",
+      "changePowerLevel": "更改权限级别",
+      "sharedPowerMessage": "您将无法撤销此更改，因为您正在将用户提升到与您相同的权限级别。确定吗？",
+      "demotingMyselfMessage": "您将无法撤销此更改，因为您正在降级自己。确定吗？",
+      "change": "更改"
+    },
+    "inviteUser": {
+      "inviteTo": "邀请到 {roomName}",
+      "directMessage": "私聊",
+      "nameOrUserId": "姓名或用户ID",
+      "searchingForUser": "正在搜索用户 \"{username}\"...",
+      "searchResultForUser": "用户 \"{username}\" 的搜索结果",
+      "notFound": "{userId} 未找到！",
+      "noMatchesFound": "未找到 \"{username}\" 的匹配项！",
+      "somethingWentWrong": "出现错误！",
+      "invited": "已邀请",
+      "alreadyJoined": "已加入",
+      "alreadyInvited": "已邀请",
+      "banned": "已封禁",
+      "invite": "邀请",
+      "message": "消息"
+    },
+    "createRoom": {
+      "home": "主页",
+      "createRoom": "创建房间",
+      "createSpace": "创建空间",
+      "visibility": "可见性",
+      "visibilityDescription": "选择谁可以加入此{type}。",
+      "private": "私有",
+      "privateDescription": "私有（仅限邀请）",
+      "restricted": "受限",
+      "restrictedDescription": "受限（空间成员可以加入）",
+      "public": "公开",
+      "publicDescription": "公开（任何人都可以加入）",
+      "visibilityMenuTitle": "可见性（谁可以加入）",
+      "roomAddress": "房间地址",
+      "spaceAddress": "空间地址",
+      "addressPlaceholder": "我的地址",
+      "addressInUse": "#{address}:{server} 已被使用",
+      "enableEncryption": "启用端到端加密",
+      "encryptionDescription": "您以后无法禁用它。桥接和大多数机器人尚无法工作。",
+      "selectRole": "选择您的角色",
+      "roleDescription": "选择管理员设置100权限级别，创始人设置101。",
+      "admin": "管理员",
+      "founder": "创始人",
+      "topic": "主题（可选）",
+      "roomName": "房间名称",
+      "spaceName": "空间名称",
+      "create": "创建",
+      "creatingRoom": "正在创建房间...",
+      "creatingSpace": "正在创建空间...",
+      "invalidCharactersInAddress": "错误：地址中的字符无效",
+      "addressAlreadyInUse": "错误：此地址已被使用"
     }
   },
   "auth": {
     "login": {
       "title": "登录",
-      "username": "用户名",
-      "password": "密码",
-      "loginButton": "登录",
       "forgotPassword": "忘记密码？",
       "noAccount": "还没有账户？",
       "register": "注册",
+      "username": "用户名",
       "hint": {
         "title": "提示",
-        "username": "用户名：",
         "matrixId": "Matrix ID：",
         "email": "邮箱："
       },
@@ -62,7 +144,6 @@
       "hour24Format": "24小时制",
       "dateFormat": "日期格式",
       "custom": "自定义",
-      "save": "保存",
       "formatting": "格式化",
       "year": "年份",
       "month": "月份",
@@ -99,7 +180,6 @@
         "Bubble": "气泡"
       },
       "spacingOptions": {
-        "None": "无",
         "Ultra Small": "极小",
         "Extra Small": "超小",
         "Small": "小",
@@ -124,7 +204,6 @@
         "notificationsNotSupported": "系统不支持通知。",
         "notificationSound": "通知声音",
         "notificationSoundDescription": "新消息到达时播放声音。",
-        "enable": "启用",
         "emailNotification": "邮件通知",
         "emailNotificationDescription": "发送通知到您的邮箱。",
         "emailNotificationWithEmail": "发送通知到您的邮箱。(\"{email}\")",
@@ -136,7 +215,6 @@
         "badge": "徽章",
         "oneToOneChats": "一对一聊天",
         "oneToOneChatsEncrypted": "一对一聊天(加密)",
-        "rooms": "房间",
         "roomsEncrypted": "房间(加密)"
       },
       "specialMessages": {
@@ -154,8 +232,7 @@
         "badge": "徽章",
         "selectKeyword": "选择关键词",
         "selectKeywordDescription": "为包含指定关键词的消息设置通知偏好。",
-        "keywordPattern": "\"{pattern}\"",
-        "save": "保存"
+        "keywordPattern": "\"{pattern}\""
       },
       "blockMessages": {
         "title": "屏蔽消息",
@@ -164,13 +241,11 @@
     },
     "developerTools": {
       "title": "开发者工具",
-      "options": "选项",
       "enable": "启用开发者工具",
       "accessToken": {
         "title": "访问令牌",
         "description": "复制访问令牌到剪贴板。"
       },
-      "copy": "复制",
       "accountData": {
         "title": "账户数据",
         "global": {
@@ -202,14 +277,11 @@
         "title": "其他设备",
         "deviceDashboard": {
           "title": "设备仪表板",
-          "open": "打开",
           "description": "打开设备仪表板来管理您的设备。"
         },
         "deleteError": "注销设备失败！",
         "deleteConfirm": "注销选中的设备。",
-        "authNotSupported": "客户端不支持执行此操作的认证步骤。",
-        "cancel": "取消",
-        "logout": "注销"
+        "authNotSupported": "客户端不支持执行此操作的认证步骤。"
       },
       "lastActivity": "最后活动时间",
       "deviceId": "设备ID",
@@ -217,9 +289,7 @@
       "deviceKey": "设备密钥",
       "deviceName": "设备名称",
       "deviceNamePublic": "设备名称对公众可见。",
-      "edit": "编辑",
-      "undo": "撤销",
-      "logout": "登出",
+      "loading": "加载中...",
       "unverified": {
         "title": "未验证",
         "description": "从其他设备开始验证或手动验证。",
@@ -237,13 +307,10 @@
           "title": "导出消息数据",
           "newPassword": "新密码",
           "confirmPassword": "确认密码",
-          "export": "导出",
           "description": "在您的设备上保存受密码保护的加密数据副本，以便稍后解密消息。"
         },
         "import": {
           "title": "导入消息数据",
-          "password": "密码",
-          "import": "导入",
           "description": "从设备加载受密码保护的加密数据副本以解密您的消息。"
         }
       }
@@ -251,7 +318,6 @@
     "about": {
       "title": "关于",
       "description": "又一个Matrix客户端。",
-      "options": "选项",
       "clearCache": {
         "title": "清除缓存并重新加载",
         "description": "清除所有本地存储的数据并从服务器重新加载。",
@@ -270,17 +336,13 @@
       },
       "avatar": {
         "title": "头像",
-        "upload": "上传",
-        "remove": "移除",
         "removeDialog": {
           "title": "移除头像",
-          "message": "确定要移除个人资料头像吗？",
-          "confirm": "移除"
+          "message": "确定要移除个人资料头像吗？"
         }
       },
       "displayName": {
-        "title": "显示名称",
-        "save": "保存"
+        "title": "显示名称"
       },
       "contactInfo": {
         "title": "联系信息",
@@ -290,8 +352,7 @@
         }
       },
       "matrixId": {
-        "title": "Matrix ID",
-        "copy": "复制"
+        "title": "Matrix ID"
       },
       "blockedUsers": {
         "title": "已屏蔽用户",
@@ -299,7 +360,6 @@
           "title": "选择用户",
           "description": "通过添加用户ID来阻止接收其消息或邀请。"
         },
-        "users": "用户",
         "block": "屏蔽"
       }
     },
@@ -310,12 +370,6 @@
       "attribution": "归属",
       "shortcode": "短代码：",
       "body": "内容：",
-      "undo": "撤销",
-      "edit": "编辑",
-      "save": "保存",
-      "cancel": "取消",
-      "upload": "上传",
-      "remove": "移除",
       "usageOptions": {
         "both": "两者",
         "sticker": "贴纸",
@@ -331,19 +385,13 @@
       },
       "pack": "包",
       "images": "图片",
-      "reset": "重置",
       "applyChanges": "应用更改",
-      "select": "选择",
       "applyError": "应用更改失败！请重试。",
       "applySuccess": "更改已保存！准备就绪后应用。",
       "globalPacks": {
         "applyError": "应用更改失败！请重试。",
         "applyReady": "更改已保存！准备就绪后应用。",
         "title": "房间表情包",
-        "save": "保存",
-        "close": "关闭",
-        "selectAll": "全选",
-        "unselectAll": "取消全选",
         "noPacks": {
           "title": "无表情包",
           "description": "房间表情包将显示在此处。您目前没有任何包含表情包的房间。"
@@ -353,18 +401,14 @@
           "title": "选择表情包",
           "description": "从房间中选择表情和贴纸包，以便在所有房间中使用。"
         },
-        "select": "选择",
-        "reset": "重置",
         "applyChanges": "应用更改"
       },
       "userPack": {
-        "title": "默认表情包",
-        "view": "查看"
+        "title": "默认表情包"
       }
     }
   },
   "navigation": {
-    "search": "搜索",
     "inbox": "收件箱",
     "notifications": "通知",
     "lobby": "大厅",
@@ -374,14 +418,42 @@
     "save": "保存",
     "cancel": "取消",
     "edit": "编辑",
-    "loading": "加载中...",
-    "logout": "登出",
     "unknown": "未知",
-    "settings": "设置"
+    "settings": "设置",
+    "expand": "展开",
+    "collapse": "折叠",
+    "close": "关闭",
+    "undo": "撤销",
+    "remove": "移除",
+    "removeAll": "全部移除",
+    "reset": "重置",
+    "upload": "上传",
+    "select": "选择",
+    "none": "无",
+    "login": "登录",
+    "logout": "注销",
+    "password": "密码",
+    "search": "搜索",
+    "options": "选项",
+    "all": "全部",
+    "rooms": "房间",
+    "spaces": "空间",
+    "users": "用户",
+    "open": "打开",
+    "import": "导入",
+    "export": "导出",
+    "selectAll": "全选",
+    "unselectAll": "取消全选",
+    "enable": "启用",
+    "disable": "禁用",
+    "copy": "复制",
+    "view": "查看"
   },
   "notifications": {
+    "invitationTitle": "邀请",
+    "newInvitationBody": "您有 {{count}} 个新的邀请请求。",
+    "newMessageBody": "来自 {{username}} 的新收件箱通知",
     "modes": {
-      "disable": "禁用",
       "notifySilent": "静音通知",
       "notifyLoud": "大声通知"
     }
@@ -395,5 +467,133 @@
     "silver": "银色",
     "dark": "深色",
     "butter": "黄油色"
+  },
+  "invites": {
+    "encrypted": "加密",
+    "direct": "私聊",
+    "space": "空间",
+    "accept": "接受",
+    "decline": "拒绝"
+  },
+  "exploreServer": {
+    "searchPlaceholder": "搜索关键词",
+    "clear": "清除",
+    "enter": "确定",
+    "protocols": "协议"
+  },
+  "syncStatus": {
+    "connecting": "正在连接...",
+    "reconnecting": "连接已丢失！正在重新连接...",
+    "error": "连接已丢失！"
+  },
+  "server": {
+    "connecting": "正在连接到服务器",
+    "connectionFailed": "无法连接到 homeserver。可能是服务器故障或网络问题。",
+    "retry": "重试",
+    "continue": "继续"
+  },
+  "client": {
+    "welcomePage": {
+      "title": "欢迎使用 Cinny",
+      "description": "又一个 Matrix 客户端。"
+    },
+    "sidebar": {
+      "addSpace": "添加空间",
+      "createSpace": "创建空间",
+      "joinWithAddress": "通过地址加入",
+      "markAsRead": "标记为已读",
+      "invite": "邀请",
+      "copyLink": "复制链接",
+      "spaceSettings": "空间设置",
+      "buildCommunity": "为您的社区创建一个空间。",
+      "becomePart": "成为现有社区的一部分。",
+      "directMessages": "私信",
+      "exploreCommunity": "探索社区",
+      "home": "首页",
+      "inbox": "收件箱",
+      "userSettings": "用户设置",
+      "unpin": "取消固定",
+      "unverifiedDevice": "未验证设备",
+      "unverifiedDevices": "未验证设备"
+    },
+    "space": {
+      "markAsRead": "标为已读",
+      "invite": "邀请",
+      "copyLink": "复制链接",
+      "settings": "空间设置",
+      "eventTimeline": "事件时间线",
+      "leaveSpace": "离开空间"
+    },
+    "inbox": {
+      "primary": "主要",
+      "noInvites": "无邀请",
+      "noInvitesSubtitle": "当与您共同房间的人向您发送邀请时，它会显示在这里。",
+      "noOutsideInvitesSubtitle": "来自房间外的人的邀请将显示在这里。",
+      "spam": "垃圾信息",
+      "spamInvitesCount": "{{count}} 条垃圾邀请",
+      "spamInvitesSubtitle": "以下邀请中可能包含有害内容或由被禁用户发送。",
+      "declineAll": "全部拒绝",
+      "reportAll": "全部举报",
+      "blockAll": "全部屏蔽",
+      "hideAll": "全部隐藏",
+      "viewAll": "查看全部",
+      "noSpamInvites": "无垃圾邀请",
+      "noSpamInvitesSubtitle": "被检测为垃圾的邀请会显示在这里。",
+      "invites": "邀请",
+      "filter": "筛选",
+      "notificationMessages": "通知消息",
+      "allNotifications": "所有通知",
+      "highlighted": "高亮",
+      "scrollToTop": "滚动到顶部",
+      "noNotifications": "无通知",
+      "noNotificationsSubtitle": "您目前没有新的通知可显示。"
+    },
+    "home": {
+      "markAsRead": "标为已读",
+      "joinWithAddress": "通过地址加入",
+      "title": "首页",
+      "noRooms": "无房间",
+      "noRoomsSubtitle": "您还没有任何房间。",
+      "createRoom": "创建房间",
+      "exploreRooms": "探索社区房间",
+      "messageSearch": "消息搜索",
+      "createRoomTitle": "创建房间",
+      "createRoomSubtitle": "创建一个实时对话房间"
+    },
+    "loading": "正在启动...",
+    "clearCacheAndReload": "清除缓存并重新加载",
+    "invites": "邀请",
+    "public": "公开",
+    "declineAll": "全部拒绝",
+    "create": {
+      "title": "创建空间",
+      "subtitle": "为您的社区创建一个空间。"
+    },
+    "direct": {
+      "title": "私信",
+      "noDirectMessages": "暂无私信",
+      "noDirectMessagesSubtitle": "您还没有任何私信。",
+      "directMessageButton": "发送私信",
+      "markAsRead": "标记为已读",
+      "createChat": "创建聊天",
+      "chats": "聊天"
+    },
+    "explore": {
+      "title": "探索社区",
+      "servers": "服务器",
+      "loadFailed": "加载公共房间失败。请重试。",
+      "addServer": "添加服务器",
+      "addServerDescription": "添加服务器名称以探索公共社区。",
+      "serverName": "服务器名称",
+      "featuredByClient": "客户端推荐",
+      "featuredByClientSubtitle": "查找并探索由客户端提供商推荐的公共房间和空间。",
+      "featuredSpaces": "推荐空间",
+      "featuredRooms": "推荐房间",
+      "noFeaturedContent": "客户端提供商没有推荐的房间或空间。",
+      "popularCommunities": "热门社区",
+      "previousPage": "上一页",
+      "nextPage": "下一页",
+      "noCommunitiesFound": "未找到社区！"
+    }
   }
 }

@@ -128,7 +128,7 @@ export function AllMessagesNotifications() {
         gap="400"
       >
         <SettingTile
-          title={t('settings.notifications.allMessages.rooms')}
+          title={t('common.rooms')}
           after={<AllMessagesModeSwitcher pushRules={pushRules} ruleId={RuleId.Message} />}
         />
       </SequenceCard>

@@ -125,7 +125,7 @@ function ProfileAvatar({ profile, userId }: ProfileProps) {
             radii="300"
             disabled={disableSetAvatar}
           >
-            <Text size="B300">{t('settings.account.avatar.upload')}</Text>
+            <Text size="B300">{t('common.upload')}</Text>
           </Button>
           {avatarUrl && (
             <Button
@@ -136,7 +136,7 @@ function ProfileAvatar({ profile, userId }: ProfileProps) {
               disabled={disableSetAvatar}
               onClick={() => setAlertRemove(true)}
             >
-              <Text size="B300">{t('settings.account.avatar.remove')}</Text>
+              <Text size="B300">{t('common.remove')}</Text>
             </Button>
           )}
         </Box>
@@ -196,7 +196,7 @@ function ProfileAvatar({ profile, userId }: ProfileProps) {
                   <Text priority="400">{t('settings.account.avatar.removeDialog.message')}</Text>
                 </Box>
                 <Button variant="Critical" onClick={handleRemoveAvatar}>
-                  <Text size="B400">{t('settings.account.avatar.removeDialog.confirm')}</Text>
+                  <Text size="B400">{t('common.remove')}</Text>
                 </Button>
               </Box>
             </Dialog>
@@ -204,7 +204,7 @@ function ProfileAvatar({ profile, userId }: ProfileProps) {
         </OverlayCenter>
       </Overlay>
     </SettingTile>
-  );
+  )
 }
 
 function ProfileDisplayName({ profile, userId }: ProfileProps) {
@@ -298,12 +298,12 @@ function ProfileDisplayName({ profile, userId }: ProfileProps) {
             type="submit"
           >
             {changingDisplayName && <Spinner variant="Success" fill="Solid" size="300" />}
-            <Text size="B400">{t('settings.account.displayName.save')}</Text>
+            <Text size="B400">{t('common.save')}</Text>
           </Button>
         </Box>
       </Box>
     </SettingTile>
-  );
+  )
 }
 
 export function Profile() {

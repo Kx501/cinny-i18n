@@ -12,8 +12,10 @@ import { ScreenSize, useScreenSizeContext } from '../../../hooks/useScreenSize';
 import { BackRouteHandler } from '../../../components/BackRouteHandler';
 import { CreateRoomForm } from '../../../features/create-room';
 import { useRoomNavigate } from '../../../hooks/useRoomNavigate';
+import { useTranslation } from 'react-i18next';
 
 export function HomeCreateRoom() {
+  const { t } = useTranslation();
   const screenSize = useScreenSizeContext();
 
   const { navigateRoom } = useRoomNavigate();
@@ -41,8 +43,8 @@ export function HomeCreateRoom() {
                 <Box direction="Column" gap="700">
                   <PageHero
                     icon={<Icon size="600" src={Icons.Hash} />}
-                    title="Create Room"
-                    subTitle="Build a Room for Real-Time Conversations"
+                    title={t('client.home.createRoomTitle')}
+                    subTitle={t('client.home.createRoomSubtitle')}
                   />
                   <CreateRoomForm onCreate={navigateRoom} />
                 </Box>

@@ -1,4 +1,5 @@
 import React, { MutableRefObject, ReactNode, useImperativeHandle, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Badge, Box, Chip, Header, Icon, Icons, Spinner, Text, as, percent } from 'folds';
 import classNames from 'classnames';
 import { useAtomValue } from 'jotai';
@@ -43,6 +44,7 @@ export function UploadBoardHeader({
   onSend,
   imperativeHandlerRef,
 }: UploadBoardHeaderProps) {
+  const { t } = useTranslation();
   const sendingRef = useRef(false);
   const uploads = useAtomValue(uploadFamilyObserverAtom);
 
@@ -124,7 +126,7 @@ export function UploadBoardHeader({
             radii="Pill"
             after={<Icon src={Icons.Cross} size="50" />}
           >
-            <Text size="B300">{uploads.length === 1 ? 'Remove' : 'Remove All'}</Text>
+            <Text size="B300">{uploads.length === 1 ? t('common.remove') : t('common.removeAll')}</Text>
           </Chip>
         )}
       </Box>

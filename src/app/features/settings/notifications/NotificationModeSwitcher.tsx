@@ -26,7 +26,7 @@ const useNotificationModeStr = (): Record<NotificationMode, string> => {
   const { t } = useTranslation();
   return useMemo(
     () => ({
-      [NotificationMode.OFF]: t('notifications.modes.disable'),
+      [NotificationMode.OFF]: t('common.disable'),
       [NotificationMode.Notify]: t('notifications.modes.notifySilent'),
       [NotificationMode.NotifyLoud]: t('notifications.modes.notifyLoud'),
     }),

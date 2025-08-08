@@ -82,7 +82,7 @@ export function ImagePackProfile({ meta, canEdit, onEdit }: ImagePackProfileProp
               onClick={onEdit}
               outlined
             >
-              <Text size="B300">{t('settings.emojisStickers.edit')}</Text>
+              <Text size="B300">{t('common.edit')}</Text>
             </Chip>
           </Box>
         )}
@@ -170,7 +170,7 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
                 radii="300"
                 onClick={() => pickFile('image/*')}
               >
-                <Text size="B300">{t('settings.emojisStickers.upload')}</Text>
+                <Text size="B300">{t('common.upload')}</Text>
               </Button>
               {!avatar && meta.avatar && (
                 <Button
@@ -181,7 +181,7 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
                   radii="300"
                   onClick={() => setAvatar(meta.avatar)}
                 >
-                  <Text size="B300">{t('settings.emojisStickers.reset')}</Text>
+                  <Text size="B300">{t('common.reset')}</Text>
                 </Button>
               )}
               {avatar && (
@@ -193,7 +193,7 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
                   radii="300"
                   onClick={() => setAvatar(undefined)}
                 >
-                  <Text size="B300">{t('settings.emojisStickers.remove')}</Text>
+                  <Text size="B300">{t('common.remove')}</Text>
                 </Button>
               )}
             </Box>
@@ -218,7 +218,7 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
       </Box>
       <Box gap="300">
         <Button type="submit" variant="Success" size="300" radii="300" disabled={uploadingAvatar}>
-          <Text size="B300">{t('settings.emojisStickers.save')}</Text>
+          <Text size="B300">{t('common.save')}</Text>
         </Button>
         <Button
           type="reset"
@@ -228,7 +228,7 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
           size="300"
           radii="300"
         >
-          <Text size="B300">{t('settings.emojisStickers.cancel')}</Text>
+          <Text size="B300">{t('common.cancel')}</Text>
         </Button>
       </Box>
     </Box>

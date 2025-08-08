@@ -236,7 +236,7 @@ export function EnableVerification({ visible }: EnableVerificationProps) {
       {visible && (
         <Button size="300" radii="300" onClick={() => setOpen(true)}>
           <Text as="span" size="B300">
-            {t('settings.notifications.system.enable')}
+            {t('common.enable')}
           </Text>
         </Button>
       )}
@@ -331,7 +331,7 @@ export function DeviceVerificationOptions() {
                   fill="None"
                 >
                   <Text as="span" size="T300" truncate>
-                    {t('settings.devices.undo')}
+                    {t('common.undo')}
                   </Text>
                 </MenuItem>
               </Box>

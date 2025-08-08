@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './InviteUser.scss';
 
 import * as roomActions from '../../../client/action/room';
@@ -21,6 +22,7 @@ import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
 
 function InviteUser({ isOpen, roomId, searchTerm, onRequestClose }) {
+  const { t } = useTranslation();
   const [isSearching, updateIsSearching] = useState(false);
   const [searchQuery, updateSearchQuery] = useState({});
   const [users, updateUsers] = useState([]);
@@ -85,7 +87,7 @@ function InviteUser({ isOpen, roomId, searchTerm, onRequestClose }) {
           },
         ]);
       } catch (e) {
-        updateSearchQuery({ error: `${inputUsername} not found!` });
+        updateSearchQuery({ error: t('organisms.inviteUser.notFound', { userId: inputUsername }) });
       }
     } else {
       try {
@@ -94,13 +96,13 @@ function InviteUser({ isOpen, roomId, searchTerm, onRequestClose }) {
           limit: 20,
         });
         if (result.results.length === 0) {
-          updateSearchQuery({ error: `No matches found for "${inputUsername}"!` });
+          updateSearchQuery({ error: t('organisms.inviteUser.noMatchesFound', { username: inputUsername }) });
           updateIsSearching(false);
           return;
         }
         updateUsers(result.results);
       } catch (e) {
-        updateSearchQuery({ error: 'Something went wrong!' });
+        updateSearchQuery({ error: t('organisms.inviteUser.somethingWentWrong') });
       }
     }
     updateIsSearching(false);
@@ -175,12 +177,12 @@ function InviteUser({ isOpen, roomId, searchTerm, onRequestClose }) {
               onRequestClose();
             }}
           >
-            Open
+            {t('common.open')}
           </Button>
         );
       }
       if (invitedUserIds.has(userId)) {
-        return messageJSX('Invited', true);
+        return messageJSX(t('organisms.inviteUser.invited'), true);
       }
       if (typeof roomId === 'string') {
         const member = mx.getRoom(roomId).getMember(userId);
@@ -188,22 +190,22 @@ function InviteUser({ isOpen, roomId, searchTerm, onRequestClose }) {
           const userMembership = member.membership;
           switch (userMembership) {
             case 'join':
-              return messageJSX('Already joined', true);
+              return messageJSX(t('organisms.inviteUser.alreadyJoined'), true);
             case 'invite':
-              return messageJSX('Already Invited', true);
+              return messageJSX(t('organisms.inviteUser.alreadyInvited'), true);
             case 'ban':
-              return messageJSX('Banned', false);
+              return messageJSX(t('organisms.inviteUser.banned'), false);
             default:
           }
         }
       }
       return typeof roomId === 'string' ? (
         <Button onClick={() => inviteToRoom(userId)} variant="primary">
-          Invite
+          {t('organisms.inviteUser.invite')}
         </Button>
       ) : (
         <Button onClick={() => createDM(userId)} variant="primary">
-          Message
+          {t('organisms.inviteUser.message')}
         </Button>
       );
     };
@@ -225,14 +227,14 @@ function InviteUser({ isOpen, roomId, searchTerm, onRequestClose }) {
           avatarSrc={
             typeof user.avatar_url === 'string'
               ? mx.mxcUrlToHttp(
-                  user.avatar_url,
-                  42,
-                  42,
-                  'crop',
-                  undefined,
-                  undefined,
-                  useAuthentication
-                )
+                user.avatar_url,
+                42,
+                42,
+                'crop',
+                undefined,
+                undefined,
+                useAuthentication
+              )
               : null
           }
           name={name}
@@ -261,8 +263,8 @@ function InviteUser({ isOpen, roomId, searchTerm, onRequestClose }) {
   return (
     <PopupWindow
       isOpen={isOpen}
-      title={typeof roomId === 'string' ? `Invite to ${mx.getRoom(roomId).name}` : 'Direct message'}
-      contentOptions={<IconButton src={CrossIC} onClick={onRequestClose} tooltip="Close" />}
+      title={typeof roomId === 'string' ? t('organisms.inviteUser.inviteTo', { roomName: mx.getRoom(roomId).name }) : t('organisms.inviteUser.directMessage')}
+      contentOptions={<IconButton src={CrossIC} onClick={onRequestClose} tooltip={t('common.close')} />}
       onRequestClose={onRequestClose}
     >
       <div className="invite-user">
@@ -273,20 +275,20 @@ function InviteUser({ isOpen, roomId, searchTerm, onRequestClose }) {
             searchUser(usernameRef.current.value);
           }}
         >
-          <Input value={searchTerm} forwardRef={usernameRef} label="Name or userId" autoFocus />
+          <Input value={searchTerm} forwardRef={usernameRef} label={t('organisms.inviteUser.nameOrUserId')} autoFocus />
           <Button disabled={isSearching} iconSrc={UserIC} variant="primary" type="submit">
-            Search
+            {t('common.search')}
           </Button>
         </form>
         <div className="invite-user__search-status">
           {typeof searchQuery.username !== 'undefined' && isSearching && (
             <div className="flex--center">
               <Spinner size="small" />
-              <Text variant="b2">{`Searching for user "${searchQuery.username}"...`}</Text>
+              <Text variant="b2">{t('organisms.inviteUser.searchingForUser', { username: searchQuery.username })}</Text>
             </div>
           )}
           {typeof searchQuery.username !== 'undefined' && !isSearching && (
-            <Text variant="b2">{`Search result for user "${searchQuery.username}"`}</Text>
+            <Text variant="b2">{t('organisms.inviteUser.searchResultForUser', { username: searchQuery.username })}</Text>
           )}
           {searchQuery.error && (
             <Text className="invite-user__search-error" variant="b2">

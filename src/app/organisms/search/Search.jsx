@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useAtomValue } from 'jotai';
+import { useTranslation } from 'react-i18next';
 import './Search.scss';
 
 import cons from '../../../client/state/cons';
@@ -101,6 +102,7 @@ function mapRoomIds(mx, roomIds, directs, roomIdToParents) {
 }
 
 function Search() {
+  const { t } = useTranslation();
   const [result, setResult] = useState(null);
   const [asyncSearch] = useState(new AsyncSearch());
   const [isOpen, requestClose] = useVisiblityToggle(setResult);
@@ -244,7 +246,7 @@ function Search() {
           }}
         >
           <RawIcon src={SearchIC} size="small" />
-          <Input onChange={handleOnChange} forwardRef={searchRef} placeholder="Search" />
+          <Input onChange={handleOnChange} forwardRef={searchRef} placeholder={t('common.search')} />
           <IconButton size="small" src={CrossIC} type="reset" onClick={handleCross} tabIndex={-1} />
         </form>
         <div className="search-dialog__content-wrapper">
@@ -255,7 +257,7 @@ function Search() {
           </ScrollView>
         </div>
         <div className="search-dialog__footer">
-          <Text variant="b3">Type # for rooms, @ for DMs and * for spaces. Hotkey: Ctrl + k</Text>
+          <Text variant="b3">{t('organisms.search.footer')}</Text>
         </div>
       </div>
     </RawModal>

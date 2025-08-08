@@ -42,4 +42,5 @@ export function Account({ requestClose }: AccountProps) {
       </Box>
     </Page>
   );
+
 }

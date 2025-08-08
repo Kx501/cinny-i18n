@@ -1,5 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { MouseEventHandler, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Avatar,
   Box,
@@ -474,13 +475,13 @@ function RoomNotificationsGroupComp({
                         src={
                           senderAvatarMxc
                             ? mxcUrlToHttp(
-                                mx,
-                                senderAvatarMxc,
-                                useAuthentication,
-                                48,
-                                48,
-                                'crop'
-                              ) ?? undefined
+                              mx,
+                              senderAvatarMxc,
+                              useAuthentication,
+                              48,
+                              48,
+                              'crop'
+                            ) ?? undefined
                             : undefined
                         }
                         alt={displayName}
@@ -552,6 +553,7 @@ const useNotificationsSearchParams = (
 const DEFAULT_REFRESH_MS = 7000;
 
 export function Notifications() {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const [hideActivity] = useSetting(settingsAtom, 'hideActivity');
   const [mediaAutoLoad] = useSetting(settingsAtom, 'mediaAutoLoad');
@@ -642,7 +644,7 @@ export function Notifications() {
           <Box alignItems="Center" gap="200">
             {screenSize !== ScreenSize.Mobile && <Icon size="400" src={Icons.Message} />}
             <Text size="H3" truncate>
-              Notification Messages
+              {t('client.inbox.notificationMessages')}
             </Text>
           </Box>
           <Box grow="Yes" basis="No" />
@@ -656,7 +658,7 @@ export function Notifications() {
               <Box direction="Column" gap="200">
                 <Box ref={scrollTopAnchorRef} direction="Column" gap="100">
                   <span data-spacing-node />
-                  <Text size="L400">Filter</Text>
+                  <Text size="L400">{t('client.inbox.filter')}</Text>
                   <Box gap="200">
                     <Chip
                       onClick={() => setOnlyHighlighted(false)}
@@ -665,7 +667,7 @@ export function Notifications() {
                       before={!onlyHighlight && <Icon size="100" src={Icons.Check} />}
                       outlined
                     >
-                      <Text size="T200">All Notifications</Text>
+                      <Text size="T200">{t('client.inbox.allNotifications')}</Text>
                     </Chip>
                     <Chip
                       onClick={() => setOnlyHighlighted(true)}
@@ -674,7 +676,7 @@ export function Notifications() {
                       before={onlyHighlight && <Icon size="100" src={Icons.Check} />}
                       outlined
                     >
-                      <Text size="T200">Highlighted</Text>
+                      <Text size="T200">{t('client.inbox.highlighted')}</Text>
                     </Chip>
                   </Box>
                 </Box>
@@ -689,7 +691,7 @@ export function Notifications() {
                     radii="Pill"
                     outlined
                     size="300"
-                    aria-label="Scroll to Top"
+                    aria-label={t('client.inbox.scrollToTop')}
                   >
                     <Icon src={Icons.ChevronTop} size="300" />
                   </IconButton>
@@ -742,9 +744,9 @@ export function Notifications() {
                       direction="Column"
                       gap="200"
                     >
-                      <Text>No Notifications</Text>
+                      <Text>{t('client.inbox.noNotifications')}</Text>
                       <Text size="T200">
-                        You don&apos;t have any new notifications to display yet.
+                        {t('client.inbox.noNotificationsSubtitle')}
                       </Text>
                     </Box>
                   )}

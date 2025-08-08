@@ -85,7 +85,7 @@ export function About({ requestClose }: AboutProps) {
                 </Box>
               </Box>
               <Box direction="Column" gap="100">
-                <Text size="L400">{t('settings.about.options')}</Text>
+                <Text size="L400">{t('common.options')}</Text>
                 <SequenceCard
                   className={SequenceCardStyle}
                   variant="SurfaceVariant"

@@ -14,6 +14,7 @@ import { useNavToActivePathMapper } from '../../../hooks/useNavToActivePathMappe
 import { PageNav, PageNavContent, PageNavHeader } from '../../../components/page';
 
 function InvitesNavItem() {
+  const { t } = useTranslation();
   const invitesSelected = useInboxInvitesSelected();
   const allInvites = useAtomValue(allInvitesAtom);
   const inviteCount = allInvites.length;
@@ -33,7 +34,7 @@ function InvitesNavItem() {
             </Avatar>
             <Box as="span" grow="Yes">
               <Text as="span" size="Inherit" truncate>
-                Invites
+                {t('client.invites')}
               </Text>
             </Box>
             {inviteCount > 0 && <UnreadBadge highlight count={inviteCount} />}
@@ -72,9 +73,9 @@ export function Inbox() {
                       <Icon src={Icons.MessageUnread} size="100" filled={notificationsSelected} />
                     </Avatar>
                     <Box as="span" grow="Yes">
-                                          <Text as="span" size="Inherit" truncate>
-                      {t('navigation.notifications')}
-                    </Text>
+                      <Text as="span" size="Inherit" truncate>
+                        {t('navigation.notifications')}
+                      </Text>
                     </Box>
                   </Box>
                 </NavItemContent>

@@ -83,6 +83,7 @@ type SpaceMenuProps = {
   requestClose: () => void;
 };
 const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClose }, ref) => {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const [hideActivity] = useSetting(settingsAtom, 'hideActivity');
   const [developerTools] = useSetting(settingsAtom, 'developerTools');
@@ -138,7 +139,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
           disabled={!unread}
         >
           <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-            Mark as Read
+            {t('client.space.markAsRead')}
           </Text>
         </MenuItem>
       </Box>
@@ -154,7 +155,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
           disabled={!canInvite}
         >
           <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-            Invite
+            {t('client.space.invite')}
           </Text>
         </MenuItem>
         <MenuItem
@@ -164,7 +165,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
           radii="300"
         >
           <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-            Copy Link
+            {t('client.space.copyLink')}
           </Text>
         </MenuItem>
         <MenuItem
@@ -174,7 +175,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
           radii="300"
         >
           <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-            Space Settings
+            {t('client.space.settings')}
           </Text>
         </MenuItem>
         {developerTools && (
@@ -185,7 +186,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
             radii="300"
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Event Timeline
+              {t('client.space.eventTimeline')}
             </Text>
           </MenuItem>
         )}
@@ -205,7 +206,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
                 aria-pressed={promptLeave}
               >
                 <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-                  Leave Space
+                  {t('client.space.leaveSpace')}
                 </Text>
               </MenuItem>
               {promptLeave && (
@@ -378,9 +379,9 @@ export function Space() {
                       <Icon src={Icons.Search} size="100" filled={searchSelected} />
                     </Avatar>
                     <Box as="span" grow="Yes">
-                                          <Text as="span" size="Inherit" truncate>
-                      {t('navigation.messageSearch')}
-                    </Text>
+                      <Text as="span" size="Inherit" truncate>
+                        {t('navigation.messageSearch')}
+                      </Text>
                     </Box>
                   </Box>
                 </NavItemContent>
@@ -414,7 +415,7 @@ export function Space() {
                           onClick={handleCategoryClick}
                           closed={closedCategories.has(categoryId)}
                         >
-                          {roomId === space.roomId ? 'Rooms' : room?.name}
+                          {roomId === space.roomId ? t('common.rooms') : room?.name}
                         </RoomNavCategoryButton>
                       </NavCategoryHeader>
                     </div>

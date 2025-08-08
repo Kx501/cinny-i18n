@@ -355,7 +355,7 @@ export const ImagePackContent = as<'div', ImagePackContentProps>(
                       outlined
                       onClick={() => pickFiles('image/*')}
                     >
-                      <Text size="B300">{t('settings.emojisStickers.select')}</Text>
+                      <Text size="B300">{t('common.select')}</Text>
                     </Button>
                   }
                 />

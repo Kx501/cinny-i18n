@@ -11,4 +11,4 @@ export const useHomeRooms = () => {
   const roomToParents = useAtomValue(roomToParentsAtom);
   const rooms = useOrphanRooms(mx, allRoomsAtom, mDirects, roomToParents);
   return rooms;
-};
+}

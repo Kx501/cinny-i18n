@@ -49,7 +49,7 @@ export function SidebarNav() {
             <SidebarStackSeparator />
             <SidebarStack>
               <SidebarItem>
-                <SidebarItemTooltip tooltip={t('navigation.search')}>
+                <SidebarItemTooltip tooltip={t('common.search')}>
                   {(triggerRef) => (
                     <SidebarAvatar
                       as="button"

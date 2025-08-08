@@ -67,14 +67,25 @@ type LanguageSelectorProps = {
 function LanguageSelector({ disabled }: LanguageSelectorProps) {
   const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState(() => {
+    return SUPPORTED_LANGUAGES.find(
+      (lang) => lang.code === i18n.language
+    ) || SUPPORTED_LANGUAGES.find(
+      (lang) => lang.code.startsWith(i18n.language.split('_')[0])
+    ) || SUPPORTED_LANGUAGES[0];
+  });
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // 获取当前语言
-  const currentLanguage = SUPPORTED_LANGUAGES.find(
-    (lang) => lang.code === i18n.language
-  ) || SUPPORTED_LANGUAGES.find(
-    (lang) => lang.code.startsWith(i18n.language.split('_')[0])
-  ) || SUPPORTED_LANGUAGES[0];
+  // 监听语言变化
+  useEffect(() => {
+    const newCurrentLanguage = SUPPORTED_LANGUAGES.find(
+      (lang) => lang.code === i18n.language
+    ) || SUPPORTED_LANGUAGES.find(
+      (lang) => lang.code.startsWith(i18n.language.split('_')[0])
+    ) || SUPPORTED_LANGUAGES[0];
+
+    setCurrentLanguage(newCurrentLanguage);
+  }, [i18n.language]);
 
   // 处理菜单打开/关闭
   const handleMenuToggle: MouseEventHandler<HTMLButtonElement> = (evt) => {
@@ -694,7 +705,7 @@ function CustomDateFormat({ value, onChange }: CustomDateFormatProps) {
           disabled={!hasChanges}
           type="submit"
         >
-          <Text size="B400">{t('settings.dateAndTime.save')}</Text>
+          <Text size="B400">{t('common.save')}</Text>
         </Button>
       </Box>
     </SettingTile>

@@ -64,7 +64,7 @@ export function DeveloperTools({ requestClose }: DeveloperToolsProps) {
           <PageContent>
             <Box direction="Column" gap="700">
               <Box direction="Column" gap="100">
-                <Text size="L400">{t('settings.developerTools.options')}</Text>
+                <Text size="L400">{t('common.options')}</Text>
                 <SequenceCard
                   className={SequenceCardStyle}
                   variant="SurfaceVariant"
@@ -103,7 +103,7 @@ export function DeveloperTools({ requestClose }: DeveloperToolsProps) {
                           radii="300"
                           outlined
                         >
-                          <Text size="B300">{t('settings.developerTools.copy')}</Text>
+                          <Text size="B300">{t('common.copy')}</Text>
                         </Button>
                       }
                     />

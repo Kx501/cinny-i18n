@@ -16,6 +16,7 @@ import {
 import { HttpApiEvent, HttpApiEventHandlerMap, MatrixClient } from 'matrix-js-sdk';
 import FocusTrap from 'focus-trap-react';
 import React, { MouseEventHandler, ReactNode, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   clearCacheAndReload,
   clearLoginData,
@@ -40,17 +41,19 @@ import { SyncStatus } from './SyncStatus';
 import { AuthMetadataProvider } from '../../hooks/useAuthMetadata';
 
 function ClientRootLoading() {
+  const { t } = useTranslation();
   return (
     <SplashScreen>
       <Box direction="Column" grow="Yes" alignItems="Center" justifyContent="Center" gap="400">
         <Spinner variant="Secondary" size="600" />
-        <Text>Heating up</Text>
+        <Text>{t('client.loading')}</Text>
       </Box>
     </SplashScreen>
   );
 }
 
 function ClientRootOptions({ mx }: { mx?: MatrixClient }) {
+  const { t } = useTranslation();
   const [menuAnchor, setMenuAnchor] = useState<RectCords>();
 
   const handleToggle: MouseEventHandler<HTMLButtonElement> = (evt) => {
@@ -95,7 +98,7 @@ function ClientRootOptions({ mx }: { mx?: MatrixClient }) {
                 {mx && (
                   <MenuItem onClick={() => clearCacheAndReload(mx)} size="300" radii="300">
                     <Text as="span" size="T300" truncate>
-                      Clear Cache and Reload
+                      {t('client.clearCacheAndReload')}
                     </Text>
                   </MenuItem>
                 )}
@@ -113,7 +116,7 @@ function ClientRootOptions({ mx }: { mx?: MatrixClient }) {
                   fill="None"
                 >
                   <Text as="span" size="T300" truncate>
-                    Logout
+                    {t('common.logout')}
                   </Text>
                 </MenuItem>
               </Box>

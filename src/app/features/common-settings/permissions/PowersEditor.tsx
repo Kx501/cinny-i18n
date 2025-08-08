@@ -1,4 +1,5 @@
 import React, { FormEventHandler, MouseEventHandler, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Text,
@@ -59,6 +60,7 @@ type EditPowerProps = {
   onClose: () => void;
 };
 function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const room = useRoom();
   const roomToParents = useAtomValue(roomToParentsAtom);
@@ -194,7 +196,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
                   fill="None"
                   radii="300"
                 >
-                  <Text size="B300">Remove</Text>
+                  <Text size="B300">{t('common.remove')}</Text>
                 </Button>
               </>
             ) : (
@@ -238,7 +240,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
                         radii="300"
                         before={<Icon size="50" src={Icons.SmilePlus} />}
                       >
-                        <Text size="B300">Pick</Text>
+                        <Text size="B300">{t('common.select')}</Text>
                       </Button>
                     </PopOut>
                   )}
@@ -251,7 +253,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
                   fill="None"
                   radii="300"
                 >
-                  <Text size="B300">Import</Text>
+                  <Text size="B300">{t('common.import')}</Text>
                 </Button>
               </>
             )}
@@ -267,7 +269,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
           radii="300"
           disabled={uploadingIcon}
         >
-          <Text size="B300">Save</Text>
+          <Text size="B300">{t('common.save')}</Text>
         </Button>
         <Button
           type="button"
@@ -277,7 +279,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
           radii="300"
           onClick={onClose}
         >
-          <Text size="B300">Cancel</Text>
+          <Text size="B300">{t('common.cancel')}</Text>
         </Button>
       </Box>
     </Box>

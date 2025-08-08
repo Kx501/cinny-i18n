@@ -103,7 +103,7 @@ export function DeviceKeyDetails({ crypto }: DeviceKeyDetailsProps) {
   return (
     <Text className={BreakWord} size="T200" priority="300">
       {t('settings.devices.deviceKey')}:
-      <i>{keysState.status === AsyncStatus.Success ? keysState.data.ed25519 : t('common.loading')}</i>
+      <i>{keysState.status === AsyncStatus.Success ? keysState.data.ed25519 : t('settings.devices.loading')}</i>
     </Text>
   );
 }
@@ -210,7 +210,7 @@ export function DeviceLogoutBtn() {
   return (
     <>
       <Chip variant="Secondary" fill="Soft" radii="Pill" onClick={() => setPrompt(true)}>
-        <Text size="B300">{t('settings.devices.logout')}</Text>
+        <Text size="B300">{t('common.logout')}</Text>
       </Chip>
       {prompt && (
         <Overlay open backdrop={<OverlayBackdrop />}>
@@ -252,7 +252,7 @@ export function DeviceDeleteBtn({
       onClick={() => onDeleteToggle(deviceId)}
       disabled={disabled}
     >
-      <Text size="B300">{t('settings.devices.undo')}</Text>
+      <Text size="B300">{t('common.undo')}</Text>
     </Chip>
   ) : (
     <Chip
@@ -316,7 +316,7 @@ export function DeviceTile({
                   onClick={() => setEdit(true)}
                   disabled={disabled}
                 >
-                  <Text size="B300">{t('settings.devices.edit')}</Text>
+                  <Text size="B300">{t('common.edit')}</Text>
                 </Chip>
               )}
             </Box>

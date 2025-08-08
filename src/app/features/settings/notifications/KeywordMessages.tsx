@@ -99,7 +99,7 @@ function KeywordInput() {
         disabled={addingKeyword}
       >
         {addingKeyword && <Spinner variant="Secondary" size="300" />}
-        <Text size="B400">{t('settings.notifications.keywordMessages.save')}</Text>
+        <Text size="B400">{t('common.save')}</Text>
       </Button>
     </Box>
   );

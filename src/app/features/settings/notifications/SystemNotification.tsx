@@ -124,7 +124,7 @@ export function SystemNotification() {
           after={
             notifPermission === 'prompt' ? (
               <Button size="300" radii="300" onClick={requestNotificationPermission}>
-                <Text size="B300">{t('settings.notifications.system.enable')}</Text>
+                <Text size="B300">{t('common.enable')}</Text>
               </Button>
             ) : (
               <Switch

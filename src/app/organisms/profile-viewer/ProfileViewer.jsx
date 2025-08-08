@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './ProfileViewer.scss';
 import { EventTimeline } from 'matrix-js-sdk';
 
@@ -40,6 +41,7 @@ import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
 
 function ModerationTools({ roomId, userId }) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const room = mx.getRoom(roomId);
   const roomMember = room.getMember(userId);
@@ -72,14 +74,14 @@ function ModerationTools({ roomId, userId }) {
     <div className="moderation-tools">
       {canIKick && (
         <form onSubmit={handleKick}>
-          <Input label="Kick reason" name="kick-reason" />
-          <Button type="submit">Kick</Button>
+          <Input label={t('organisms.profileViewer.kickReason')} name="kick-reason" />
+          <Button type="submit">{t('organisms.profileViewer.kick')}</Button>
         </form>
       )}
       {canIBan && (
         <form onSubmit={handleBan}>
-          <Input label="Ban reason" name="ban-reason" />
-          <Button type="submit">Ban</Button>
+          <Input label={t('organisms.profileViewer.banReason')} name="ban-reason" />
+          <Button type="submit">{t('organisms.profileViewer.ban')}</Button>
         </form>
       )}
     </div>
@@ -91,6 +93,7 @@ ModerationTools.propTypes = {
 };
 
 function SessionInfo({ userId }) {
+  const { t } = useTranslation();
   const [devices, setDevices] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const mx = useMatrixClient();
@@ -121,8 +124,8 @@ function SessionInfo({ userId }) {
     if (!isVisible) return null;
     return (
       <div className="session-info__chips">
-        {devices === null && <Text variant="b2">Loading sessions...</Text>}
-        {devices?.length === 0 && <Text variant="b2">No session found.</Text>}
+        {devices === null && <Text variant="b2">{t('organisms.profileViewer.loadingSessions')}</Text>}
+        {devices?.length === 0 && <Text variant="b2">{t('organisms.profileViewer.noSessionFound')}</Text>}
         {devices !== null &&
           devices.map((device) => (
             <Chip
@@ -141,11 +144,10 @@ function SessionInfo({ userId }) {
         onClick={() => setIsVisible(!isVisible)}
         iconSrc={isVisible ? ChevronBottomIC : ChevronRightIC}
       >
-        <Text variant="b2">{`View ${
-          devices?.length > 0
-            ? `${devices.length} ${devices.length === 1 ? 'session' : 'sessions'}`
-            : 'sessions'
-        }`}</Text>
+        <Text variant="b2">{devices?.length > 0
+          ? t('organisms.profileViewer.viewSessions', { count: devices.length })
+          : t('organisms.profileViewer.viewSessionsNoCount')
+        }</Text>
       </MenuItem>
       {renderSessionChips()}
     </div>
@@ -157,6 +159,7 @@ SessionInfo.propTypes = {
 };
 
 function ProfileFooter({ roomId, userId, onRequestClose }) {
+  const { t } = useTranslation();
   const [isCreatingDM, setIsCreatingDM] = useState(false);
   const [isIgnoring, setIsIgnoring] = useState(false);
   const mx = useMatrixClient();
@@ -252,18 +255,18 @@ function ProfileFooter({ roomId, userId, onRequestClose }) {
   return (
     <div className="profile-viewer__buttons">
       <Button variant="primary" onClick={openDM} disabled={isCreatingDM}>
-        {isCreatingDM ? 'Creating room...' : 'Message'}
+        {isCreatingDM ? t('organisms.profileViewer.creatingRoom') : t('organisms.profileViewer.message')}
       </Button>
       {isBanned && canIKick && (
         <Button variant="positive" onClick={() => mx.unban(roomId, userId)}>
-          Unban
+          {t('organisms.profileViewer.unban')}
         </Button>
       )}
       {(isInvited ? canIKick : room.canInvite(mx.getUserId())) && isInvitable && (
         <Button onClick={toggleInvite} disabled={isInviting}>
           {isInvited
-            ? `${isInviting ? 'Disinviting...' : 'Disinvite'}`
-            : `${isInviting ? 'Inviting...' : 'Invite'}`}
+            ? `${isInviting ? t('organisms.profileViewer.disinviting') : t('organisms.profileViewer.disinvite')}`
+            : `${isInviting ? t('organisms.profileViewer.inviting') : t('organisms.profileViewer.invite')}`}
         </Button>
       )}
       <Button
@@ -272,8 +275,8 @@ function ProfileFooter({ roomId, userId, onRequestClose }) {
         disabled={isIgnoring}
       >
         {isUserIgnored
-          ? `${isIgnoring ? 'Unignoring...' : 'Unignore'}`
-          : `${isIgnoring ? 'Ignoring...' : 'Ignore'}`}
+          ? `${isIgnoring ? t('organisms.profileViewer.unignoring') : t('organisms.profileViewer.unignore')}`
+          : `${isIgnoring ? t('organisms.profileViewer.ignoring') : t('organisms.profileViewer.ignore')}`}
       </Button>
     </div>
   );
@@ -333,6 +336,7 @@ function useRerenderOnProfileChange(roomId, userId) {
 }
 
 function ProfileViewer() {
+  const { t } = useTranslation();
   const [isOpen, roomId, userId, closeDialog, handleAfterClose] = useToggleDialog();
   useRerenderOnProfileChange(roomId, userId);
   const useAuthentication = useMediaAuthentication();
@@ -359,18 +363,16 @@ function ProfileViewer() {
 
     const handleChangePowerLevel = async (newPowerLevel) => {
       if (newPowerLevel === powerLevel) return;
-      const SHARED_POWER_MSG =
-        'You will not be able to undo this change as you are promoting the user to have the same power level as yourself. Are you sure?';
-      const DEMOTING_MYSELF_MSG =
-        'You will not be able to undo this change as you are demoting yourself. Are you sure?';
+      const SHARED_POWER_MSG = t('organisms.profileViewer.sharedPowerMessage');
+      const DEMOTING_MYSELF_MSG = t('organisms.profileViewer.demotingMyselfMessage');
 
       const isSharedPower = newPowerLevel === myPowerLevel;
       const isDemotingMyself = userId === mx.getUserId();
       if (isSharedPower || isDemotingMyself) {
         const isConfirmed = await confirmDialog(
-          'Change power level',
+          t('organisms.profileViewer.changePowerLevel'),
           isSharedPower ? SHARED_POWER_MSG : DEMOTING_MYSELF_MSG,
-          'Change',
+          t('organisms.profileViewer.change'),
           'caution'
         );
         if (!isConfirmed) return;
@@ -404,12 +406,12 @@ function ProfileViewer() {
             <Text variant="b2">{userId}</Text>
           </div>
           <div className="profile-viewer__user__role">
-            <Text variant="b3">Role</Text>
+            <Text variant="b3">{t('organisms.profileViewer.role')}</Text>
             <Button
               onClick={canChangeRole ? handlePowerSelector : null}
               iconSrc={canChangeRole ? ChevronBottomIC : null}
             >
-              {`${getPowerLabel(powerLevel) || 'Member'} - ${powerLevel}`}
+              {`${getPowerLabel(powerLevel) || t('organisms.profileViewer.member')} - ${powerLevel}`}
             </Button>
           </div>
         </div>
@@ -429,7 +431,7 @@ function ProfileViewer() {
       title={room?.name ?? ''}
       onAfterClose={handleAfterClose}
       onRequestClose={closeDialog}
-      contentOptions={<IconButton src={CrossIC} onClick={closeDialog} tooltip="Close" />}
+      contentOptions={<IconButton src={CrossIC} onClick={closeDialog} tooltip={t('common.close')} />}
     >
       {roomId ? renderProfile() : <div />}
     </Dialog>

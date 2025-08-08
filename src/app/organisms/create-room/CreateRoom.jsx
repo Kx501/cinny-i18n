@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import './CreateRoom.scss';
 
 import cons from '../../../client/state/cons';
@@ -34,6 +35,7 @@ import { useRoomNavigate } from '../../hooks/useRoomNavigate';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 
 function CreateRoomContent({ isSpace, parentId, onRequestClose }) {
+  const { t } = useTranslation();
   const [joinRule, setJoinRule] = useState(parentId ? 'restricted' : 'invite');
   const [isEncrypted, setIsEncrypted] = useState(true);
   const [isCreatingRoom, setIsCreatingRoom] = useState(false);
@@ -91,10 +93,10 @@ function CreateRoomContent({ isSpace, parentId, onRequestClose }) {
       }
     } catch (e) {
       if (e.message === 'M_UNKNOWN: Invalid characters in room alias') {
-        setCreatingError('ERROR: Invalid characters in address');
+        setCreatingError(t('organisms.createRoom.invalidCharactersInAddress'));
         setIsValidAddress(false);
       } else if (e.message === 'M_ROOM_IN_USE: Room alias already taken') {
-        setCreatingError('ERROR: This address is already in use');
+        setCreatingError(t('organisms.createRoom.addressAlreadyInUse'));
         setIsValidAddress(false);
       } else setCreatingError(e.message);
       setIsCreatingRoom(false);
@@ -122,18 +124,18 @@ function CreateRoomContent({ isSpace, parentId, onRequestClose }) {
   };
 
   const joinRules = ['invite', 'restricted', 'public'];
-  const joinRuleShortText = ['Private', 'Restricted', 'Public'];
+  const joinRuleShortText = [t('organisms.createRoom.private'), t('organisms.createRoom.restricted'), t('organisms.createRoom.public')];
   const joinRuleText = [
-    'Private (invite only)',
-    'Restricted (space member can join)',
-    'Public (anyone can join)',
+    t('organisms.createRoom.privateDescription'),
+    t('organisms.createRoom.restrictedDescription'),
+    t('organisms.createRoom.publicDescription'),
   ];
   const jrRoomIC = [HashLockIC, HashIC, HashGlobeIC];
   const jrSpaceIC = [SpaceLockIC, SpaceIC, SpaceGlobeIC];
   const handleJoinRule = (evt) => {
     openReusableContextMenu('bottom', getEventCords(evt, '.btn-surface'), (closeMenu) => (
       <>
-        <MenuHeader>Visibility (who can join)</MenuHeader>
+        <MenuHeader>{t('organisms.createRoom.visibilityMenuTitle')}</MenuHeader>
         {joinRules.map((rule) => (
           <MenuItem
             key={rule}
@@ -158,20 +160,20 @@ function CreateRoomContent({ isSpace, parentId, onRequestClose }) {
     <div className="create-room">
       <form className="create-room__form" onSubmit={handleSubmit}>
         <SettingTile
-          title="Visibility"
+          title={t('organisms.createRoom.visibility')}
           options={
             <Button onClick={handleJoinRule} iconSrc={ChevronBottomIC}>
               {joinRuleShortText[joinRules.indexOf(joinRule)]}
             </Button>
           }
           content={
-            <Text variant="b3">{`Select who can join this ${isSpace ? 'space' : 'room'}.`}</Text>
+            <Text variant="b3">{t('organisms.createRoom.visibilityDescription', { type: isSpace ? 'space' : 'room' })}</Text>
           }
         />
         {joinRule === 'public' && (
           <div>
             <Text className="create-room__address__label" variant="b2">
-              {isSpace ? 'Space address' : 'Room address'}
+              {isSpace ? t('organisms.createRoom.spaceAddress') : t('organisms.createRoom.roomAddress')}
             </Text>
             <div className="create-room__address">
               <Text variant="b1">#</Text>
@@ -180,7 +182,7 @@ function CreateRoomContent({ isSpace, parentId, onRequestClose }) {
                 onChange={validateAddress}
                 state={isValidAddress === false ? 'error' : 'normal'}
                 forwardRef={addressRef}
-                placeholder="my_address"
+                placeholder={t('organisms.createRoom.addressPlaceholder')}
                 required
               />
               <Text variant="b1">{`:${userHs}`}</Text>
@@ -189,51 +191,51 @@ function CreateRoomContent({ isSpace, parentId, onRequestClose }) {
               <Text className="create-room__address__tip" variant="b3">
                 <span
                   style={{ color: 'var(--bg-danger)' }}
-                >{`#${addressValue}:${userHs} is already in use`}</span>
+                >{t('organisms.createRoom.addressInUse', { address: addressValue, server: userHs })}</span>
               </Text>
             )}
           </div>
         )}
         {!isSpace && joinRule !== 'public' && (
           <SettingTile
-            title="Enable end-to-end encryption"
+            title={t('organisms.createRoom.enableEncryption')}
             options={<Toggle isActive={isEncrypted} onToggle={setIsEncrypted} />}
             content={
               <Text variant="b3">
-                You can’t disable this later. Bridges & most bots won’t work yet.
+                {t('organisms.createRoom.encryptionDescription')}
               </Text>
             }
           />
         )}
         <SettingTile
-          title="Select your role"
+          title={t('organisms.createRoom.selectRole')}
           options={
             <SegmentControl
               selected={roleIndex}
-              segments={[{ text: 'Admin' }, { text: 'Founder' }]}
+              segments={[{ text: t('organisms.createRoom.admin') }, { text: t('organisms.createRoom.founder') }]}
               onSelect={setRoleIndex}
             />
           }
           content={
-            <Text variant="b3">Selecting Admin sets 100 power level whereas Founder sets 101.</Text>
+            <Text variant="b3">{t('organisms.createRoom.roleDescription')}</Text>
           }
         />
-        <Input name="topic" minHeight={174} resizable label="Topic (optional)" />
+        <Input name="topic" minHeight={174} resizable label={t('organisms.createRoom.topic')} />
         <div className="create-room__name-wrapper">
-          <Input name="name" label={`${isSpace ? 'Space' : 'Room'} name`} required />
+          <Input name="name" label={isSpace ? t('organisms.createRoom.spaceName') : t('organisms.createRoom.roomName')} required />
           <Button
             disabled={isValidAddress === false || isCreatingRoom}
             iconSrc={isSpace ? SpacePlusIC : HashPlusIC}
             type="submit"
             variant="primary"
           >
-            Create
+            {t('organisms.createRoom.create')}
           </Button>
         </div>
         {isCreatingRoom && (
           <div className="create-room__loading">
             <Spinner size="small" />
-            <Text>{`Creating ${isSpace ? 'space' : 'room'}...`}</Text>
+            <Text>{isSpace ? t('organisms.createRoom.creatingSpace') : t('organisms.createRoom.creatingRoom')}</Text>
           </div>
         )}
         {typeof creatingError === 'string' && (
@@ -276,6 +278,7 @@ function useWindowToggle() {
 }
 
 function CreateRoom() {
+  const { t } = useTranslation();
   const [create, onRequestClose] = useWindowToggle();
   const { isSpace, parentId } = create ?? {};
   const mx = useMatrixClient();
@@ -286,9 +289,9 @@ function CreateRoom() {
       isOpen={create !== null}
       title={
         <Text variant="s1" weight="medium" primary>
-          {parentId ? room.name : 'Home'}
+          {parentId ? room.name : t('organisms.createRoom.home')}
           <span style={{ color: 'var(--tc-surface-low)' }}>
-            {` — create ${isSpace ? 'space' : 'room'}`}
+            {` — ${isSpace ? t('organisms.createRoom.createSpace') : t('organisms.createRoom.createRoom')}`}
           </span>
         </Text>
       }

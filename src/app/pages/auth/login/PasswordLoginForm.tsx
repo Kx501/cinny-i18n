@@ -72,7 +72,7 @@ function UsernameHint({ server }: { server: string }) {
             >
               <Text size="T300">
                 <Text as="span" size="Inherit" priority="300">
-                  {t('auth.login.hint.username')}
+                  {t('auth.login.username')}:
                 </Text>{' '}
                 johndoe
               </Text>
@@ -228,7 +228,7 @@ export function PasswordLoginForm({ defaultUsername, defaultEmail }: PasswordLog
       </Box>
       <Box direction="Column" gap="100">
         <Text as="label" size="L400" priority="300">
-          {t('auth.login.password')}
+          {t('common.password')}
         </Text>
         <PasswordInput name="passwordInput" variant="Background" size="500" outlined required />
         <Box alignItems="Start" justifyContent="SpaceBetween" gap="200">
@@ -260,7 +260,7 @@ export function PasswordLoginForm({ defaultUsername, defaultEmail }: PasswordLog
       </Box>
       <Button type="submit" variant="Primary" size="500">
         <Text as="span" size="B500">
-          {t('auth.login.loginButton')}
+          {t('common.login')}
         </Text>
       </Button>
 

@@ -91,6 +91,7 @@ import { useMediaAuthentication } from '../../../hooks/useMediaAuthentication';
 import { useSetting } from '../../../state/hooks/settings';
 import { settingsAtom } from '../../../state/settings';
 import { useOpenSpaceSettings } from '../../../state/hooks/spaceSettings';
+import { useTranslation } from 'react-i18next';
 
 type SpaceMenuProps = {
   room: Room;
@@ -99,6 +100,7 @@ type SpaceMenuProps = {
 };
 const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(
   ({ room, requestClose, onUnpin }, ref) => {
+    const { t } = useTranslation();
     const mx = useMatrixClient();
     const [hideActivity] = useSetting(settingsAtom, 'hideActivity');
     const roomToParents = useAtomValue(roomToParentsAtom);
@@ -152,7 +154,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(
             disabled={!unread}
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Mark as Read
+              {t('client.sidebar.markAsRead')}
             </Text>
           </MenuItem>
           {onUnpin && (
@@ -163,7 +165,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(
               after={<Icon size="100" src={Icons.Pin} />}
             >
               <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-                Unpin
+                {t('client.sidebar.unpin')}
               </Text>
             </MenuItem>
           )}
@@ -180,7 +182,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(
             disabled={!canInvite}
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Invite
+              {t('client.sidebar.invite')}
             </Text>
           </MenuItem>
           <MenuItem
@@ -190,7 +192,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(
             radii="300"
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Copy Link
+              {t('client.sidebar.copyLink')}
             </Text>
           </MenuItem>
           <MenuItem
@@ -200,7 +202,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(
             radii="300"
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Space Settings
+              {t('client.sidebar.spaceSettings')}
             </Text>
           </MenuItem>
         </Box>
@@ -232,18 +234,18 @@ const useDraggableItem = (
     return !target
       ? undefined
       : draggable({
-          element: target,
-          dragHandle,
-          getInitialData: () => ({ item }),
-          onDragStart: () => {
-            setDragging(true);
-            onDragging?.(item);
-          },
-          onDrop: () => {
-            setDragging(false);
-            onDragging?.(undefined);
-          },
-        });
+        element: target,
+        dragHandle,
+        getInitialData: () => ({ item }),
+        onDragStart: () => {
+          setDragging(true);
+          onDragging?.(item);
+        },
+        onDrop: () => {
+          setDragging(false);
+          onDragging?.(undefined);
+        },
+      });
   }, [targetRef, dragHandleRef, item, onDragging]);
 
   return dragging;
@@ -393,9 +395,9 @@ function SpaceTab({
     () =>
       folder
         ? {
-            folder,
-            spaceId: space.roomId,
-          }
+          folder,
+          spaceId: space.roomId,
+        }
         : space.roomId,
     [folder, space]
   );
@@ -731,7 +733,7 @@ export function SpaceTabs({ scrollRef }: SpaceTabsProps) {
 
         const newSpacesContent = makeCinnySpacesContent(mx, newItems);
         localEchoSidebarItem(parseSidebar(mx, orphanSpaces, newSpacesContent));
-        mx.setAccountData(AccountDataEvent.CinnySpaces, newSpacesContent);
+        mx.setAccountData(AccountDataEvent.CinnySpaces as any, newSpacesContent as any);
       },
       [mx, sidebarItems, setOpenedFolder, localEchoSidebarItem, orphanSpaces]
     )
@@ -777,7 +779,7 @@ export function SpaceTabs({ scrollRef }: SpaceTabsProps) {
 
       const newSpacesContent = makeCinnySpacesContent(mx, newItems);
       localEchoSidebarItem(parseSidebar(mx, orphanSpaces, newSpacesContent));
-      mx.setAccountData(AccountDataEvent.CinnySpaces, newSpacesContent);
+      mx.setAccountData(AccountDataEvent.CinnySpaces as any, newSpacesContent as any);
     },
     [mx, sidebarItems, orphanSpaces, localEchoSidebarItem]
   );

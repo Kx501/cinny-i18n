@@ -153,7 +153,7 @@ export function IgnoredUserList() {
             <IgnoreUserInput userList={ignoredUsers} />
             {ignoredUsers.length > 0 && (
               <Box direction="Inherit" gap="100">
-                <Text size="L400">{t('settings.account.blockedUsers.users')}</Text>
+                <Text size="L400">{t('common.users')}</Text>
                 <Box wrap="Wrap" gap="200">
                   {ignoredUsers.map((userId) => (
                     <IgnoredUserChip key={userId} userId={userId} userList={ignoredUsers} />
