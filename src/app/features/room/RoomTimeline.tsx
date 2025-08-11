@@ -85,7 +85,6 @@ import {
 } from '../../utils/room';
 import { useSetting } from '../../state/hooks/settings';
 import { MessageLayout, settingsAtom } from '../../state/settings';
-import { openProfileViewer } from '../../../client/action/navigation';
 import { useMatrixEventRenderer } from '../../hooks/useMatrixEventRenderer';
 import { Reactions, Message, Event, EncryptedContent } from './message';
 import { useMemberEventParser } from '../../hooks/useMemberEventParser';
@@ -120,6 +119,8 @@ import { useIgnoredUsers } from '../../hooks/useIgnoredUsers';
 import { useImagePackRooms } from '../../hooks/useImagePackRooms';
 import { GetPowerLevelTag } from '../../hooks/usePowerLevelTags';
 import { useIsDirectRoom } from '../../hooks/useRoom';
+import { useOpenUserRoomProfile } from '../../state/hooks/userRoomProfile';
+import { useSpaceOptionally } from '../../hooks/useSpace';
 
 const TimelineFloat = as<'div', css.TimelineFloatVariants>(
   ({ position, className, ...props }, ref) => (
@@ -472,6 +473,8 @@ export function RoomTimeline({
   const { navigateRoom } = useRoomNavigate();
   const mentionClickHandler = useMentionClickHandler(room.roomId);
   const spoilerClickHandler = useSpoilerClickHandler();
+  const openUserRoomProfile = useOpenUserRoomProfile();
+  const space = useSpaceOptionally();
 
   const imagePackRooms: Room[] = useImagePackRooms(room.roomId, roomToParents);
 
@@ -909,9 +912,14 @@ export function RoomTimeline({
         console.warn('Button should have "data-user-id" attribute!');
         return;
       }
-      openProfileViewer(userId, room.roomId);
+      openUserRoomProfile(
+        room.roomId,
+        space?.roomId,
+        userId,
+        evt.currentTarget.getBoundingClientRect()
+      );
     },
-    [room]
+    [room, space, openUserRoomProfile]
   );
   const handleUsernameClick: MouseEventHandler<HTMLButtonElement> = useCallback(
     (evt) => {

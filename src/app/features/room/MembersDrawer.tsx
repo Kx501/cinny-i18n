@@ -30,7 +30,6 @@ import { Room, RoomMember } from 'matrix-js-sdk';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import classNames from 'classnames';
 
-import { openProfileViewer } from '../../../client/action/navigation';
 import * as css from './MembersDrawer.css';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { UseStateProvider } from '../../components/UseStateProvider';
@@ -56,6 +55,8 @@ import { useMemberSort, useMemberSortMenu } from '../../hooks/useMemberSort';
 import { usePowerLevelsAPI, usePowerLevelsContext } from '../../hooks/usePowerLevels';
 import { MembershipFilterMenu } from '../../components/MembershipFilterMenu';
 import { MemberSortMenu } from '../../components/MemberSortMenu';
+import { useOpenUserRoomProfile, useUserRoomProfileState } from '../../state/hooks/userRoomProfile';
+import { useSpaceOptionally } from '../../hooks/useSpace';
 
 const SEARCH_OPTIONS: UseAsyncSearchOptions = {
   limit: 1000,
@@ -82,6 +83,9 @@ export function MembersDrawer({ room, members }: MembersDrawerProps) {
   const [, getPowerLevelTag] = usePowerLevelTags(room, powerLevels);
   const fetchingMembers = members.length < room.getJoinedMemberCount();
   const setPeopleDrawer = useSetSetting(settingsAtom, 'isPeopleDrawer');
+  const openUserRoomProfile = useOpenUserRoomProfile();
+  const space = useSpaceOptionally();
+  const openProfileUserId = useUserRoomProfileState()?.userId;
 
   const membershipFilterMenu = useMembershipFilterMenu();
   const sortFilterMenu = useMemberSortMenu();
@@ -142,7 +146,8 @@ export function MembersDrawer({ room, members }: MembersDrawerProps) {
   const handleMemberClick: MouseEventHandler<HTMLButtonElement> = (evt) => {
     const btn = evt.currentTarget as HTMLButtonElement;
     const userId = btn.getAttribute('data-user-id');
-    openProfileViewer(userId, room.roomId);
+    if (!userId) return;
+    openUserRoomProfile(room.roomId, space?.roomId, userId, btn.getBoundingClientRect(), 'Left');
   };
 
   return (
@@ -350,6 +355,7 @@ export function MembersDrawer({ room, members }: MembersDrawerProps) {
                         padding: `0 ${config.space.S200}`,
                         transform: `translateY(${vItem.start}px)`,
                       }}
+                      aria-pressed={openProfileUserId === member.userId}
                       data-index={vItem.index}
                       data-user-id={member.userId}
                       ref={virtualizer.measureElement}
