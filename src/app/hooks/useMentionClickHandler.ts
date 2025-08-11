@@ -3,14 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { useRoomNavigate } from './useRoomNavigate';
 import { useMatrixClient } from './useMatrixClient';
 import { isRoomId, isUserId } from '../utils/matrix';
-import { openProfileViewer } from '../../client/action/navigation';
 import { getHomeRoomPath, withSearchParam } from '../pages/pathUtils';
 import { _RoomSearchParams } from '../pages/paths';
+import { useOpenUserRoomProfile } from '../state/hooks/userRoomProfile';
+import { useSpaceOptionally } from './useSpace';
 
 export const useMentionClickHandler = (roomId: string): ReactEventHandler<HTMLElement> => {
   const mx = useMatrixClient();
   const { navigateRoom, navigateSpace } = useRoomNavigate();
   const navigate = useNavigate();
+  const openProfile = useOpenUserRoomProfile();
+  const space = useSpaceOptionally();
 
   const handleClick: ReactEventHandler<HTMLElement> = useCallback(
     (evt) => {
@@ -21,7 +24,7 @@ export const useMentionClickHandler = (roomId: string): ReactEventHandler<HTMLEl
       if (typeof mentionId !== 'string') return;
 
       if (isUserId(mentionId)) {
-        openProfileViewer(mentionId, roomId);
+        openProfile(roomId, space?.roomId, mentionId, target.getBoundingClientRect());
         return;
       }
 
@@ -37,7 +40,7 @@ export const useMentionClickHandler = (roomId: string): ReactEventHandler<HTMLEl
 
       navigate(viaServers ? withSearchParam<_RoomSearchParams>(path, { viaServers }) : path);
     },
-    [mx, navigate, navigateRoom, navigateSpace, roomId]
+    [mx, navigate, navigateRoom, navigateSpace, roomId, space, openProfile]
   );
 
   return handleClick;

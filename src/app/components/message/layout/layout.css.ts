@@ -124,7 +124,7 @@ export const AvatarBase = style({
 
   selectors: {
     '&:hover': {
-      transform: `translateY(${toRem(-4)})`,
+      transform: `translateY(${toRem(-2)})`,
     },
   },
 });

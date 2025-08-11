@@ -37,7 +37,6 @@ import { MemberTile } from '../../../components/member-tile';
 import { useMediaAuthentication } from '../../../hooks/useMediaAuthentication';
 import { getMxIdLocalPart, getMxIdServer } from '../../../utils/matrix';
 import { ServerBadge } from '../../../components/server-badge';
-import { openProfileViewer } from '../../../../client/action/navigation';
 import { useDebounce } from '../../../hooks/useDebounce';
 import {
   SearchItemStrGetter,
@@ -53,6 +52,11 @@ import { UseStateProvider } from '../../../components/UseStateProvider';
 import { MembershipFilterMenu } from '../../../components/MembershipFilterMenu';
 import { MemberSortMenu } from '../../../components/MemberSortMenu';
 import { ScrollTopContainer } from '../../../components/scroll-top-container';
+import {
+  useOpenUserRoomProfile,
+  useUserRoomProfileState,
+} from '../../../state/hooks/userRoomProfile';
+import { useSpaceOptionally } from '../../../hooks/useSpace';
 
 const SEARCH_OPTIONS: UseAsyncSearchOptions = {
   limit: 1000,
@@ -77,6 +81,9 @@ export function Members({ requestClose }: MembersProps) {
   const room = useRoom();
   const members = useRoomMembers(mx, room.roomId);
   const fetchingMembers = members.length < room.getJoinedMemberCount();
+  const openProfile = useOpenUserRoomProfile();
+  const profileUser = useUserRoomProfileState();
+  const space = useSpaceOptionally();
 
   const powerLevels = usePowerLevels(room);
   const { getPowerLevel } = usePowerLevelsAPI(powerLevels);
@@ -142,8 +149,9 @@ export function Members({ requestClose }: MembersProps) {
   const handleMemberClick: MouseEventHandler<HTMLButtonElement> = (evt) => {
     const btn = evt.currentTarget as HTMLButtonElement;
     const userId = btn.getAttribute('data-user-id');
-    openProfileViewer(userId, room.roomId);
-    requestClose();
+    if (userId) {
+      openProfile(room.roomId, space?.roomId, userId, btn.getBoundingClientRect());
+    }
   };
 
   return (
@@ -317,6 +325,7 @@ export function Members({ requestClose }: MembersProps) {
                           <MemberTile
                             data-user-id={tagOrMember.userId}
                             onClick={handleMemberClick}
+                            aria-pressed={profileUser?.userId === tagOrMember.userId}
                             mx={mx}
                             room={room}
                             member={tagOrMember}

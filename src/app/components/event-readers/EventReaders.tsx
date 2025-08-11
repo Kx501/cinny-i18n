@@ -19,9 +19,10 @@ import { getMemberDisplayName } from '../../utils/room';
 import { getMxIdLocalPart } from '../../utils/matrix';
 import * as css from './EventReaders.css';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
-import { openProfileViewer } from '../../../client/action/navigation';
 import { UserAvatar } from '../user-avatar';
 import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
+import { useOpenUserRoomProfile } from '../../state/hooks/userRoomProfile';
+import { useSpaceOptionally } from '../../hooks/useSpace';
 
 export type EventReadersProps = {
   room: Room;
@@ -33,6 +34,8 @@ export const EventReaders = as<'div', EventReadersProps>(
     const mx = useMatrixClient();
     const useAuthentication = useMediaAuthentication();
     const latestEventReaders = useRoomEventReaders(room, eventId);
+    const openProfile = useOpenUserRoomProfile();
+    const space = useSpaceOptionally();
 
     const getName = (userId: string) =>
       getMemberDisplayName(room, userId) ?? getMxIdLocalPart(userId) ?? userId;
@@ -57,19 +60,32 @@ export const EventReaders = as<'div', EventReadersProps>(
             <Box className={css.Content} direction="Column">
               {latestEventReaders.map((readerId) => {
                 const name = getName(readerId);
-                const avatarMxcUrl = room
-                  .getMember(readerId)
-                  ?.getMxcAvatarUrl();
-                const avatarUrl = avatarMxcUrl ? mx.mxcUrlToHttp(avatarMxcUrl, 100, 100, 'crop', undefined, false, useAuthentication) : undefined;
+                const avatarMxcUrl = room.getMember(readerId)?.getMxcAvatarUrl();
+                const avatarUrl = avatarMxcUrl
+                  ? mx.mxcUrlToHttp(
+                      avatarMxcUrl,
+                      100,
+                      100,
+                      'crop',
+                      undefined,
+                      false,
+                      useAuthentication
+                    )
+                  : undefined;
 
                 return (
                   <MenuItem
                     key={readerId}
                     style={{ padding: `0 ${config.space.S200}` }}
                     radii="400"
-                    onClick={() => {
-                      requestClose();
-                      openProfileViewer(readerId, room.roomId);
+                    onClick={(event) => {
+                      openProfile(
+                        room.roomId,
+                        space?.roomId,
+                        readerId,
+                        event.currentTarget.getBoundingClientRect(),
+                        'Bottom'
+                      );
                     }}
                     before={
                       <Avatar size="200">
