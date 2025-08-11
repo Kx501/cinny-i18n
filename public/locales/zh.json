@@ -101,6 +101,11 @@
         "matrixId": "Matrix ID：",
         "email": "邮箱："
       },
+      "loading": {
+        "lookingForHomeserver": "正在查找主服务器...",
+        "connectingToServer": "正在连接到 {server}",
+        "loadingAuthFlow": "正在加载身份验证流程..."
+      },
       "errors": {
         "serverNotSupported": "此客户端不支持在 \"{server}\" 服务器上登录。未找到基于密码和SSO的登录方法。",
         "serverNotAllowed": "您的客户端实例不允许使用自定义服务器登录。",
@@ -110,7 +115,12 @@
         "invalidRequest": "登录失败。您的请求数据部分无效。",
         "rateLimited": "登录失败。您的登录请求已被服务器限流，请稍后重试。",
         "unknown": "登录失败。未知原因。",
-        "invalidToken": "登录令牌无效。"
+        "invalidToken": "登录令牌无效。",
+        "failedToFindHomeserver": "找不到主服务器。",
+        "homeserverConfigUnusable": "连接失败。发现主服务器配置 {host} 似乎不可用。",
+        "homeserverConfigInvalid": "连接失败。主服务器配置 base_url 似乎无效。",
+        "homeserverUnavailable": "连接失败。主服务器此时不可用或不存在。",
+        "failedToGetAuthFlow": "获取身份验证流程信息失败。"
       }
     }
   },
@@ -594,6 +604,11 @@
       "previousPage": "上一页",
       "nextPage": "下一页",
       "noCommunitiesFound": "未找到社区！"
+    }
+  },
+  "Organisms": {
+    "RoomCommon": {
+      "changedRoomName": "改变了房间名称"
     }
   }
 }

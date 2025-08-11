@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { Box, Header, Scroll, Spinner, Text, color } from 'folds';
+import { useTranslation } from 'react-i18next';
 import {
   Outlet,
   generatePath,
@@ -66,6 +67,7 @@ function AuthLayoutError({ message }: { message: string }) {
 }
 
 export function AuthLayout() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { server: urlEncodedServer } = useParams();
@@ -151,18 +153,18 @@ export function AuthLayout() {
               />
             </Box>
             {discoveryState.status === AsyncStatus.Loading && (
-              <AuthLayoutLoading message="Looking for homeserver..." />
+              <AuthLayoutLoading message={t('auth.login.loading.lookingForHomeserver')} />
             )}
             {discoveryState.status === AsyncStatus.Error && (
-              <AuthLayoutError message="Failed to find homeserver." />
+              <AuthLayoutError message={t('auth.login.errors.failedToFindHomeserver')} />
             )}
             {autoDiscoveryError?.action === AutoDiscoveryAction.FAIL_PROMPT && (
               <AuthLayoutError
-                message={`Failed to connect. Homeserver configuration found with ${autoDiscoveryError.host} appears unusable.`}
+                message={t('auth.login.errors.homeserverConfigUnusable', { host: autoDiscoveryError.host })}
               />
             )}
             {autoDiscoveryError?.action === AutoDiscoveryAction.FAIL_ERROR && (
-              <AuthLayoutError message="Failed to connect. Homeserver configuration base_url appears invalid." />
+              <AuthLayoutError message={t('auth.login.errors.homeserverConfigInvalid')} />
             )}
             {discoveryState.status === AsyncStatus.Success && autoDiscoveryInfo && (
               <AuthServerProvider value={discoveryState.data.serverName}>
@@ -171,21 +173,21 @@ export function AuthLayout() {
                     baseUrl={autoDiscoveryInfo['m.homeserver'].base_url}
                     fallback={() => (
                       <AuthLayoutLoading
-                        message={`Connecting to ${autoDiscoveryInfo['m.homeserver'].base_url}`}
+                        message={t('auth.login.loading.connectingToServer', { server: autoDiscoveryInfo['m.homeserver'].base_url })}
                       />
                     )}
                     error={() => (
-                      <AuthLayoutError message="Failed to connect. Either homeserver is unavailable at this moment or does not exist." />
+                      <AuthLayoutError message={t('auth.login.errors.homeserverUnavailable')} />
                     )}
                   >
                     {(specVersions) => (
                       <SpecVersionsProvider value={specVersions}>
                         <AuthFlowsLoader
                           fallback={() => (
-                            <AuthLayoutLoading message="Loading authentication flow..." />
+                            <AuthLayoutLoading message={t('auth.login.loading.loadingAuthFlow')} />
                           )}
                           error={() => (
-                            <AuthLayoutError message="Failed to get authentication flow information." />
+                            <AuthLayoutError message={t('auth.login.errors.failedToGetAuthFlow')} />
                           )}
                         >
                           {(authFlows) => (

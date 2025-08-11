@@ -65,27 +65,30 @@ type LanguageSelectorProps = {
 };
 
 function LanguageSelector({ disabled }: LanguageSelectorProps) {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState(() => {
-    return SUPPORTED_LANGUAGES.find(
-      (lang) => lang.code === i18n.language
-    ) || SUPPORTED_LANGUAGES.find(
-      (lang) => lang.code.startsWith(i18n.language.split('_')[0])
-    ) || SUPPORTED_LANGUAGES[0];
-  });
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const [forceUpdate, setForceUpdate] = useState(0);
 
-  // 监听语言变化
+  // 获取当前语言 - 直接从i18n.language计算，让React自动响应变化
+  const currentLanguage = SUPPORTED_LANGUAGES.find(
+    (lang) => lang.code === i18n.language
+  ) || SUPPORTED_LANGUAGES.find(
+    (lang) => i18n.language.startsWith(lang.code)
+  ) || SUPPORTED_LANGUAGES[0];
+
+  // 监听语言变化事件
   useEffect(() => {
-    const newCurrentLanguage = SUPPORTED_LANGUAGES.find(
-      (lang) => lang.code === i18n.language
-    ) || SUPPORTED_LANGUAGES.find(
-      (lang) => lang.code.startsWith(i18n.language.split('_')[0])
-    ) || SUPPORTED_LANGUAGES[0];
+    const handleLanguageChanged = (lng: string) => {
+      setForceUpdate(prev => prev + 1);
+    };
 
-    setCurrentLanguage(newCurrentLanguage);
-  }, [i18n.language]);
+    i18n.on('languageChanged', handleLanguageChanged);
+
+    return () => {
+      i18n.off('languageChanged', handleLanguageChanged);
+    };
+  }, [i18n]);
 
   // 处理菜单打开/关闭
   const handleMenuToggle: MouseEventHandler<HTMLButtonElement> = (evt) => {

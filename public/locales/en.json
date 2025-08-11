@@ -101,6 +101,11 @@
         "matrixId": "Matrix ID:",
         "email": "Email:"
       },
+      "loading": {
+        "lookingForHomeserver": "Looking for homeserver...",
+        "connectingToServer": "Connecting to {server}",
+        "loadingAuthFlow": "Loading authentication flow..."
+      },
       "errors": {
         "serverNotSupported": "This client does not support login on \"{server}\" homeserver. Password and SSO based login method not found.",
         "serverNotAllowed": "Login with custom server not allowed by your client instance.",
@@ -110,7 +115,12 @@
         "invalidRequest": "Failed to login. Part of your request data is invalid.",
         "rateLimited": "Failed to login. Your login request has been rate-limited by server, Please try after some time.",
         "unknown": "Failed to login. Unknown reason.",
-        "invalidToken": "Invalid login token."
+        "invalidToken": "Invalid login token.",
+        "failedToFindHomeserver": "Failed to find homeserver.",
+        "homeserverConfigUnusable": "Failed to connect. Homeserver configuration found with {host} appears unusable.",
+        "homeserverConfigInvalid": "Failed to connect. Homeserver configuration base_url appears invalid.",
+        "homeserverUnavailable": "Failed to connect. Either homeserver is unavailable at this moment or does not exist.",
+        "failedToGetAuthFlow": "Failed to get authentication flow information."
       }
     }
   },
@@ -594,6 +604,11 @@
       "previousPage": "Previous Page",
       "nextPage": "Next Page",
       "noCommunitiesFound": "No communities found!"
+    }
+  },
+  "Organisms": {
+    "RoomCommon": {
+      "changedRoomName": " changed room name"
     }
   }
 }
