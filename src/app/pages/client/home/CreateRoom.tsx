@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Icon, Icons, Scroll, IconButton } from 'folds';
 import {
   Page,
@@ -12,7 +13,6 @@ import { ScreenSize, useScreenSizeContext } from '../../../hooks/useScreenSize';
 import { BackRouteHandler } from '../../../components/BackRouteHandler';
 import { CreateRoomForm } from '../../../features/create-room';
 import { useRoomNavigate } from '../../../hooks/useRoomNavigate';
-import { useTranslation } from 'react-i18next';
 
 export function HomeCreateRoom() {
   const { t } = useTranslation();

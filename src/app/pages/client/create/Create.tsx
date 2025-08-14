@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Icon, Icons, Scroll } from 'folds';
+import { useTranslation } from 'react-i18next';
 import {
   Page,
   PageContent,
@@ -9,7 +10,6 @@ import {
 } from '../../../components/page';
 import { CreateSpaceForm } from '../../../features/create-space';
 import { useRoomNavigate } from '../../../hooks/useRoomNavigate';
-import { useTranslation } from 'react-i18next';
 
 export function Create() {
   const { navigateSpace } = useRoomNavigate();
