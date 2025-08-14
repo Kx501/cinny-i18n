@@ -27,8 +27,10 @@ import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 import { syntaxErrorPosition } from '../../../utils/dom';
 import { SettingTile } from '../../../components/setting-tile';
 import { SequenceCardStyle } from '../styles.css';
-import { usePowerLevels, usePowerLevelsAPI } from '../../../hooks/usePowerLevels';
+import { usePowerLevels } from '../../../hooks/usePowerLevels';
 import { useTextAreaCodeEditor } from '../../../hooks/useTextAreaCodeEditor';
+import { useRoomCreators } from '../../../hooks/useRoomCreators';
+import { useRoomPermissions } from '../../../hooks/useRoomPermissions';
 
 const EDITOR_INTENT_SPACE_COUNT = 2;
 
@@ -244,8 +246,10 @@ export function StateEventEditor({ type, stateKey, requestClose }: StateEventEdi
   const stateEvent = useStateEvent(room, type as unknown as StateEvent, stateKey);
   const [editContent, setEditContent] = useState<object>();
   const powerLevels = usePowerLevels(room);
-  const { getPowerLevel, canSendStateEvent } = usePowerLevelsAPI(powerLevels);
-  const canEdit = canSendStateEvent(type, getPowerLevel(mx.getSafeUserId()));
+  const creators = useRoomCreators(room);
+
+  const permissions = useRoomPermissions(creators, powerLevels);
+  const canEdit = permissions.stateEvent(type, mx.getSafeUserId());
 
   const eventJSONStr = useMemo(() => {
     if (!stateEvent) return '';

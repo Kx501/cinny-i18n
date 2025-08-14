@@ -1,29 +1,24 @@
-import { MatrixClient, Room, RoomMember } from 'matrix-js-sdk';
-import { useCallback, useMemo } from 'react';
+import { Room } from 'matrix-js-sdk';
+import { useMemo } from 'react';
 import { IPowerLevels } from './usePowerLevels';
 import { useStateEvent } from './useStateEvent';
-import { StateEvent } from '../../types/matrix/room';
-import { IImageInfo } from '../../types/matrix/common';
-import { ThemeKind } from './useTheme';
-import { accessibleColor } from '../plugins/color';
+import { MemberPowerTag, StateEvent } from '../../types/matrix/room';
 
-export type PowerLevelTagIcon = {
-  key?: string;
-  info?: IImageInfo;
-};
-export type PowerLevelTag = {
-  name: string;
-  color?: string;
-  icon?: PowerLevelTagIcon;
-};
+export type PowerLevelTags = Record<number, MemberPowerTag>;
 
-export type PowerLevelTags = Record<number, PowerLevelTag>;
-
-export const powerSortFn = (a: number, b: number) => b - a;
-export const sortPowers = (powers: number[]): number[] => powers.sort(powerSortFn);
+const powerSortFn = (a: number, b: number) => b - a;
+const sortPowers = (powers: number[]): number[] => powers.sort(powerSortFn);
 
 export const getPowers = (tags: PowerLevelTags): number[] => {
-  const powers: number[] = Object.keys(tags).map((p) => parseInt(p, 10));
+  const powers: number[] = Object.keys(tags)
+    .map((p) => {
+      const power = parseInt(p, 10);
+      if (Number.isNaN(power)) {
+        return undefined;
+      }
+      return power;
+    })
+    .filter((power) => typeof power === 'number');
 
   return sortPowers(powers);
 };
@@ -55,8 +50,8 @@ const DEFAULT_TAGS: PowerLevelTags = {
     name: 'Goku',
     color: '#ff6a00',
   },
-  102: {
-    name: 'Goku Reborn',
+  150: {
+    name: 'Co-Founder',
     color: '#ff6a7f',
   },
   101: {
@@ -81,7 +76,7 @@ const DEFAULT_TAGS: PowerLevelTags = {
   },
 };
 
-const generateFallbackTag = (powerLevelTags: PowerLevelTags, power: number): PowerLevelTag => {
+const generateFallbackTag = (powerLevelTags: PowerLevelTags, power: number): MemberPowerTag => {
   const highToLow = sortPowers(getPowers(powerLevelTags));
 
   const tagPower = highToLow.find((p) => p < power);
@@ -92,12 +87,7 @@ const generateFallbackTag = (powerLevelTags: PowerLevelTags, power: number): Pow
   };
 };
 
-export type GetPowerLevelTag = (powerLevel: number) => PowerLevelTag;
-
-export const usePowerLevelTags = (
-  room: Room,
-  powerLevels: IPowerLevels
-): [PowerLevelTags, GetPowerLevelTag] => {
+export const usePowerLevelTags = (room: Room, powerLevels: IPowerLevels): PowerLevelTags => {
   const tagsEvent = useStateEvent(room, StateEvent.PowerLevelTags);
 
   const powerLevelTags: PowerLevelTags = useMemo(() => {
@@ -114,66 +104,13 @@ export const usePowerLevelTags = (
     return powerToTags;
   }, [powerLevels, tagsEvent]);
 
-  const getTag: GetPowerLevelTag = useCallback(
-    (power) => {
-      const tag: PowerLevelTag | undefined = powerLevelTags[power];
-      return tag ?? generateFallbackTag(DEFAULT_TAGS, power);
-    },
-    [powerLevelTags]
-  );
-
-  return [powerLevelTags, getTag];
+  return powerLevelTags;
 };
 
-export const useFlattenPowerLevelTagMembers = (
-  members: RoomMember[],
-  getPowerLevel: (userId: string) => number,
-  getTag: GetPowerLevelTag
-): Array<PowerLevelTag | RoomMember> => {
-  const PLTagOrRoomMember = useMemo(() => {
-    let prevTag: PowerLevelTag | undefined;
-    const tagOrMember: Array<PowerLevelTag | RoomMember> = [];
-    members.forEach((member) => {
-      const memberPL = getPowerLevel(member.userId);
-      const tag = getTag(memberPL);
-      if (tag !== prevTag) {
-        prevTag = tag;
-        tagOrMember.push(tag);
-      }
-      tagOrMember.push(member);
-    });
-    return tagOrMember;
-  }, [members, getTag, getPowerLevel]);
-
-  return PLTagOrRoomMember;
-};
-
-export const getTagIconSrc = (
-  mx: MatrixClient,
-  useAuthentication: boolean,
-  icon: PowerLevelTagIcon
-): string | undefined =>
-  icon?.key?.startsWith('mxc://')
-    ? mx.mxcUrlToHttp(icon.key, 96, 96, 'scale', undefined, undefined, useAuthentication) ?? '🌻'
-    : icon?.key;
-
-export const useAccessibleTagColors = (
-  themeKind: ThemeKind,
-  powerLevelTags: PowerLevelTags
-): Map<string, string> => {
-  const accessibleColors: Map<string, string> = useMemo(() => {
-    const colors: Map<string, string> = new Map();
-
-    getPowers(powerLevelTags).forEach((power) => {
-      const tag = powerLevelTags[power];
-      const { color } = tag;
-      if (!color) return;
-
-      colors.set(color, accessibleColor(themeKind, color));
-    });
-
-    return colors;
-  }, [powerLevelTags, themeKind]);
-
-  return accessibleColors;
+export const getPowerLevelTag = (
+  powerLevelTags: PowerLevelTags,
+  powerLevel: number
+): MemberPowerTag => {
+  const tag: MemberPowerTag | undefined = powerLevelTags[powerLevel];
+  return tag ?? generateFallbackTag(powerLevelTags, powerLevel);
 };

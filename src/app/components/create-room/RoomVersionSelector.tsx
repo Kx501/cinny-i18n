@@ -47,7 +47,7 @@ export function RoomVersionSelector({
       gap="500"
     >
       <SettingTile
-        title="Room Version"
+        title="Version"
         after={
           <PopOut
             anchor={menuCords}

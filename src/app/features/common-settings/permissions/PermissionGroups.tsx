@@ -10,10 +10,9 @@ import {
   getPermissionPower,
   IPowerLevels,
   PermissionLocation,
-  usePowerLevelsAPI,
 } from '../../../hooks/usePowerLevels';
 import { PermissionGroup } from './types';
-import { getPowers, usePowerLevelTags } from '../../../hooks/usePowerLevelTags';
+import { getPowerLevelTag, getPowers, usePowerLevelTags } from '../../../hooks/usePowerLevelTags';
 import { useRoom } from '../../../hooks/useRoom';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import { StateEvent } from '../../../../types/matrix/room';
@@ -26,19 +25,20 @@ const USER_DEFAULT_LOCATION: PermissionLocation = {
 };
 
 type PermissionGroupsProps = {
+  canEdit: boolean;
   powerLevels: IPowerLevels;
   permissionGroups: PermissionGroup[];
 };
-export function PermissionGroups({ powerLevels, permissionGroups }: PermissionGroupsProps) {
+export function PermissionGroups({
+  powerLevels,
+  permissionGroups,
+  canEdit,
+}: PermissionGroupsProps) {
   const mx = useMatrixClient();
   const room = useRoom();
   const alive = useAlive();
-  const { getPowerLevel, canSendStateEvent } = usePowerLevelsAPI(powerLevels);
-  const canChangePermission = canSendStateEvent(
-    StateEvent.RoomPowerLevels,
-    getPowerLevel(mx.getSafeUserId())
-  );
-  const [powerLevelTags, getPowerLevelTag] = usePowerLevelTags(room, powerLevels);
+
+  const powerLevelTags = usePowerLevelTags(room, powerLevels);
   const maxPower = useMemo(() => Math.max(...getPowers(powerLevelTags)), [powerLevelTags]);
 
   const [permissionUpdate, setPermissionUpdate] = useState<Map<PermissionLocation, number>>(
@@ -82,6 +82,7 @@ export function PermissionGroups({ powerLevels, permissionGroups }: PermissionGr
         permissionUpdate.forEach((power, location) =>
           applyPermissionPower(draftPowerLevels, location, power)
         );
+
         return draftPowerLevels;
       });
       await mx.sendStateEvent(room.roomId, StateEvent.RoomPowerLevels as any, editedPowerLevels);
@@ -108,7 +109,7 @@ export function PermissionGroups({ powerLevels, permissionGroups }: PermissionGr
     const powerUpdate = permissionUpdate.get(USER_DEFAULT_LOCATION);
     const value = powerUpdate ?? power;
 
-    const tag = getPowerLevelTag(value);
+    const tag = getPowerLevelTag(powerLevelTags, value);
     const powerChanges = value !== power;
 
     return (
@@ -136,14 +137,14 @@ export function PermissionGroups({ powerLevels, permissionGroups }: PermissionGr
                     fill="Soft"
                     radii="Pill"
                     aria-selected={opened}
-                    disabled={!canChangePermission || applyingChanges}
+                    disabled={!canEdit || applyingChanges}
                     after={
                       powerChanges && (
                         <Badge size="200" variant="Success" fill="Solid" radii="Pill" />
                       )
                     }
                     before={
-                      canChangePermission && (
+                      canEdit && (
                         <Icon size="50" src={opened ? Icons.ChevronTop : Icons.ChevronBottom} />
                       )
                     }
@@ -173,7 +174,7 @@ export function PermissionGroups({ powerLevels, permissionGroups }: PermissionGr
             const powerUpdate = permissionUpdate.get(item.location);
             const value = powerUpdate ?? power;
 
-            const tag = getPowerLevelTag(value);
+            const tag = getPowerLevelTag(powerLevelTags, value);
             const powerChanges = value !== power;
 
             return (
@@ -200,14 +201,14 @@ export function PermissionGroups({ powerLevels, permissionGroups }: PermissionGr
                           fill="Soft"
                           radii="Pill"
                           aria-selected={opened}
-                          disabled={!canChangePermission || applyingChanges}
+                          disabled={!canEdit || applyingChanges}
                           after={
                             powerChanges && (
                               <Badge size="200" variant="Success" fill="Solid" radii="Pill" />
                             )
                           }
                           before={
-                            canChangePermission && (
+                            canEdit && (
                               <Icon
                                 size="50"
                                 src={opened ? Icons.ChevronTop : Icons.ChevronBottom}

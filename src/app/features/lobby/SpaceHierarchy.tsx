@@ -8,14 +8,16 @@ import {
   HierarchyItemSpace,
   useFetchSpaceHierarchyLevel,
 } from '../../hooks/useSpaceHierarchy';
-import { IPowerLevels, powerLevelAPI } from '../../hooks/usePowerLevels';
+import { IPowerLevels } from '../../hooks/usePowerLevels';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { SpaceItemCard } from './SpaceItem';
 import { AfterItemDropTarget, CanDropCallback } from './DnD';
 import { HierarchyItemMenu } from './HierarchyItemMenu';
 import { RoomItemCard } from './RoomItem';
-import { RoomType } from '../../../types/matrix/room';
+import { RoomType, StateEvent } from '../../../types/matrix/room';
 import { SequenceCard } from '../../components/sequence-card';
+import { getRoomCreatorsForRoomId } from '../../hooks/useRoomCreators';
+import { getRoomPermissionsAPI } from '../../hooks/useRoomPermissions';
 
 type SpaceHierarchyProps = {
   summary: IHierarchyRoom | undefined;
@@ -24,7 +26,6 @@ type SpaceHierarchyProps = {
   allJoinedRooms: Set<string>;
   mDirects: Set<string>;
   roomsPowerLevels: Map<string, IPowerLevels>;
-  canEditSpaceChild: (powerLevels: IPowerLevels) => boolean;
   categoryId: string;
   closed: boolean;
   handleClose: MouseEventHandler<HTMLButtonElement>;
@@ -48,7 +49,6 @@ export const SpaceHierarchy = forwardRef<HTMLDivElement, SpaceHierarchyProps>(
       allJoinedRooms,
       mDirects,
       roomsPowerLevels,
-      canEditSpaceChild,
       categoryId,
       closed,
       handleClose,
@@ -79,25 +79,28 @@ export const SpaceHierarchy = forwardRef<HTMLDivElement, SpaceHierarchyProps>(
       return s;
     }, [rooms]);
 
-    const spacePowerLevels = roomsPowerLevels.get(spaceItem.roomId) ?? {};
-    const userPLInSpace = powerLevelAPI.getPowerLevel(
-      spacePowerLevels,
-      mx.getUserId() ?? undefined
-    );
-    const canInviteInSpace = powerLevelAPI.canDoAction(spacePowerLevels, 'invite', userPLInSpace);
+    const spacePowerLevels = roomsPowerLevels.get(spaceItem.roomId);
+    const spaceCreators = getRoomCreatorsForRoomId(mx, spaceItem.roomId);
+    const spacePermissions =
+      spacePowerLevels && getRoomPermissionsAPI(spaceCreators, spacePowerLevels);
 
     const draggingSpace =
       draggingItem?.roomId === spaceItem.roomId && draggingItem.parentId === spaceItem.parentId;
 
     const { parentId } = spaceItem;
-    const parentPowerLevels = parentId ? roomsPowerLevels.get(parentId) ?? {} : undefined;
+    const parentPowerLevels = parentId ? roomsPowerLevels.get(parentId) : undefined;
+    const parentCreators = parentId ? getRoomCreatorsForRoomId(mx, parentId) : undefined;
+    const parentPermissions =
+      parentCreators &&
+      parentPowerLevels &&
+      getRoomPermissionsAPI(parentCreators, parentPowerLevels);
 
     useEffect(() => {
       onSpacesFound(Array.from(subspaces.values()));
     }, [subspaces, onSpacesFound]);
 
     let childItems = roomItems?.filter((i) => !subspaces.has(i.roomId));
-    if (!canEditSpaceChild(spacePowerLevels)) {
+    if (!spacePermissions?.stateEvent(StateEvent.SpaceChild, mx.getSafeUserId())) {
       // hide unknown rooms for normal user
       childItems = childItems?.filter((i) => {
         const forbidden = error instanceof MatrixError ? error.errcode === 'M_FORBIDDEN' : false;
@@ -117,18 +120,22 @@ export const SpaceHierarchy = forwardRef<HTMLDivElement, SpaceHierarchyProps>(
           closed={closed}
           handleClose={handleClose}
           getRoom={getRoom}
-          canEditChild={canEditSpaceChild(spacePowerLevels)}
+          canEditChild={!!spacePermissions?.stateEvent(StateEvent.SpaceChild, mx.getSafeUserId())}
           canReorder={
-            parentPowerLevels && !disabledReorder ? canEditSpaceChild(parentPowerLevels) : false
+            parentPowerLevels && !disabledReorder && parentPermissions
+              ? parentPermissions.stateEvent(StateEvent.SpaceChild, mx.getSafeUserId())
+              : false
           }
           options={
             parentId &&
             parentPowerLevels && (
               <HierarchyItemMenu
                 item={{ ...spaceItem, parentId }}
-                canInvite={canInviteInSpace}
+                powerLevels={spacePowerLevels}
                 joined={allJoinedRooms.has(spaceItem.roomId)}
-                canEditChild={canEditSpaceChild(parentPowerLevels)}
+                canEditChild={
+                  !!parentPermissions?.stateEvent(StateEvent.SpaceChild, mx.getSafeUserId())
+                }
                 pinned={pinned}
                 onTogglePin={togglePinToSidebar}
               />
@@ -151,15 +158,6 @@ export const SpaceHierarchy = forwardRef<HTMLDivElement, SpaceHierarchyProps>(
               const roomSummary = rooms.get(roomItem.roomId);
 
               const roomPowerLevels = roomsPowerLevels.get(roomItem.roomId) ?? {};
-              const userPLInRoom = powerLevelAPI.getPowerLevel(
-                roomPowerLevels,
-                mx.getUserId() ?? undefined
-              );
-              const canInviteInRoom = powerLevelAPI.canDoAction(
-                roomPowerLevels,
-                'invite',
-                userPLInRoom
-              );
 
               const lastItem = index === childItems.length;
               const nextRoomId = lastItem ? nextSpaceId : childItems[index + 1]?.roomId;
@@ -178,13 +176,18 @@ export const SpaceHierarchy = forwardRef<HTMLDivElement, SpaceHierarchyProps>(
                   dm={mDirects.has(roomItem.roomId)}
                   onOpen={onOpenRoom}
                   getRoom={getRoom}
-                  canReorder={canEditSpaceChild(spacePowerLevels) && !disabledReorder}
+                  canReorder={
+                    !!spacePermissions?.stateEvent(StateEvent.SpaceChild, mx.getSafeUserId()) &&
+                    !disabledReorder
+                  }
                   options={
                     <HierarchyItemMenu
                       item={roomItem}
-                      canInvite={canInviteInRoom}
+                      powerLevels={roomPowerLevels}
                       joined={allJoinedRooms.has(roomItem.roomId)}
-                      canEditChild={canEditSpaceChild(spacePowerLevels)}
+                      canEditChild={
+                        !!spacePermissions?.stateEvent(StateEvent.SpaceChild, mx.getSafeUserId())
+                      }
                     />
                   }
                   after={

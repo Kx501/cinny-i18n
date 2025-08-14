@@ -42,7 +42,7 @@ import { getCanonicalAliasOrRoomId, isRoomAlias, mxcUrlToHttp } from '../../util
 import { _SearchPathSearchParams } from '../../pages/paths';
 import * as css from './RoomViewHeader.css';
 import { useRoomUnread } from '../../state/hooks/unread';
-import { usePowerLevelsAPI, usePowerLevelsContext } from '../../hooks/usePowerLevels';
+import { usePowerLevelsContext } from '../../hooks/usePowerLevels';
 import { markAsRead } from '../../../client/action/notifications';
 import { roomToUnreadAtom } from '../../state/room/roomToUnread';
 import { openInviteUser } from '../../../client/action/navigation';
@@ -67,6 +67,8 @@ import {
 } from '../../hooks/useRoomsNotificationPreferences';
 import { JumpToTime } from './jump-to-time';
 import { useRoomNavigate } from '../../hooks/useRoomNavigate';
+import { useRoomCreators } from '../../hooks/useRoomCreators';
+import { useRoomPermissions } from '../../hooks/useRoomPermissions';
 
 type RoomMenuProps = {
   room: Room;
@@ -77,8 +79,10 @@ const RoomMenu = forwardRef<HTMLDivElement, RoomMenuProps>(({ room, requestClose
   const [hideActivity] = useSetting(settingsAtom, 'hideActivity');
   const unread = useRoomUnread(room.roomId, roomToUnreadAtom);
   const powerLevels = usePowerLevelsContext();
-  const { getPowerLevel, canDoAction } = usePowerLevelsAPI(powerLevels);
-  const canInvite = canDoAction('invite', getPowerLevel(mx.getUserId() ?? ''));
+  const creators = useRoomCreators(room);
+
+  const permissions = useRoomPermissions(creators, powerLevels);
+  const canInvite = permissions.action('invite', mx.getSafeUserId());
   const notificationPreferences = useRoomsNotificationPreferencesContext();
   const notificationMode = getRoomNotificationMode(notificationPreferences, room.roomId);
   const { navigateRoom } = useRoomNavigate();

@@ -26,8 +26,8 @@ import { isKeyHotkey } from 'is-hotkey';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
 import { PowerColorBadge, PowerIcon } from '../power';
-import { usePowerLevels, usePowerLevelsAPI } from '../../hooks/usePowerLevels';
-import { getPowers, getTagIconSrc, usePowerLevelTags } from '../../hooks/usePowerLevelTags';
+import { useGetMemberPowerLevel, usePowerLevels } from '../../hooks/usePowerLevels';
+import { getPowers, usePowerLevelTags } from '../../hooks/usePowerLevelTags';
 import { stopPropagation } from '../../utils/keyboard';
 import { StateEvent } from '../../../types/matrix/room';
 import { useOpenRoomSettings } from '../../state/hooks/roomSettings';
@@ -39,6 +39,10 @@ import { useOpenSpaceSettings } from '../../state/hooks/spaceSettings';
 import { SpaceSettingsPage } from '../../state/spaceSettings';
 import { AsyncStatus, useAsyncCallback } from '../../hooks/useAsyncCallback';
 import { BreakWord } from '../../styles/Text.css';
+import { getPowerTagIconSrc, useGetMemberPowerTag } from '../../hooks/useMemberPowerTag';
+import { useRoomCreators } from '../../hooks/useRoomCreators';
+import { useRoomPermissions } from '../../hooks/useRoomPermissions';
+import { useMemberPowerCompare } from '../../hooks/useMemberPowerCompare';
 
 type SelfDemoteAlertProps = {
   power: number;
@@ -149,16 +153,22 @@ export function PowerChip({ userId }: { userId: string }) {
   const openSpaceSettings = useOpenSpaceSettings();
 
   const powerLevels = usePowerLevels(room);
-  const { getPowerLevel, canSendStateEvent } = usePowerLevelsAPI(powerLevels);
-  const [powerLevelTags, getPowerLevelTag] = usePowerLevelTags(room, powerLevels);
-  const myPower = getPowerLevel(mx.getSafeUserId());
-  const userPower = getPowerLevel(userId);
-  const canChangePowers =
-    canSendStateEvent(StateEvent.RoomPowerLevels, myPower) &&
-    (mx.getSafeUserId() === userId ? true : myPower > userPower);
+  const creators = useRoomCreators(room);
 
-  const tag = getPowerLevelTag(userPower);
-  const tagIconSrc = tag.icon && getTagIconSrc(mx, useAuthentication, tag.icon);
+  const permissions = useRoomPermissions(creators, powerLevels);
+  const getMemberPowerLevel = useGetMemberPowerLevel(powerLevels);
+  const { hasMorePower } = useMemberPowerCompare(creators, powerLevels);
+
+  const powerLevelTags = usePowerLevelTags(room, powerLevels);
+  const getMemberPowerTag = useGetMemberPowerTag(room, creators, powerLevels);
+
+  const myUserId = mx.getSafeUserId();
+  const canChangePowers =
+    permissions.stateEvent(StateEvent.RoomPowerLevels, myUserId) &&
+    (myUserId === userId ? true : hasMorePower(myUserId, userId));
+
+  const tag = getMemberPowerTag(userId);
+  const tagIconSrc = tag.icon && getPowerTagIconSrc(mx, useAuthentication, tag.icon);
 
   const [cords, setCords] = useState<RectCords>();
 
@@ -184,13 +194,13 @@ export function PowerChip({ userId }: { userId: string }) {
   const handlePowerSelect = (power: number): void => {
     close();
     if (!canChangePowers) return;
-    if (power === userPower) return;
+    if (power === getMemberPowerLevel(userId)) return;
 
     if (userId === mx.getSafeUserId()) {
       setSelfDemote(power);
       return;
     }
-    if (power === myPower) {
+    if (!creators.has(myUserId) && power === getMemberPowerLevel(myUserId)) {
       setSharedPower(power);
       return;
     }
@@ -242,19 +252,22 @@ export function PowerChip({ userId }: { userId: string }) {
                 {getPowers(powerLevelTags).map((power) => {
                   const powerTag = powerLevelTags[power];
                   const powerTagIconSrc =
-                    powerTag.icon && getTagIconSrc(mx, useAuthentication, powerTag.icon);
+                    powerTag.icon && getPowerTagIconSrc(mx, useAuthentication, powerTag.icon);
 
-                  const canAssignPower = power <= myPower;
+                  const selected = getMemberPowerLevel(userId) === power;
+                  const canAssignPower = creators.has(myUserId)
+                    ? true
+                    : power <= getMemberPowerLevel(myUserId);
 
                   return (
                     <MenuItem
                       key={power}
-                      variant={userPower === power ? 'Primary' : 'Surface'}
+                      variant={selected ? 'Primary' : 'Surface'}
                       fill="None"
                       size="300"
                       radii="300"
                       aria-disabled={changing || !canChangePowers || !canAssignPower}
-                      aria-pressed={userPower === power}
+                      aria-pressed={selected}
                       before={<PowerColorBadge color={powerTag.color} />}
                       after={
                         powerTagIconSrc ? (

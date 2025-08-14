@@ -77,7 +77,7 @@ import { AccountDataEvent } from '../../../../types/matrix/accountData';
 import { ScreenSize, useScreenSizeContext } from '../../../hooks/useScreenSize';
 import { useNavToActivePathAtom } from '../../../state/hooks/navToActivePath';
 import { useOpenedSidebarFolderAtom } from '../../../state/hooks/openedSidebarFolder';
-import { usePowerLevels, usePowerLevelsAPI } from '../../../hooks/usePowerLevels';
+import { usePowerLevels } from '../../../hooks/usePowerLevels';
 import { useRoomsUnread } from '../../../state/hooks/unread';
 import { roomToUnreadAtom } from '../../../state/room/roomToUnread';
 import { markAsRead } from '../../../../client/action/notifications';
@@ -92,6 +92,8 @@ import { useSetting } from '../../../state/hooks/settings';
 import { settingsAtom } from '../../../state/settings';
 import { useOpenSpaceSettings } from '../../../state/hooks/spaceSettings';
 import { useTranslation } from 'react-i18next';
+import { useRoomCreators } from '../../../hooks/useRoomCreators';
+import { useRoomPermissions } from '../../../hooks/useRoomPermissions';
 
 type SpaceMenuProps = {
   room: Room;
@@ -105,8 +107,10 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(
     const [hideActivity] = useSetting(settingsAtom, 'hideActivity');
     const roomToParents = useAtomValue(roomToParentsAtom);
     const powerLevels = usePowerLevels(room);
-    const { getPowerLevel, canDoAction } = usePowerLevelsAPI(powerLevels);
-    const canInvite = canDoAction('invite', getPowerLevel(mx.getUserId() ?? ''));
+    const creators = useRoomCreators(room);
+
+    const permissions = useRoomPermissions(creators, powerLevels);
+    const canInvite = permissions.action('invite', mx.getSafeUserId());
     const openSpaceSettings = useOpenSpaceSettings();
 
     const allChild = useSpaceChildren(

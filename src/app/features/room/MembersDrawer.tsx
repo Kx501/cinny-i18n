@@ -26,7 +26,7 @@ import {
   TooltipProvider,
   config,
 } from 'folds';
-import { Room, RoomMember } from 'matrix-js-sdk';
+import { MatrixClient, Room, RoomMember } from 'matrix-js-sdk';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import classNames from 'classnames';
 
@@ -39,7 +39,6 @@ import {
   useAsyncSearch,
 } from '../../hooks/useAsyncSearch';
 import { useDebounce } from '../../hooks/useDebounce';
-import { usePowerLevelTags, useFlattenPowerLevelTagMembers } from '../../hooks/usePowerLevelTags';
 import { TypingIndicator } from '../../components/typing-indicator';
 import { getMemberDisplayName, getMemberSearchStr } from '../../utils/room';
 import { getMxIdLocalPart } from '../../utils/matrix';
@@ -51,12 +50,116 @@ import { UserAvatar } from '../../components/user-avatar';
 import { useRoomTypingMember } from '../../hooks/useRoomTypingMembers';
 import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
 import { useMembershipFilter, useMembershipFilterMenu } from '../../hooks/useMemberFilter';
-import { useMemberSort, useMemberSortMenu } from '../../hooks/useMemberSort';
-import { usePowerLevelsAPI, usePowerLevelsContext } from '../../hooks/usePowerLevels';
+import { useMemberPowerSort, useMemberSort, useMemberSortMenu } from '../../hooks/useMemberSort';
+import { usePowerLevelsContext } from '../../hooks/usePowerLevels';
 import { MembershipFilterMenu } from '../../components/MembershipFilterMenu';
 import { MemberSortMenu } from '../../components/MemberSortMenu';
 import { useOpenUserRoomProfile, useUserRoomProfileState } from '../../state/hooks/userRoomProfile';
 import { useSpaceOptionally } from '../../hooks/useSpace';
+import { ContainerColor } from '../../styles/ContainerColor.css';
+import { useFlattenPowerTagMembers, useGetMemberPowerTag } from '../../hooks/useMemberPowerTag';
+import { useRoomCreators } from '../../hooks/useRoomCreators';
+
+type MemberDrawerHeaderProps = {
+  room: Room;
+};
+function MemberDrawerHeader({ room }: MemberDrawerHeaderProps) {
+  const setPeopleDrawer = useSetSetting(settingsAtom, 'isPeopleDrawer');
+
+  return (
+    <Header className={css.MembersDrawerHeader} variant="Background" size="600">
+      <Box grow="Yes" alignItems="Center" gap="200">
+        <Box grow="Yes" alignItems="Center" gap="200">
+          <Text title={`${room.getJoinedMemberCount()} Members`} size="H5" truncate>
+            {`${millify(room.getJoinedMemberCount())} Members`}
+          </Text>
+        </Box>
+        <Box shrink="No" alignItems="Center">
+          <TooltipProvider
+            position="Bottom"
+            align="End"
+            offset={4}
+            tooltip={
+              <Tooltip>
+                <Text>Close</Text>
+              </Tooltip>
+            }
+          >
+            {(triggerRef) => (
+              <IconButton
+                ref={triggerRef}
+                variant="Background"
+                onClick={() => setPeopleDrawer(false)}
+              >
+                <Icon src={Icons.Cross} />
+              </IconButton>
+            )}
+          </TooltipProvider>
+        </Box>
+      </Box>
+    </Header>
+  );
+}
+
+type MemberItemProps = {
+  mx: MatrixClient;
+  useAuthentication: boolean;
+  room: Room;
+  member: RoomMember;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  pressed?: boolean;
+  typing?: boolean;
+};
+function MemberItem({
+  mx,
+  useAuthentication,
+  room,
+  member,
+  onClick,
+  pressed,
+  typing,
+}: MemberItemProps) {
+  const name =
+    getMemberDisplayName(room, member.userId) ?? getMxIdLocalPart(member.userId) ?? member.userId;
+  const avatarMxcUrl = member.getMxcAvatarUrl();
+  const avatarUrl = avatarMxcUrl
+    ? mx.mxcUrlToHttp(avatarMxcUrl, 100, 100, 'crop', undefined, false, useAuthentication)
+    : undefined;
+
+  return (
+    <MenuItem
+      style={{ padding: `0 ${config.space.S200}` }}
+      aria-pressed={pressed}
+      data-user-id={member.userId}
+      variant="Background"
+      radii="400"
+      onClick={onClick}
+      before={
+        <Avatar size="200">
+          <UserAvatar
+            userId={member.userId}
+            src={avatarUrl ?? undefined}
+            alt={name}
+            renderFallback={() => <Icon size="50" src={Icons.User} filled />}
+          />
+        </Avatar>
+      }
+      after={
+        typing && (
+          <Badge size="300" variant="Secondary" fill="Soft" radii="Pill" outlined>
+            <TypingIndicator size="300" />
+          </Badge>
+        )
+      }
+    >
+      <Box grow="Yes">
+        <Text size="T400" truncate>
+          {name}
+        </Text>
+      </Box>
+    </MenuItem>
+  );
+}
 
 const SEARCH_OPTIONS: UseAsyncSearchOptions = {
   limit: 1000,
@@ -80,9 +183,10 @@ export function MembersDrawer({ room, members }: MembersDrawerProps) {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const scrollTopAnchorRef = useRef<HTMLDivElement>(null);
   const powerLevels = usePowerLevelsContext();
-  const [, getPowerLevelTag] = usePowerLevelTags(room, powerLevels);
+  const creators = useRoomCreators(room);
+  const getPowerTag = useGetMemberPowerTag(room, creators, powerLevels);
+
   const fetchingMembers = members.length < room.getJoinedMemberCount();
-  const setPeopleDrawer = useSetSetting(settingsAtom, 'isPeopleDrawer');
   const openUserRoomProfile = useOpenUserRoomProfile();
   const space = useSpaceOptionally();
   const openProfileUserId = useUserRoomProfileState()?.userId;
@@ -91,20 +195,16 @@ export function MembersDrawer({ room, members }: MembersDrawerProps) {
   const sortFilterMenu = useMemberSortMenu();
   const [sortFilterIndex, setSortFilterIndex] = useSetting(settingsAtom, 'memberSortFilterIndex');
   const [membershipFilterIndex, setMembershipFilterIndex] = useState(0);
-  const { getPowerLevel } = usePowerLevelsAPI(powerLevels);
 
   const membershipFilter = useMembershipFilter(membershipFilterIndex, membershipFilterMenu);
   const memberSort = useMemberSort(sortFilterIndex, sortFilterMenu);
+  const memberPowerSort = useMemberPowerSort(creators);
 
   const typingMembers = useRoomTypingMember(room.roomId);
 
   const filteredMembers = useMemo(
-    () =>
-      members
-        .filter(membershipFilter.filterFn)
-        .sort(memberSort.sortFn)
-        .sort((a, b) => b.powerLevel - a.powerLevel),
-    [members, membershipFilter, memberSort]
+    () => members.filter(membershipFilter.filterFn).sort(memberSort.sortFn).sort(memberPowerSort),
+    [members, membershipFilter, memberSort, memberPowerSort]
   );
 
   const [result, search, resetSearch] = useAsyncSearch(
@@ -116,11 +216,7 @@ export function MembersDrawer({ room, members }: MembersDrawerProps) {
 
   const processMembers = result ? result.items : filteredMembers;
 
-  const PLTagOrRoomMember = useFlattenPowerLevelTagMembers(
-    processMembers,
-    getPowerLevel,
-    getPowerLevelTag
-  );
+  const PLTagOrRoomMember = useFlattenPowerTagMembers(processMembers, getPowerTag);
 
   const virtualizer = useVirtualizer({
     count: PLTagOrRoomMember.length,
@@ -140,9 +236,6 @@ export function MembersDrawer({ room, members }: MembersDrawerProps) {
     { wait: 200 }
   );
 
-  const getName = (member: RoomMember) =>
-    getMemberDisplayName(room, member.userId) ?? getMxIdLocalPart(member.userId) ?? member.userId;
-
   const handleMemberClick: MouseEventHandler<HTMLButtonElement> = (evt) => {
     const btn = evt.currentTarget as HTMLButtonElement;
     const userId = btn.getAttribute('data-user-id');
@@ -151,38 +244,12 @@ export function MembersDrawer({ room, members }: MembersDrawerProps) {
   };
 
   return (
-    <Box className={css.MembersDrawer} shrink="No" direction="Column">
-      <Header className={css.MembersDrawerHeader} variant="Background" size="600">
-        <Box grow="Yes" alignItems="Center" gap="200">
-          <Box grow="Yes" alignItems="Center" gap="200">
-            <Text title={`${room.getJoinedMemberCount()} Members`} size="H5" truncate>
-              {`${millify(room.getJoinedMemberCount())} Members`}
-            </Text>
-          </Box>
-          <Box shrink="No" alignItems="Center">
-            <TooltipProvider
-              position="Bottom"
-              align="End"
-              offset={4}
-              tooltip={
-                <Tooltip>
-                  <Text>Close</Text>
-                </Tooltip>
-              }
-            >
-              {(triggerRef) => (
-                <IconButton
-                  ref={triggerRef}
-                  variant="Background"
-                  onClick={() => setPeopleDrawer(false)}
-                >
-                  <Icon src={Icons.Cross} />
-                </IconButton>
-              )}
-            </TooltipProvider>
-          </Box>
-        </Box>
-      </Header>
+    <Box
+      className={classNames(css.MembersDrawer, ContainerColor({ variant: 'Background' }))}
+      shrink="No"
+      direction="Column"
+    >
+      <MemberDrawerHeader room={room} />
       <Box className={css.MemberDrawerContentBase} grow="Yes">
         <Scroll ref={scrollRef} variant="Background" size="300" visibility="Hover" hideTrack>
           <Box className={css.MemberDrawerContent} direction="Column" gap="200">
@@ -334,60 +401,28 @@ export function MembersDrawer({ room, members }: MembersDrawerProps) {
                     );
                   }
 
-                  const member = tagOrMember;
-                  const name = getName(member);
-                  const avatarMxcUrl = member.getMxcAvatarUrl();
-                  const avatarUrl = avatarMxcUrl
-                    ? mx.mxcUrlToHttp(
-                        avatarMxcUrl,
-                        100,
-                        100,
-                        'crop',
-                        undefined,
-                        false,
-                        useAuthentication
-                      )
-                    : undefined;
-
                   return (
-                    <MenuItem
+                    <div
                       style={{
-                        padding: `0 ${config.space.S200}`,
                         transform: `translateY(${vItem.start}px)`,
                       }}
-                      aria-pressed={openProfileUserId === member.userId}
-                      data-index={vItem.index}
-                      data-user-id={member.userId}
-                      ref={virtualizer.measureElement}
-                      key={`${room.roomId}-${member.userId}`}
                       className={css.DrawerVirtualItem}
-                      variant="Background"
-                      radii="400"
-                      onClick={handleMemberClick}
-                      before={
-                        <Avatar size="200">
-                          <UserAvatar
-                            userId={member.userId}
-                            src={avatarUrl ?? undefined}
-                            alt={name}
-                            renderFallback={() => <Icon size="50" src={Icons.User} filled />}
-                          />
-                        </Avatar>
-                      }
-                      after={
-                        typingMembers.find((receipt) => receipt.userId === member.userId) && (
-                          <Badge size="300" variant="Secondary" fill="Soft" radii="Pill" outlined>
-                            <TypingIndicator size="300" />
-                          </Badge>
-                        )
-                      }
+                      data-index={vItem.index}
+                      key={`${room.roomId}-${tagOrMember.userId}`}
+                      ref={virtualizer.measureElement}
                     >
-                      <Box grow="Yes">
-                        <Text size="T400" truncate>
-                          {name}
-                        </Text>
-                      </Box>
-                    </MenuItem>
+                      <MemberItem
+                        mx={mx}
+                        useAuthentication={useAuthentication}
+                        room={room}
+                        member={tagOrMember}
+                        onClick={handleMemberClick}
+                        pressed={openProfileUserId === tagOrMember.userId}
+                        typing={typingMembers.some(
+                          (receipt) => receipt.userId === tagOrMember.userId
+                        )}
+                      />
+                    </div>
                   );
                 })}
               </div>

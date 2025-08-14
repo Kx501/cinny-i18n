@@ -85,16 +85,19 @@ import { ScreenSize, useScreenSizeContext } from '../../../hooks/useScreenSize';
 import { BackRouteHandler } from '../../../components/BackRouteHandler';
 import { useMediaAuthentication } from '../../../hooks/useMediaAuthentication';
 import { allRoomsAtom } from '../../../state/room-list/roomList';
-import { usePowerLevels, usePowerLevelsAPI } from '../../../hooks/usePowerLevels';
-import {
-  getTagIconSrc,
-  useAccessibleTagColors,
-  usePowerLevelTags,
-} from '../../../hooks/usePowerLevelTags';
+import { usePowerLevels } from '../../../hooks/usePowerLevels';
+import { usePowerLevelTags } from '../../../hooks/usePowerLevelTags';
 import { useTheme } from '../../../hooks/useTheme';
 import { PowerIcon } from '../../../components/power';
 import colorMXID from '../../../../util/colorMXID';
 import { mDirectAtom } from '../../../state/mDirectList';
+import {
+  getPowerTagIconSrc,
+  useAccessiblePowerTagColors,
+  useGetMemberPowerTag,
+} from '../../../hooks/useMemberPowerTag';
+import { useRoomCreatorsTag } from '../../../hooks/useRoomCreatorsTag';
+import { useRoomCreators } from '../../../hooks/useRoomCreators';
 
 type RoomNotificationsGroup = {
   roomId: string;
@@ -225,10 +228,14 @@ function RoomNotificationsGroupComp({
   const unread = useRoomUnread(room.roomId, roomToUnreadAtom);
 
   const powerLevels = usePowerLevels(room);
-  const { getPowerLevel } = usePowerLevelsAPI(powerLevels);
-  const [powerLevelTags, getPowerLevelTag] = usePowerLevelTags(room, powerLevels);
+  const creators = useRoomCreators(room);
+
+  const creatorsTag = useRoomCreatorsTag();
+  const powerLevelTags = usePowerLevelTags(room, powerLevels);
+  const getMemberPowerTag = useGetMemberPowerTag(room, creators, powerLevels);
+
   const theme = useTheme();
-  const accessibleTagColors = useAccessibleTagColors(theme.kind, powerLevelTags);
+  const accessibleTagColors = useAccessiblePowerTagColors(theme.kind, creatorsTag, powerLevelTags);
 
   const mentionClickHandler = useMentionClickHandler(room.roomId);
   const spoilerClickHandler = useSpoilerClickHandler();
@@ -448,13 +455,12 @@ function RoomNotificationsGroupComp({
           const threadRootId =
             relation?.rel_type === RelationType.Thread ? relation.event_id : undefined;
 
-          const senderPowerLevel = getPowerLevel(event.sender);
-          const powerLevelTag = getPowerLevelTag(senderPowerLevel);
-          const tagColor = powerLevelTag?.color
-            ? accessibleTagColors?.get(powerLevelTag.color)
+          const memberPowerTag = getMemberPowerTag(event.sender);
+          const tagColor = memberPowerTag?.color
+            ? accessibleTagColors?.get(memberPowerTag.color)
             : undefined;
-          const tagIconSrc = powerLevelTag?.icon
-            ? getTagIconSrc(mx, useAuthentication, powerLevelTag.icon)
+          const tagIconSrc = memberPowerTag?.icon
+            ? getPowerTagIconSrc(mx, useAuthentication, memberPowerTag.icon)
             : undefined;
 
           const usernameColor = legacyUsernameColor ? colorMXID(event.sender) : tagColor;
@@ -524,8 +530,7 @@ function RoomNotificationsGroupComp({
                     replyEventId={replyEventId}
                     threadRootId={threadRootId}
                     onClick={handleOpenClick}
-                    getPowerLevel={getPowerLevel}
-                    getPowerLevelTag={getPowerLevelTag}
+                    getMemberPowerTag={getMemberPowerTag}
                     accessibleTagColors={accessibleTagColors}
                     legacyUsernameColor={legacyUsernameColor}
                   />

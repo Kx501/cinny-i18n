@@ -27,7 +27,7 @@ import { nameInitials } from '../../utils/common';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { useRoomUnread } from '../../state/hooks/unread';
 import { roomToUnreadAtom } from '../../state/room/roomToUnread';
-import { usePowerLevels, usePowerLevelsAPI } from '../../hooks/usePowerLevels';
+import { usePowerLevels } from '../../hooks/usePowerLevels';
 import { copyToClipboard } from '../../utils/dom';
 import { markAsRead } from '../../../client/action/notifications';
 import { openInviteUser } from '../../../client/action/navigation';
@@ -49,6 +49,8 @@ import {
   RoomNotificationMode,
 } from '../../hooks/useRoomsNotificationPreferences';
 import { RoomNotificationModeSwitcher } from '../../components/RoomNotificationSwitcher';
+import { useRoomCreators } from '../../hooks/useRoomCreators';
+import { useRoomPermissions } from '../../hooks/useRoomPermissions';
 
 type RoomNavItemMenuProps = {
   room: Room;
@@ -61,8 +63,10 @@ const RoomNavItemMenu = forwardRef<HTMLDivElement, RoomNavItemMenuProps>(
     const [hideActivity] = useSetting(settingsAtom, 'hideActivity');
     const unread = useRoomUnread(room.roomId, roomToUnreadAtom);
     const powerLevels = usePowerLevels(room);
-    const { getPowerLevel, canDoAction } = usePowerLevelsAPI(powerLevels);
-    const canInvite = canDoAction('invite', getPowerLevel(mx.getUserId() ?? ''));
+    const creators = useRoomCreators(room);
+
+    const permissions = useRoomPermissions(creators, powerLevels);
+    const canInvite = permissions.action('invite', mx.getSafeUserId());
     const openRoomSettings = useOpenRoomSettings();
     const space = useSpaceOptionally();
 

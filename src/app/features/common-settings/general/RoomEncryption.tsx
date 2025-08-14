@@ -21,28 +21,24 @@ import FocusTrap from 'focus-trap-react';
 import { SequenceCard } from '../../../components/sequence-card';
 import { SequenceCardStyle } from '../../room-settings/styles.css';
 import { SettingTile } from '../../../components/setting-tile';
-import { IPowerLevels, powerLevelAPI } from '../../../hooks/usePowerLevels';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import { StateEvent } from '../../../../types/matrix/room';
 import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 import { useRoom } from '../../../hooks/useRoom';
 import { useStateEvent } from '../../../hooks/useStateEvent';
 import { stopPropagation } from '../../../utils/keyboard';
+import { RoomPermissionsAPI } from '../../../hooks/useRoomPermissions';
 
 const ROOM_ENC_ALGO = 'm.megolm.v1.aes-sha2';
 
 type RoomEncryptionProps = {
-  powerLevels: IPowerLevels;
+  permissions: RoomPermissionsAPI;
 };
-export function RoomEncryption({ powerLevels }: RoomEncryptionProps) {
+export function RoomEncryption({ permissions }: RoomEncryptionProps) {
   const mx = useMatrixClient();
   const room = useRoom();
-  const userPowerLevel = powerLevelAPI.getPowerLevel(powerLevels, mx.getSafeUserId());
-  const canEnable = powerLevelAPI.canSendStateEvent(
-    powerLevels,
-    StateEvent.RoomEncryption,
-    userPowerLevel
-  );
+
+  const canEnable = permissions.stateEvent(StateEvent.RoomEncryption, mx.getSafeUserId());
   const content = useStateEvent(room, StateEvent.RoomEncryption)?.getContent<{
     algorithm: string;
   }>();

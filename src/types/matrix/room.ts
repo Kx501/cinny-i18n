@@ -1,3 +1,5 @@
+import { IImageInfo } from './common';
+
 export enum Membership {
   Invite = 'invite',
   Knock = 'knock',
@@ -69,7 +71,7 @@ export type IRoomCreateContent = {
   room_version: string;
   type?: string;
   predecessor?: {
-    event_id: string;
+    event_id?: string;
     room_id: string;
   };
 };
@@ -92,4 +94,14 @@ export type UnreadInfo = {
 export type MuteChanges = {
   added: string[];
   removed: string[];
+};
+
+export type MemberPowerTagIcon = {
+  key?: string;
+  info?: IImageInfo;
+};
+export type MemberPowerTag = {
+  name: string;
+  color?: string;
+  icon?: MemberPowerTagIcon;
 };

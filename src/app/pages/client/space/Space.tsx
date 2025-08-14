@@ -11,6 +11,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import {
   Avatar,
   Box,
+  Button,
   Icon,
   IconButton,
   Icons,
@@ -19,7 +20,9 @@ import {
   MenuItem,
   PopOut,
   RectCords,
+  Spinner,
   Text,
+  color,
   config,
   toRem,
 } from 'folds';
@@ -54,7 +57,7 @@ import { useRoomName } from '../../../hooks/useRoomMeta';
 import { useSpaceJoinedHierarchy } from '../../../hooks/useSpaceHierarchy';
 import { allRoomsAtom } from '../../../state/room-list/roomList';
 import { PageNav, PageNavContent, PageNavHeader } from '../../../components/page';
-import { usePowerLevels, usePowerLevelsAPI } from '../../../hooks/usePowerLevels';
+import { usePowerLevels } from '../../../hooks/usePowerLevels';
 import { openInviteUser } from '../../../../client/action/navigation';
 import { useRecursiveChildScopeFactory, useSpaceChildren } from '../../../state/hooks/roomList';
 import { roomToParentsAtom } from '../../../state/room/roomToParents';
@@ -65,7 +68,7 @@ import { LeaveSpacePrompt } from '../../../components/leave-space-prompt';
 import { copyToClipboard } from '../../../utils/dom';
 import { useClosedNavCategoriesAtom } from '../../../state/hooks/closedNavCategories';
 import { useStateEvent } from '../../../hooks/useStateEvent';
-import { StateEvent } from '../../../../types/matrix/room';
+import { Membership, StateEvent } from '../../../../types/matrix/room';
 import { stopPropagation } from '../../../utils/keyboard';
 import { getMatrixToRoom } from '../../../plugins/matrix-to';
 import { getViaServers } from '../../../plugins/via-servers';
@@ -77,6 +80,11 @@ import {
 } from '../../../hooks/useRoomsNotificationPreferences';
 import { useOpenSpaceSettings } from '../../../state/hooks/spaceSettings';
 import { useRoomNavigate } from '../../../hooks/useRoomNavigate';
+import { useRoomCreators } from '../../../hooks/useRoomCreators';
+import { useRoomPermissions } from '../../../hooks/useRoomPermissions';
+import { ContainerColor } from '../../../styles/ContainerColor.css';
+import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
+import { BreakWord } from '../../../styles/Text.css';
 
 type SpaceMenuProps = {
   room: Room;
@@ -89,8 +97,10 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
   const [developerTools] = useSetting(settingsAtom, 'developerTools');
   const roomToParents = useAtomValue(roomToParentsAtom);
   const powerLevels = usePowerLevels(room);
-  const { getPowerLevel, canDoAction } = usePowerLevelsAPI(powerLevels);
-  const canInvite = canDoAction('invite', getPowerLevel(mx.getUserId() ?? ''));
+  const creators = useRoomCreators(room);
+
+  const permissions = useRoomPermissions(creators, powerLevels);
+  const canInvite = permissions.action('invite', mx.getSafeUserId());
   const openSpaceSettings = useOpenSpaceSettings();
   const { navigateRoom } = useRoomNavigate();
 
@@ -286,6 +296,75 @@ function SpaceHeader() {
   );
 }
 
+type SpaceTombstoneProps = { roomId: string; replacementRoomId: string };
+export function SpaceTombstone({ roomId, replacementRoomId }: SpaceTombstoneProps) {
+  const mx = useMatrixClient();
+  const { navigateRoom } = useRoomNavigate();
+
+  const [joinState, handleJoin] = useAsyncCallback(
+    useCallback(() => {
+      const currentRoom = mx.getRoom(roomId);
+      const via = currentRoom ? getViaServers(currentRoom) : [];
+      return mx.joinRoom(replacementRoomId, {
+        viaServers: via,
+      });
+    }, [mx, roomId, replacementRoomId])
+  );
+  const replacementRoom = mx.getRoom(replacementRoomId);
+
+  const handleOpen = () => {
+    if (replacementRoom) navigateRoom(replacementRoom.roomId);
+    if (joinState.status === AsyncStatus.Success) navigateRoom(joinState.data.roomId);
+  };
+
+  return (
+    <Box
+      style={{
+        padding: config.space.S200,
+        borderRadius: config.radii.R400,
+        borderWidth: config.borderWidth.B300,
+      }}
+      className={ContainerColor({ variant: 'Surface' })}
+      direction="Column"
+      gap="300"
+    >
+      <Box direction="Column" grow="Yes" gap="100">
+        <Text size="L400">Space Upgraded</Text>
+        <Text size="T200">This space has been replaced and is no longer active.</Text>
+        {joinState.status === AsyncStatus.Error && (
+          <Text className={BreakWord} style={{ color: color.Critical.Main }} size="T200">
+            {(joinState.error as any)?.message ?? 'Failed to join replacement space!'}
+          </Text>
+        )}
+      </Box>
+      <Box direction="Column" shrink="No">
+        {replacementRoom?.getMyMembership() === Membership.Join ||
+        joinState.status === AsyncStatus.Success ? (
+          <Button onClick={handleOpen} size="300" variant="Success" fill="Solid" radii="300">
+            <Text size="B300">Open New Space</Text>
+          </Button>
+        ) : (
+          <Button
+            onClick={handleJoin}
+            size="300"
+            variant="Primary"
+            fill="Solid"
+            radii="300"
+            before={
+              joinState.status === AsyncStatus.Loading && (
+                <Spinner size="100" variant="Primary" fill="Solid" />
+              )
+            }
+            disabled={joinState.status === AsyncStatus.Loading}
+          >
+            <Text size="B300">Join New Space</Text>
+          </Button>
+        )}
+      </Box>
+    </Box>
+  );
+}
+
 export function Space() {
   const mx = useMatrixClient();
   const space = useSpace();
@@ -298,6 +377,8 @@ export function Space() {
   const allRooms = useAtomValue(allRoomsAtom);
   const allJoinedRooms = useMemo(() => new Set(allRooms), [allRooms]);
   const notificationPreferences = useRoomsNotificationPreferencesContext();
+
+  const tombstoneEvent = useStateEvent(space, StateEvent.RoomTombstone);
 
   const selectedRoomId = useSelectedRoom();
   const lobbySelected = useSpaceLobbySelected(spaceIdOrAlias);
@@ -354,6 +435,12 @@ export function Space() {
       <SpaceHeader />
       <PageNavContent scrollRef={scrollRef}>
         <Box direction="Column" gap="300">
+          {tombstoneEvent && (
+            <SpaceTombstone
+              roomId={space.roomId}
+              replacementRoomId={tombstoneEvent.getContent().replacement_room}
+            />
+          )}
           <NavCategory>
             <NavItem variant="Background" radii="400" aria-selected={lobbySelected}>
               <NavLink to={getSpaceLobbyPath(getCanonicalAliasOrRoomId(mx, space.roomId))}>

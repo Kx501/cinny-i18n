@@ -33,11 +33,13 @@ import { SequenceCardStyle } from '../styles.css';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import { mxcUrlToHttp } from '../../../utils/matrix';
 import { useMediaAuthentication } from '../../../hooks/useMediaAuthentication';
-import { usePowerLevels, usePowerLevelsAPI } from '../../../hooks/usePowerLevels';
+import { usePowerLevels } from '../../../hooks/usePowerLevels';
 import { StateEvent } from '../../../../types/matrix/room';
 import { suffixRename } from '../../../utils/common';
 import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 import { useAlive } from '../../../hooks/useAlive';
+import { useRoomCreators } from '../../../hooks/useRoomCreators';
+import { useRoomPermissions } from '../../../hooks/useRoomPermissions';
 
 type CreatePackTileProps = {
   packs: ImagePack[];
@@ -146,8 +148,10 @@ export function RoomPacks({ onViewPack }: RoomPacksProps) {
   const alive = useAlive();
 
   const powerLevels = usePowerLevels(room);
-  const { canSendStateEvent, getPowerLevel } = usePowerLevelsAPI(powerLevels);
-  const canEdit = canSendStateEvent(StateEvent.PoniesRoomEmotes, getPowerLevel(mx.getSafeUserId()));
+  const creators = useRoomCreators(room);
+
+  const permissions = useRoomPermissions(creators, powerLevels);
+  const canEdit = permissions.stateEvent(StateEvent.PoniesRoomEmotes, mx.getSafeUserId());
 
   const unfilteredPacks = useRoomImagePacks(room);
   const packs = useMemo(() => unfilteredPacks.filter((pack) => !pack.deleted), [unfilteredPacks]);

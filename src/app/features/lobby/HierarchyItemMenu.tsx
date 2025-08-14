@@ -27,6 +27,9 @@ import { stopPropagation } from '../../utils/keyboard';
 import { useOpenRoomSettings } from '../../state/hooks/roomSettings';
 import { useSpaceOptionally } from '../../hooks/useSpace';
 import { useOpenSpaceSettings } from '../../state/hooks/spaceSettings';
+import { IPowerLevels } from '../../hooks/usePowerLevels';
+import { getRoomCreatorsForRoomId } from '../../hooks/useRoomCreators';
+import { getRoomPermissionsAPI } from '../../hooks/useRoomPermissions';
 
 type HierarchyItemWithParent = HierarchyItem & {
   parentId: string;
@@ -45,7 +48,7 @@ function SuggestMenuItem({
   const [toggleState, handleToggleSuggested] = useAsyncCallback(
     useCallback(() => {
       const newContent: MSpaceChildContent = { ...content, suggested: !content.suggested };
-      return mx.sendStateEvent(parentId, StateEvent.SpaceChild, newContent, roomId);
+      return mx.sendStateEvent(parentId, StateEvent.SpaceChild as any, newContent, roomId);
     }, [mx, parentId, roomId, content])
   );
 
@@ -82,7 +85,7 @@ function RemoveMenuItem({
 
   const [removeState, handleRemove] = useAsyncCallback(
     useCallback(
-      () => mx.sendStateEvent(parentId, StateEvent.SpaceChild, {}, roomId),
+      () => mx.sendStateEvent(parentId, StateEvent.SpaceChild as any, {}, roomId),
       [mx, parentId, roomId]
     )
   );
@@ -180,7 +183,7 @@ type HierarchyItemMenuProps = {
     parentId: string;
   };
   joined: boolean;
-  canInvite: boolean;
+  powerLevels?: IPowerLevels;
   canEditChild: boolean;
   pinned?: boolean;
   onTogglePin?: (roomId: string) => void;
@@ -188,12 +191,21 @@ type HierarchyItemMenuProps = {
 export function HierarchyItemMenu({
   item,
   joined,
-  canInvite,
+  powerLevels,
   canEditChild,
   pinned,
   onTogglePin,
 }: HierarchyItemMenuProps) {
+  const mx = useMatrixClient();
   const [menuAnchor, setMenuAnchor] = useState<RectCords>();
+
+  const canInvite = (): boolean => {
+    if (!powerLevels) return false;
+    const creators = getRoomCreatorsForRoomId(mx, item.roomId);
+    const permissions = getRoomPermissionsAPI(creators, powerLevels);
+
+    return permissions.action('invite', mx.getSafeUserId());
+  };
 
   const handleOpenMenu: MouseEventHandler<HTMLButtonElement> = (evt) => {
     setMenuAnchor(evt.currentTarget.getBoundingClientRect());
@@ -254,7 +266,7 @@ export function HierarchyItemMenu({
                     <InviteMenuItem
                       item={item}
                       requestClose={handleRequestClose}
-                      disabled={!canInvite}
+                      disabled={!canInvite()}
                     />
                     <SettingsMenuItem item={item} requestClose={handleRequestClose} />
                     <UseStateProvider initial={false}>

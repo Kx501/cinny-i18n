@@ -27,11 +27,7 @@ import { Page, PageContent, PageHeader } from '../../../components/page';
 import { useRoom } from '../../../hooks/useRoom';
 import { useRoomMembers } from '../../../hooks/useRoomMembers';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
-import { usePowerLevels, usePowerLevelsAPI } from '../../../hooks/usePowerLevels';
-import {
-  useFlattenPowerLevelTagMembers,
-  usePowerLevelTags,
-} from '../../../hooks/usePowerLevelTags';
+import { usePowerLevels } from '../../../hooks/usePowerLevels';
 import { VirtualTile } from '../../../components/virtualizer';
 import { MemberTile } from '../../../components/member-tile';
 import { useMediaAuthentication } from '../../../hooks/useMediaAuthentication';
@@ -45,7 +41,7 @@ import {
 } from '../../../hooks/useAsyncSearch';
 import { getMemberSearchStr } from '../../../utils/room';
 import { useMembershipFilter, useMembershipFilterMenu } from '../../../hooks/useMemberFilter';
-import { useMemberSort, useMemberSortMenu } from '../../../hooks/useMemberSort';
+import { useMemberPowerSort, useMemberSort, useMemberSortMenu } from '../../../hooks/useMemberSort';
 import { settingsAtom } from '../../../state/settings';
 import { useSetting } from '../../../state/hooks/settings';
 import { UseStateProvider } from '../../../components/UseStateProvider';
@@ -57,6 +53,8 @@ import {
   useUserRoomProfileState,
 } from '../../../state/hooks/userRoomProfile';
 import { useSpaceOptionally } from '../../../hooks/useSpace';
+import { useFlattenPowerTagMembers, useGetMemberPowerTag } from '../../../hooks/useMemberPowerTag';
+import { useRoomCreators } from '../../../hooks/useRoomCreators';
 
 const SEARCH_OPTIONS: UseAsyncSearchOptions = {
   limit: 1000,
@@ -86,13 +84,14 @@ export function Members({ requestClose }: MembersProps) {
   const space = useSpaceOptionally();
 
   const powerLevels = usePowerLevels(room);
-  const { getPowerLevel } = usePowerLevelsAPI(powerLevels);
-  const [, getPowerLevelTag] = usePowerLevelTags(room, powerLevels);
+  const creators = useRoomCreators(room);
+  const getPowerTag = useGetMemberPowerTag(room, creators, powerLevels);
 
   const [membershipFilterIndex, setMembershipFilterIndex] = useState(0);
   const [sortFilterIndex, setSortFilterIndex] = useSetting(settingsAtom, 'memberSortFilterIndex');
   const membershipFilter = useMembershipFilter(membershipFilterIndex, useMembershipFilterMenu());
   const memberSort = useMemberSort(sortFilterIndex, useMemberSortMenu());
+  const memberPowerSort = useMemberPowerSort(creators);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -103,8 +102,8 @@ export function Members({ requestClose }: MembersProps) {
       Array.from(members)
         .filter(membershipFilter.filterFn)
         .sort(memberSort.sortFn)
-        .sort((a, b) => b.powerLevel - a.powerLevel),
-    [members, membershipFilter, memberSort]
+        .sort(memberPowerSort),
+    [members, membershipFilter, memberSort, memberPowerSort]
   );
 
   const [result, search, resetSearch] = useAsyncSearch(
@@ -114,11 +113,7 @@ export function Members({ requestClose }: MembersProps) {
   );
   if (!result && searchInputRef.current?.value) search(searchInputRef.current.value);
 
-  const flattenTagMembers = useFlattenPowerLevelTagMembers(
-    result?.items ?? sortedMembers,
-    getPowerLevel,
-    getPowerLevelTag
-  );
+  const flattenTagMembers = useFlattenPowerTagMembers(result?.items ?? sortedMembers, getPowerTag);
 
   const virtualizer = useVirtualizer({
     count: flattenTagMembers.length,

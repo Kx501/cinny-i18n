@@ -1,10 +1,8 @@
 import { keyframes, style } from '@vanilla-extract/css';
-import { color, config, toRem } from 'folds';
+import { config, toRem } from 'folds';
 
 export const MembersDrawer = style({
   width: toRem(266),
-  backgroundColor: color.Background.Container,
-  color: color.Background.OnContainer,
 });
 
 export const MembersDrawerHeader = style({

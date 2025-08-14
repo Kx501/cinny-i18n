@@ -33,7 +33,6 @@ import { RoomAvatar, RoomIcon } from '../../../components/room-avatar';
 import { mxcUrlToHttp } from '../../../utils/matrix';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import { useMediaAuthentication } from '../../../hooks/useMediaAuthentication';
-import { IPowerLevels, usePowerLevelsAPI } from '../../../hooks/usePowerLevels';
 import { StateEvent } from '../../../../types/matrix/room';
 import { CompactUploadCardRenderer } from '../../../components/upload-card';
 import { useObjectURL } from '../../../hooks/useObjectURL';
@@ -41,6 +40,7 @@ import { createUploadAtom, UploadSuccess } from '../../../state/upload';
 import { useFilePicker } from '../../../hooks/useFilePicker';
 import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 import { useAlive } from '../../../hooks/useAlive';
+import { RoomPermissionsAPI } from '../../../hooks/useRoomPermissions';
 
 type RoomProfileEditProps = {
   canEditAvatar: boolean;
@@ -263,24 +263,22 @@ export function RoomProfileEdit({
 }
 
 type RoomProfileProps = {
-  powerLevels: IPowerLevels;
+  permissions: RoomPermissionsAPI;
 };
-export function RoomProfile({ powerLevels }: RoomProfileProps) {
+export function RoomProfile({ permissions }: RoomProfileProps) {
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
   const room = useRoom();
   const directs = useAtomValue(mDirectAtom);
-  const { getPowerLevel, canSendStateEvent } = usePowerLevelsAPI(powerLevels);
-  const userPowerLevel = getPowerLevel(mx.getSafeUserId());
 
   const avatar = useRoomAvatar(room, directs.has(room.roomId));
   const name = useRoomName(room);
   const topic = useRoomTopic(room);
   const joinRule = useRoomJoinRule(room);
 
-  const canEditAvatar = canSendStateEvent(StateEvent.RoomAvatar, userPowerLevel);
-  const canEditName = canSendStateEvent(StateEvent.RoomName, userPowerLevel);
-  const canEditTopic = canSendStateEvent(StateEvent.RoomTopic, userPowerLevel);
+  const canEditAvatar = permissions.stateEvent(StateEvent.RoomAvatar, mx.getSafeUserId());
+  const canEditName = permissions.stateEvent(StateEvent.RoomName, mx.getSafeUserId());
+  const canEditTopic = permissions.stateEvent(StateEvent.RoomTopic, mx.getSafeUserId());
   const canEdit = canEditAvatar || canEditName || canEditTopic;
 
   const avatarUrl = avatar

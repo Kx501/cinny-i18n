@@ -8,23 +8,22 @@ import { SettingTile } from '../../../components/setting-tile';
 import { useRoom } from '../../../hooks/useRoom';
 import { useRoomDirectoryVisibility } from '../../../hooks/useRoomDirectoryVisibility';
 import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
-import { IPowerLevels, powerLevelAPI } from '../../../hooks/usePowerLevels';
 import { StateEvent } from '../../../../types/matrix/room';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import { useStateEvent } from '../../../hooks/useStateEvent';
 import { ExtendedJoinRules } from '../../../components/JoinRulesSwitcher';
+import { RoomPermissionsAPI } from '../../../hooks/useRoomPermissions';
 
 type RoomPublishProps = {
-  powerLevels: IPowerLevels;
+  permissions: RoomPermissionsAPI;
 };
-export function RoomPublish({ powerLevels }: RoomPublishProps) {
+export function RoomPublish({ permissions }: RoomPublishProps) {
   const mx = useMatrixClient();
   const room = useRoom();
-  const userPowerLevel = powerLevelAPI.getPowerLevel(powerLevels, mx.getSafeUserId());
-  const canEditCanonical = powerLevelAPI.canSendStateEvent(
-    powerLevels,
+
+  const canEditCanonical = permissions.stateEvent(
     StateEvent.RoomCanonicalAlias,
-    userPowerLevel
+    mx.getSafeUserId()
   );
   const joinRuleEvent = useStateEvent(room, StateEvent.RoomJoinRules);
   const content = joinRuleEvent?.getContent<RoomJoinRulesEventContent>();

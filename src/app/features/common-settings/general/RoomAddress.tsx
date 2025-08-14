@@ -15,7 +15,6 @@ import {
   toRem,
 } from 'folds';
 import { MatrixError } from 'matrix-js-sdk';
-import { IPowerLevels, powerLevelAPI } from '../../../hooks/usePowerLevels';
 import { SettingTile } from '../../../components/setting-tile';
 import { SequenceCard } from '../../../components/sequence-card';
 import { SequenceCardStyle } from '../../room-settings/styles.css';
@@ -33,19 +32,19 @@ import { getIdServer } from '../../../../util/matrixUtil';
 import { replaceSpaceWithDash } from '../../../utils/common';
 import { useAlive } from '../../../hooks/useAlive';
 import { StateEvent } from '../../../../types/matrix/room';
+import { RoomPermissionsAPI } from '../../../hooks/useRoomPermissions';
 
 type RoomPublishedAddressesProps = {
-  powerLevels: IPowerLevels;
+  permissions: RoomPermissionsAPI;
 };
 
-export function RoomPublishedAddresses({ powerLevels }: RoomPublishedAddressesProps) {
+export function RoomPublishedAddresses({ permissions }: RoomPublishedAddressesProps) {
   const mx = useMatrixClient();
   const room = useRoom();
-  const userPowerLevel = powerLevelAPI.getPowerLevel(powerLevels, mx.getSafeUserId());
-  const canEditCanonical = powerLevelAPI.canSendStateEvent(
-    powerLevels,
+
+  const canEditCanonical = permissions.stateEvent(
     StateEvent.RoomCanonicalAlias,
-    userPowerLevel
+    mx.getSafeUserId()
   );
 
   const [canonicalAlias, publishedAliases] = usePublishedAliases(room);
@@ -360,14 +359,13 @@ function LocalAddressesList({
   );
 }
 
-export function RoomLocalAddresses({ powerLevels }: { powerLevels: IPowerLevels }) {
+export function RoomLocalAddresses({ permissions }: { permissions: RoomPermissionsAPI }) {
   const mx = useMatrixClient();
   const room = useRoom();
-  const userPowerLevel = powerLevelAPI.getPowerLevel(powerLevels, mx.getSafeUserId());
-  const canEditCanonical = powerLevelAPI.canSendStateEvent(
-    powerLevels,
+
+  const canEditCanonical = permissions.stateEvent(
     StateEvent.RoomCanonicalAlias,
-    userPowerLevel
+    mx.getSafeUserId()
   );
 
   const [expand, setExpand] = useState(false);

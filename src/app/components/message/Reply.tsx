@@ -10,8 +10,8 @@ import * as css from './Reply.css';
 import { MessageBadEncryptedContent, MessageDeletedContent, MessageFailedContent } from './content';
 import { scaleSystemEmoji } from '../../plugins/react-custom-html-parser';
 import { useRoomEvent } from '../../hooks/useRoomEvent';
-import { GetPowerLevelTag } from '../../hooks/usePowerLevelTags';
 import colorMXID from '../../../util/colorMXID';
+import { GetMemberPowerTag } from '../../hooks/useMemberPowerTag';
 
 type ReplyLayoutProps = {
   userColor?: string;
@@ -57,8 +57,7 @@ type ReplyProps = {
   replyEventId: string;
   threadRootId?: string | undefined;
   onClick?: MouseEventHandler | undefined;
-  getPowerLevel?: (userId: string) => number;
-  getPowerLevelTag?: GetPowerLevelTag;
+  getMemberPowerTag?: GetMemberPowerTag;
   accessibleTagColors?: Map<string, string>;
   legacyUsernameColor?: boolean;
 };
@@ -71,8 +70,7 @@ export const Reply = as<'div', ReplyProps>(
       replyEventId,
       threadRootId,
       onClick,
-      getPowerLevel,
-      getPowerLevelTag,
+      getMemberPowerTag,
       accessibleTagColors,
       legacyUsernameColor,
       ...props
@@ -88,8 +86,7 @@ export const Reply = as<'div', ReplyProps>(
 
     const { body } = replyEvent?.getContent() ?? {};
     const sender = replyEvent?.getSender();
-    const senderPL = sender && getPowerLevel?.(sender);
-    const powerTag = typeof senderPL === 'number' ? getPowerLevelTag?.(senderPL) : undefined;
+    const powerTag = sender ? getMemberPowerTag?.(sender) : undefined;
     const tagColor = powerTag?.color ? accessibleTagColors?.get(powerTag.color) : undefined;
 
     const usernameColor = legacyUsernameColor ? colorMXID(sender ?? replyEventId) : tagColor;

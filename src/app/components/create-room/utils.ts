@@ -14,7 +14,8 @@ import { getMxIdServer } from '../../utils/matrix';
 
 export const createRoomCreationContent = (
   type: RoomType | undefined,
-  allowFederation: boolean
+  allowFederation: boolean,
+  additionalCreators: string[] | undefined
 ): object => {
   const content: Record<string, any> = {};
   if (typeof type === 'string') {
@@ -22,6 +23,9 @@ export const createRoomCreationContent = (
   }
   if (allowFederation === false) {
     content['m.federate'] = false;
+  }
+  if (Array.isArray(additionalCreators)) {
+    content.additional_creators = additionalCreators;
   }
 
   return content;
@@ -89,6 +93,7 @@ export type CreateRoomData = {
   encryption?: boolean;
   knock: boolean;
   allowFederation: boolean;
+  additionalCreators?: string[];
 };
 export const createRoom = async (mx: MatrixClient, data: CreateRoomData): Promise<string> => {
   const initialState: ICreateRoomStateEvent[] = [];
@@ -108,7 +113,11 @@ export const createRoom = async (mx: MatrixClient, data: CreateRoomData): Promis
     name: data.name,
     topic: data.topic,
     room_alias_name: data.aliasLocalPart,
-    creation_content: createRoomCreationContent(data.type, data.allowFederation),
+    creation_content: createRoomCreationContent(
+      data.type,
+      data.allowFederation,
+      data.additionalCreators
+    ),
     initial_state: initialState,
   };
 

@@ -3,7 +3,6 @@ import { color, Text } from 'folds';
 import { JoinRule, MatrixError, RestrictedAllowType } from 'matrix-js-sdk';
 import { RoomJoinRulesEventContent } from 'matrix-js-sdk/lib/types';
 import { useAtomValue } from 'jotai';
-import { IPowerLevels, powerLevelAPI } from '../../../hooks/usePowerLevels';
 import {
   ExtendedJoinRules,
   JoinRulesSwitcher,
@@ -32,6 +31,7 @@ import {
   knockSupported,
   restrictedSupported,
 } from '../../../utils/matrix';
+import { RoomPermissionsAPI } from '../../../hooks/useRoomPermissions';
 
 type RestrictedRoomAllowContent = {
   room_id: string;
@@ -39,9 +39,9 @@ type RestrictedRoomAllowContent = {
 };
 
 type RoomJoinRulesProps = {
-  powerLevels: IPowerLevels;
+  permissions: RoomPermissionsAPI;
 };
-export function RoomJoinRules({ powerLevels }: RoomJoinRulesProps) {
+export function RoomJoinRules({ permissions }: RoomJoinRulesProps) {
   const mx = useMatrixClient();
   const room = useRoom();
   const allowKnockRestricted = knockRestrictedSupported(room.getVersion());
@@ -53,12 +53,7 @@ export function RoomJoinRules({ powerLevels }: RoomJoinRulesProps) {
   const subspacesScope = useRecursiveChildSpaceScopeFactory(mx, roomIdToParents);
   const subspaces = useSpaceChildren(allRoomsAtom, space?.roomId ?? '', subspacesScope);
 
-  const userPowerLevel = powerLevelAPI.getPowerLevel(powerLevels, mx.getSafeUserId());
-  const canEdit = powerLevelAPI.canSendStateEvent(
-    powerLevels,
-    StateEvent.RoomHistoryVisibility,
-    userPowerLevel
-  );
+  const canEdit = permissions.stateEvent(StateEvent.RoomHistoryVisibility, mx.getSafeUserId());
 
   const joinRuleEvent = useStateEvent(room, StateEvent.RoomJoinRules);
   const content = joinRuleEvent?.getContent<RoomJoinRulesEventContent>();

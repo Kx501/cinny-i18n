@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Box, Icon, IconButton, Icons, Scroll, Text } from 'folds';
 import { Page, PageContent, PageHeader } from '../../../components/page';
 import { useRoom } from '../../../hooks/useRoom';
-import { usePowerLevels, usePowerLevelsAPI } from '../../../hooks/usePowerLevels';
+import { usePowerLevels } from '../../../hooks/usePowerLevels';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import { StateEvent } from '../../../../types/matrix/room';
 import { usePermissionGroups } from './usePermissionItems';
 import { PermissionGroups, Powers, PowersEditor } from '../../common-settings/permissions';
+import { useRoomCreators } from '../../../hooks/useRoomCreators';
+import { useRoomPermissions } from '../../../hooks/useRoomPermissions';
 
 type PermissionsProps = {
   requestClose: () => void;
@@ -15,11 +17,12 @@ export function Permissions({ requestClose }: PermissionsProps) {
   const mx = useMatrixClient();
   const room = useRoom();
   const powerLevels = usePowerLevels(room);
-  const { getPowerLevel, canSendStateEvent } = usePowerLevelsAPI(powerLevels);
-  const canEditPowers = canSendStateEvent(
-    StateEvent.PowerLevelTags,
-    getPowerLevel(mx.getSafeUserId())
-  );
+  const creators = useRoomCreators(room);
+
+  const permissions = useRoomPermissions(creators, powerLevels);
+
+  const canEditPowers = permissions.stateEvent(StateEvent.PowerLevelTags, mx.getSafeUserId());
+  const canEditPermissions = permissions.stateEvent(StateEvent.RoomPowerLevels, mx.getSafeUserId());
   const permissionGroups = usePermissionGroups();
 
   const [powerEditor, setPowerEditor] = useState(false);
@@ -57,7 +60,11 @@ export function Permissions({ requestClose }: PermissionsProps) {
                 onEdit={canEditPowers ? handleEditPowers : undefined}
                 permissionGroups={permissionGroups}
               />
-              <PermissionGroups powerLevels={powerLevels} permissionGroups={permissionGroups} />
+              <PermissionGroups
+                canEdit={canEditPermissions}
+                powerLevels={powerLevels}
+                permissionGroups={permissionGroups}
+              />
             </Box>
           </PageContent>
         </Scroll>

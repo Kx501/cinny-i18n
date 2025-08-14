@@ -13,6 +13,8 @@ import {
   RoomPublish,
   RoomUpgrade,
 } from '../../common-settings/general';
+import { useRoomCreators } from '../../../hooks/useRoomCreators';
+import { useRoomPermissions } from '../../../hooks/useRoomPermissions';
 
 type GeneralProps = {
   requestClose: () => void;
@@ -20,6 +22,8 @@ type GeneralProps = {
 export function General({ requestClose }: GeneralProps) {
   const room = useRoom();
   const powerLevels = usePowerLevels(room);
+  const creators = useRoomCreators(room);
+  const permissions = useRoomPermissions(creators, powerLevels);
 
   return (
     <Page>
@@ -41,22 +45,22 @@ export function General({ requestClose }: GeneralProps) {
         <Scroll hideTrack visibility="Hover">
           <PageContent>
             <Box direction="Column" gap="700">
-              <RoomProfile powerLevels={powerLevels} />
+              <RoomProfile permissions={permissions} />
               <Box direction="Column" gap="100">
                 <Text size="L400">Options</Text>
-                <RoomJoinRules powerLevels={powerLevels} />
-                <RoomHistoryVisibility powerLevels={powerLevels} />
-                <RoomEncryption powerLevels={powerLevels} />
-                <RoomPublish powerLevels={powerLevels} />
+                <RoomJoinRules permissions={permissions} />
+                <RoomHistoryVisibility permissions={permissions} />
+                <RoomEncryption permissions={permissions} />
+                <RoomPublish permissions={permissions} />
               </Box>
               <Box direction="Column" gap="100">
                 <Text size="L400">Addresses</Text>
-                <RoomPublishedAddresses powerLevels={powerLevels} />
-                <RoomLocalAddresses powerLevels={powerLevels} />
+                <RoomPublishedAddresses permissions={permissions} />
+                <RoomLocalAddresses permissions={permissions} />
               </Box>
               <Box direction="Column" gap="100">
                 <Text size="L400">Advance Options</Text>
-                <RoomUpgrade powerLevels={powerLevels} requestClose={requestClose} />
+                <RoomUpgrade permissions={permissions} requestClose={requestClose} />
               </Box>
             </Box>
           </PageContent>

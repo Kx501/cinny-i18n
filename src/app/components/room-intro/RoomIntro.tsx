@@ -87,7 +87,7 @@ export const RoomIntro = as<'div', RoomIntroProps>(({ room, ...props }, ref) => 
           {typeof prevRoomId === 'string' &&
             (mx.getRoom(prevRoomId)?.getMyMembership() === Membership.Join ? (
               <Button
-                onClick={() => navigateRoom(prevRoomId)}
+                onClick={() => navigateRoom(prevRoomId, createContent?.predecessor?.event_id)}
                 variant="Success"
                 size="300"
                 fill="Soft"

@@ -1,4 +1,4 @@
-import React, { FormEventHandler, useCallback, useState } from 'react';
+import React, { FormEventHandler, useCallback, useEffect, useState } from 'react';
 import { MatrixError, Room } from 'matrix-js-sdk';
 import {
   Box,
@@ -16,7 +16,12 @@ import {
 } from 'folds';
 import { SettingTile } from '../../components/setting-tile';
 import { SequenceCard } from '../../components/sequence-card';
-import { knockRestrictedSupported, knockSupported, restrictedSupported } from '../../utils/matrix';
+import {
+  creatorsSupported,
+  knockRestrictedSupported,
+  knockSupported,
+  restrictedSupported,
+} from '../../utils/matrix';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { millisecondsToMinutes, replaceSpaceWithDash } from '../../utils/common';
 import { AsyncStatus, useAsyncCallback } from '../../hooks/useAsyncCallback';
@@ -24,12 +29,14 @@ import { useCapabilities } from '../../hooks/useCapabilities';
 import { useAlive } from '../../hooks/useAlive';
 import { ErrorCode } from '../../cs-errorcode';
 import {
+  AdditionalCreatorInput,
   createRoom,
   CreateRoomAliasInput,
   CreateRoomData,
   CreateRoomKind,
   CreateRoomKindSelector,
   RoomVersionSelector,
+  useAdditionalCreators,
 } from '../../components/create-room';
 
 const getCreateRoomKindToIcon = (kind: CreateRoomKind) => {
@@ -50,12 +57,19 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
   const capabilities = useCapabilities();
   const roomVersions = capabilities['m.room_versions'];
   const [selectedRoomVersion, selectRoomVersion] = useState(roomVersions?.default ?? '1');
+  useEffect(() => {
+    // capabilities load async
+    selectRoomVersion(roomVersions?.default ?? '1');
+  }, [roomVersions?.default]);
 
   const allowRestricted = space && restrictedSupported(selectedRoomVersion);
 
   const [kind, setKind] = useState(
     defaultKind ?? allowRestricted ? CreateRoomKind.Restricted : CreateRoomKind.Private
   );
+  const allowAdditionalCreators = creatorsSupported(selectedRoomVersion);
+  const { additionalCreators, addAdditionalCreator, removeAdditionalCreator } =
+    useAdditionalCreators();
   const [federation, setFederation] = useState(true);
   const [encryption, setEncryption] = useState(false);
   const [knock, setKnock] = useState(false);
@@ -112,6 +126,7 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
       encryption: publicRoom ? false : encryption,
       knock: roomKnock,
       allowFederation: federation,
+      additionalCreators: allowAdditionalCreators ? additionalCreators : undefined,
     }).then((roomId) => {
       if (alive()) {
         onCreate?.(roomId);
@@ -172,6 +187,20 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
             </Chip>
           </Box>
         </Box>
+        {allowAdditionalCreators && (
+          <SequenceCard
+            style={{ padding: config.space.S300 }}
+            variant="SurfaceVariant"
+            direction="Column"
+            gap="500"
+          >
+            <AdditionalCreatorInput
+              additionalCreators={additionalCreators}
+              onSelect={addAdditionalCreator}
+              onRemove={removeAdditionalCreator}
+            />
+          </SequenceCard>
+        )}
         {kind !== CreateRoomKind.Public && (
           <>
             <SequenceCard

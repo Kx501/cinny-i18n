@@ -18,6 +18,8 @@ export enum AccountDataEvent {
   MegolmBackupV1 = 'm.megolm_backup.v1',
 }
 
+export type MDirectContent = Record<string, string[]>;
+
 export type SecretStorageDefaultKeyContent = {
   key: string;
 };
