@@ -51,7 +51,8 @@ export function AccountData({ expand, onExpandToggle, onSelect }: AccountDataPro
                 <Icon src={expand ? Icons.ChevronTop : Icons.ChevronBottom} size="100" filled />
               }
             >
-              <Text size="B300">{t(expand ? 'common.collapse' : 'common.expand')}</Text>
+              <Text size="B300">{t(expand ? t('common.collapse') : t('common.expand'))}</Text>
+
             </Button>
           }
         />

@@ -1,614 +1,612 @@
 {
-  "organisms": {
-    "search": {
-      "footer": "Type # for rooms, @ for DMs and * for spaces. Hotkey: Ctrl + k"
-    },
-    "joinAlias": {
-      "title": "Join with address",
-      "address": "Address",
-      "join": "Join",
-      "lookingForAddress": "Looking for address...",
-      "joining": "Joining {alias}...",
-      "invalidAddress": "Invalid address.",
-      "unableToFind": "Unable to find room/space with {alias}. Either room/space is private or doesn't exist.",
-      "unableToJoin": "Unable to join {alias}. Either room/space is private or doesn't exist."
-    },
-    "profileViewer": {
-      "role": "Role",
-      "member": "Member",
-      "kickReason": "Kick reason",
-      "kick": "Kick",
-      "banReason": "Ban reason",
-      "ban": "Ban",
-      "unban": "Unban",
-      "loadingSessions": "Loading sessions...",
-      "noSessionFound": "No session found.",
-      "viewSessions": "View {count} {count, plural, one {session} other {sessions}}",
-      "viewSessionsNoCount": "View sessions",
-      "message": "Message",
-      "creatingRoom": "Creating room...",
-      "invite": "Invite",
-      "inviting": "Inviting...",
-      "disinvite": "Disinvite",
-      "disinviting": "Disinviting...",
-      "ignore": "Ignore",
-      "ignoring": "Ignoring...",
-      "unignore": "Unignore",
-      "unignoring": "Unignoring...",
-      "changePowerLevel": "Change power level",
-      "sharedPowerMessage": "You will not be able to undo this change as you are promoting the user to have the same power level as yourself. Are you sure?",
-      "demotingMyselfMessage": "You will not be able to undo this change as you are demoting yourself. Are you sure?",
-      "change": "Change"
-    },
-    "inviteUser": {
-      "inviteTo": "Invite to {roomName}",
-      "directMessage": "Direct message",
-      "nameOrUserId": "Name or userId",
-      "searchingForUser": "Searching for user \"{username}\"...",
-      "searchResultForUser": "Search result for user \"{username}\"",
-      "notFound": "{userId} not found!",
-      "noMatchesFound": "No matches found for \"{username}\"!",
-      "somethingWentWrong": "Something went wrong!",
-      "invited": "Invited",
-      "alreadyJoined": "Already joined",
-      "alreadyInvited": "Already Invited",
-      "banned": "Banned",
-      "invite": "Invite",
-      "message": "Message"
-    },
-    "createRoom": {
-      "home": "Home",
-      "createRoom": "create room",
-      "createSpace": "create space",
-      "visibility": "Visibility",
-      "visibilityDescription": "Select who can join this {type}.",
-      "private": "Private",
-      "privateDescription": "Private (invite only)",
-      "restricted": "Restricted",
-      "restrictedDescription": "Restricted (space member can join)",
-      "public": "Public",
-      "publicDescription": "Public (anyone can join)",
-      "visibilityMenuTitle": "Visibility (who can join)",
-      "roomAddress": "Room address",
-      "spaceAddress": "Space address",
-      "addressPlaceholder": "my_address",
-      "addressInUse": "#{address}:{server} is already in use",
-      "enableEncryption": "Enable end-to-end encryption",
-      "encryptionDescription": "You can't disable this later. Bridges & most bots won't work yet.",
-      "selectRole": "Select your role",
-      "roleDescription": "Selecting Admin sets 100 power level whereas Founder sets 101.",
-      "admin": "Admin",
-      "founder": "Founder",
-      "topic": "Topic (optional)",
-      "roomName": "Room name",
-      "spaceName": "Space name",
-      "create": "Create",
-      "creatingRoom": "Creating room...",
-      "creatingSpace": "Creating space...",
-      "invalidCharactersInAddress": "ERROR: Invalid characters in address",
-      "addressAlreadyInUse": "ERROR: This address is already in use"
-    }
-  },
-  "auth": {
-    "login": {
-      "title": "Login",
-      "forgotPassword": "Forget Password?",
-      "noAccount": "Do not have an account?",
-      "register": "Register",
-      "username": "Username",
-      "hint": {
-        "title": "Hint",
-        "matrixId": "Matrix ID:",
-        "email": "Email:"
-      },
-      "loading": {
-        "lookingForHomeserver": "Looking for homeserver...",
-        "connectingToServer": "Connecting to {server}",
-        "loadingAuthFlow": "Loading authentication flow..."
-      },
-      "errors": {
-        "serverNotSupported": "This client does not support login on \"{server}\" homeserver. Password and SSO based login method not found.",
-        "serverNotAllowed": "Login with custom server not allowed by your client instance.",
-        "invalidServer": "Failed to find your Matrix ID server.",
-        "invalidCredentials": "Invalid Username or Password.",
-        "accountDeactivated": "This account has been deactivated.",
-        "invalidRequest": "Failed to login. Part of your request data is invalid.",
-        "rateLimited": "Failed to login. Your login request has been rate-limited by server, Please try after some time.",
-        "unknown": "Failed to login. Unknown reason.",
-        "invalidToken": "Invalid login token.",
-        "failedToFindHomeserver": "Failed to find homeserver.",
-        "homeserverConfigUnusable": "Failed to connect. Homeserver configuration found with {host} appears unusable.",
-        "homeserverConfigInvalid": "Failed to connect. Homeserver configuration base_url appears invalid.",
-        "homeserverUnavailable": "Failed to connect. Either homeserver is unavailable at this moment or does not exist.",
-        "failedToGetAuthFlow": "Failed to get authentication flow information."
-      }
-    }
-  },
-  "settings": {
-    "general": {
-      "title": "General",
-      "language": "Language",
-      "languageDescription": "Choose your preferred language for the interface."
-    },
-    "appearance": {
-      "title": "Appearance",
-      "systemTheme": {
-        "title": "System Theme",
-        "description": "Choose between light and dark theme based on system preference."
-      },
-      "theme": {
-        "title": "Theme",
-        "description": "Theme to use when system theme is not enabled."
-      },
-      "lightThemeTitle": "Light Theme:",
-      "darkThemeTitle": "Dark Theme:",
-      "twitterEmoji": {
-        "title": "Twitter Emoji"
-      },
-      "pageZoom": {
-        "title": "Page Zoom"
-      }
-    },
-    "dateAndTime": {
-      "title": "Date & Time",
-      "hour24Format": "24-Hour Time Format",
-      "dateFormat": "Date Format",
-      "custom": "Custom",
-      "formatting": "Formatting",
-      "year": "Year",
-      "month": "Month",
-      "dayOfMonth": "Day of the Month",
-      "dayOfWeek": "Day of the Week",
-      "twoDigitYear": "Two-digit year",
-      "fourDigitYear": "Four-digit year",
-      "theMonth": "The month",
-      "twoDigitMonth": "Two-digit month",
-      "shortMonthName": "Short month name",
-      "fullMonthName": "Full month name",
-      "dayOfMonthDesc": "Day of the month",
-      "twoDigitDayOfMonth": "Two-digit day of the month",
-      "dayOfWeekDesc": "Day of the week (Sunday = 0)",
-      "twoLetterDayName": "Two-letter day name",
-      "shortDayName": "Short day name",
-      "fullDayName": "Full day name"
-    },
-    "editor": {
-      "title": "Editor",
-      "enterForNewline": "ENTER for Newline",
-      "enterForNewlineDescription": "Use {key} + ENTER to send message and ENTER for newline.",
-      "markdownFormatting": "Markdown Formatting",
-      "hideTypingReadReceipts": "Hide Typing & Read Receipts",
-      "hideTypingReadReceiptsDescription": "Turn off both typing status and read receipts to keep your activity private."
-    },
-    "messages": {
-      "title": "Messages",
-      "messageLayout": "Message Layout",
-      "messageSpacing": "Message Spacing",
-      "layoutOptions": {
-        "Modern": "Modern",
-        "Compact": "Compact",
-        "Bubble": "Bubble"
-      },
-      "spacingOptions": {
-        "Ultra Small": "Ultra Small",
-        "Extra Small": "Extra Small",
-        "Small": "Small",
-        "Normal": "Normal",
-        "Large": "Large"
-      },
-      "legacyUsernameColor": "Legacy Username Color",
-      "hideMembershipChange": "Hide Membership Change",
-      "hideProfileChange": "Hide Profile Change",
-      "disableMediaAutoLoad": "Disable Media Auto Load",
-      "urlPreview": "Url Preview",
-      "urlPreviewEncrypted": "Url Preview in Encrypted Room",
-      "showHiddenEvents": "Show Hidden Events"
-    },
-    "notifications": {
-      "title": "Notifications",
-      "system": {
-        "title": "System",
-        "desktopNotifications": "Desktop Notifications",
-        "desktopNotificationsDescription": "Show desktop notifications when message arrive.",
-        "notificationPermissionBlocked": "Notification permission is blocked. Please allow notification permission from browser address bar.",
-        "notificationsNotSupported": "Notifications are not supported by the system.",
-        "notificationSound": "Notification Sound",
-        "notificationSoundDescription": "Play sound when new message arrive.",
-        "emailNotification": "Email Notification",
-        "emailNotificationDescription": "Send notification to your email.",
-        "emailNotificationWithEmail": "Send notification to your email. (\"{email}\")",
-        "noEmailAttached": "Your account does not have any email attached.",
-        "unexpectedError": "Unexpected Error!"
-      },
-      "allMessages": {
-        "title": "All Messages",
-        "badge": "Badge",
-        "oneToOneChats": "1-to-1 Chats",
-        "oneToOneChatsEncrypted": "1-to-1 Chats (Encrypted)",
-        "roomsEncrypted": "Rooms (Encrypted)"
-      },
-      "specialMessages": {
-        "title": "Special Messages",
-        "badge": "Badge",
-        "mentionUserId": "Mention User ID (\"{userId}\")",
-        "containsDisplayName": "Contains Displayname {displayName}",
-        "containsDisplayNameWithName": "Contains Displayname (\"{displayName}\")",
-        "containsUsername": "Contains Username (\"{username}\")",
-        "mentionRoom": "Mention @room",
-        "containsRoom": "Contains @room"
-      },
-      "keywordMessages": {
-        "title": "Keyword Messages",
-        "badge": "Badge",
-        "selectKeyword": "Select Keyword",
-        "selectKeywordDescription": "Set a notification preference for message containing given keyword.",
-        "keywordPattern": "\"{pattern}\""
-      },
-      "blockMessages": {
-        "title": "Block Messages",
-        "description": "This option has been moved to \"Account > Block Users\" section."
-      }
-    },
-    "developerTools": {
-      "title": "Developer Tools",
-      "enable": "Enable Developer Tools",
-      "accessToken": {
-        "title": "Access Token",
-        "description": "Copy access token to clipboard."
-      },
-      "accountData": {
-        "title": "Account Data",
-        "global": {
-          "title": "Global Account Data",
-          "description": "View and edit account data stored on your account."
-        },
-        "events": "Events",
-        "total": "Total: {{count}}",
-        "addNew": "Add New Event"
-      }
-    },
-    "devices": {
-      "title": "Devices",
-      "security": "Security",
-      "verification": {
-        "title": "Device Verification",
-        "description": "To verify device identity and grant access to encrypted messages.",
-        "steps": {
-          "title": "Steps to verify from other device.",
-          "openDevice": "Open your other verified device.",
-          "openSettings": "Open Settings.",
-          "findDevice": "Find this device in Devices/Sessions section.",
-          "initiate": "Initiate verification.",
-          "noVerifiedDevice": "If you do not have any verified device press the \"Verify Manually\" button."
-        }
-      },
-      "current": "Current Device",
-      "other": {
-        "title": "Other Devices",
-        "deviceDashboard": {
-          "title": "Device Dashboard",
-          "description": "Open device dashboard to manage your devices."
-        },
-        "deleteError": "Failed to logout devices!",
-        "deleteConfirm": "Logout from selected devices.",
-        "authNotSupported": "Authentication steps to perform this action are not supported by client."
-      },
-      "lastActivity": "Last activity",
-      "deviceId": "Device ID",
-      "ipAddress": "IP Address",
-      "deviceKey": "Device Key",
-      "deviceName": "Device Name",
-      "deviceNamePublic": "Device names are visible to public.",
-      "loading": "Loading...",
-      "unverified": {
-        "title": "Unverified",
-        "description": "Start verification from other device or verify manually.",
-        "learnMore": "Learn More",
-        "viewLess": "View Less",
-        "verifyManually": "Verify Manually"
-      },
-      "verificationStatus": {
-        "verified": "Verified",
-        "unverified": "Unverified"
-      },
-      "backup": {
-        "title": "Local Backup",
-        "export": {
-          "title": "Export Messages Data",
-          "newPassword": "New Password",
-          "confirmPassword": "Confirm Password",
-          "description": "Save password protected copy of encryption data on your device to decrypt messages later."
-        },
-        "import": {
-          "title": "Import Messages Data",
-          "description": "Load password protected copy of encryption data from device to decrypt your messages."
-        }
-      }
-    },
-    "about": {
-      "title": "About",
-      "description": "Yet another matrix client.",
-      "clearCache": {
-        "title": "Clear Cache & Reload",
-        "description": "Clear all cached data and reload the app.",
-        "button": "Clear Cache"
-      },
-      "sourceCode": "Source Code",
-      "support": "Support",
-      "cinnyName": "Cinny",
-      "version": "v{{version}}",
-      "credits": "Credits"
-    },
-    "account": {
-      "title": "Account",
-      "profile": {
-        "title": "Profile"
-      },
-      "avatar": {
-        "title": "Avatar",
-        "removeDialog": {
-          "title": "Remove Avatar",
-          "message": "Are you sure you want to remove profile avatar?"
-        }
-      },
-      "displayName": {
-        "title": "Display Name"
-      },
-      "contactInfo": {
-        "title": "Contact Information",
-        "email": {
-          "title": "Email Address",
-          "description": "Email address attached to your account."
-        }
-      },
-      "matrixId": {
-        "title": "Matrix ID"
-      },
-      "blockedUsers": {
-        "title": "Blocked Users",
-        "selectUser": {
-          "title": "Select User",
-          "description": "Prevent receiving messages or invites from user by adding their userId."
-        },
-        "block": "Block"
-      }
-    },
-    "emojisStickers": {
-      "title": "Emojis & Stickers",
-      "imagesUsage": {
-        "title": "Images Usage",
-        "description": "Select how the images are being used: as emojis, as stickers, or as both."
-      },
-      "uploadImages": {
-        "title": "Upload Images",
-        "description": "Select images from your storage to upload them in pack."
-      },
-      "pack": "Pack",
-      "images": "Images",
-      "applyChanges": "Apply Changes",
-      "applyError": "Failed to apply changes! Please try again.",
-      "applySuccess": "Changes saved! Apply when ready.",
-      "packAvatar": "Pack Avatar",
-      "name": "Name",
-      "attribution": "Attribution",
-      "shortcode": "Shortcode:",
-      "body": "Body:",
-      "usageOptions": {
-        "both": "Both",
-        "sticker": "Sticker",
-        "emoji": "Emoji"
-      },
-      "globalPacks": {
-        "applyError": "Failed to apply changes! Please try again.",
-        "applyReady": "Changes saved! Apply when ready.",
-        "title": "Room Packs",
-        "noPacks": {
-          "title": "No Packs",
-          "description": "Pack from rooms will appear here. You do not have any room with packs yet."
-        },
-        "favoritePacks": "Favorite Packs",
-        "selectPack": {
-          "title": "Select Pack",
-          "description": "Pick emojis and stickers pack from rooms to use in all rooms."
-        },
-        "applyChanges": "Apply Changes"
-      },
-      "userPack": {
-        "title": "Default Pack"
-      }
-    }
-  },
-  "navigation": {
-    "inbox": "Inbox",
-    "notifications": "Notifications",
-    "lobby": "Lobby",
-    "messageSearch": "Message Search"
-  },
-  "common": {
-    "save": "Save",
-    "cancel": "Cancel",
-    "edit": "Edit",
-    "unknown": "Unknown",
-    "settings": "Settings",
-    "expand": "Expand",
-    "collapse": "Collapse",
-    "close": "Close",
-    "undo": "Undo",
-    "remove": "Remove",
-    "removeAll": "Remove All",
-    "reset": "Reset",
-    "upload": "Upload",
-    "select": "Select",
-    "none": "None",
-    "login": "Login",
-    "logout": "Logout",
-    "password": "Password",
-    "search": "Search",
-    "options": "Options",
-    "all": "All",
-    "rooms": "Rooms",
-    "spaces": "Spaces",
-    "users": "Users",
-    "open": "Open",
-    "import": "Import",
-    "export": "Export",
-    "selectAll": "Select All",
-    "unselectAll": "Unselect All",
-    "enable": "Enable",
-    "disable": "Disable",
-    "copy": "Copy",
-    "view": "View"
-  },
-  "notifications": {
-    "invitationTitle": "Invitation",
-    "newInvitationBody": "You have {{count}} new invitation request.",
-    "newMessageBody": "New inbox notification from {{username}}",
-    "modes": {
-      "notifySilent": "Notify Silent",
-      "notifyLoud": "Notify Loud"
-    }
-  },
-  "accountData": {
-    "title": "Account Data",
-    "jsonContent": "JSON Content"
-  },
-  "themes": {
-    "light": "Light",
-    "silver": "Silver",
-    "dark": "Dark",
-    "butter": "Butter"
-  },
-  "invites": {
-    "encrypted": "Encrypted",
-    "direct": "Direct",
-    "space": "Space",
-    "accept": "Accept",
-    "decline": "Decline"
-  },
-  "exploreServer": {
-    "searchPlaceholder": "Search for keyword",
-    "clear": "Clear",
-    "enter": "Enter",
-    "protocols": "Protocols"
-  },
-  "syncStatus": {
-    "connecting": "Connecting...",
-    "reconnecting": "Connection Lost! Reconnecting...",
-    "error": "Connection Lost!"
-  },
-  "server": {
-    "connecting": "Connecting to server",
-    "connectionFailed": "Failed to connect to homeserver. Either homeserver is down or your internet.",
-    "retry": "Retry",
-    "continue": "Continue"
-  },
-  "client": {
-    "welcomePage": {
-      "title": "Welcome to Cinny",
-      "description": "Yet another matrix client."
-    },
-    "sidebar": {
-      "addSpace": "Add Space",
-      "createSpace": "Create Space",
-      "joinWithAddress": "Join with Address",
-      "markAsRead": "Mark as Read",
-      "unpin": "Unpin",
-      "invite": "Invite",
-      "copyLink": "Copy Link",
-      "spaceSettings": "Space Settings",
-      "buildCommunity": "Build a space for your community.",
-      "becomePart": "Become a part of existing community.",
-      "directMessages": "Direct Messages",
-      "exploreCommunity": "Explore Community",
-      "home": "Home",
-      "inbox": "Inbox",
-      "userSettings": "User Settings",
-      "unverifiedDevice": "Unverified Device",
-      "unverifiedDevices": "Unverified Devices"
-    },
-    "space": {
-      "markAsRead": "Mark as Read",
-      "invite": "Invite",
-      "copyLink": "Copy Link",
-      "settings": "Space Settings",
-      "eventTimeline": "Event Timeline",
-      "leaveSpace": "Leave Space"
-    },
-    "inbox": {
-      "primary": "Primary",
-      "noInvites": "No Invites",
-      "noInvitesSubtitle": "When someone you share a room with sends you an invite, it'll show up here.",
-      "noOutsideInvitesSubtitle": "Invites from people outside your rooms will appear here.",
-      "spam": "Spam",
-      "spamInvitesCount": "{{count}} Spam Invites",
-      "spamInvitesSubtitle": "Some of the following invites may contain harmful content or have been sent by banned users.",
-      "declineAll": "Decline All",
-      "reportAll": "Report All",
-      "blockAll": "Block All",
-      "hideAll": "Hide All",
-      "viewAll": "View All",
-      "noSpamInvites": "No Spam Invites",
-      "noSpamInvitesSubtitle": "Invites detected as spam appear here.",
-      "invites": "Invites",
-      "filter": "Filter",
-      "notificationMessages": "Notification Messages",
-      "allNotifications": "All Notifications",
-      "highlighted": "Highlighted",
-      "scrollToTop": "Scroll to Top",
-      "noNotifications": "No Notifications",
-      "noNotificationsSubtitle": "You don't have any new notifications to display yet."
-    },
-    "home": {
-      "markAsRead": "Mark as Read",
-      "joinWithAddress": "Join with Address",
-      "title": "Home",
-      "noRooms": "No Rooms",
-      "noRoomsSubtitle": "You do not have any rooms yet.",
-      "createRoom": "Create Room",
-      "exploreRooms": "Explore Community Rooms",
-      "messageSearch": "Message Search",
-      "createRoomTitle": "Create Room",
-      "createRoomSubtitle": "Build a Room for Real-Time Conversations"
-    },
-    "loading": "Heating up...",
-    "clearCacheAndReload": "Clear Cache and Reload",
-    "invites": "Invites",
-    "public": "Public",
-    "declineAll": "Decline All",
-    "create": {
-      "title": "Create Space",
-      "subtitle": "Build a space for your community."
-    },
-    "direct": {
-      "title": "Direct Messages",
-      "noDirectMessages": "No Direct Messages",
-      "noDirectMessagesSubtitle": "You do not have any direct messages yet.",
-      "directMessageButton": "Direct Message",
-      "markAsRead": "Mark as Read",
-      "createChat": "Create Chat",
-      "chats": "Chats"
-    },
-    "explore": {
-      "title": "Explore Community",
-      "servers": "Servers",
-      "loadFailed": "Failed to load public rooms. Please try again.",
-      "addServer": "Add Server",
-      "addServerDescription": "Add server name to explore public communities.",
-      "serverName": "Server Name",
-      "featuredByClient": "Featured by Client",
-      "featuredByClientSubtitle": "Find and explore public rooms and spaces featured by client provider.",
-      "featuredSpaces": "Featured Spaces",
-      "featuredRooms": "Featured Rooms",
-      "noFeaturedContent": "No rooms or spaces featured by client provider.",
-      "popularCommunities": "Popular Communities",
-      "previousPage": "Previous Page",
-      "nextPage": "Next Page",
-      "noCommunitiesFound": "No communities found!"
-    }
-  },
-  "Organisms": {
-    "RoomCommon": {
-      "changedRoomName": " changed room name"
-    }
-  }
+	"organisms": {
+		"search": {
+			"footer": "Type # for rooms, @ for DMs and * for spaces. Hotkey: Ctrl + k"
+		},
+		"joinAlias": {
+			"title": "Join with address",
+			"address": "Address",
+			"join": "Join",
+			"lookingForAddress": "Looking for address...",
+			"joining": "Joining {alias}...",
+			"invalidAddress": "Invalid address.",
+			"unableToFind": "Unable to find room/space with {alias}. Either room/space is private or doesn't exist.",
+			"unableToJoin": "Unable to join {alias}. Either room/space is private or doesn't exist."
+		},
+		"profileViewer": {
+			"role": "Role",
+			"member": "Member",
+			"kickReason": "Kick reason",
+			"kick": "Kick",
+			"banReason": "Ban reason",
+			"ban": "Ban",
+			"unban": "Unban",
+			"loadingSessions": "Loading sessions...",
+			"noSessionFound": "No session found.",
+			"viewSessions": "View {count} {count, plural, one {session} other {sessions}}",
+			"viewSessionsNoCount": "View sessions",
+			"message": "Message",
+			"creatingRoom": "Creating room...",
+			"invite": "Invite",
+			"inviting": "Inviting...",
+			"disinvite": "Disinvite",
+			"disinviting": "Disinviting...",
+			"ignore": "Ignore",
+			"ignoring": "Ignoring...",
+			"unignore": "Unignore",
+			"unignoring": "Unignoring...",
+			"changePowerLevel": "Change power level",
+			"sharedPowerMessage": "You will not be able to undo this change as you are promoting the user to have the same power level as yourself. Are you sure?",
+			"demotingMyselfMessage": "You will not be able to undo this change as you are demoting yourself. Are you sure?",
+			"change": "Change"
+		},
+		"inviteUser": {
+			"inviteTo": "Invite to {roomName}",
+			"directMessage": "Direct message",
+			"nameOrUserId": "Name or userId",
+			"searchingForUser": "Searching for user \"{username}\"...",
+			"searchResultForUser": "Search result for user \"{username}\"",
+			"notFound": "{userId} not found!",
+			"noMatchesFound": "No matches found for \"{username}\"!",
+			"somethingWentWrong": "Something went wrong!",
+			"invited": "Invited",
+			"alreadyJoined": "Already joined",
+			"alreadyInvited": "Already Invited",
+			"banned": "Banned",
+			"invite": "Invite",
+			"message": "Message"
+		},
+		"createRoom": {
+			"home": "Home",
+			"createRoom": "create room",
+			"createSpace": "create space",
+			"visibility": "Visibility",
+			"visibilityDescription": "Select who can join this {type}.",
+			"private": "Private",
+			"privateDescription": "Private (invite only)",
+			"restricted": "Restricted",
+			"restrictedDescription": "Restricted (space member can join)",
+			"public": "Public",
+			"publicDescription": "Public (anyone can join)",
+			"visibilityMenuTitle": "Visibility (who can join)",
+			"roomAddress": "Room address",
+			"spaceAddress": "Space address",
+			"addressPlaceholder": "my_address",
+			"addressInUse": "#{address}:{server} is already in use",
+			"enableEncryption": "Enable end-to-end encryption",
+			"encryptionDescription": "You can't disable this later. Bridges & most bots won't work yet.",
+			"selectRole": "Select your role",
+			"roleDescription": "Selecting Admin sets 100 power level whereas Founder sets 101.",
+			"admin": "Admin",
+			"founder": "Founder",
+			"topic": "Topic (optional)",
+			"roomName": "Room name",
+			"spaceName": "Space name",
+			"create": "Create",
+			"creatingRoom": "Creating room...",
+			"creatingSpace": "Creating space...",
+			"invalidCharactersInAddress": "ERROR: Invalid characters in address",
+			"addressAlreadyInUse": "ERROR: This address is already in use"
+		},
+		"roomCommon": {
+			"changedRoomName": " changed room name"
+		}
+	},
+	"auth": {
+		"login": {
+			"title": "Login",
+			"forgotPassword": "Forget Password?",
+			"noAccount": "Do not have an account?",
+			"register": "Register",
+			"username": "Username",
+			"hint": {
+				"title": "Hint",
+				"matrixId": "Matrix ID:",
+				"email": "Email:"
+			},
+			"loading": {
+				"lookingForHomeserver": "Looking for homeserver...",
+				"connectingToServer": "Connecting to {server}",
+				"loadingAuthFlow": "Loading authentication flow..."
+			},
+			"errors": {
+				"serverNotSupported": "This client does not support login on \"{server}\" homeserver. Password and SSO based login method not found.",
+				"serverNotAllowed": "Login with custom server not allowed by your client instance.",
+				"invalidServer": "Failed to find your Matrix ID server.",
+				"invalidCredentials": "Invalid Username or Password.",
+				"accountDeactivated": "This account has been deactivated.",
+				"invalidRequest": "Failed to login. Part of your request data is invalid.",
+				"rateLimited": "Failed to login. Your login request has been rate-limited by server, Please try after some time.",
+				"unknown": "Failed to login. Unknown reason.",
+				"invalidToken": "Invalid login token.",
+				"failedToFindHomeserver": "Failed to find homeserver.",
+				"homeserverConfigUnusable": "Failed to connect. Homeserver configuration found with {host} appears unusable.",
+				"homeserverConfigInvalid": "Failed to connect. Homeserver configuration base_url appears invalid.",
+				"homeserverUnavailable": "Failed to connect. Either homeserver is unavailable at this moment or does not exist.",
+				"failedToGetAuthFlow": "Failed to get authentication flow information."
+			}
+		}
+	},
+	"settings": {
+		"general": {
+			"title": "General",
+			"language": "Language",
+			"languageDescription": "Choose your preferred language for the interface."
+		},
+		"appearance": {
+			"title": "Appearance",
+			"systemTheme": {
+				"title": "System Theme",
+				"description": "Choose between light and dark theme based on system preference."
+			},
+			"theme": {
+				"title": "Theme",
+				"description": "Theme to use when system theme is not enabled."
+			},
+			"lightThemeTitle": "Light Theme:",
+			"darkThemeTitle": "Dark Theme:",
+			"twitterEmoji": {
+				"title": "Twitter Emoji"
+			},
+			"pageZoom": {
+				"title": "Page Zoom"
+			}
+		},
+		"dateAndTime": {
+			"title": "Date & Time",
+			"hour24Format": "24-Hour Time Format",
+			"dateFormat": "Date Format",
+			"custom": "Custom",
+			"formatting": "Formatting",
+			"year": "Year",
+			"month": "Month",
+			"dayOfMonth": "Day of the Month",
+			"dayOfWeek": "Day of the Week",
+			"twoDigitYear": "Two-digit year",
+			"fourDigitYear": "Four-digit year",
+			"theMonth": "The month",
+			"twoDigitMonth": "Two-digit month",
+			"shortMonthName": "Short month name",
+			"fullMonthName": "Full month name",
+			"dayOfMonthDesc": "Day of the month",
+			"twoDigitDayOfMonth": "Two-digit day of the month",
+			"dayOfWeekDesc": "Day of the week (Sunday = 0)",
+			"twoLetterDayName": "Two-letter day name",
+			"shortDayName": "Short day name",
+			"fullDayName": "Full day name"
+		},
+		"editor": {
+			"title": "Editor",
+			"enterForNewline": "ENTER for Newline",
+			"enterForNewlineDescription": "Use {key} + ENTER to send message and ENTER for newline.",
+			"markdownFormatting": "Markdown Formatting",
+			"hideTypingReadReceipts": "Hide Typing & Read Receipts",
+			"hideTypingReadReceiptsDescription": "Turn off both typing status and read receipts to keep your activity private."
+		},
+		"messages": {
+			"title": "Messages",
+			"messageLayout": "Message Layout",
+			"messageSpacing": "Message Spacing",
+			"layoutOptions": {
+				"Modern": "Modern",
+				"Compact": "Compact",
+				"Bubble": "Bubble"
+			},
+			"spacingOptions": {
+				"Ultra Small": "Ultra Small",
+				"Extra Small": "Extra Small",
+				"Small": "Small",
+				"Normal": "Normal",
+				"Large": "Large"
+			},
+			"legacyUsernameColor": "Legacy Username Color",
+			"hideMembershipChange": "Hide Membership Change",
+			"hideProfileChange": "Hide Profile Change",
+			"disableMediaAutoLoad": "Disable Media Auto Load",
+			"urlPreview": "Url Preview",
+			"urlPreviewEncrypted": "Url Preview in Encrypted Room",
+			"showHiddenEvents": "Show Hidden Events"
+		},
+		"notifications": {
+			"title": "Notifications",
+			"system": {
+				"title": "System",
+				"desktopNotifications": "Desktop Notifications",
+				"desktopNotificationsDescription": "Show desktop notifications when message arrive.",
+				"notificationPermissionBlocked": "Notification permission is blocked. Please allow notification permission from browser address bar.",
+				"notificationsNotSupported": "Notifications are not supported by the system.",
+				"notificationSound": "Notification Sound",
+				"notificationSoundDescription": "Play sound when new message arrive.",
+				"emailNotification": "Email Notification",
+				"emailNotificationDescription": "Send notification to your email.",
+				"emailNotificationWithEmail": "Send notification to your email. (\"{email}\")",
+				"noEmailAttached": "Your account does not have any email attached.",
+				"unexpectedError": "Unexpected Error!"
+			},
+			"allMessages": {
+				"title": "All Messages",
+				"badge": "Badge",
+				"oneToOneChats": "1-to-1 Chats",
+				"oneToOneChatsEncrypted": "1-to-1 Chats (Encrypted)",
+				"roomsEncrypted": "Rooms (Encrypted)"
+			},
+			"specialMessages": {
+				"title": "Special Messages",
+				"badge": "Badge",
+				"mentionUserId": "Mention User ID (\"{userId}\")",
+				"containsDisplayName": "Contains Displayname {displayName}",
+				"containsDisplayNameWithName": "Contains Displayname (\"{displayName}\")",
+				"containsUsername": "Contains Username (\"{username}\")",
+				"mentionRoom": "Mention @room",
+				"containsRoom": "Contains @room"
+			},
+			"keywordMessages": {
+				"title": "Keyword Messages",
+				"badge": "Badge",
+				"selectKeyword": "Select Keyword",
+				"selectKeywordDescription": "Set a notification preference for message containing given keyword.",
+				"keywordPattern": "\"{pattern}\""
+			},
+			"blockMessages": {
+				"title": "Block Messages",
+				"description": "This option has been moved to \"Account > Block Users\" section."
+			}
+		},
+		"developerTools": {
+			"title": "Developer Tools",
+			"enable": "Enable Developer Tools",
+			"accessToken": {
+				"title": "Access Token",
+				"description": "Copy access token to clipboard."
+			},
+			"accountData": {
+				"title": "Account Data",
+				"global": {
+					"title": "Global Account Data",
+					"description": "View and edit account data stored on your account."
+				},
+				"events": "Events",
+				"total": "Total: {{count}}",
+				"addNew": "Add New Event"
+			}
+		},
+		"devices": {
+			"title": "Devices",
+			"security": "Security",
+			"verification": {
+				"title": "Device Verification",
+				"description": "To verify device identity and grant access to encrypted messages.",
+				"steps": {
+					"title": "Steps to verify from other device.",
+					"openDevice": "Open your other verified device.",
+					"openSettings": "Open Settings.",
+					"findDevice": "Find this device in Devices/Sessions section.",
+					"initiate": "Initiate verification.",
+					"noVerifiedDevice": "If you do not have any verified device press the \"Verify Manually\" button."
+				}
+			},
+			"current": "Current Device",
+			"other": {
+				"title": "Other Devices",
+				"deviceDashboard": {
+					"title": "Device Dashboard",
+					"description": "Open device dashboard to manage your devices."
+				},
+				"deleteError": "Failed to logout devices!",
+				"deleteConfirm": "Logout from selected devices.",
+				"authNotSupported": "Authentication steps to perform this action are not supported by client."
+			},
+			"lastActivity": "Last activity",
+			"deviceId": "Device ID",
+			"ipAddress": "IP Address",
+			"deviceKey": "Device Key",
+			"deviceName": "Device Name",
+			"deviceNamePublic": "Device names are visible to public.",
+			"loading": "Loading...",
+			"unverified": {
+				"title": "Unverified",
+				"description": "Start verification from other device or verify manually.",
+				"learnMore": "Learn More",
+				"viewLess": "View Less",
+				"verifyManually": "Verify Manually"
+			},
+			"verificationStatus": {
+				"verified": "Verified",
+				"unverified": "Unverified"
+			},
+			"backup": {
+				"title": "Local Backup",
+				"export": {
+					"title": "Export Messages Data",
+					"newPassword": "New Password",
+					"confirmPassword": "Confirm Password",
+					"description": "Save password protected copy of encryption data on your device to decrypt messages later."
+				},
+				"import": {
+					"title": "Import Messages Data",
+					"description": "Load password protected copy of encryption data from device to decrypt your messages."
+				}
+			}
+		},
+		"about": {
+			"title": "About",
+			"description": "Yet another matrix client.",
+			"clearCache": {
+				"title": "Clear Cache & Reload",
+				"description": "Clear all cached data and reload the app.",
+				"button": "Clear Cache"
+			},
+			"sourceCode": "Source Code",
+			"support": "Support",
+			"cinnyName": "Cinny",
+			"version": "v{{version}}",
+			"credits": "Credits"
+		},
+		"account": {
+			"title": "Account",
+			"profile": {
+				"title": "Profile"
+			},
+			"avatar": {
+				"title": "Avatar",
+				"removeDialog": {
+					"title": "Remove Avatar",
+					"message": "Are you sure you want to remove profile avatar?"
+				}
+			},
+			"displayName": {
+				"title": "Display Name"
+			},
+			"contactInfo": {
+				"title": "Contact Information",
+				"email": {
+					"title": "Email Address",
+					"description": "Email address attached to your account."
+				}
+			},
+			"matrixId": {
+				"title": "Matrix ID"
+			},
+			"blockedUsers": {
+				"title": "Blocked Users",
+				"selectUser": {
+					"title": "Select User",
+					"description": "Prevent receiving messages or invites from user by adding their userId."
+				},
+				"block": "Block"
+			}
+		},
+		"emojisStickers": {
+			"title": "Emojis & Stickers",
+			"imagesUsage": {
+				"title": "Images Usage",
+				"description": "Select how the images are being used: as emojis, as stickers, or as both."
+			},
+			"uploadImages": {
+				"title": "Upload Images",
+				"description": "Select images from your storage to upload them in pack."
+			},
+			"pack": "Pack",
+			"images": "Images",
+			"applyChanges": "Apply Changes",
+			"applyError": "Failed to apply changes! Please try again.",
+			"applySuccess": "Changes saved! Apply when ready.",
+			"packAvatar": "Pack Avatar",
+			"name": "Name",
+			"attribution": "Attribution",
+			"shortcode": "Shortcode:",
+			"body": "Body:",
+			"usageOptions": {
+				"both": "Both",
+				"sticker": "Sticker",
+				"emoji": "Emoji"
+			},
+			"globalPacks": {
+				"applyError": "Failed to apply changes! Please try again.",
+				"applyReady": "Changes saved! Apply when ready.",
+				"title": "Room Packs",
+				"noPacks": {
+					"title": "No Packs",
+					"description": "Pack from rooms will appear here. You do not have any room with packs yet."
+				},
+				"favoritePacks": "Favorite Packs",
+				"selectPack": {
+					"title": "Select Pack",
+					"description": "Pick emojis and stickers pack from rooms to use in all rooms."
+				},
+				"applyChanges": "Apply Changes"
+			},
+			"userPack": {
+				"title": "Default Pack"
+			}
+		}
+	},
+	"navigation": {
+		"inbox": "Inbox",
+		"notifications": "Notifications",
+		"lobby": "Lobby",
+		"messageSearch": "Message Search"
+	},
+	"common": {
+		"save": "Save",
+		"cancel": "Cancel",
+		"edit": "Edit",
+		"unknown": "Unknown",
+		"settings": "Settings",
+		"expand": "Expand",
+		"collapse": "Collapse",
+		"close": "Close",
+		"undo": "Undo",
+		"remove": "Remove",
+		"removeAll": "Remove All",
+		"reset": "Reset",
+		"upload": "Upload",
+		"select": "Select",
+		"none": "None",
+		"login": "Login",
+		"logout": "Logout",
+		"password": "Password",
+		"search": "Search",
+		"options": "Options",
+		"all": "All",
+		"rooms": "Rooms",
+		"spaces": "Spaces",
+		"users": "Users",
+		"open": "Open",
+		"import": "Import",
+		"export": "Export",
+		"selectAll": "Select All",
+		"unselectAll": "Unselect All",
+		"enable": "Enable",
+		"disable": "Disable",
+		"copy": "Copy",
+		"view": "View"
+	},
+	"notifications": {
+		"invitationTitle": "Invitation",
+		"newInvitationBody": "You have {{count}} new invitation request.",
+		"newMessageBody": "New inbox notification from {{username}}",
+		"modes": {
+			"notifySilent": "Notify Silent",
+			"notifyLoud": "Notify Loud"
+		}
+	},
+	"accountData": {
+		"title": "Account Data",
+		"jsonContent": "JSON Content"
+	},
+	"themes": {
+		"light": "Light",
+		"silver": "Silver",
+		"dark": "Dark",
+		"butter": "Butter"
+	},
+	"invites": {
+		"encrypted": "Encrypted",
+		"direct": "Direct",
+		"space": "Space",
+		"accept": "Accept",
+		"decline": "Decline"
+	},
+	"exploreServer": {
+		"searchPlaceholder": "Search for keyword",
+		"clear": "Clear",
+		"enter": "Enter",
+		"protocols": "Protocols"
+	},
+	"syncStatus": {
+		"connecting": "Connecting...",
+		"reconnecting": "Connection Lost! Reconnecting...",
+		"error": "Connection Lost!"
+	},
+	"server": {
+		"connecting": "Connecting to server",
+		"connectionFailed": "Failed to connect to homeserver. Either homeserver is down or your internet.",
+		"retry": "Retry",
+		"continue": "Continue"
+	},
+	"client": {
+		"welcomePage": {
+			"title": "Welcome to Cinny",
+			"description": "Yet another matrix client."
+		},
+		"sidebar": {
+			"addSpace": "Add Space",
+			"createSpace": "Create Space",
+			"joinWithAddress": "Join with Address",
+			"markAsRead": "Mark as Read",
+			"unpin": "Unpin",
+			"invite": "Invite",
+			"copyLink": "Copy Link",
+			"spaceSettings": "Space Settings",
+			"buildCommunity": "Build a space for your community.",
+			"becomePart": "Become a part of existing community.",
+			"directMessages": "Direct Messages",
+			"exploreCommunity": "Explore Community",
+			"home": "Home",
+			"inbox": "Inbox",
+			"userSettings": "User Settings",
+			"unverifiedDevice": "Unverified Device",
+			"unverifiedDevices": "Unverified Devices"
+		},
+		"space": {
+			"markAsRead": "Mark as Read",
+			"invite": "Invite",
+			"copyLink": "Copy Link",
+			"settings": "Space Settings",
+			"eventTimeline": "Event Timeline",
+			"leaveSpace": "Leave Space"
+		},
+		"inbox": {
+			"primary": "Primary",
+			"noInvites": "No Invites",
+			"noInvitesSubtitle": "When someone you share a room with sends you an invite, it'll show up here.",
+			"noOutsideInvitesSubtitle": "Invites from people outside your rooms will appear here.",
+			"spam": "Spam",
+			"spamInvitesCount": "{{count}} Spam Invites",
+			"spamInvitesSubtitle": "Some of the following invites may contain harmful content or have been sent by banned users.",
+			"declineAll": "Decline All",
+			"reportAll": "Report All",
+			"blockAll": "Block All",
+			"hideAll": "Hide All",
+			"viewAll": "View All",
+			"noSpamInvites": "No Spam Invites",
+			"noSpamInvitesSubtitle": "Invites detected as spam appear here.",
+			"invites": "Invites",
+			"filter": "Filter",
+			"notificationMessages": "Notification Messages",
+			"allNotifications": "All Notifications",
+			"highlighted": "Highlighted",
+			"scrollToTop": "Scroll to Top",
+			"noNotifications": "No Notifications",
+			"noNotificationsSubtitle": "You don't have any new notifications to display yet."
+		},
+		"home": {
+			"markAsRead": "Mark as Read",
+			"joinWithAddress": "Join with Address",
+			"title": "Home",
+			"noRooms": "No Rooms",
+			"noRoomsSubtitle": "You do not have any rooms yet.",
+			"createRoom": "Create Room",
+			"exploreRooms": "Explore Community Rooms",
+			"messageSearch": "Message Search",
+			"createRoomTitle": "Create Room",
+			"createRoomSubtitle": "Build a Room for Real-Time Conversations"
+		},
+		"loading": "Heating up...",
+		"clearCacheAndReload": "Clear Cache and Reload",
+		"invites": "Invites",
+		"public": "Public",
+		"declineAll": "Decline All",
+		"create": {
+			"title": "Create Space",
+			"subtitle": "Build a space for your community."
+		},
+		"direct": {
+			"title": "Direct Messages",
+			"noDirectMessages": "No Direct Messages",
+			"noDirectMessagesSubtitle": "You do not have any direct messages yet.",
+			"directMessageButton": "Direct Message",
+			"markAsRead": "Mark as Read",
+			"createChat": "Create Chat",
+			"chats": "Chats"
+		},
+		"explore": {
+			"title": "Explore Community",
+			"servers": "Servers",
+			"loadFailed": "Failed to load public rooms. Please try again.",
+			"addServer": "Add Server",
+			"addServerDescription": "Add server name to explore public communities.",
+			"serverName": "Server Name",
+			"featuredByClient": "Featured by Client",
+			"featuredByClientSubtitle": "Find and explore public rooms and spaces featured by client provider.",
+			"featuredSpaces": "Featured Spaces",
+			"featuredRooms": "Featured Rooms",
+			"noFeaturedContent": "No rooms or spaces featured by client provider.",
+			"popularCommunities": "Popular Communities",
+			"previousPage": "Previous Page",
+			"nextPage": "Next Page",
+			"noCommunitiesFound": "No communities found!"
+		}
+	}
 }

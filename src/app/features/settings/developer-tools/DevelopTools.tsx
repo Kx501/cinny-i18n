@@ -27,7 +27,7 @@ export function DeveloperTools({ requestClose }: DeveloperToolsProps) {
 
   const submitAccountData: AccountDataSubmitCallback = useCallback(
     async (type, content) => {
-      await mx.setAccountData(type as any, content as any);
+      await mx.setAccountData(type, content);
     },
     [mx]
   );

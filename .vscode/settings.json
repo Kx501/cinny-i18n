@@ -5,17 +5,55 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
+  "i18n-ally.extract.autoDetect": false,
+  "i18n-ally.sourceLanguage": "en",
+  "i18n-ally.keystyle": "nested",
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "i18n-ally.tabStyle": "tab",
+  "i18n-ally.showFlags": true,
   "i18n-ally.localesPaths": [
     "public/locales"
   ],
-  "i18n-ally.extract.autoDetect": true,
-  "i18n-ally.sourceLanguage": "en",
-  "i18n-ally.keystyle": "nested",
-  "i18n-ally.keysInUse": [
-    "common.expand",
-    "common.collapse"
+  "i18n-ally.fullReloadOnChanged": true,
+  "i18n-ally.extract.keygenStyle": "camelCase",
+  "i18n-ally.enabledFrameworks": [
+    "react-i18next"
   ],
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  }
+  // "i18n-ally.extract.parsers.html": {
+  //   "attributes": [
+  //     "title",
+  //     "description"
+  //   ],
+  //   "ignoredTags": [
+  //     "script",
+  //     "style",
+  //     "code",
+  //     "pre",
+  //     "variant"
+  //   ],
+  //   "vBind": true,
+  //   "inlineText": true
+  // },
+  "i18n-ally.extract.parsers.babel": {
+    "ignoredJSXAttributes": [
+      "style",
+      "type",
+      "id",
+      "variant",
+      "direction",
+      "fill",
+      "size",
+      "grow",
+      "alignItems",
+      "justifyContent"
+    ]
+  },
+  "i18n-ally.extract.ignored": [
+    "Inherit"
+  ],
+  "i18n-ally.translate.promptSource": true,
+  "i18n-ally.translate.saveAsCandidates": true,
+  "commentTranslate.source": "Bing"
 }
