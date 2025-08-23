@@ -4,6 +4,33 @@ import Backend, { HttpBackendOptions } from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 import { trimTrailingSlash } from './utils/common';
 
+// 定义命名空间列表
+export const NAMESPACES = [
+  'common',
+  'atoms',
+  'molecules',
+  'organisms',
+  'components',
+  'features',
+  'pages',
+  'hooks',
+  'utils',
+  'state',
+  'styles',
+  'plugins',
+  'partials',
+  'client',
+  'util',
+  'types'
+] as const;
+
+// 支持的语言列表
+export const SUPPORTED_LANGUAGES = [
+  { code: 'en', name: 'English', nativeName: 'English' },
+  { code: 'zh-CN', name: 'Chinese', nativeName: '中文' },
+  { code: 'de', name: 'German', nativeName: 'Deutsch' }
+] as const;
+
 i18n
   // i18next-http-backend
   // loads translations from your server
@@ -19,12 +46,18 @@ i18n
   .init<HttpBackendOptions>({
     debug: false,
     fallbackLng: 'en',
+    supportedLngs: SUPPORTED_LANGUAGES.map(lang => lang.code),
+    ns: NAMESPACES,
+    defaultNS: 'common',
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
-    load: 'languageOnly',
     backend: {
-      loadPath: `${trimTrailingSlash(import.meta.env.BASE_URL)}/public/locales/{{lng}}.json`,
+      loadPath: `${trimTrailingSlash(import.meta.env.BASE_URL)}/public/locales/{{lng}}/{{ns}}.json`,
+    },
+    detection: {
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage'],
     },
   });
 

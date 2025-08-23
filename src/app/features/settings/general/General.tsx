@@ -4,6 +4,7 @@ import React, {
   KeyboardEventHandler,
   MouseEventHandler,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import dayjs from 'dayjs';
@@ -29,6 +30,8 @@ import {
 } from 'folds';
 import { isKeyHotkey } from 'is-hotkey';
 import FocusTrap from 'focus-trap-react';
+import { useTranslation } from 'react-i18next';
+import { SUPPORTED_LANGUAGES } from '../../../i18n';
 import { Page, PageContent, PageHeader } from '../../../components/page';
 import { SequenceCard } from '../../../components/sequence-card';
 import { useSetting } from '../../../state/hooks/settings';
@@ -50,6 +53,120 @@ import { useMessageLayoutItems } from '../../../hooks/useMessageLayout';
 import { useMessageSpacingItems } from '../../../hooks/useMessageSpacing';
 import { useDateFormatItems } from '../../../hooks/useDateFormat';
 import { SequenceCardStyle } from '../styles.css';
+
+type LanguageSelectorProps = {
+  disabled?: boolean;
+};
+
+function LanguageSelector({ disabled }: LanguageSelectorProps) {
+  const { i18n } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Get current language - directly calculate from i18n.language, let React automatically respond to changes
+  const currentLanguage = SUPPORTED_LANGUAGES.find(
+    (lang) => lang.code === i18n.language
+  ) || SUPPORTED_LANGUAGES.find(
+    (lang) => i18n.language.startsWith(lang.code)
+  ) || SUPPORTED_LANGUAGES[0];
+
+  // Listen for language change events
+  useEffect(() => {
+    const handleLanguageChanged = () => {
+      // Force re-render when language changes
+    };
+
+    i18n.on('languageChanged', handleLanguageChanged);
+
+    return () => {
+      i18n.off('languageChanged', handleLanguageChanged);
+    };
+  }, [i18n]);
+
+  // Handle menu open/close
+  const handleMenuToggle: MouseEventHandler<HTMLButtonElement> = (evt) => {
+    evt.stopPropagation();
+    setIsOpen(!isOpen);
+  };
+
+  // Handle language selection
+  const handleLanguageSelect = (languageCode: string) => {
+    setIsOpen(false);
+    i18n.changeLanguage(languageCode).catch((error) => {
+      console.error('Language change failed:', error);
+    });
+  };
+
+  // Handle clicking outside to close menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
+  return (
+    <Box style={{ position: 'relative' }}>
+      <Button
+        ref={buttonRef}
+        size="300"
+        variant="Primary"
+        outlined
+        fill="Soft"
+        radii="300"
+        disabled={disabled}
+        onClick={handleMenuToggle}
+        onMouseDown={(e) => e.stopPropagation()}
+        after={<Icon size="300" src={Icons.ChevronBottom} />}
+      >
+        <Text size="T300">{currentLanguage.nativeName}</Text>
+      </Button>
+
+      {isOpen && (
+        <Box
+          style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+            marginTop: '4px',
+          }}
+        >
+          <Menu>
+            <Box direction="Column" gap="100" style={{ padding: config.space.S100 }}>
+              {SUPPORTED_LANGUAGES.map((language) => (
+                <MenuItem
+                  key={language.code}
+                  size="300"
+                  variant={language.code === currentLanguage.code ? 'Primary' : 'Surface'}
+                  radii="300"
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleLanguageSelect(language.code);
+                  }}
+                >
+                  <Text size="T300">{language.nativeName}</Text>
+                </MenuItem>
+              ))}
+            </Box>
+          </Menu>
+        </Box>
+      )}
+    </Box>
+  );
+}
 
 type ThemeSelectorProps = {
   themeNames: Record<string, string>;
@@ -710,9 +827,8 @@ function Editor() {
       <SequenceCard className={SequenceCardStyle} variant="SurfaceVariant" direction="Column">
         <SettingTile
           title="ENTER for Newline"
-          description={`Use ${
-            isMacOS() ? KeySymbol.Command : 'Ctrl'
-          } + ENTER to send message and ENTER for newline.`}
+          description={`Use ${isMacOS() ? KeySymbol.Command : 'Ctrl'
+            } + ENTER to send message and ENTER for newline.`}
           after={<Switch variant="Primary" value={enterForNewline} onChange={setEnterForNewline} />}
         />
       </SequenceCard>
@@ -970,6 +1086,21 @@ function Messages() {
   );
 }
 
+function Language() {
+  return (
+    <Box direction="Column" gap="100">
+      <Text size="L400">Language</Text>
+      <SequenceCard className={SequenceCardStyle} variant="SurfaceVariant" direction="Column">
+        <SettingTile
+          title="Language"
+          description="Choose your preferred language for the interface."
+          after={<LanguageSelector />}
+        />
+      </SequenceCard>
+    </Box>
+  );
+}
+
 type GeneralProps = {
   requestClose: () => void;
 };
@@ -994,6 +1125,7 @@ export function General({ requestClose }: GeneralProps) {
         <Scroll hideTrack visibility="Hover">
           <PageContent>
             <Box direction="Column" gap="700">
+              <Language />
               <Appearance />
               <DateAndTime />
               <Editor />

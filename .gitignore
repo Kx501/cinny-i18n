@@ -5,3 +5,6 @@ devAssets
 
 .DS_Store
 .idea
+
+.vscode/i18n-ally-reviews.yml
+yarn.lock

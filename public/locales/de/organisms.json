@@ -1,0 +1,9 @@
+{
+    "organisms": {
+        "room": {
+            "changed_room_name": " hat den Raumnamen geändert",
+            "changed_room_topic": " hat das Raumthema geändert",
+            "changed_room_avatar": " hat das Raumavatar geändert"
+        }
+    }
+}
