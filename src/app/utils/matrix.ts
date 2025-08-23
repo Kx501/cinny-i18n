@@ -17,13 +17,13 @@ import to from 'await-to-js';
 import { IImageInfo, IThumbnailContent, IVideoInfo } from '../../types/matrix/common';
 import { AccountDataEvent } from '../../types/matrix/accountData';
 import { getStateEvent } from './room';
-import { StateEvent } from '../../types/matrix/room';
+import { Membership, StateEvent } from '../../types/matrix/room';
 
 const DOMAIN_REGEX = /\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b/;
 
 export const isServerName = (serverName: string): boolean => DOMAIN_REGEX.test(serverName);
 
-const matchMxId = (id: string): RegExpMatchArray | null => id.match(/^([@$+#])(.+):(\S+)$/);
+const matchMxId = (id: string): RegExpMatchArray | null => id.match(/^([@$+#])([^\s:]+):(\S+)$/);
 
 const validMxId = (id: string): boolean => !!matchMxId(id);
 
@@ -182,7 +182,12 @@ export const eventWithShortcode = (ev: MatrixEvent) =>
 export const getDMRoomFor = (mx: MatrixClient, userId: string): Room | undefined => {
   const dmLikeRooms = mx
     .getRooms()
-    .filter((room) => room.hasEncryptionStateEvent() && room.getMembers().length <= 2);
+    .filter(
+      (room) =>
+        room.getMyMembership() === Membership.Join &&
+        room.hasEncryptionStateEvent() &&
+        room.getMembers().length <= 2
+    );
 
   return dmLikeRooms.find((room) => room.getMember(userId));
 };

@@ -51,7 +51,7 @@ const DEFAULT_TAGS: PowerLevelTags = {
     color: '#ff6a00',
   },
   150: {
-    name: 'Co-Founder',
+    name: 'Manager',
     color: '#ff6a7f',
   },
   101: {

@@ -124,8 +124,8 @@ export function UserRoomProfile({ userId }: UserRoomProfileProps) {
             {server && <ServerChip server={server} />}
             <ShareChip userId={userId} />
             {creator ? <CreatorChip /> : <PowerChip userId={userId} />}
-            <MutualRoomsChip userId={userId} />
-            <OptionsChip userId={userId} />
+            {userId !== myUserId && <MutualRoomsChip userId={userId} />}
+            {userId !== myUserId && <OptionsChip userId={userId} />}
           </Box>
         </Box>
         {ignored && <IgnoredUserAlert />}

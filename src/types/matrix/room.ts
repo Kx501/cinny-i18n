@@ -70,6 +70,7 @@ export type IRoomCreateContent = {
   ['m.federate']?: boolean;
   room_version: string;
   type?: string;
+  additional_creators?: string[];
   predecessor?: {
     event_id?: string;
     room_id: string;

@@ -297,7 +297,7 @@ function SpaceHeader() {
 type SpaceTombstoneProps = { roomId: string; replacementRoomId: string };
 export function SpaceTombstone({ roomId, replacementRoomId }: SpaceTombstoneProps) {
   const mx = useMatrixClient();
-  const { navigateRoom } = useRoomNavigate();
+  const { navigateSpace } = useRoomNavigate();
 
   const [joinState, handleJoin] = useAsyncCallback(
     useCallback(() => {
@@ -311,8 +311,8 @@ export function SpaceTombstone({ roomId, replacementRoomId }: SpaceTombstoneProp
   const replacementRoom = mx.getRoom(replacementRoomId);
 
   const handleOpen = () => {
-    if (replacementRoom) navigateRoom(replacementRoom.roomId);
-    if (joinState.status === AsyncStatus.Success) navigateRoom(joinState.data.roomId);
+    if (replacementRoom) navigateSpace(replacementRoom.roomId);
+    if (joinState.status === AsyncStatus.Success) navigateSpace(joinState.data.roomId);
   };
 
   return (

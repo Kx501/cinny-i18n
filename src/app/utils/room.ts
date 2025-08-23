@@ -20,6 +20,7 @@ import {
 import { CryptoBackend } from 'matrix-js-sdk/lib/common-crypto/CryptoBackend';
 import { AccountDataEvent } from '../../types/matrix/accountData';
 import {
+  IRoomCreateContent,
   Membership,
   MessageEvent,
   NotificationType,
@@ -43,7 +44,7 @@ export const getStateEvents = (room: Room, eventType: StateEvent): MatrixEvent[]
 export const getAccountData = (
   mx: MatrixClient,
   eventType: AccountDataEvent
-): MatrixEvent | undefined => mx.getAccountData(eventType);
+): MatrixEvent | undefined => mx.getAccountData(eventType as any);
 
 export const getMDirects = (mDirectEvent: MatrixEvent): Set<string> => {
   const roomIds = new Set<string>();
@@ -480,6 +481,23 @@ export const bannedInRooms = (mx: MatrixClient, rooms: string[], otherUserId: st
     return banned;
   });
 
+export const getAllVersionsRoomCreator = (room: Room): Set<string> => {
+  const creators = new Set<string>();
+
+  const createEvent = getStateEvent(room, StateEvent.RoomCreate);
+  const createContent = createEvent?.getContent<IRoomCreateContent>();
+  const creator = createEvent?.getSender();
+  if (typeof creator === 'string') creators.add(creator);
+
+  if (createContent && Array.isArray(createContent.additional_creators)) {
+    createContent.additional_creators.forEach((c) => {
+      if (typeof c === 'string') creators.add(c);
+    });
+  }
+
+  return creators;
+};
+
 export const guessPerfectParent = (
   mx: MatrixClient,
   roomId: string,
@@ -490,15 +508,29 @@ export const guessPerfectParent = (
   }
 
   const getSpecialUsers = (rId: string): string[] => {
+    const specialUsers: Set<string> = new Set();
+
     const r = mx.getRoom(rId);
-    const powerLevels =
-      r && getStateEvent(r, StateEvent.RoomPowerLevels)?.getContent<IPowerLevelsContent>();
+    if (!r) return [];
+
+    getAllVersionsRoomCreator(r).forEach((c) => specialUsers.add(c));
+
+    const powerLevels = getStateEvent(
+      r,
+      StateEvent.RoomPowerLevels
+    )?.getContent<IPowerLevelsContent>();
 
     const { users_default: usersDefault, users } = powerLevels ?? {};
-    if (typeof users !== 'object') return [];
-
     const defaultPower = typeof usersDefault === 'number' ? usersDefault : 0;
-    return Object.keys(users).filter((userId) => users[userId] > defaultPower);
+
+    if (typeof users === 'object')
+      Object.keys(users).forEach((userId) => {
+        if (users[userId] > defaultPower) {
+          specialUsers.add(userId);
+        }
+      });
+
+    return Array.from(specialUsers);
   };
 
   let perfectParent: string | undefined;

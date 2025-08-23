@@ -27,6 +27,7 @@ import { UserAvatar } from '../../../components/user-avatar';
 import { useMediaAuthentication } from '../../../hooks/useMediaAuthentication';
 import { useOpenUserRoomProfile } from '../../../state/hooks/userRoomProfile';
 import { useSpaceOptionally } from '../../../hooks/useSpace';
+import { getMouseEventCords } from '../../../utils/dom';
 
 export type ReactionViewerProps = {
   room: Room;
@@ -136,7 +137,7 @@ export const ReactionViewer = as<'div', ReactionViewerProps>(
                           room.roomId,
                           space?.roomId,
                           senderId,
-                          event.currentTarget.getBoundingClientRect(),
+                          getMouseEventCords(event.nativeEvent),
                           'Bottom'
                         );
                       }}

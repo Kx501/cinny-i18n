@@ -54,7 +54,6 @@ function CreateRoomModal({ state }: CreateRoomModalProps) {
                   style={{
                     padding: config.space.S200,
                     paddingLeft: config.space.S400,
-                    borderBottomWidth: config.borderWidth.B300,
                   }}
                 >
                   <Box grow="Yes">

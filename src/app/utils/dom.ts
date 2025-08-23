@@ -43,6 +43,17 @@ export const canFitInScrollView = (
 
 export type FilesOrFile<T extends boolean | undefined = undefined> = T extends true ? File[] : File;
 
+export const getFilesFromFileList = (fileList: FileList): File[] => {
+  const files: File[] = [];
+
+  for (let i = 0; i < fileList.length; i += 1) {
+    const file: File | undefined = fileList[i];
+    if (file instanceof File) files.push(file);
+  }
+
+  return files;
+};
+
 export const selectFile = <M extends boolean | undefined = undefined>(
   accept: string,
   multiple?: M
@@ -58,7 +69,7 @@ export const selectFile = <M extends boolean | undefined = undefined>(
       if (!fileList) {
         resolve(undefined);
       } else {
-        const files: File[] = [...fileList].filter((file) => file);
+        const files: File[] = getFilesFromFileList(fileList);
         resolve((multiple ? files : files[0]) as FilesOrFile<M>);
       }
       input.removeEventListener('change', changeHandler);
@@ -70,7 +81,7 @@ export const selectFile = <M extends boolean | undefined = undefined>(
 
 export const getDataTransferFiles = (dataTransfer: DataTransfer): File[] | undefined => {
   const fileList = dataTransfer.files;
-  const files = [...fileList].filter((file) => file);
+  const files: File[] = getFilesFromFileList(fileList);
   if (files.length === 0) return undefined;
   return files;
 };
@@ -224,3 +235,10 @@ export const notificationPermission = (permission: NotificationPermission) => {
   }
   return false;
 };
+
+export const getMouseEventCords = (event: MouseEvent) => ({
+  x: event.clientX,
+  y: event.clientY,
+  width: 0,
+  height: 0,
+});

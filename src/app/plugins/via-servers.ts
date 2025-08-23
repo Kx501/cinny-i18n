@@ -1,11 +1,19 @@
 import { Room } from 'matrix-js-sdk';
 import { IPowerLevels } from '../hooks/usePowerLevels';
-import { getMxIdServer } from '../utils/matrix';
-import { StateEvent } from '../../types/matrix/room';
+import { creatorsSupported, getMxIdServer } from '../utils/matrix';
+import { IRoomCreateContent, StateEvent } from '../../types/matrix/room';
 import { getStateEvent } from '../utils/room';
 
 export const getViaServers = (room: Room): string[] => {
   const getHighestPowerUserId = (): string | undefined => {
+    const creatorEvent = getStateEvent(room, StateEvent.RoomCreate);
+    if (
+      creatorEvent &&
+      creatorsSupported(creatorEvent.getContent<IRoomCreateContent>().room_version)
+    ) {
+      return creatorEvent.getSender();
+    }
+
     const powerLevels = getStateEvent(room, StateEvent.RoomPowerLevels)?.getContent<IPowerLevels>();
 
     if (!powerLevels) return undefined;

@@ -55,6 +55,7 @@ import {
 import { useSpaceOptionally } from '../../../hooks/useSpace';
 import { useFlattenPowerTagMembers, useGetMemberPowerTag } from '../../../hooks/useMemberPowerTag';
 import { useRoomCreators } from '../../../hooks/useRoomCreators';
+import { getMouseEventCords } from '../../../utils/dom';
 
 const SEARCH_OPTIONS: UseAsyncSearchOptions = {
   limit: 1000,
@@ -145,7 +146,7 @@ export function Members({ requestClose }: MembersProps) {
     const btn = evt.currentTarget as HTMLButtonElement;
     const userId = btn.getAttribute('data-user-id');
     if (userId) {
-      openProfile(room.roomId, space?.roomId, userId, btn.getBoundingClientRect());
+      openProfile(room.roomId, space?.roomId, userId, getMouseEventCords(evt.nativeEvent));
     }
   };
 

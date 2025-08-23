@@ -7,15 +7,22 @@ import { stopPropagation } from '../../../utils/keyboard';
 import { SequenceCard } from '../../../components/sequence-card';
 import { SettingTile } from '../../../components/setting-tile';
 import { ContainerColor } from '../../../styles/ContainerColor.css';
-import { openJoinAlias } from '../../../../client/action/navigation';
-import { getCreatePath } from '../../pathUtils';
+import {
+  encodeSearchParamValueArray,
+  getCreatePath,
+  getSpacePath,
+  withSearchParam,
+} from '../../pathUtils';
 import { useCreateSelected } from '../../../hooks/router/useCreateSelected';
+import { JoinAddressPrompt } from '../../../components/join-address-prompt';
+import { _RoomSearchParams } from '../../paths';
 
 export function CreateTab() {
   const createSelected = useCreateSelected();
 
   const navigate = useNavigate();
   const [menuCords, setMenuCords] = useState<RectCords>();
+  const [joinAddress, setJoinAddress] = useState(false);
 
   const handleMenu: MouseEventHandler<HTMLButtonElement> = (evt) => {
     setMenuCords(menuCords ? undefined : evt.currentTarget.getBoundingClientRect());
@@ -27,7 +34,7 @@ export function CreateTab() {
   };
 
   const handleJoinWithAddress = () => {
-    openJoinAlias();
+    setJoinAddress(true);
     setMenuCords(undefined);
   };
 
@@ -103,6 +110,22 @@ export function CreateTab() {
             >
               <Icon src={Icons.Plus} />
             </SidebarAvatar>
+            {joinAddress && (
+              <JoinAddressPrompt
+                onCancel={() => setJoinAddress(false)}
+                onOpen={(roomIdOrAlias, viaServers) => {
+                  setJoinAddress(false);
+                  const path = getSpacePath(roomIdOrAlias);
+                  navigate(
+                    viaServers
+                      ? withSearchParam<_RoomSearchParams>(path, {
+                          viaServers: encodeSearchParamValueArray(viaServers),
+                        })
+                      : path
+                  );
+                }}
+              />
+            )}
           </PopOut>
         )}
       </SidebarItemTooltip>

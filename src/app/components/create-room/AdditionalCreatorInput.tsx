@@ -30,9 +30,7 @@ import { SettingTile } from '../setting-tile';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { stopPropagation } from '../../utils/keyboard';
 import { useAsyncSearch, UseAsyncSearchOptions } from '../../hooks/useAsyncSearch';
-import { findAndReplace } from '../../utils/findAndReplace';
-import { highlightText } from '../../styles/CustomHtml.css';
-import { makeHighlightRegex } from '../../plugins/react-custom-html-parser';
+import { highlightText, makeHighlightRegex } from '../../plugins/react-custom-html-parser';
 
 export const useAdditionalCreators = (defaultCreators?: string[]) => {
   const mx = useMatrixClient();
@@ -245,19 +243,9 @@ export function AdditionalCreatorInput({
                                   <Text size="T200" truncate>
                                     <b>
                                       {queryHighlighRegex
-                                        ? findAndReplace(
+                                        ? highlightText(queryHighlighRegex, [
                                             getMxIdLocalPart(userId) ?? userId,
-                                            queryHighlighRegex,
-                                            (match, pushIndex) => (
-                                              <span
-                                                key={`highlight-${pushIndex}`}
-                                                className={highlightText}
-                                              >
-                                                {match[0]}
-                                              </span>
-                                            ),
-                                            (txt) => txt
-                                          )
+                                          ])
                                         : getMxIdLocalPart(userId)}
                                     </b>
                                   </Text>

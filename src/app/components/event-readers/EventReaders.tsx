@@ -23,6 +23,7 @@ import { UserAvatar } from '../user-avatar';
 import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
 import { useOpenUserRoomProfile } from '../../state/hooks/userRoomProfile';
 import { useSpaceOptionally } from '../../hooks/useSpace';
+import { getMouseEventCords } from '../../utils/dom';
 
 export type EventReadersProps = {
   room: Room;
@@ -83,7 +84,7 @@ export const EventReaders = as<'div', EventReadersProps>(
                         room.roomId,
                         space?.roomId,
                         readerId,
-                        event.currentTarget.getBoundingClientRect(),
+                        getMouseEventCords(event.nativeEvent),
                         'Bottom'
                       );
                     }}
