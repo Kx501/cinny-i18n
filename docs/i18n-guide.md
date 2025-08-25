@@ -32,59 +32,38 @@ public/locales/
 ## 翻译键命名规范
 
 ### 基本原则
-- **按文件夹结构组织**：每个文件夹对应一个翻译文件
-- **文件名作为嵌套键名**：`atoms.json` 中的键都以 `atoms.` 开头
-- **快速定位**：通过键名能直接定位到代码中的文件夹位置
-- **内部使用扁平结构**：避免过深的嵌套，最多2-3级
+- **文件即命名空间**：每个翻译文件就是一个命名空间（如 `organisms.json` → 命名空间 `organisms`）
+- **文件内不包同名根键**：直接从分组开始（如 `room.*`），避免 `organisms.room.*` 这类重复前缀
+- **快速定位**：键名与源码路径一一对应（如 `organisms:room.changed_room_name` → `src/app/organisms/room/*`）
+- **内部使用扁平结构**：最多 2-3 级，便于维护
 
 ### 命名示例
 
 ```json
-// atoms.json
+// atoms.json（不包同名根键，直接从分组开始）
 {
-  "atoms": {
-    "button": {
-      "primary": "主要按钮",
-      "secondary": "次要按钮",
-      "danger": "危险按钮"
-    },
-    "input": {
-      "placeholder": "请输入...",
-      "error": "输入错误"
-    }
+  "button": {
+    "primary": "主要按钮",
+    "secondary": "次要按钮",
+    "danger": "危险按钮"
+  },
+  "input": {
+    "placeholder": "请输入...",
+    "error": "输入错误"
   }
 }
 
-// features.json
+// features.json（同理）
 {
-  "features": {
-    "settings": {
-      "title": "设置",
-      "language": "语言",
-      "theme": "主题"
-    },
-    "room": {
-      "create": "创建房间",
-      "join": "加入房间",
-      "leave": "离开房间"
-    }
-  }
-}
-
-// common.json
-{
-  "common": {
-    "actions": {
-      "save": "保存",
-      "cancel": "取消",
-      "confirm": "确认",
-      "delete": "删除"
-    },
-    "states": {
-      "loading": "加载中...",
-      "error": "错误",
-      "success": "成功"
-    }
+  "settings": {
+    "title": "设置",
+    "language": "语言",
+    "theme": "主题"
+  },
+  "room": {
+    "create": "创建房间",
+    "join": "加入房间",
+    "leave": "离开房间"
   }
 }
 ```
@@ -167,30 +146,42 @@ i18n
 export default i18n;
 ```
 
-### 2. 在组件中使用
+### 2. 在组件中使用（含多命名空间）
 
 ```typescript
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-// 基本用法
+// 推荐：显式命名空间前缀，最稳妥
 function MyComponent() {
   const { t } = useTranslation();
-
   return (
     <div>
-      <button>{t('common.actions.save')}</button>
-      <h1>{t('features.settings.title')}</h1>
+      <button>{t('atoms:button.primary')}</button>
+      <h1>{t('features:settings.title')}</h1>
     </div>
   );
 }
 
-// 使用特定命名空间
+// 绑定单一命名空间：在文件顶部绑定后，键可不写前缀
 function ButtonComponent() {
   const { t } = useTranslation('atoms');
 
   return (
-    <button>{t('button.primary')}</button>
+    <button>{t('button.primary')}</button> // 等价于 t('atoms:button.primary')
+  );
+}
+
+// 绑定多个命名空间：按数组顺序加载并以第一个为默认
+function MultiNSComponent() {
+  const { t } = useTranslation(['organisms', 'features']);
+  return (
+    <div>
+      {/* 显式前缀（推荐，避免歧义） */}
+      <p>{t('organisms:room.changed_room_name')}</p>
+      {/* 或在选项里指定 ns */}
+      <p>{t('room.changed_room_name', { ns: 'organisms' })}</p>
+    </div>
   );
 }
 
@@ -200,8 +191,8 @@ function RoomComponent({ userName, messageCount }) {
 
   return (
     <div>
-      <p>{t('features.room.member_joined', { name: userName })}</p>
-      <p>{t('features.room.unread_count', { count: messageCount })}</p>
+      <p>{t('features:room.member_joined', { name: userName })}</p>
+      <p>{t('features:room.unread_count', { count: messageCount })}</p>
     </div>
   );
 }

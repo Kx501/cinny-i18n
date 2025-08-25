@@ -1,0 +1,15 @@
+{
+    "no longer active": "inactive",
+    "join replacement room": "join_replacement_room",
+    "jump to unread": "jump_to_unread",
+    "open new room": "open_new_room",
+    "jump to time": "jump_to_time",
+    "try again": "retry",
+    "end-to-end encryption": "e2ee",
+    "failed to": "failed_after",
+    "unable to": "failed_after",
+    "could not": "failed_after",
+    "don't have permission": "_permission_denied_after",
+    "not allowed to": "permission_denied_after",
+    "forbidden to": "permission_denied_after"
+}

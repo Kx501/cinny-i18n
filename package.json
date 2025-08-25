@@ -14,7 +14,10 @@
     "check:eslint": "eslint src/*",
     "check:prettier": "prettier --check .",
     "fix:prettier": "prettier --write .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "i18n:extract:sample": "i18next --config i18next-parser.config.cjs src/app/features/room/RoomTimeline.tsx src/app/features/settings/general/General.tsx",
+    "i18n:codemod:sample": "node scripts/i18n-codemod-sample.cjs --file src/app/features/room/RoomTimeline.tsx",
+    "i18n:codemod:sample:write": "node scripts/i18n-codemod-sample.cjs --file src/app/features/room/RoomTimeline.tsx --write"
   },
   "keywords": [],
   "author": "Ajay Bura",

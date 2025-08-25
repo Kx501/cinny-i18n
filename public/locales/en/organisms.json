@@ -1,9 +1,1 @@
-{
-    "organisms": {
-        "room": {
-            "changed_room_name": " changed room name",
-            "changed_room_topic": " changed room topic",
-            "changed_room_avatar": " changed room avatar"
-        }
-    }
-}
+{}
