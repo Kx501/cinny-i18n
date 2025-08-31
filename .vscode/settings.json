@@ -1,6 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "vscode.typescript-language-features",
   "typescript.tsdk": "node_modules/typescript/lib",
   "i18n-ally.localesPaths": [
     "public/locales"
@@ -8,5 +8,73 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
-  "i18n-ally.keystyle": "nested"
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.ignoreFiles": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/*.test.*",
+    "**/*.spec.*"
+  ],
+  "i18n-ally.extract.ignored": [
+    "ERROR: Invalid characters in address",
+    "M_UNKNOWN: Invalid characters in room alias",
+    "M_ROOM_IN_USE: Room alias already taken",
+    "M_LIMIT_EXCEEDED",
+    "M_FORBIDDEN",
+    "M_UNKNOWN_TOKEN",
+    "M_MISSING_TOKEN",
+    "M_BAD_JSON",
+    "M_NOT_JSON",
+    "M_NOT_FOUND",
+    "M_UNRECOGNIZED",
+    "M_UNKNOWN",
+    "M_UNAUTHORIZED",
+    "M_USER_DEACTIVATED",
+    "M_USER_IN_USE",
+    "M_INVALID_USERNAME",
+    "M_WEAK_PASSWORD",
+    "M_PASSWORD_TOO_SHORT",
+    "M_INVALID_ROOM_STATE",
+    "M_THREEPID_IN_USE",
+    "M_THREEPID_NOT_FOUND",
+    "M_THREEPID_AUTH_FAILED",
+    "M_THREEPID_DENIED",
+    "M_SERVER_NOT_TRUSTED",
+    "M_UNSUPPORTED_ROOM_VERSION",
+    "M_INCOMPATIBLE_ROOM_VERSION",
+    "M_BAD_STATE",
+    "M_GUEST_ACCESS_FORBIDDEN",
+    "M_CAPTCHA_NEEDED",
+    "M_CAPTCHA_INVALID",
+    "M_MISSING_PARAM",
+    "M_INVALID_PARAM",
+    "M_TOO_LARGE",
+    "M_EXCLUSIVE",
+    "M_RESOURCE_LIMIT_EXCEEDED",
+    "M_CANNOT_LEAVE_SERVER_NOTICE_ROOM",
+    "ERROR: Invalid characters in address",
+    "ERROR: This address is already in use",
+    "ERROR: Invalid characters in address"
+  ],
+  "i18n-ally.extract.autoDetect": true,
+  "i18n-ally.extract.keygenStrategy": "source",
+  "i18n-ally.extract.keygenStyle": "snake_case",
+  "i18n-ally.fullReloadOnChanged": true,
+  "i18n-ally.namespace": true,
+  "i18n-ally.tabStyle": "tab",
+  "i18n-ally.sourceLanguage": "en",
+  "i18n-ally.translate.saveAsCandidates": true
 }

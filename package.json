@@ -14,10 +14,7 @@
     "check:eslint": "eslint src/*",
     "check:prettier": "prettier --check .",
     "fix:prettier": "prettier --write .",
-    "typecheck": "tsc --noEmit",
-    "i18n:extract:sample": "i18next --config i18next-parser.config.cjs src/app/features/room/RoomTimeline.tsx src/app/features/settings/general/General.tsx",
-    "i18n:codemod:sample": "node scripts/i18n-codemod-sample.cjs --file src/app/features/room/RoomTimeline.tsx",
-    "i18n:codemod:sample:write": "node scripts/i18n-codemod-sample.cjs --file src/app/features/room/RoomTimeline.tsx --write"
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "Ajay Bura",
@@ -86,6 +83,10 @@
     "ua-parser-js": "1.0.35"
   },
   "devDependencies": {
+    "@babel/generator": "7.28.3",
+    "@babel/parser": "7.28.3",
+    "@babel/traverse": "7.28.3",
+    "@babel/types": "7.28.2",
     "@esbuild-plugins/node-globals-polyfill": "0.2.3",
     "@rollup/plugin-inject": "5.0.3",
     "@rollup/plugin-wasm": "6.1.1",
