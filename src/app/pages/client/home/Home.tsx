@@ -65,6 +65,7 @@ import {
 import { UseStateProvider } from '../../../components/UseStateProvider';
 import { JoinAddressPrompt } from '../../../components/join-address-prompt';
 import { _RoomSearchParams } from '../../paths';
+import { useTranslation } from 'react-i18next';
 
 type HomeMenuProps = {
   requestClose: () => void;
@@ -153,6 +154,7 @@ function HomeHeader() {
 }
 
 function HomeEmpty() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
@@ -161,19 +163,19 @@ function HomeEmpty() {
         icon={<Icon size="600" src={Icons.Hash} />}
         title={
           <Text size="H5" align="Center">
-            No Rooms
+            {t('pages:client.home.no_rooms')}
           </Text>
         }
         content={
           <Text size="T300" align="Center">
-            You do not have any rooms yet.
+            {t('pages:client.home.no_rooms_yet')}
           </Text>
         }
         options={
           <>
             <Button onClick={() => navigate(getHomeCreatePath())} variant="Secondary" size="300">
               <Text size="B300" truncate>
-                Create Room
+                {t('pages:client.home.create_room')}
               </Text>
             </Button>
             <Button
@@ -183,7 +185,7 @@ function HomeEmpty() {
               size="300"
             >
               <Text size="B300" truncate>
-                Explore Community Rooms
+                {t('pages:client.home.explore_community_rooms')}
               </Text>
             </Button>
           </>
@@ -195,6 +197,7 @@ function HomeEmpty() {
 
 const DEFAULT_CATEGORY_ID = makeNavCategoryId('home', 'room');
 export function Home() {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   useNavToActivePathMapper('home');
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -250,7 +253,7 @@ export function Home() {
                       </Avatar>
                       <Box as="span" grow="Yes">
                         <Text as="span" size="Inherit" truncate>
-                          Create Room
+                          {t('pages:client.home.create_room')}
                         </Text>
                       </Box>
                     </Box>
@@ -269,7 +272,7 @@ export function Home() {
                             </Avatar>
                             <Box as="span" grow="Yes">
                               <Text as="span" size="Inherit" truncate>
-                                Join with Address
+                                {t('pages:client.home.join_with_address')}
                               </Text>
                             </Box>
                           </Box>
@@ -285,8 +288,8 @@ export function Home() {
                           navigate(
                             viaServers
                               ? withSearchParam<_RoomSearchParams>(path, {
-                                  viaServers: encodeSearchParamValueArray(viaServers),
-                                })
+                                viaServers: encodeSearchParamValueArray(viaServers),
+                              })
                               : path
                           );
                         }}
@@ -304,7 +307,7 @@ export function Home() {
                       </Avatar>
                       <Box as="span" grow="Yes">
                         <Text as="span" size="Inherit" truncate>
-                          Message Search
+                          {t('pages:client.home.message_search')}
                         </Text>
                       </Box>
                     </Box>
@@ -319,7 +322,7 @@ export function Home() {
                   data-category-id={DEFAULT_CATEGORY_ID}
                   onClick={handleCategoryClick}
                 >
-                  Rooms
+                  {t('pages:client.home.rooms')}
                 </RoomNavCategoryButton>
               </NavCategoryHeader>
               <div

@@ -15,6 +15,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import FocusTrap from 'focus-trap-react';
 import { AuthDict, AuthType, MatrixError, createClient } from 'matrix-js-sdk';
+import { useTranslation } from 'react-i18next';
 import { useAutoDiscoveryInfo } from '../../../hooks/useAutoDiscoveryInfo';
 import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 import { useAuthServer } from '../../../hooks/useAuthServer';
@@ -36,6 +37,7 @@ type FormData = {
 };
 
 function ResetPasswordComplete({ email }: { email?: string }) {
+  const { t } = useTranslation();
   const server = useAuthServer();
 
   const navigate = useNavigate();
@@ -56,11 +58,11 @@ function ResetPasswordComplete({ email }: { email?: string }) {
           <Dialog>
             <Box style={{ padding: config.space.S400 }} direction="Column" gap="400">
               <Text>
-                Password has been reset successfully. Please login with your new password.
+                {t('pages:auth.reset-password.password_reset_success')}
               </Text>
               <Button variant="Primary" onClick={handleClick}>
                 <Text size="B400" as="span">
-                  Login
+                  {t('pages:auth.reset-password.cta_login')}
                 </Text>
               </Button>
             </Box>
@@ -75,6 +77,7 @@ type PasswordResetFormProps = {
   defaultEmail?: string;
 };
 export function PasswordResetForm({ defaultEmail }: PasswordResetFormProps) {
+  const { t } = useTranslation();
   const server = useAuthServer();
 
   const serverDiscovery = useAutoDiscoveryInfo();
@@ -167,11 +170,11 @@ export function PasswordResetForm({ defaultEmail }: PasswordResetFormProps) {
   return (
     <Box as="form" onSubmit={handleSubmit} direction="Inherit" gap="400">
       <Text size="T300" priority="400">
-        Homeserver <strong>{server}</strong> will send you an email to let you reset your password.
+        {t('pages:auth.reset-password.homeserver_will_send_email', { server })}
       </Text>
       <Box direction="Column" gap="100">
         <Text as="label" size="L400" priority="300">
-          Email
+          {t('pages:auth.reset-password.email')}
         </Text>
         <Input
           defaultValue={defaultEmail}
@@ -193,7 +196,7 @@ export function PasswordResetForm({ defaultEmail }: PasswordResetFormProps) {
           <>
             <Box direction="Column" gap="100">
               <Text as="label" size="L400" priority="300">
-                New Password
+                {t('pages:auth.reset-password.new_password')}
               </Text>
               <PasswordInput
                 ref={passRef}
@@ -207,7 +210,7 @@ export function PasswordResetForm({ defaultEmail }: PasswordResetFormProps) {
             </Box>
             <Box direction="Column" gap="100">
               <Text as="label" size="L400" priority="300">
-                Confirm Password
+                {t('pages:auth.reset-password.confirm_password')}
               </Text>
               <PasswordInput
                 ref={confPassRef}
@@ -225,15 +228,14 @@ export function PasswordResetForm({ defaultEmail }: PasswordResetFormProps) {
       </ConfirmPasswordMatch>
       {resetPasswordError && (
         <FieldError
-          message={`${resetPasswordError.errcode}: ${
-            resetPasswordError.data?.error ?? 'Failed to reset password.'
-          }`}
+          message={`${resetPasswordError.errcode}: ${resetPasswordError.data?.error ?? t('pages:auth.reset-password.failed_to_reset_password')
+            }`}
         />
       )}
       <span data-spacing-node />
       <Button type="submit" variant="Primary" size="500">
         <Text as="span" size="B500">
-          Reset Password
+          {t('pages:auth.reset-password.reset_password_button')}
         </Text>
       </Button>
 

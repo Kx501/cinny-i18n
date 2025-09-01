@@ -14,14 +14,7 @@ export const NAMESPACES = [
   'features',
   'pages',
   'hooks',
-  'utils',
-  'state',
-  'styles',
-  'plugins',
-  'partials',
-  'client',
-  'util',
-  'types'
+  'util'
 ] as const;
 
 // 支持的语言列表

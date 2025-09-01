@@ -8,3 +8,4 @@ devAssets
 
 .vscode/i18n-ally-reviews.yml
 yarn.lock
+dist.zip

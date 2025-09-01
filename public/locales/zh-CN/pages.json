@@ -1,1 +1,236 @@
-{}
+{
+    "auth": {
+        "homeserver": "主服务器",
+        "looking_for_homeserver": "正在查找主服务器...",
+        "failed_to_find_homeserver": "未能找到主服务器。",
+        "failed_to_connect_config_with_host_unusable": "连接失败。发现的主服务器配置 {{host}} 似乎无法使用。",
+        "failed_to_connect_base_url_invalid": "连接失败。主服务器配置的 base_url 似乎无效。",
+        "connecting_to_base_url": "正在连接到 {{base_url}}",
+        "failed_to_connect_unavailable_or_not_exist": "连接失败。主服务器当前不可用或不存在。",
+        "loading_authentication_flow": "正在加载身份验证流程...",
+        "failed_to_get_authentication_flow_information": "无法获取身份验证流程信息。",
+        "homeserver_list": "主服务器列表",
+        "or": "或",
+        "about": "关于",
+        "twitter": "推特",
+        "powered_by_matrix": "由 Matrix 驱动",
+        "continue_with_sso": "使用 SSO 继续",
+        "continue_with_name": "使用 {{name}} 继续",
+        "login": {
+            "title_login": "登录",
+            "not_supported_on_server": "此客户端不支持在 \"{{server}}\" 主服务器上登录。未找到密码和 SSO 登录方式。",
+            "do_not_have_an_account": "没有账户？",
+            "cta_register": "注册",
+            "username": "用户名",
+            "password": "密码",
+            "forget_password": "忘记密码？",
+            "login_button": "登录",
+            "hint": "提示",
+            "username_colon": "用户名：",
+            "matrix_id_colon": "Matrix ID：",
+            "email_colon": "邮箱：",
+            "login_with_custom_server_not_allowed": "您的客户端实例不允许使用自定义服务器登录。",
+            "failed_to_find_your_matrix_id_server": "未能找到您的 Matrix ID 服务器。",
+            "invalid_username_or_password": "用户名或密码无效。",
+            "account_has_been_deactivated": "此账户已被停用。",
+            "failed_to_login_request_invalid": "登录失败。您的请求数据部分无效。",
+            "failed_to_login_rate_limited": "登录失败。您的登录请求已被服务器限制频率，请稍后重试。",
+            "failed_to_login_unknown": "登录失败。未知原因。",
+            "token_login_title": "令牌登录",
+            "invalid_login_token": "无效的登录令牌。"
+        },
+        "register": {
+            "title_register": "注册",
+            "registration_disabled": "此主服务器已禁用注册。",
+            "you_have_been_rate_limited": "您已被限制频率！请稍后重试。",
+            "invalid_request_failed_to_get_registration_options": "无效请求！无法获取任何注册选项。",
+            "app_not_support_registration": "此应用程序不支持在此主服务器上注册。",
+            "already_have_an_account": "已有账户？",
+            "cta_login": "登录",
+            "username": "用户名",
+            "this_username_is_already_taken": "此用户名已被占用。",
+            "this_username_contains_invalid_characters": "此用户名包含无效字符。",
+            "this_username_is_reserved": "此用户名已被保留。",
+            "password": "密码",
+            "weak_password": "密码过弱。服务器拒绝了密码，请选择更强的密码。",
+            "short_password": "密码过短。服务器拒绝了密码，请选择更长的密码。",
+            "confirm_password": "确认密码",
+            "registration_token": "注册令牌",
+            "registration_token_optional": "注册令牌（可选）",
+            "email": "邮箱",
+            "email_optional": "邮箱（可选）",
+            "i_accept_server_terms_and_conditions": "我接受服务器",
+            "terms_and_conditions": "条款和条件",
+            "failed_to_register_rate_limited": "注册失败。您的注册请求已被服务器限制频率，请稍后重试。",
+            "failed_to_register_not_permit": "注册失败。主服务器不允许注册。",
+            "failed_to_register_invalid_request": "注册失败。无效请求。",
+            "failed_to_register_unknown_reason": "注册失败。未知原因。",
+            "register_button": "注册"
+        },
+        "reset-password": {
+            "title_reset_password": "重置密码",
+            "remember_your_password": "记起密码了？",
+            "cta_login": "登录",
+            "homeserver_will_send_email": "主服务器 {{server}} 将向您发送邮件以重置密码。",
+            "email": "邮箱",
+            "new_password": "新密码",
+            "confirm_password": "确认密码",
+            "reset_password_button": "重置密码",
+            "password_reset_success": "密码已成功重置。请使用新密码登录。",
+            "failed_to_reset_password": "重置密码失败。",
+            "account_has_been_deactivated": "此账户已被停用。",
+            "failed_to_login_request_invalid": "登录失败。您的请求数据部分无效。",
+            "failed_to_login_rate_limited": "登录失败。您的登录请求已被服务器限制频率，请稍后重试。",
+            "failed_to_login_unknown": "登录失败。未知原因。"
+        }
+    },
+    "client": {
+        "welcome": {
+            "welcome_to_cinny": "欢迎使用 Cinny",
+            "yet_another_matrix_client": "又一个 Matrix 客户端。",
+            "source_code": "源代码",
+            "support": "支持"
+        },
+        "sync": {
+            "connecting": "连接中...",
+            "connection_lost_reconnecting": "连接断开！重新连接中...",
+            "connection_lost": "连接断开！"
+        },
+        "spec-versions": {
+            "connecting_to_server": "正在连接到服务器",
+            "failed_to_connect_homeserver": "连接主服务器失败。主服务器可能已停机或您的网络有问题。",
+            "retry": "重试",
+            "continue": "继续"
+        },
+        "home": {
+            "home": "首页",
+            "no_rooms": "没有房间",
+            "no_rooms_yet": "您还没有任何房间。",
+            "create_room": "创建房间",
+            "explore_community_rooms": "探索社区房间",
+            "join_with_address": "通过地址加入",
+            "message_search": "消息搜索",
+            "rooms": "房间",
+            "search": {
+                "message_search": "消息搜索",
+                "home": "首页"
+            }
+        },
+        "direct": {
+            "direct_messages": "私聊消息",
+            "no_direct_messages": "没有私聊消息",
+            "no_direct_messages_yet": "您还没有任何私聊消息。",
+            "direct_message": "私聊消息",
+            "create_chat": "创建聊天",
+            "chats": "聊天"
+        },
+        "create": {
+            "create_space": "创建空间",
+            "build_a_space_for_your_community": "为您的社区构建一个空间。"
+        },
+        "explore": {
+            "explore_community": "探索社区",
+            "servers": "服务器",
+            "add_server": "添加服务器",
+            "add_server_name_to_explore_public_communities": "添加服务器名称以探索公共社区。",
+            "server_name": "服务器名称",
+            "failed_to_load_public_rooms": "加载公共房间失败。请重试。",
+            "view": "查看",
+            "featured": {
+                "featured_by_client": "客户端精选",
+                "find_and_explore_public_rooms_and_spaces_featured_by_client_provider": "查找和探索由客户端提供商精选的公共房间和空间。",
+                "featured_spaces": "精选空间",
+                "featured_rooms": "精选房间",
+                "no_rooms_or_spaces_featured": "客户端提供商未精选任何房间或空间。"
+            },
+            "server": {
+                "search": "搜索",
+                "search_for_keyword": "搜索关键词",
+                "clear": "清除",
+                "enter": "回车",
+                "protocols": "协议",
+                "presets": "预设",
+                "custom_limit": "自定义限制",
+                "per_page_item_limit": "每页项目限制",
+                "change_limit": "更改限制",
+                "popular_communities": "热门社区",
+                "results_for_term": "\"{{term}}\" 的搜索结果",
+                "previous_page": "上一页",
+                "next_page": "下一页",
+                "no_communities_found": "未找到社区！"
+            }
+        },
+        "inbox": {
+            "inbox": "收件箱",
+            "notifications": "通知",
+            "invites": "邀请",
+            "notifications_page": {
+                "no_notifications": "没有通知",
+                "no_notifications_desc": "您暂时没有新通知要显示。",
+                "notification_messages": "通知消息",
+                "filter": "筛选",
+                "all_notifications": "所有通知",
+                "highlighted": "高亮",
+                "scroll_to_top": "滚动到顶部",
+                "mark_as_read": "标记为已读"
+            },
+            "invites_page": {
+                "primary": "主要",
+                "public": "公共",
+                "no_invites": "没有邀请",
+                "no_invites_primary_desc": "当与您共享房间的人向您发送邀请时，它会显示在这里。",
+                "no_invites_public_desc": "来自房间外的人的邀请将显示在这里。",
+                "decline_all": "全部拒绝",
+                "view_all": "查看全部",
+                "hide_all": "隐藏全部",
+                "decline": "拒绝",
+                "accept": "接受",
+                "from_colon": "来自：",
+                "spam": "垃圾邮件",
+                "no_spam_invites": "没有垃圾邀请",
+                "spam_invites_title": "{{count}} 个垃圾邀请",
+                "spam_invites_desc": "以下某些邀请可能包含有害内容或由被封禁用户发送。",
+                "report_all": "全部举报",
+                "block_all": "全部屏蔽"
+            }
+        },
+        "space": {
+            "lobby": "大厅",
+            "message_search": "消息搜索",
+            "rooms": "房间",
+            "mark_as_read": "标记为已读",
+            "invite": "邀请",
+            "copy_link": "复制链接",
+            "space_settings": "空间设置",
+            "event_timeline": "事件时间线",
+            "leave_space": "离开空间",
+            "space_upgraded": "空间已升级",
+            "space_replaced_no_longer_active": "此空间已被替换且不再活跃。",
+            "failed_to_join_replacement_space": "加入替换空间失败！",
+            "open_new_space": "打开新空间",
+            "join_new_space": "加入新空间",
+            "search": {
+                "message_search": "消息搜索"
+            }
+        },
+        "sidebar": {
+            "home": "首页",
+            "explore_community": "探索社区",
+            "inbox": "收件箱"
+        }
+    },
+    "config-config": {
+        "heating_up": "正在预热",
+        "failed_to_load_client_configuration_file": "加载客户端配置文件失败。",
+        "retry": "重试",
+        "continue": "继续"
+    },
+    "feature-check": {
+        "missing_browser_feature": "缺少浏览器功能",
+        "no_indexeddb_support": "未找到 IndexedDB 支持。此应用程序需要 IndexedDB 来本地存储会话数据。请确保您的浏览器支持 IndexedDB 并已启用。",
+        "what_is_indexeddb": "什么是 IndexedDB？"
+    },
+    "router": {
+        "page_not_found": "页面未找到"
+    }
+}

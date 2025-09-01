@@ -43,6 +43,7 @@ import { useRegisterEmail } from '../../../hooks/useRegisterEmail';
 import { ConfirmPasswordMatch } from '../../../components/ConfirmPasswordMatch';
 import { UIAFlowOverlay } from '../../../components/UIAFlowOverlay';
 import { RequestEmailTokenCallback, RequestEmailTokenResponse } from '../../../hooks/types';
+import { useTranslation } from 'react-i18next';
 
 export const SUPPORTED_REGISTER_STAGES = [
   AuthType.RegistrationToken,
@@ -254,12 +255,14 @@ export function PasswordRegisterForm({
     });
   };
 
+  const { t } = useTranslation();
+
   return (
     <>
       <Box as="form" onSubmit={handleSubmit} direction="Inherit" gap="400">
         <Box direction="Column" gap="100">
           <Text as="label" size="L400" priority="300">
-            Username
+            {t('pages:auth.register.username')}
           </Text>
           <Input
             variant="Background"
@@ -270,13 +273,13 @@ export function PasswordRegisterForm({
             required
           />
           {registerError?.errcode === RegisterError.UserTaken && (
-            <FieldError message="This username is already taken." />
+            <FieldError message={t('pages:auth.register.this_username_is_already_taken')} />
           )}
           {registerError?.errcode === RegisterError.UserInvalid && (
-            <FieldError message="This username contains invalid characters." />
+            <FieldError message={t('pages:auth.register.this_username_contains_invalid_characters')} />
           )}
           {registerError?.errcode === RegisterError.UserExclusive && (
-            <FieldError message="This username is reserved." />
+            <FieldError message={t('pages:auth.register.this_username_is_reserved')} />
           )}
         </Box>
         <ConfirmPasswordMatch initialValue>
@@ -284,7 +287,7 @@ export function PasswordRegisterForm({
             <>
               <Box direction="Column" gap="100">
                 <Text as="label" size="L400" priority="300">
-                  Password
+                  {t('pages:auth.register.password')}
                 </Text>
                 <PasswordInput
                   ref={passRef}
@@ -299,7 +302,7 @@ export function PasswordRegisterForm({
                   <FieldError
                     message={
                       registerError.data.error ??
-                      'Weak Password. Password rejected by server please choosing more strong Password.'
+                      t('pages:auth.register.weak_password')
                     }
                   />
                 )}
@@ -307,14 +310,14 @@ export function PasswordRegisterForm({
                   <FieldError
                     message={
                       registerError.data.error ??
-                      'Short Password. Password rejected by server please choosing more long Password.'
+                      t('pages:auth.register.short_password')
                     }
                   />
                 )}
               </Box>
               <Box direction="Column" gap="100">
                 <Text as="label" size="L400" priority="300">
-                  Confirm Password
+                  {t('pages:auth.register.confirm_password')}
                 </Text>
                 <PasswordInput
                   ref={confPassRef}
@@ -334,8 +337,8 @@ export function PasswordRegisterForm({
           <Box direction="Column" gap="100">
             <Text as="label" size="L400" priority="300">
               {requiredStageInFlows(uiaFlows, AuthType.RegistrationToken)
-                ? 'Registration Token'
-                : 'Registration Token (Optional)'}
+                ? t('pages:auth.register.registration_token')
+                : t('pages:auth.register.registration_token_optional')}
             </Text>
             <Input
               variant="Background"
@@ -350,7 +353,7 @@ export function PasswordRegisterForm({
         {hasStageInFlows(uiaFlows, AuthType.Email) && (
           <Box direction="Column" gap="100">
             <Text as="label" size="L400" priority="300">
-              {requiredStageInFlows(uiaFlows, AuthType.Email) ? 'Email' : 'Email (Optional)'}
+              {requiredStageInFlows(uiaFlows, AuthType.Email) ? t('pages:auth.register.email') : t('pages:auth.register.email_optional')}
             </Text>
             <Input
               variant="Background"
@@ -368,30 +371,30 @@ export function PasswordRegisterForm({
           <Box alignItems="Center" gap="200">
             <Checkbox name="termsInput" size="300" variant="Primary" required />
             <Text size="T300">
-              I accept server{' '}
+              {t('pages:auth.register.i_accept_server_terms_and_conditions')}{' '}
               <a href={termUrl} target="_blank" rel="noreferrer">
-                Terms and Conditions
+                {t('pages:auth.register.terms_and_conditions')}
               </a>
               .
             </Text>
           </Box>
         )}
         {registerError?.errcode === RegisterError.RateLimited && (
-          <FieldError message="Failed to register. Your register request has been rate-limited by server, Please try after some time." />
+          <FieldError message={t('pages:auth.register.failed_to_register_rate_limited')} />
         )}
         {registerError?.errcode === RegisterError.Forbidden && (
-          <FieldError message="Failed to register. The homeserver does not permit registration." />
+          <FieldError message={t('pages:auth.register.failed_to_register_not_permit')} />
         )}
         {registerError?.errcode === RegisterError.InvalidRequest && (
-          <FieldError message="Failed to register. Invalid request." />
+          <FieldError message={t('pages:auth.register.failed_to_register_invalid_request')} />
         )}
         {registerError?.errcode === RegisterError.Unknown && (
-          <FieldError message={registerError.data.error ?? 'Failed to register. Unknown Reason.'} />
+          <FieldError message={registerError.data.error ?? t('pages:auth.register.failed_to_register_unknown_reason')} />
         )}
         <span data-spacing-node />
         <Button variant="Primary" size="500" type="submit">
           <Text as="span" size="B500">
-            Register
+            {t('pages:auth.register.register_button')}
           </Text>
         </Button>
       </Box>
