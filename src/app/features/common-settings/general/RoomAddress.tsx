@@ -28,11 +28,11 @@ import {
 } from '../../../hooks/useRoomAliases';
 import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 import { CutoutCard } from '../../../components/cutout-card';
-import { getIdServer } from '../../../../util/matrixUtil';
 import { replaceSpaceWithDash } from '../../../utils/common';
 import { useAlive } from '../../../hooks/useAlive';
 import { StateEvent } from '../../../../types/matrix/room';
 import { RoomPermissionsAPI } from '../../../hooks/useRoomPermissions';
+import { getMxIdServer } from '../../../utils/matrix';
 
 type RoomPublishedAddressesProps = {
   permissions: RoomPermissionsAPI;
@@ -133,7 +133,7 @@ export function RoomPublishedAddresses({ permissions }: RoomPublishedAddressesPr
 function LocalAddressInput({ addLocalAlias }: { addLocalAlias: (alias: string) => Promise<void> }) {
   const mx = useMatrixClient();
   const userId = mx.getSafeUserId();
-  const server = getIdServer(userId);
+  const server = getMxIdServer(userId);
   const alive = useAlive();
 
   const [addState, addAlias] = useAsyncCallback(addLocalAlias);

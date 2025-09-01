@@ -8,7 +8,7 @@ import { configClass, varsClass } from 'folds';
 
 enableMapSet();
 
-import './index.scss';
+import './index.css';
 
 import { trimTrailingSlash } from './app/utils/common';
 import App from './app/pages/App';

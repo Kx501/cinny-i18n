@@ -18,7 +18,6 @@ import {
 import { HierarchyItem } from '../../hooks/useSpaceHierarchy';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { MSpaceChildContent, StateEvent } from '../../../types/matrix/room';
-import { openInviteUser } from '../../../client/action/navigation';
 import { AsyncStatus, useAsyncCallback } from '../../hooks/useAsyncCallback';
 import { UseStateProvider } from '../../components/UseStateProvider';
 import { LeaveSpacePrompt } from '../../components/leave-space-prompt';
@@ -30,6 +29,7 @@ import { useOpenSpaceSettings } from '../../state/hooks/spaceSettings';
 import { IPowerLevels } from '../../hooks/usePowerLevels';
 import { getRoomCreatorsForRoomId } from '../../hooks/useRoomCreators';
 import { getRoomPermissionsAPI } from '../../hooks/useRoomPermissions';
+import { InviteUserPrompt } from '../../components/invite-user-prompt';
 
 type HierarchyItemWithParent = HierarchyItem & {
   parentId: string;
@@ -126,24 +126,39 @@ function InviteMenuItem({
   requestClose: () => void;
   disabled?: boolean;
 }) {
+  const mx = useMatrixClient();
+  const room = mx.getRoom(item.roomId);
+  const [invitePrompt, setInvitePrompt] = useState(false);
+
   const handleInvite = () => {
-    openInviteUser(item.roomId);
-    requestClose();
+    setInvitePrompt(true);
   };
 
   return (
-    <MenuItem
-      onClick={handleInvite}
-      size="300"
-      radii="300"
-      variant="Primary"
-      fill="None"
-      disabled={disabled}
-    >
-      <Text as="span" size="T300" truncate>
-        Invite
-      </Text>
-    </MenuItem>
+    <>
+      <MenuItem
+        onClick={handleInvite}
+        size="300"
+        radii="300"
+        variant="Primary"
+        fill="None"
+        aria-pressed={invitePrompt}
+        disabled={disabled || !room}
+      >
+        <Text as="span" size="T300" truncate>
+          Invite
+        </Text>
+      </MenuItem>
+      {invitePrompt && room && (
+        <InviteUserPrompt
+          room={room}
+          requestClose={() => {
+            setInvitePrompt(false);
+            requestClose();
+          }}
+        />
+      )}
+    </>
   );
 }
 

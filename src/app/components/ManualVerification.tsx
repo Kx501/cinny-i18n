@@ -19,7 +19,7 @@ import { SecretStorageKeyContent } from '../../types/matrix/accountData';
 import { SecretStorageRecoveryKey, SecretStorageRecoveryPassphrase } from './SecretStorage';
 import { useMatrixClient } from '../hooks/useMatrixClient';
 import { AsyncStatus, useAsyncCallback } from '../hooks/useAsyncCallback';
-import { storePrivateKey } from '../../client/state/secretStorageKeys';
+import { storePrivateKey } from '../../client/secretStorageKeys';
 
 export enum ManualVerificationMethod {
   RecoveryPassphrase = 'passphrase',

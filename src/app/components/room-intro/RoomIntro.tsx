@@ -1,8 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Avatar, Box, Button, Spinner, Text, as } from 'folds';
 import { Room } from 'matrix-js-sdk';
 import { useAtomValue } from 'jotai';
-import { openInviteUser } from '../../../client/action/navigation';
 import { IRoomCreateContent, Membership, StateEvent } from '../../../types/matrix/room';
 import { getMemberDisplayName, getStateEvent } from '../../utils/room';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
@@ -17,6 +16,7 @@ import { mDirectAtom } from '../../state/mDirectList';
 import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
 import { useSetting } from '../../state/hooks/settings';
 import { settingsAtom } from '../../state/settings';
+import { InviteUserPrompt } from '../invite-user-prompt';
 
 export type RoomIntroProps = {
   room: Room;
@@ -27,6 +27,7 @@ export const RoomIntro = as<'div', RoomIntroProps>(({ room, ...props }, ref) => 
   const useAuthentication = useMediaAuthentication();
   const { navigateRoom } = useRoomNavigate();
   const mDirects = useAtomValue(mDirectAtom);
+  const [invitePrompt, setInvitePrompt] = useState(false);
 
   const createEvent = getStateEvent(room, StateEvent.RoomCreate);
   const avatarMxc = useRoomAvatar(room, mDirects.has(room.roomId));
@@ -76,14 +77,13 @@ export const RoomIntro = as<'div', RoomIntroProps>(({ room, ...props }, ref) => 
           )}
         </Box>
         <Box gap="200" wrap="Wrap">
-          <Button
-            onClick={() => openInviteUser(room.roomId)}
-            variant="Secondary"
-            size="300"
-            radii="300"
-          >
+          <Button onClick={() => setInvitePrompt(true)} variant="Secondary" size="300" radii="300">
             <Text size="B300">Invite Member</Text>
           </Button>
+
+          {invitePrompt && (
+            <InviteUserPrompt room={room} requestClose={() => setInvitePrompt(false)} />
+          )}
           {typeof prevRoomId === 'string' &&
             (mx.getRoom(prevRoomId)?.getMyMembership() === Membership.Join ? (
               <Button

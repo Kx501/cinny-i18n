@@ -39,4 +39,16 @@ export const UserAvatarContainer = style({
 });
 export const UserHeroAvatar = style({
   outline: `${config.borderWidth.B600} solid ${color.Surface.Container}`,
+  selectors: {
+    'button&': {
+      cursor: 'pointer',
+    },
+  },
+});
+export const UserHeroAvatarImg = style({
+  selectors: {
+    [`button${UserHeroAvatar}:hover &`]: {
+      filter: 'brightness(0.5)',
+    },
+  },
 });

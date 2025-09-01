@@ -1,7 +1,8 @@
-import { Box, Button, color, config, Icon, Icons, Spinner, Text } from 'folds';
-import React, { useCallback } from 'react';
+import { Box, Button, config, Icon, Icons, Text } from 'folds';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserHero, UserHeroName } from './UserHero';
-import { getDMRoomFor, getMxIdServer, mxcUrlToHttp } from '../../utils/matrix';
+import { getMxIdServer, mxcUrlToHttp } from '../../utils/matrix';
 import { getMemberAvatarMxc, getMemberDisplayName } from '../../utils/room';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
@@ -9,11 +10,6 @@ import { usePowerLevels } from '../../hooks/usePowerLevels';
 import { useRoom } from '../../hooks/useRoom';
 import { useUserPresence } from '../../hooks/useUserPresence';
 import { IgnoredUserAlert, MutualRoomsChip, OptionsChip, ServerChip, ShareChip } from './UserChips';
-import { AsyncStatus, useAsyncCallback } from '../../hooks/useAsyncCallback';
-import { createDM } from '../../../client/action/room';
-import { hasDevices } from '../../../util/matrixUtil';
-import { useRoomNavigate } from '../../hooks/useRoomNavigate';
-import { useAlive } from '../../hooks/useAlive';
 import { useCloseUserRoomProfile } from '../../state/hooks/userRoomProfile';
 import { PowerChip } from './PowerChip';
 import { UserInviteAlert, UserBanAlert, UserModeration, UserKickAlert } from './UserModeration';
@@ -24,6 +20,8 @@ import { useRoomCreators } from '../../hooks/useRoomCreators';
 import { useRoomPermissions } from '../../hooks/useRoomPermissions';
 import { useMemberPowerCompare } from '../../hooks/useMemberPowerCompare';
 import { CreatorChip } from './CreatorChip';
+import { getDirectCreatePath, withSearchParam } from '../../pages/pathUtils';
+import { DirectCreateSearchParams } from '../../pages/paths';
 
 type UserRoomProfileProps = {
   userId: string;
@@ -31,8 +29,7 @@ type UserRoomProfileProps = {
 export function UserRoomProfile({ userId }: UserRoomProfileProps) {
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
-  const { navigateRoom } = useRoomNavigate();
-  const alive = useAlive();
+  const navigate = useNavigate();
   const closeUserRoomProfile = useCloseUserRoomProfile();
   const ignoredUsers = useIgnoredUsers();
   const ignored = ignoredUsers.includes(userId);
@@ -62,26 +59,12 @@ export function UserRoomProfile({ userId }: UserRoomProfileProps) {
 
   const presence = useUserPresence(userId);
 
-  const [directMessageState, directMessage] = useAsyncCallback<string, Error, []>(
-    useCallback(async () => {
-      const result = await createDM(mx, userId, await hasDevices(mx, userId));
-      return result.room_id as string;
-    }, [userId, mx])
-  );
-
   const handleMessage = () => {
-    const dmRoomId = getDMRoomFor(mx, userId)?.roomId;
-    if (dmRoomId) {
-      navigateRoom(dmRoomId);
-      closeUserRoomProfile();
-      return;
-    }
-    directMessage().then((rId) => {
-      if (alive()) {
-        navigateRoom(rId);
-        closeUserRoomProfile();
-      }
-    });
+    closeUserRoomProfile();
+    const directSearchParam: DirectCreateSearchParams = {
+      userId,
+    };
+    navigate(withSearchParam(getDirectCreatePath(), directSearchParam));
   };
 
   return (
@@ -95,31 +78,21 @@ export function UserRoomProfile({ userId }: UserRoomProfileProps) {
         <Box direction="Column" gap="400">
           <Box gap="400" alignItems="Start">
             <UserHeroName displayName={displayName} userId={userId} />
-            <Box shrink="No">
-              <Button
-                size="300"
-                variant="Primary"
-                fill="Solid"
-                radii="300"
-                disabled={directMessageState.status === AsyncStatus.Loading}
-                before={
-                  directMessageState.status === AsyncStatus.Loading ? (
-                    <Spinner size="50" variant="Primary" fill="Solid" />
-                  ) : (
-                    <Icon size="50" src={Icons.Message} filled />
-                  )
-                }
-                onClick={handleMessage}
-              >
-                <Text size="B300">Message</Text>
-              </Button>
-            </Box>
+            {userId !== myUserId && (
+              <Box shrink="No">
+                <Button
+                  size="300"
+                  variant="Primary"
+                  fill="Solid"
+                  radii="300"
+                  before={<Icon size="50" src={Icons.Message} filled />}
+                  onClick={handleMessage}
+                >
+                  <Text size="B300">Message</Text>
+                </Button>
+              </Box>
+            )}
           </Box>
-          {directMessageState.status === AsyncStatus.Error && (
-            <Text style={{ color: color.Critical.Main }}>
-              <b>{directMessageState.error.message}</b>
-            </Text>
-          )}
           <Box alignItems="Center" gap="200" wrap="Wrap">
             {server && <ServerChip server={server} />}
             <ShareChip userId={userId} />

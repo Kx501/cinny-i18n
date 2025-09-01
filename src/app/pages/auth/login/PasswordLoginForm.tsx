@@ -74,19 +74,19 @@ function UsernameHint({ server }: { server: string }) {
                 <Text as="span" size="Inherit" priority="300">
                   {t('pages:auth.login.username')}
                 </Text>{' '}
-                johndoe
+                user123
               </Text>
               <Text size="T300">
                 <Text as="span" size="Inherit" priority="300">
                   {t('pages:auth.login.matrix_id')}
                 </Text>
-                {` @johndoe:${server}`}
+                {` @user123:${server}`}
               </Text>
               <Text size="T300">
                 <Text as="span" size="Inherit" priority="300">
                   {t('pages:auth.login.email')}
                 </Text>
-                {` johndoe@${server}`}
+                {` user123@${server}`}
               </Text>
             </Box>
           </Menu>

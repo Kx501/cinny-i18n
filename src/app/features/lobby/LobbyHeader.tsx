@@ -26,7 +26,6 @@ import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { RoomAvatar } from '../../components/room-avatar';
 import { nameInitials } from '../../utils/common';
 import * as css from './LobbyHeader.css';
-import { openInviteUser } from '../../../client/action/navigation';
 import { IPowerLevels } from '../../hooks/usePowerLevels';
 import { UseStateProvider } from '../../components/UseStateProvider';
 import { LeaveSpacePrompt } from '../../components/leave-space-prompt';
@@ -38,6 +37,7 @@ import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
 import { useOpenSpaceSettings } from '../../state/hooks/spaceSettings';
 import { useRoomCreators } from '../../hooks/useRoomCreators';
 import { useRoomPermissions } from '../../hooks/useRoomPermissions';
+import { InviteUserPrompt } from '../../components/invite-user-prompt';
 
 type LobbyMenuProps = {
   powerLevels: IPowerLevels;
@@ -53,9 +53,10 @@ const LobbyMenu = forwardRef<HTMLDivElement, LobbyMenuProps>(
     const canInvite = permissions.action('invite', mx.getSafeUserId());
     const openSpaceSettings = useOpenSpaceSettings();
 
+    const [invitePrompt, setInvitePrompt] = useState(false);
+
     const handleInvite = () => {
-      openInviteUser(space.roomId);
-      requestClose();
+      setInvitePrompt(true);
     };
 
     const handleRoomSettings = () => {
@@ -65,6 +66,15 @@ const LobbyMenu = forwardRef<HTMLDivElement, LobbyMenuProps>(
 
     return (
       <Menu ref={ref} style={{ maxWidth: toRem(160), width: '100vw' }}>
+        {invitePrompt && (
+          <InviteUserPrompt
+            room={space}
+            requestClose={() => {
+              setInvitePrompt(false);
+              requestClose();
+            }}
+          />
+        )}
         <Box direction="Column" gap="100" style={{ padding: config.space.S100 }}>
           <MenuItem
             onClick={handleInvite}
@@ -73,6 +83,7 @@ const LobbyMenu = forwardRef<HTMLDivElement, LobbyMenuProps>(
             size="300"
             after={<Icon size="100" src={Icons.UserPlus} />}
             radii="300"
+            aria-pressed={invitePrompt}
             disabled={!canInvite}
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>

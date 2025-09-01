@@ -1,20 +1,32 @@
-import { Direction, IContextResponse, MatrixClient, Method, Room, RoomMember } from 'matrix-js-sdk';
+import {
+  Direction,
+  EventTimeline,
+  IContextResponse,
+  MatrixClient,
+  Method,
+  Preset,
+  Room,
+  RoomMember,
+  Visibility,
+} from 'matrix-js-sdk';
 import { RoomServerAclEventContent } from 'matrix-js-sdk/lib/types';
 import { useMemo } from 'react';
 import {
+  addRoomIdToMDirect,
   getDMRoomFor,
+  guessDmRoomUserId,
   isRoomAlias,
   isRoomId,
   isServerName,
   isUserId,
   rateLimitedActions,
+  removeRoomIdFromMDirect,
 } from '../utils/matrix';
-import { hasDevices } from '../../util/matrixUtil';
-import * as roomActions from '../../client/action/room';
 import { useRoomNavigate } from './useRoomNavigate';
 import { Membership, StateEvent } from '../../types/matrix/room';
 import { getStateEvent } from '../utils/room';
 import { splitWithSpace } from '../utils/common';
+import { createRoomEncryptionState } from '../components/create-room';
 
 export const SHRUG = '¯\\_(ツ)_/¯';
 export const TABLEFLIP = '(╯°□°)╯︵ ┻━┻';
@@ -192,7 +204,7 @@ export const useCommands = (mx: MatrixClient, room: Room): CommandRecord => {
         description: 'Start direct message with user. Example: /startdm userId1',
         exe: async (payload) => {
           const rawIds = splitWithSpace(payload);
-          const userIds = rawIds.filter((id) => isUserId(id) && id !== mx.getUserId());
+          const userIds = rawIds.filter((id) => isUserId(id) && id !== mx.getSafeUserId());
           if (userIds.length === 0) return;
           if (userIds.length === 1) {
             const dmRoomId = getDMRoomFor(mx, userIds[0])?.roomId;
@@ -201,9 +213,14 @@ export const useCommands = (mx: MatrixClient, room: Room): CommandRecord => {
               return;
             }
           }
-          const devices = await Promise.all(userIds.map((uid) => hasDevices(mx, uid)));
-          const isEncrypt = devices.every((hasDevice) => hasDevice);
-          const result = await roomActions.createDM(mx, userIds, isEncrypt);
+          const result = await mx.createRoom({
+            is_direct: true,
+            invite: userIds,
+            visibility: Visibility.Private,
+            preset: Preset.TrustedPrivateChat,
+            initial_state: [createRoomEncryptionState()],
+          });
+          addRoomIdToMDirect(mx, result.room_id, userIds[0]);
           navigateRoom(result.room_id);
         },
       },
@@ -212,10 +229,12 @@ export const useCommands = (mx: MatrixClient, room: Room): CommandRecord => {
         description: 'Join room with address. Example: /join address1 address2',
         exe: async (payload) => {
           const rawIds = splitWithSpace(payload);
-          const roomIds = rawIds.filter(
+          const roomIdOrAliases = rawIds.filter(
             (idOrAlias) => isRoomId(idOrAlias) || isRoomAlias(idOrAlias)
           );
-          roomIds.map((id) => roomActions.join(mx, id));
+          roomIdOrAliases.forEach(async (idOrAlias) => {
+            await mx.joinRoom(idOrAlias);
+          });
         },
       },
       [Command.Leave]: {
@@ -314,7 +333,11 @@ export const useCommands = (mx: MatrixClient, room: Room): CommandRecord => {
         exe: async (payload) => {
           const rawIds = splitWithSpace(payload);
           const userIds = rawIds.filter((id) => isUserId(id));
-          if (userIds.length > 0) roomActions.ignore(mx, userIds);
+          if (userIds.length > 0) {
+            let ignoredUsers = mx.getIgnoredUsers().concat(userIds);
+            ignoredUsers = [...new Set(ignoredUsers)];
+            await mx.setIgnoredUsers(ignoredUsers);
+          }
         },
       },
       [Command.UnIgnore]: {
@@ -323,7 +346,10 @@ export const useCommands = (mx: MatrixClient, room: Room): CommandRecord => {
         exe: async (payload) => {
           const rawIds = splitWithSpace(payload);
           const userIds = rawIds.filter((id) => isUserId(id));
-          if (userIds.length > 0) roomActions.unignore(mx, userIds);
+          if (userIds.length > 0) {
+            const ignoredUsers = mx.getIgnoredUsers();
+            await mx.setIgnoredUsers(ignoredUsers.filter((id) => !userIds.includes(id)));
+          }
         },
       },
       [Command.MyRoomNick]: {
@@ -332,7 +358,21 @@ export const useCommands = (mx: MatrixClient, room: Room): CommandRecord => {
         exe: async (payload) => {
           const nick = payload.trim();
           if (nick === '') return;
-          roomActions.setMyRoomNick(mx, room.roomId, nick);
+          const mEvent = room
+            .getLiveTimeline()
+            .getState(EventTimeline.FORWARDS)
+            ?.getStateEvents(StateEvent.RoomMember, mx.getSafeUserId());
+          const content = mEvent?.getContent();
+          if (!content) return;
+          await mx.sendStateEvent(
+            room.roomId,
+            StateEvent.RoomMember as any,
+            {
+              ...content,
+              displayname: nick,
+            },
+            mx.getSafeUserId()
+          );
         },
       },
       [Command.MyRoomAvatar]: {
@@ -340,7 +380,21 @@ export const useCommands = (mx: MatrixClient, room: Room): CommandRecord => {
         description: 'Change profile picture in current room. Example /myroomavatar mxc://xyzabc',
         exe: async (payload) => {
           if (payload.match(/^mxc:\/\/\S+$/)) {
-            roomActions.setMyRoomAvatar(mx, room.roomId, payload);
+            const mEvent = room
+              .getLiveTimeline()
+              .getState(EventTimeline.FORWARDS)
+              ?.getStateEvents(StateEvent.RoomMember, mx.getSafeUserId());
+            const content = mEvent?.getContent();
+            if (!content) return;
+            await mx.sendStateEvent(
+              room.roomId,
+              StateEvent.RoomMember as any,
+              {
+                ...content,
+                avatar_url: payload,
+              },
+              mx.getSafeUserId()
+            );
           }
         },
       },
@@ -348,14 +402,15 @@ export const useCommands = (mx: MatrixClient, room: Room): CommandRecord => {
         name: Command.ConvertToDm,
         description: 'Convert room to direct message',
         exe: async () => {
-          roomActions.convertToDm(mx, room.roomId);
+          const dmUserId = guessDmRoomUserId(room, mx.getSafeUserId());
+          await addRoomIdToMDirect(mx, room.roomId, dmUserId);
         },
       },
       [Command.ConvertToRoom]: {
         name: Command.ConvertToRoom,
         description: 'Convert direct message to room',
         exe: async () => {
-          roomActions.convertToRoom(mx, room.roomId);
+          await removeRoomIdFromMDirect(mx, room.roomId);
         },
       },
       [Command.Delete]: {

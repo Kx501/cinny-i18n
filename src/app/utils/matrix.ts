@@ -230,8 +230,11 @@ export const addRoomIdToMDirect = async (
   roomId: string,
   userId: string
 ): Promise<void> => {
-  const mDirectsEvent = mx.getAccountData(AccountDataEvent.Direct);
-  const userIdToRoomIds: Record<string, string[]> = mDirectsEvent?.getContent() ?? {};
+  const mDirectsEvent = mx.getAccountData(AccountDataEvent.Direct as any);
+  let userIdToRoomIds: Record<string, string[]> = {};
+
+  if (typeof mDirectsEvent !== 'undefined')
+    userIdToRoomIds = structuredClone(mDirectsEvent.getContent());
 
   // remove it from the lists of any others users
   // (it can only be a DM room for one person)
@@ -252,12 +255,15 @@ export const addRoomIdToMDirect = async (
   }
   userIdToRoomIds[userId] = roomIds;
 
-  await mx.setAccountData(AccountDataEvent.Direct, userIdToRoomIds);
+  await mx.setAccountData(AccountDataEvent.Direct as any, userIdToRoomIds as any);
 };
 
 export const removeRoomIdFromMDirect = async (mx: MatrixClient, roomId: string): Promise<void> => {
-  const mDirectsEvent = mx.getAccountData(AccountDataEvent.Direct);
-  const userIdToRoomIds: Record<string, string[]> = mDirectsEvent?.getContent() ?? {};
+  const mDirectsEvent = mx.getAccountData(AccountDataEvent.Direct as any);
+  let userIdToRoomIds: Record<string, string[]> = {};
+
+  if (typeof mDirectsEvent !== 'undefined')
+    userIdToRoomIds = structuredClone(mDirectsEvent.getContent());
 
   Object.keys(userIdToRoomIds).forEach((targetUserId) => {
     const roomIds = userIdToRoomIds[targetUserId];
@@ -267,7 +273,7 @@ export const removeRoomIdFromMDirect = async (mx: MatrixClient, roomId: string):
     }
   });
 
-  await mx.setAccountData(AccountDataEvent.Direct, userIdToRoomIds);
+  await mx.setAccountData(AccountDataEvent.Direct as any, userIdToRoomIds as any);
 };
 
 export const mxcUrlToHttp = (

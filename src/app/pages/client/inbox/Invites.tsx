@@ -82,6 +82,7 @@ type InviteData = {
   senderId: string;
   senderName: string;
   inviteTs?: number;
+  reason?: string;
 
   isSpace: boolean;
   isDirect: boolean;
@@ -104,11 +105,17 @@ const makeInviteData = (mx: MatrixClient, room: Room, useAuthentication: boolean
   const member = room.getMember(userId);
   const memberEvent = member?.events.member;
 
+  const content = memberEvent?.getContent();
   const senderId = memberEvent?.getSender();
+
   const senderName = senderId
     ? getMemberDisplayName(room, senderId) ?? getMxIdLocalPart(senderId) ?? senderId
     : undefined;
-  const inviteTs = memberEvent?.getTs() ?? 0;
+  const inviteTs = memberEvent?.getTs();
+  const reason =
+    content && 'reason' in content && typeof content.reason === 'string'
+      ? content.reason
+      : undefined;
 
   return {
     room,
@@ -121,6 +128,7 @@ const makeInviteData = (mx: MatrixClient, room: Room, useAuthentication: boolean
     senderId: senderId ?? t('pages:client.inbox.unknown'),
     senderName: senderName ?? t('pages:client.inbox.unknown'),
     inviteTs,
+    reason,
 
     isSpace: isSpace(room),
     isDirect: direct,
@@ -132,7 +140,8 @@ const hasBadWords = (invite: InviteData): boolean =>
   testBadWords(invite.roomName) ||
   testBadWords(invite.roomTopic ?? '') ||
   testBadWords(invite.senderName) ||
-  testBadWords(invite.senderId);
+  testBadWords(invite.senderId) ||
+  testBadWords(invite.reason || '');
 
 type NavigateHandler = (roomId: string, space: boolean) => void;
 
@@ -187,7 +196,7 @@ function InviteCard({
       variant="SurfaceVariant"
       direction="Column"
       gap="300"
-      style={{ padding: `${config.space.S400} ${config.space.S400} ${config.space.S200}` }}
+      style={{ padding: config.space.S400 }}
     >
       {(invite.isEncrypted || invite.isDirect || invite.isSpace) && (
         <Box gap="200" alignItems="Center">
@@ -301,22 +310,29 @@ function InviteCard({
           </Box>
         </Box>
       </Box>
-      <Box gap="200" alignItems="Baseline">
-        <Box grow="Yes">
-          <Text size="T200" priority="300">
-            {t('pages:client.inbox.from')} <b>{invite.senderId}</b>
-          </Text>
-        </Box>
-        {invite.inviteTs && (
-          <Box shrink="No">
-            <Time
-              size="T200"
-              ts={invite.inviteTs}
-              hour24Clock={hour24Clock}
-              dateFormatString={dateFormatString}
-              priority="300"
-            />
+      <Box direction="Column">
+        <Box gap="200" alignItems="Baseline">
+          <Box grow="Yes">
+            <Text size="T200" priority="300">
+              {t('pages:client.inbox.from')} <b>{invite.senderId}</b>
+            </Text>
           </Box>
+          {typeof invite.inviteTs === 'number' && invite.inviteTs !== 0 && (
+            <Box shrink="No">
+              <Time
+                size="T200"
+                ts={invite.inviteTs}
+                hour24Clock={hour24Clock}
+                dateFormatString={dateFormatString}
+                priority="300"
+              />
+            </Box>
+          )}
+        </Box>
+        {invite.reason && (
+          <Text size="T200" priority="300">
+            Reason: {invite.reason}
+          </Text>
         )}
       </Box>
     </SequenceCard>

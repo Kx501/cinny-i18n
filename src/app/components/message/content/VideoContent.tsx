@@ -22,8 +22,7 @@ import {
 import * as css from './style.css';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
-import { bytesToSize } from '../../../../util/common';
-import { millisecondsToMinutesAndSeconds } from '../../../utils/common';
+import { bytesToSize, millisecondsToMinutesAndSeconds } from '../../../utils/common';
 import {
   decryptFile,
   downloadEncryptedMedia,

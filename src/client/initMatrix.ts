@@ -1,6 +1,6 @@
 import { createClient, MatrixClient, IndexedDBStore, IndexedDBCryptoStore } from 'matrix-js-sdk';
 
-import { cryptoCallbacks } from './state/secretStorageKeys';
+import { cryptoCallbacks } from './secretStorageKeys';
 import { clearNavToActivePathStore } from '../app/state/navToActivePath';
 
 type Session = {

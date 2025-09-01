@@ -1,6 +1,17 @@
-import React from 'react';
-import { Avatar, Box, Icon, Icons, Text } from 'folds';
+import React, { useState } from 'react';
+import {
+  Avatar,
+  Box,
+  Icon,
+  Icons,
+  Modal,
+  Overlay,
+  OverlayBackdrop,
+  OverlayCenter,
+  Text,
+} from 'folds';
 import classNames from 'classnames';
+import FocusTrap from 'focus-trap-react';
 import * as css from './styles.css';
 import { UserAvatar } from '../user-avatar';
 import colorMXID from '../../../util/colorMXID';
@@ -8,6 +19,8 @@ import { getMxIdLocalPart } from '../../utils/matrix';
 import { BreakWord, LineClamp3 } from '../../styles/Text.css';
 import { UserPresence } from '../../hooks/useUserPresence';
 import { AvatarPresence, PresenceBadge } from '../presence';
+import { ImageViewer } from '../image-viewer';
+import { stopPropagation } from '../../utils/keyboard';
 
 type UserHeroProps = {
   userId: string;
@@ -15,6 +28,8 @@ type UserHeroProps = {
   presence?: UserPresence;
 };
 export function UserHero({ userId, avatarUrl, presence }: UserHeroProps) {
+  const [viewAvatar, setViewAvatar] = useState<string>();
+
   return (
     <Box direction="Column" className={css.UserHero}>
       <div
@@ -24,7 +39,9 @@ export function UserHero({ userId, avatarUrl, presence }: UserHeroProps) {
           filter: avatarUrl ? undefined : 'brightness(50%)',
         }}
       >
-        {avatarUrl && <img className={css.UserHeroCover} src={avatarUrl} alt={userId} />}
+        {avatarUrl && (
+          <img className={css.UserHeroCover} src={avatarUrl} alt={userId} draggable="false" />
+        )}
       </div>
       <div className={css.UserHeroAvatarContainer}>
         <AvatarPresence
@@ -33,8 +50,14 @@ export function UserHero({ userId, avatarUrl, presence }: UserHeroProps) {
             presence && <PresenceBadge presence={presence.presence} status={presence.status} />
           }
         >
-          <Avatar className={css.UserHeroAvatar} size="500">
+          <Avatar
+            as={avatarUrl ? 'button' : 'div'}
+            onClick={avatarUrl ? () => setViewAvatar(avatarUrl) : undefined}
+            className={css.UserHeroAvatar}
+            size="500"
+          >
             <UserAvatar
+              className={css.UserHeroAvatarImg}
               userId={userId}
               src={avatarUrl}
               alt={userId}
@@ -42,6 +65,28 @@ export function UserHero({ userId, avatarUrl, presence }: UserHeroProps) {
             />
           </Avatar>
         </AvatarPresence>
+        {viewAvatar && (
+          <Overlay open backdrop={<OverlayBackdrop />}>
+            <OverlayCenter>
+              <FocusTrap
+                focusTrapOptions={{
+                  initialFocus: false,
+                  onDeactivate: () => setViewAvatar(undefined),
+                  clickOutsideDeactivates: true,
+                  escapeDeactivates: stopPropagation,
+                }}
+              >
+                <Modal size="500" onContextMenu={(evt: any) => evt.stopPropagation()}>
+                  <ImageViewer
+                    src={viewAvatar}
+                    alt={userId}
+                    requestClose={() => setViewAvatar(undefined)}
+                  />
+                </Modal>
+              </FocusTrap>
+            </OverlayCenter>
+          </Overlay>
+        )}
       </div>
     </Box>
   );

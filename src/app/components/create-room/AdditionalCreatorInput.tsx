@@ -201,7 +201,7 @@ export function AdditionalCreatorInput({
                           variant="Background"
                           radii="300"
                           outlined
-                          placeholder="@john:server"
+                          placeholder="@username:server"
                           onChange={handleCreatorChange}
                           onKeyDown={handleCreatorKeyDown}
                         />

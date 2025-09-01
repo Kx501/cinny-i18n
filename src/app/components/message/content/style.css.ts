@@ -16,7 +16,6 @@ export const AbsoluteContainer = style([
     position: 'absolute',
     top: 0,
     left: 0,
-    zIndex: 1,
     width: '100%',
     height: '100%',
   },
@@ -26,6 +25,7 @@ export const AbsoluteFooter = style([
   DefaultReset,
   {
     position: 'absolute',
+    pointerEvents: 'none',
     bottom: config.space.S100,
     left: config.space.S100,
     right: config.space.S100,

@@ -106,12 +106,12 @@
             "mark_as_read": "Mark as Read",
             "no_rooms": "No Rooms",
             "you_do_not_have_any": "You do not have any rooms yet.",
-            "create_room": "Create Room",
             "explore_community_rooms": "Explore Community Rooms",
             "join_with_address": "Join with Address",
             "rooms": "Rooms",
             "message_search": "Message Search",
-            "build_a_room_for_real_time_conversations": "Build a Room for Real-Time Conversations"
+            "create_room": "Create Room",
+            "build_a_room_for_real_time_conversations": "Build a Room for Real-Time Conversations."
         },
         "direct": {
             "mark_as_read": "Mark as Read",

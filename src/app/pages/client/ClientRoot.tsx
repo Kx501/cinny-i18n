@@ -24,21 +24,18 @@ import {
   logoutClient,
   startClient,
 } from '../../../client/initMatrix';
-import { getSecret } from '../../../client/state/auth';
 import { SplashScreen } from '../../components/splash-screen';
 import { ServerConfigsLoader } from '../../components/ServerConfigsLoader';
 import { CapabilitiesProvider } from '../../hooks/useCapabilities';
 import { MediaConfigProvider } from '../../hooks/useMediaConfig';
 import { MatrixClientProvider } from '../../hooks/useMatrixClient';
 import { SpecVersions } from './SpecVersions';
-import Windows from '../../organisms/pw/Windows';
-import Dialogs from '../../organisms/pw/Dialogs';
-import ReusableContextMenu from '../../atoms/context-menu/ReusableContextMenu';
 import { AsyncStatus, useAsyncCallback } from '../../hooks/useAsyncCallback';
 import { useSyncState } from '../../hooks/useSyncState';
 import { stopPropagation } from '../../utils/keyboard';
 import { SyncStatus } from './SyncStatus';
 import { AuthMetadataProvider } from '../../hooks/useAuthMetadata';
+import { getFallbackSession } from '../../state/sessions';
 
 function ClientRootLoading() {
   const { t } = useTranslation();
@@ -151,10 +148,16 @@ type ClientRootProps = {
 export function ClientRoot({ children }: ClientRootProps) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const { baseUrl } = getSecret();
+  const { baseUrl } = getFallbackSession() ?? {};
 
   const [loadState, loadMatrix] = useAsyncCallback<MatrixClient, Error, []>(
-    useCallback(() => initClient(getSecret() as any), [])
+    useCallback(() => {
+      const session = getFallbackSession();
+      if (!session) {
+        throw new Error('No session Found!');
+      }
+      return initClient(session);
+    }, [])
   );
   const mx = loadState.status === AsyncStatus.Success ? loadState.data : undefined;
   const [startState, startMatrix] = useAsyncCallback<void, Error, [MatrixClient]>(
@@ -219,9 +222,6 @@ export function ClientRoot({ children }: ClientRootProps) {
                 <MediaConfigProvider value={serverConfigs.mediaConfig ?? {}}>
                   <AuthMetadataProvider value={serverConfigs.authMetadata}>
                     {children}
-                    <Windows />
-                    <Dialogs />
-                    <ReusableContextMenu />
                   </AuthMetadataProvider>
                 </MediaConfigProvider>
               </CapabilitiesProvider>

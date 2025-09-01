@@ -18,7 +18,6 @@ import { Page } from '../../components/page';
 import { RoomViewHeader } from './RoomViewHeader';
 import { useKeyDown } from '../../hooks/useKeyDown';
 import { editableActiveElement } from '../../utils/dom';
-import navigation from '../../../client/state/navigation';
 import { settingsAtom } from '../../state/settings';
 import { useSetting } from '../../state/hooks/settings';
 import { useRoomPermissions } from '../../hooks/useRoomPermissions';
@@ -80,10 +79,9 @@ export function RoomView({ room, eventId }: { room: Room; eventId?: string }) {
     useCallback(
       (evt) => {
         if (editableActiveElement()) return;
-        if (
-          document.body.lastElementChild?.className !== 'ReactModalPortal' ||
-          navigation.isRawModalVisible
-        ) {
+        // means some menu or modal window is open
+        const lastNode = document.body.lastElementChild;
+        if (lastNode && !lastNode.hasAttribute('data-last-node')) {
           return;
         }
         if (shouldFocusMessageField(evt) || isKeyHotkey('mod+v', evt)) {

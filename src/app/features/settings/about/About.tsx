@@ -6,7 +6,6 @@ import { SequenceCard } from '../../../components/sequence-card';
 import { SequenceCardStyle } from '../styles.css';
 import { SettingTile } from '../../../components/setting-tile';
 import CinnySVG from '../../../../../public/res/svg/cinny.svg';
-import cons from '../../../../client/state/cons';
 import { clearCacheAndReload } from '../../../../client/initMatrix';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 
@@ -48,8 +47,8 @@ export function About({ requestClose }: AboutProps) {
                 <Box direction="Column" gap="300">
                   <Box direction="Column" gap="100">
                     <Box gap="100" alignItems="End">
-                      <Text size="H3">{t('pages:client.cinny')}</Text>
-                      <Text size="T200">v{cons.version}</Text>
+                      <Text size="H3">Cinny</Text>
+                      <Text size="T200">v4.10.0</Text>
                     </Box>
                     <Text>{t('pages:client.yet_another_matrix_client')}</Text>
                   </Box>
