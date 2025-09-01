@@ -59,7 +59,7 @@ export function Login() {
   return (
     <Box direction="Column" gap="500">
       <Text size="H2" priority="400">
-        {t('pages:auth.login.title_login')}
+        {t('pages:auth.login.login')}
       </Text>
       {parsedFlows.token && loginSearchParams.loginToken && (
         <TokenLogin token={loginSearchParams.loginToken} />
@@ -88,13 +88,13 @@ export function Login() {
       {!parsedFlows.password && !parsedFlows.sso && (
         <>
           <Text style={{ color: color.Critical.Main }}>
-            {t('pages:auth.login.not_supported_on_server', { server })}
+            {t('pages:auth.login.this_client_does_not_support', { server })}
           </Text>
           <span data-spacing-node />
         </>
       )}
       <Text align="Center">
-        {t('pages:auth.login.do_not_have_an_account')} <Link to={getRegisterPath(server)}>{t('pages:auth.login.cta_register')}</Link>
+        {t('pages:auth.login.do_not_have_an_account')} <Link to={getRegisterPath(server)}>{t('pages:auth.login.register')}</Link>
       </Text>
     </Box>
   );

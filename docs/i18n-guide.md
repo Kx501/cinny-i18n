@@ -8,7 +8,7 @@
 
 ```
 public/locales/
-├── en/                         # 英文翻译文件
+├── en-US/                         # 英文翻译文件
 │   ├── common.json             # 通用翻译（按钮、状态、时间等）
 │   ├── atoms.json              # app/atoms/ 组件翻译
 │   ├── molecules.json          # app/molecules/ 组件翻译
@@ -41,12 +41,14 @@ public/locales/
 
 - **基于原文生成**：键名直接来源于原文文本，经过清理和截断处理
 - **清理规则**：移除特殊字符，将空格转换为下划线，统一为小写
-- **截断处理**：限制键名长度（通常25个字符以内），确保可读性
+- **截断处理**：直接从原文开头开始截断5-6个不同的词汇，确保键名唯一性和可读性
 - **示例转换**：
   - `"Enable end-to-end encryption"` → `"enable_end_to_end_encryption"`
   - `"Select who can join this room."` → `"select_who_can_join_this"`
   - `"Creating space..."` → `"creating_space"`
   - `"You can't disable this later."` → `"you_cant_disable_this_later"`
+  - `"When someone you share a room with sends you an invite, it'll show up here."` → `"when_someone_you_share_a_room"`
+  - `"Some of the following invites may contain harmful content..."` → `"some_of_the_following_invites"`
 
 ### 命名示例
 

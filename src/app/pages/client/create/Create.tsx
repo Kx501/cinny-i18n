@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Icon, Icons, Scroll } from 'folds';
+import { useTranslation } from 'react-i18next';
 import {
   Page,
   PageContent,
@@ -11,6 +12,7 @@ import { CreateSpaceForm } from '../../../features/create-space';
 import { useRoomNavigate } from '../../../hooks/useRoomNavigate';
 
 export function Create() {
+  const { t } = useTranslation();
   const { navigateSpace } = useRoomNavigate();
 
   return (
@@ -23,8 +25,8 @@ export function Create() {
                 <Box direction="Column" gap="700">
                   <PageHero
                     icon={<Icon size="600" src={Icons.Space} />}
-                    title="Create Space"
-                    subTitle="Build a space for your community."
+                    title={t('pages:client.create.create_space')}
+                    subTitle={t('pages:client.create.build_a_space_for_your_community')}
                   />
                   <CreateSpaceForm onCreate={navigateSpace} />
                 </Box>

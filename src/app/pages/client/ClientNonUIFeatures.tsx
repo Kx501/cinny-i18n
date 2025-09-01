@@ -2,6 +2,7 @@ import { useAtomValue } from 'jotai';
 import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RoomEvent, RoomEventHandlerMap } from 'matrix-js-sdk';
+import { useTranslation } from 'react-i18next';
 import { roomToUnreadAtom, unreadEqual, unreadInfoToUnread } from '../../state/room/roomToUnread';
 import LogoSVG from '../../../../public/res/svg/cinny.svg';
 import LogoUnreadSVG from '../../../../public/res/svg/cinny-unread.svg';
@@ -77,6 +78,7 @@ function FaviconUpdater() {
 }
 
 function InviteNotifications() {
+  const { t } = useTranslation();
   const audioRef = useRef<HTMLAudioElement>(null);
   const invites = useAtomValue(allInvitesAtom);
   const perviousInviteLen = usePreviousValue(invites.length, 0);
@@ -88,7 +90,7 @@ function InviteNotifications() {
 
   const notify = useCallback(
     (count: number) => {
-      const noti = new window.Notification('Invitation', {
+      const noti = new window.Notification(t('pages:client.invitation'), {
         icon: LogoSVG,
         badge: LogoSVG,
         body: `You have ${count} new invitation request.`,

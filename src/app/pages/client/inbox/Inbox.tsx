@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, Box, Icon, Icons, Text } from 'folds';
 import { useAtomValue } from 'jotai';
+import { useTranslation } from 'react-i18next';
 import { NavCategory, NavItem, NavItemContent, NavLink } from '../../../components/nav';
 import { getInboxInvitesPath, getInboxNotificationsPath } from '../../pathUtils';
 import {
@@ -13,6 +14,7 @@ import { useNavToActivePathMapper } from '../../../hooks/useNavToActivePathMappe
 import { PageNav, PageNavContent, PageNavHeader } from '../../../components/page';
 
 function InvitesNavItem() {
+  const { t } = useTranslation();
   const invitesSelected = useInboxInvitesSelected();
   const allInvites = useAtomValue(allInvitesAtom);
   const inviteCount = allInvites.length;
@@ -32,7 +34,7 @@ function InvitesNavItem() {
             </Avatar>
             <Box as="span" grow="Yes">
               <Text as="span" size="Inherit" truncate>
-                Invites
+                {t('pages:client.inbox.invites')}
               </Text>
             </Box>
             {inviteCount > 0 && <UnreadBadge highlight count={inviteCount} />}
@@ -44,6 +46,7 @@ function InvitesNavItem() {
 }
 
 export function Inbox() {
+  const { t } = useTranslation();
   useNavToActivePathMapper('inbox');
   const notificationsSelected = useInboxNotificationsSelected();
 
@@ -53,7 +56,7 @@ export function Inbox() {
         <Box grow="Yes" gap="300">
           <Box grow="Yes">
             <Text size="H4" truncate>
-              Inbox
+              {t('pages:client.inbox.inbox')}
             </Text>
           </Box>
         </Box>
@@ -70,8 +73,8 @@ export function Inbox() {
                       <Icon src={Icons.MessageUnread} size="100" filled={notificationsSelected} />
                     </Avatar>
                     <Box as="span" grow="Yes">
-                      <Text as="span" size="Inherit" truncate>
-                        Notifications
+                      <Text size="Inherit" truncate>
+                        {t('pages:client.inbox.notifications')}
                       </Text>
                     </Box>
                   </Box>

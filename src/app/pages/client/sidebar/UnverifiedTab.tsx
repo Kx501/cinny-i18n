@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Badge, color, Icon, Icons, Text } from 'folds';
+import { useTranslation } from 'react-i18next';
 import {
   SidebarAvatar,
   SidebarItem,
@@ -19,6 +20,7 @@ import { Modal500 } from '../../../components/Modal500';
 import { Settings, SettingsPages } from '../../../features/settings';
 
 function UnverifiedIndicator() {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
 
   const crypto = mx.getCrypto();
@@ -49,7 +51,7 @@ function UnverifiedIndicator() {
     <>
       {hasUnverified && (
         <SidebarItem active={settings} className={css.UnverifiedTab}>
-          <SidebarItemTooltip tooltip={unverified ? 'Unverified Device' : 'Unverified Devices'}>
+          <SidebarItemTooltip tooltip={unverified ? t('pages:client.sidebar.unverified_device') : t('pages:client.sidebar.unverified_devices')}>
             {(triggerRef) => (
               <SidebarAvatar
                 className={unverified ? css.UnverifiedAvatar : css.UnverifiedOtherAvatar}

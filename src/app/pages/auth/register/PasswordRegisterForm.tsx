@@ -371,7 +371,7 @@ export function PasswordRegisterForm({
           <Box alignItems="Center" gap="200">
             <Checkbox name="termsInput" size="300" variant="Primary" required />
             <Text size="T300">
-              {t('pages:auth.register.i_accept_server_terms_and_conditions')}{' '}
+              {t('pages:auth.register.i_accept_server')}{' '}
               <a href={termUrl} target="_blank" rel="noreferrer">
                 {t('pages:auth.register.terms_and_conditions')}
               </a>
@@ -380,10 +380,10 @@ export function PasswordRegisterForm({
           </Box>
         )}
         {registerError?.errcode === RegisterError.RateLimited && (
-          <FieldError message={t('pages:auth.register.failed_to_register_rate_limited')} />
+          <FieldError message={t('pages:auth.register.failed_to_register_your_register_request')} />
         )}
         {registerError?.errcode === RegisterError.Forbidden && (
-          <FieldError message={t('pages:auth.register.failed_to_register_not_permit')} />
+          <FieldError message={t('pages:auth.register.failed_to_register_the_homeserver')} />
         )}
         {registerError?.errcode === RegisterError.InvalidRequest && (
           <FieldError message={t('pages:auth.register.failed_to_register_invalid_request')} />
@@ -394,7 +394,7 @@ export function PasswordRegisterForm({
         <span data-spacing-node />
         <Button variant="Primary" size="500" type="submit">
           <Text as="span" size="B500">
-            {t('pages:auth.register.register_button')}
+            {t('pages:auth.register.register')}
           </Text>
         </Button>
       </Box>

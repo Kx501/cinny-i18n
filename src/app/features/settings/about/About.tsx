@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Text, IconButton, Icon, Icons, Scroll, Button, config, toRem } from 'folds';
+import { useTranslation } from 'react-i18next';
 import { Page, PageContent, PageHeader } from '../../../components/page';
 import { SequenceCard } from '../../../components/sequence-card';
 import { SequenceCardStyle } from '../styles.css';
@@ -13,6 +14,7 @@ type AboutProps = {
   requestClose: () => void;
 };
 export function About({ requestClose }: AboutProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
 
   return (
@@ -21,7 +23,7 @@ export function About({ requestClose }: AboutProps) {
         <Box grow="Yes" gap="200">
           <Box grow="Yes" alignItems="Center" gap="200">
             <Text size="H3" truncate>
-              About
+              {t('pages:client.about')}
             </Text>
           </Box>
           <Box shrink="No">
@@ -46,10 +48,10 @@ export function About({ requestClose }: AboutProps) {
                 <Box direction="Column" gap="300">
                   <Box direction="Column" gap="100">
                     <Box gap="100" alignItems="End">
-                      <Text size="H3">Cinny</Text>
+                      <Text size="H3">{t('pages:client.cinny')}</Text>
                       <Text size="T200">v{cons.version}</Text>
                     </Box>
-                    <Text>Yet another matrix client.</Text>
+                    <Text>{t('pages:client.yet_another_matrix_client')}</Text>
                   </Box>
 
                   <Box gap="200" wrap="Wrap">
@@ -64,7 +66,7 @@ export function About({ requestClose }: AboutProps) {
                       radii="300"
                       before={<Icon src={Icons.Code} size="100" filled />}
                     >
-                      <Text size="B300">Source Code</Text>
+                      <Text size="B300">{t('pages:client.source_code')}</Text>
                     </Button>
                     <Button
                       as="a"
@@ -77,13 +79,13 @@ export function About({ requestClose }: AboutProps) {
                       radii="300"
                       before={<Icon src={Icons.Heart} size="100" filled />}
                     >
-                      <Text size="B300">Support</Text>
+                      <Text size="B300">{t('pages:client.support')}</Text>
                     </Button>
                   </Box>
                 </Box>
               </Box>
               <Box direction="Column" gap="100">
-                <Text size="L400">Options</Text>
+                <Text size="L400">{t('pages:client.options')}</Text>
                 <SequenceCard
                   className={SequenceCardStyle}
                   variant="SurfaceVariant"
@@ -91,8 +93,8 @@ export function About({ requestClose }: AboutProps) {
                   gap="400"
                 >
                   <SettingTile
-                    title="Clear Cache & Reload"
-                    description="Clear all your locally stored data and reload from server."
+                    title={t('pages:client.clear_cache_and_reload')}
+                    description={t('pages:client.clear_all_your_locally_stored')}
                     after={
                       <Button
                         onClick={() => clearCacheAndReload(mx)}
@@ -102,14 +104,14 @@ export function About({ requestClose }: AboutProps) {
                         radii="300"
                         outlined
                       >
-                        <Text size="B300">Clear Cache</Text>
+                        <Text size="B300">{t('pages:client.clear_cache')}</Text>
                       </Button>
                     }
                   />
                 </SequenceCard>
               </Box>
               <Box direction="Column" gap="100">
-                <Text size="L400">Credits</Text>
+                <Text size="L400">{t('pages:client.credits')}</Text>
                 <SequenceCard
                   className={SequenceCardStyle}
                   variant="SurfaceVariant"

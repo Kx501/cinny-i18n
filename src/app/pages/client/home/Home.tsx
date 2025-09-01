@@ -71,6 +71,7 @@ type HomeMenuProps = {
   requestClose: () => void;
 };
 const HomeMenu = forwardRef<HTMLDivElement, HomeMenuProps>(({ requestClose }, ref) => {
+  const { t } = useTranslation();
   const orphanRooms = useHomeRooms();
   const [hideActivity] = useSetting(settingsAtom, 'hideActivity');
   const unread = useRoomsUnread(orphanRooms, roomToUnreadAtom);
@@ -93,7 +94,7 @@ const HomeMenu = forwardRef<HTMLDivElement, HomeMenuProps>(({ requestClose }, re
           aria-disabled={!unread}
         >
           <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-            Mark as Read
+            {t('pages:client.home.mark_as_read')}
           </Text>
         </MenuItem>
       </Box>
@@ -168,7 +169,7 @@ function HomeEmpty() {
         }
         content={
           <Text size="T300" align="Center">
-            {t('pages:client.home.no_rooms_yet')}
+            {t('pages:client.home.you_do_not_have_any')}
           </Text>
         }
         options={

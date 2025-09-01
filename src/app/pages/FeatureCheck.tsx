@@ -1,10 +1,12 @@
 import React, { ReactNode, useEffect } from 'react';
 import { Box, Dialog, Text, config } from 'folds';
+import { useTranslation } from 'react-i18next';
 import { AsyncStatus, useAsyncCallback } from '../hooks/useAsyncCallback';
 import { checkIndexedDBSupport } from '../utils/featureCheck';
 import { SplashScreen } from '../components/splash-screen';
 
 export function FeatureCheck({ children }: { children: ReactNode }) {
+  const { t } = useTranslation();
   const [idbSupportState, checkIDBSupport] = useAsyncCallback(checkIndexedDBSupport);
 
   useEffect(() => {
@@ -17,10 +19,9 @@ export function FeatureCheck({ children }: { children: ReactNode }) {
         <Box grow="Yes" alignItems="Center" justifyContent="Center">
           <Dialog>
             <Box style={{ padding: config.space.S400 }} direction="Column" gap="400">
-              <Text>Missing Browser Feature</Text>
+              <Text>{t('pages:missing_browser_feature')}</Text>
               <Text size="T300" priority="400">
-                No IndexedDB support found. This application requires IndexedDB to store session
-                data locally. Please make sure your browser support IndexedDB and have it enabled.
+                {t('pages:no_indexeddb_support')}
               </Text>
               <Text size="T200">
                 <a
@@ -28,7 +29,7 @@ export function FeatureCheck({ children }: { children: ReactNode }) {
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                  What is IndexedDB?
+                  {t('pages:what_is_indexeddb')}
                 </a>
               </Text>
             </Box>

@@ -26,13 +26,13 @@ export function ResetPassword() {
   return (
     <Box direction="Column" gap="500">
       <Text size="H2" priority="400">
-        {t('pages:auth.reset-password.title_reset_password')}
+        {t('pages:auth.reset-password.reset_password')}
       </Text>
       <PasswordResetForm defaultEmail={resetPasswordSearchParams.email} />
       <span data-spacing-node />
 
       <Text align="Center">
-        {t('pages:auth.reset-password.remember_your_password')} <Link to={getLoginPath(server)}>{t('pages:auth.reset-password.cta_login')}</Link>
+        {t('pages:auth.reset-password.remember_your_password')} <Link to={getLoginPath(server)}>{t('pages:auth.reset-password.login')}</Link>
       </Text>
     </Box>
   );

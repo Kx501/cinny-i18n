@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Icon, IconButton, Icons, Scroll, Text } from 'folds';
 import { useAtomValue } from 'jotai';
+import { useTranslation } from 'react-i18next';
 import { useClientConfig } from '../../../hooks/useClientConfig';
 import { RoomCard, RoomCardGrid } from '../../../components/room-card';
 import { allRoomsAtom } from '../../../state/room-list/roomList';
@@ -20,6 +21,7 @@ import { ScreenSize, useScreenSizeContext } from '../../../hooks/useScreenSize';
 import { BackRouteHandler } from '../../../components/BackRouteHandler';
 
 export function FeaturedRooms() {
+  const { t } = useTranslation();
   const { featuredCommunities } = useClientConfig();
   const { rooms, spaces } = featuredCommunities ?? {};
   const allRooms = useAtomValue(allRoomsAtom);
@@ -49,14 +51,14 @@ export function FeaturedRooms() {
                 <PageHeroSection>
                   <PageHero
                     icon={<Icon size="600" src={Icons.Bulb} />}
-                    title="Featured by Client"
-                    subTitle="Find and explore public rooms and spaces featured by client provider."
+                    title={t('pages:client.explore.featured_by_client')}
+                    subTitle={t('pages:client.explore.find_and_explore_public_rooms')}
                   />
                 </PageHeroSection>
                 <Box direction="Column" gap="700">
                   {spaces && spaces.length > 0 && (
                     <Box direction="Column" gap="400">
-                      <Text size="H4">Featured Spaces</Text>
+                      <Text size="H4">{t('pages:client.explore.featured_spaces')}</Text>
                       <RoomCardGrid>
                         {spaces.map((roomIdOrAlias) => (
                           <RoomSummaryLoader key={roomIdOrAlias} roomIdOrAlias={roomIdOrAlias}>
@@ -85,7 +87,7 @@ export function FeaturedRooms() {
                   )}
                   {rooms && rooms.length > 0 && (
                     <Box direction="Column" gap="400">
-                      <Text size="H4">Featured Rooms</Text>
+                      <Text size="H4">{t('pages:client.explore.featured_rooms')}</Text>
                       <RoomCardGrid>
                         {rooms.map((roomIdOrAlias) => (
                           <RoomSummaryLoader key={roomIdOrAlias} roomIdOrAlias={roomIdOrAlias}>
@@ -114,19 +116,19 @@ export function FeaturedRooms() {
                   )}
                   {((spaces && spaces.length === 0 && rooms && rooms.length === 0) ||
                     (!spaces && !rooms)) && (
-                    <Box
-                      className={css.RoomsInfoCard}
-                      direction="Column"
-                      justifyContent="Center"
-                      alignItems="Center"
-                      gap="200"
-                    >
-                      <Icon size="400" src={Icons.Info} />
-                      <Text size="T300" align="Center">
-                        No rooms or spaces featured by client provider.
-                      </Text>
-                    </Box>
-                  )}
+                      <Box
+                        className={css.RoomsInfoCard}
+                        direction="Column"
+                        justifyContent="Center"
+                        alignItems="Center"
+                        gap="200"
+                      >
+                        <Icon size="400" src={Icons.Info} />
+                        <Text size="T300" align="Center">
+                          {t('pages:client.explore.no_rooms_or_spaces_featured')}
+                        </Text>
+                      </Box>
+                    )}
                 </Box>
               </Box>
             </PageContentCenter>

@@ -30,6 +30,7 @@ import { JoinRule, Room } from 'matrix-js-sdk';
 import { RoomJoinRulesEventContent } from 'matrix-js-sdk/lib/types';
 import FocusTrap from 'focus-trap-react';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
+import { useTranslation } from 'react-i18next';
 import { mDirectAtom } from '../../../state/mDirectList';
 import {
   NavCategory,
@@ -90,6 +91,7 @@ type SpaceMenuProps = {
   requestClose: () => void;
 };
 const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClose }, ref) => {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const [hideActivity] = useSetting(settingsAtom, 'hideActivity');
   const [developerTools] = useSetting(settingsAtom, 'developerTools');
@@ -147,7 +149,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
           disabled={!unread}
         >
           <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-            Mark as Read
+            {t('pages:client.space.mark_as_read')}
           </Text>
         </MenuItem>
       </Box>
@@ -163,7 +165,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
           disabled={!canInvite}
         >
           <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-            Invite
+            {t('pages:client.space.invite')}
           </Text>
         </MenuItem>
         <MenuItem
@@ -173,7 +175,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
           radii="300"
         >
           <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-            Copy Link
+            {t('pages:client.space.copy_link')}
           </Text>
         </MenuItem>
         <MenuItem
@@ -183,7 +185,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
           radii="300"
         >
           <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-            Space Settings
+            {t('pages:client.space.space_settings')}
           </Text>
         </MenuItem>
         {developerTools && (
@@ -194,7 +196,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
             radii="300"
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Event Timeline
+              {t('pages:client.space.event_timeline')}
             </Text>
           </MenuItem>
         )}
@@ -214,7 +216,7 @@ const SpaceMenu = forwardRef<HTMLDivElement, SpaceMenuProps>(({ room, requestClo
                 aria-pressed={promptLeave}
               >
                 <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-                  Leave Space
+                  {t('pages:client.space.leave_space')}
                 </Text>
               </MenuItem>
               {promptLeave && (
@@ -296,6 +298,7 @@ function SpaceHeader() {
 
 type SpaceTombstoneProps = { roomId: string; replacementRoomId: string };
 export function SpaceTombstone({ roomId, replacementRoomId }: SpaceTombstoneProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const { navigateSpace } = useRoomNavigate();
 
@@ -327,19 +330,19 @@ export function SpaceTombstone({ roomId, replacementRoomId }: SpaceTombstoneProp
       gap="300"
     >
       <Box direction="Column" grow="Yes" gap="100">
-        <Text size="L400">Space Upgraded</Text>
-        <Text size="T200">This space has been replaced and is no longer active.</Text>
+        <Text size="L400">{t('pages:client.space.space_upgraded')}</Text>
+        <Text size="T200">{t('pages:client.space.this_space_has_been_replaced')}</Text>
         {joinState.status === AsyncStatus.Error && (
           <Text className={BreakWord} style={{ color: color.Critical.Main }} size="T200">
-            {(joinState.error as any)?.message ?? 'Failed to join replacement space!'}
+            {(joinState.error as any)?.message ?? t('pages:client.space.failed_to_join_replacement_space')}
           </Text>
         )}
       </Box>
       <Box direction="Column" shrink="No">
         {replacementRoom?.getMyMembership() === Membership.Join ||
-        joinState.status === AsyncStatus.Success ? (
+          joinState.status === AsyncStatus.Success ? (
           <Button onClick={handleOpen} size="300" variant="Success" fill="Solid" radii="300">
-            <Text size="B300">Open New Space</Text>
+            <Text size="B300">{t('pages:client.space.open_new_space')}</Text>
           </Button>
         ) : (
           <Button
@@ -355,7 +358,7 @@ export function SpaceTombstone({ roomId, replacementRoomId }: SpaceTombstoneProp
             }
             disabled={joinState.status === AsyncStatus.Loading}
           >
-            <Text size="B300">Join New Space</Text>
+            <Text size="B300">{t('pages:client.space.join_new_space')}</Text>
           </Button>
         )}
       </Box>
@@ -364,6 +367,7 @@ export function SpaceTombstone({ roomId, replacementRoomId }: SpaceTombstoneProp
 }
 
 export function Space() {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const space = useSpace();
   useNavToActivePathMapper(space.roomId);
@@ -448,7 +452,7 @@ export function Space() {
                     </Avatar>
                     <Box as="span" grow="Yes">
                       <Text as="span" size="Inherit" truncate>
-                        Lobby
+                        {t('pages:client.space.lobby')}
                       </Text>
                     </Box>
                   </Box>
@@ -464,7 +468,7 @@ export function Space() {
                     </Avatar>
                     <Box as="span" grow="Yes">
                       <Text as="span" size="Inherit" truncate>
-                        Message Search
+                        {t('pages:client.space.message_search')}
                       </Text>
                     </Box>
                   </Box>
@@ -499,7 +503,7 @@ export function Space() {
                           onClick={handleCategoryClick}
                           closed={closedCategories.has(categoryId)}
                         >
-                          {roomId === space.roomId ? 'Rooms' : room?.name}
+                          {roomId === space.roomId ? t('pages:client.space.rooms') : room?.name}
                         </RoomNavCategoryButton>
                       </NavCategoryHeader>
                     </div>

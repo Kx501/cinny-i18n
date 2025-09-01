@@ -19,7 +19,7 @@ export const NAMESPACES = [
 
 // 支持的语言列表
 export const SUPPORTED_LANGUAGES = [
-  { code: 'en', name: 'English', nativeName: 'English' },
+  { code: 'en-US', name: 'English', nativeName: 'English' },
   { code: 'zh-CN', name: 'Chinese', nativeName: '中文' },
   { code: 'de', name: 'German', nativeName: 'Deutsch' }
 ] as const;

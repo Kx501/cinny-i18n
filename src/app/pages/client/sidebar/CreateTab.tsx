@@ -1,5 +1,6 @@
 import React, { MouseEventHandler, useState } from 'react';
 import { Box, config, Icon, Icons, Menu, PopOut, RectCords, Text } from 'folds';
+import { useTranslation } from 'react-i18next';
 import FocusTrap from 'focus-trap-react';
 import { useNavigate } from 'react-router-dom';
 import { SidebarAvatar, SidebarItem, SidebarItemTooltip } from '../../../components/sidebar';
@@ -18,6 +19,7 @@ import { JoinAddressPrompt } from '../../../components/join-address-prompt';
 import { _RoomSearchParams } from '../../paths';
 
 export function CreateTab() {
+  const { t } = useTranslation();
   const createSelected = useCreateSelected();
 
   const navigate = useNavigate();
@@ -40,7 +42,7 @@ export function CreateTab() {
 
   return (
     <SidebarItem active={createSelected}>
-      <SidebarItemTooltip tooltip="Add Space">
+      <SidebarItemTooltip tooltip={t('pages:client.sidebar.add_space')}>
         {(triggerRef) => (
           <PopOut
             anchor={menuCords}
@@ -73,9 +75,9 @@ export function CreateTab() {
                       onClick={handleCreateSpace}
                     >
                       <SettingTile before={<Icon size="400" src={Icons.Space} />}>
-                        <Text size="H6">Create Space</Text>
+                        <Text size="H6">{t('pages:client.sidebar.create_space')}</Text>
                         <Text size="T300" priority="300">
-                          Build a space for your community.
+                          {t('pages:client.sidebar.build_a_space_for_your_community')}
                         </Text>
                       </SettingTile>
                     </SequenceCard>
@@ -90,9 +92,9 @@ export function CreateTab() {
                       onClick={handleJoinWithAddress}
                     >
                       <SettingTile before={<Icon size="400" src={Icons.Link} />}>
-                        <Text size="H6">Join with Address</Text>
+                        <Text size="H6">{t('pages:client.sidebar.join_with_address')}</Text>
                         <Text size="T300" priority="300">
-                          Become a part of existing community.
+                          {t('pages:client.sidebar.become_a_part_of_existing_community')}
                         </Text>
                       </SettingTile>
                     </SequenceCard>
@@ -119,8 +121,8 @@ export function CreateTab() {
                   navigate(
                     viaServers
                       ? withSearchParam<_RoomSearchParams>(path, {
-                          viaServers: encodeSearchParamValueArray(viaServers),
-                        })
+                        viaServers: encodeSearchParamValueArray(viaServers),
+                      })
                       : path
                   );
                 }}

@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Header,
   Icon,
@@ -35,6 +36,7 @@ export function ServerPicker({
   allowCustomServer?: boolean;
   onServerChange: (server: string) => void;
 }) {
+  const { t } = useTranslation();
   const [serverMenuAnchor, setServerMenuAnchor] = useState<RectCords>();
   const serverInputRef = useRef<HTMLInputElement>(null);
 
@@ -109,7 +111,7 @@ export function ServerPicker({
               >
                 <Menu>
                   <Header size="300" style={{ padding: `0 ${config.space.S200}` }}>
-                    <Text size="L400">Homeserver List</Text>
+                    <Text size="L400">{t('pages:auth.homeserver_list')}</Text>
                   </Header>
                   <div style={{ padding: config.space.S100, paddingTop: 0 }}>
                     {serverList?.map((serverName) => (

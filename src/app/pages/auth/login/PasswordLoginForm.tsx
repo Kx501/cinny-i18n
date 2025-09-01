@@ -72,19 +72,19 @@ function UsernameHint({ server }: { server: string }) {
             >
               <Text size="T300">
                 <Text as="span" size="Inherit" priority="300">
-                  {t('pages:auth.login.username_colon')}
+                  {t('pages:auth.login.username')}
                 </Text>{' '}
                 johndoe
               </Text>
               <Text size="T300">
                 <Text as="span" size="Inherit" priority="300">
-                  {t('pages:auth.login.matrix_id_colon')}
+                  {t('pages:auth.login.matrix_id')}
                 </Text>
                 {` @johndoe:${server}`}
               </Text>
               <Text size="T300">
                 <Text as="span" size="Inherit" priority="300">
-                  {t('pages:auth.login.email_colon')}
+                  {t('pages:auth.login.email')}
                 </Text>
                 {` johndoe@${server}`}
               </Text>
@@ -238,13 +238,13 @@ export function PasswordLoginForm({ defaultUsername, defaultEmail }: PasswordLog
                 <FieldError message={t('pages:auth.login.invalid_username_or_password')} />
               )}
               {loginState.error.errcode === LoginError.UserDeactivated && (
-                <FieldError message={t('pages:auth.login.account_has_been_deactivated')} />
+                <FieldError message={t('pages:auth.login.this_account_has_been_deactivated')} />
               )}
               {loginState.error.errcode === LoginError.InvalidRequest && (
-                <FieldError message={t('pages:auth.login.failed_to_login_request_invalid')} />
+                <FieldError message={t('pages:auth.login.failed_to_login_part_of_your')} />
               )}
               {loginState.error.errcode === LoginError.RateLimited && (
-                <FieldError message={t('pages:auth.login.failed_to_login_rate_limited')} />
+                <FieldError message={t('pages:auth.login.failed_to_login_your_login_request')} />
               )}
               {loginState.error.errcode === LoginError.Unknown && (
                 <FieldError message={t('pages:auth.login.failed_to_login_unknown')} />
@@ -260,7 +260,7 @@ export function PasswordLoginForm({ defaultUsername, defaultEmail }: PasswordLog
       </Box>
       <Button type="submit" variant="Primary" size="500">
         <Text as="span" size="B500">
-          {t('pages:auth.login.login_button')}
+          {t('pages:auth.login.login')}
         </Text>
       </Button>
 

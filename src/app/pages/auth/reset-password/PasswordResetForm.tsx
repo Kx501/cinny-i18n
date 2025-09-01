@@ -58,11 +58,11 @@ function ResetPasswordComplete({ email }: { email?: string }) {
           <Dialog>
             <Box style={{ padding: config.space.S400 }} direction="Column" gap="400">
               <Text>
-                {t('pages:auth.reset-password.password_reset_success')}
+                {t('pages:auth.reset-password.password_has_been_reset_successfully')}
               </Text>
               <Button variant="Primary" onClick={handleClick}>
                 <Text size="B400" as="span">
-                  {t('pages:auth.reset-password.cta_login')}
+                  {t('pages:auth.reset-password.login')}
                 </Text>
               </Button>
             </Box>
@@ -235,7 +235,7 @@ export function PasswordResetForm({ defaultEmail }: PasswordResetFormProps) {
       <span data-spacing-node />
       <Button type="submit" variant="Primary" size="500">
         <Text as="span" size="B500">
-          {t('pages:auth.reset-password.reset_password_button')}
+          {t('pages:auth.reset-password.reset_password')}
         </Text>
       </Button>
 

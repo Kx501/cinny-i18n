@@ -18,10 +18,10 @@ export function WelcomePage() {
         <PageHeroSection>
           <PageHero
             icon={<img width="70" height="70" src={CinnySVG} alt="Cinny Logo" />}
-            title={t('pages:client.welcome.welcome_to_cinny')}
+            title={t('pages:client.welcome_to_cinny')}
             subTitle={
               <span>
-                {t('pages:client.welcome.yet_another_matrix_client')}{' '}
+                {t('pages:client.yet_another_matrix_client')}{' '}
                 <a
                   href="https://github.com/cinnyapp/cinny/releases"
                   target="_blank"
@@ -42,7 +42,7 @@ export function WelcomePage() {
                   before={<Icon size="200" src={Icons.Code} />}
                 >
                   <Text as="span" size="B400" truncate>
-                    {t('pages:client.welcome.source_code')}
+                    {t('pages:client.source_code')}
                   </Text>
                 </Button>
                 <Button
@@ -54,7 +54,7 @@ export function WelcomePage() {
                   before={<Icon size="200" src={Icons.Heart} />}
                 >
                   <Text as="span" size="B400" truncate>
-                    {t('pages:client.welcome.support')}
+                    {t('pages:client.support')}
                   </Text>
                 </Button>
               </Box>

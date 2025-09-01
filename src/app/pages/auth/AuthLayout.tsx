@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { Box, Header, Scroll, Spinner, Text, color } from 'folds';
+import { useTranslation } from 'react-i18next';
 import {
   Outlet,
   generatePath,
@@ -66,6 +67,7 @@ function AuthLayoutError({ message }: { message: string }) {
 }
 
 export function AuthLayout() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { server: urlEncodedServer } = useParams();
@@ -135,13 +137,13 @@ export function AuthLayout() {
           <Header className={css.AuthHeader} size="600" variant="Surface">
             <Box grow="Yes" direction="Row" gap="300" alignItems="Center">
               <img className={css.AuthLogo} src={CinnySVG} alt="Cinny Logo" />
-              <Text size="H3">Cinny</Text>
+              <Text size="H3">{t('pages:auth.cinny')}</Text>
             </Box>
           </Header>
           <Box className={css.AuthCardContent} direction="Column">
             <Box direction="Column" gap="100">
               <Text as="label" size="L400" priority="300">
-                Homeserver
+                {t('pages:auth.homeserver')}
               </Text>
               <ServerPicker
                 server={server}
@@ -151,18 +153,18 @@ export function AuthLayout() {
               />
             </Box>
             {discoveryState.status === AsyncStatus.Loading && (
-              <AuthLayoutLoading message="Looking for homeserver..." />
+              <AuthLayoutLoading message={t('pages:auth.looking_for_homeserver')} />
             )}
             {discoveryState.status === AsyncStatus.Error && (
-              <AuthLayoutError message="Failed to find homeserver." />
+              <AuthLayoutError message={t('pages:auth.failed_to_find_homeserver')} />
             )}
             {autoDiscoveryError?.action === AutoDiscoveryAction.FAIL_PROMPT && (
               <AuthLayoutError
-                message={`Failed to connect. Homeserver configuration found with ${autoDiscoveryError.host} appears unusable.`}
+                message={t('pages:auth.failed_to_connect_homeserver_configuration', { host: autoDiscoveryError.host })}
               />
             )}
             {autoDiscoveryError?.action === AutoDiscoveryAction.FAIL_ERROR && (
-              <AuthLayoutError message="Failed to connect. Homeserver configuration base_url appears invalid." />
+              <AuthLayoutError message={t('pages:auth.failed_to_connect_homeserver_configuration_base')} />
             )}
             {discoveryState.status === AsyncStatus.Success && autoDiscoveryInfo && (
               <AuthServerProvider value={discoveryState.data.serverName}>
@@ -171,21 +173,21 @@ export function AuthLayout() {
                     baseUrl={autoDiscoveryInfo['m.homeserver'].base_url}
                     fallback={() => (
                       <AuthLayoutLoading
-                        message={`Connecting to ${autoDiscoveryInfo['m.homeserver'].base_url}`}
+                        message={t('pages:auth.connecting_to_base_url', { base_url: autoDiscoveryInfo['m.homeserver'].base_url })}
                       />
                     )}
                     error={() => (
-                      <AuthLayoutError message="Failed to connect. Either homeserver is unavailable at this moment or does not exist." />
+                      <AuthLayoutError message={t('pages:auth.failed_to_connect_either_homeserver_is')} />
                     )}
                   >
                     {(specVersions) => (
                       <SpecVersionsProvider value={specVersions}>
                         <AuthFlowsLoader
                           fallback={() => (
-                            <AuthLayoutLoading message="Loading authentication flow..." />
+                            <AuthLayoutLoading message={t('pages:auth.loading_authentication_flow')} />
                           )}
                           error={() => (
-                            <AuthLayoutError message="Failed to get authentication flow information." />
+                            <AuthLayoutError message={t('pages:auth.failed_to_get_authentication_flow_information')} />
                           )}
                         >
                           {(authFlows) => (

@@ -1,5 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { MouseEventHandler, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Avatar,
   Box,
@@ -222,6 +223,7 @@ function RoomNotificationsGroupComp({
   hour24Clock,
   dateFormatString,
 }: RoomNotificationsGroupProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
   const unread = useRoomUnread(room.roomId, roomToUnreadAtom);
@@ -290,7 +292,7 @@ function RoomNotificationsGroupComp({
             <Box grow="Yes" direction="Column">
               <Text size="T400" priority="300">
                 <code className={customHtmlCss.Code}>{evt.type}</code>
-                {' event'}
+                {t('pages:client.inbox.event')}
               </Text>
             </Box>
           );
@@ -376,7 +378,7 @@ function RoomNotificationsGroupComp({
         return (
           <Box grow="Yes" direction="Column">
             <Text size="T400" priority="300">
-              Room Tombstone. {content.body}
+              {t('pages:client.inbox.room_tombstone')} {content.body}
             </Text>
           </Box>
         );
@@ -391,7 +393,7 @@ function RoomNotificationsGroupComp({
         <Box grow="Yes" direction="Column">
           <Text size="T400" priority="300">
             <code className={customHtmlCss.Code}>{event.type}</code>
-            {' event'}
+            {t('pages:client.inbox.event')}
           </Text>
         </Box>
       );
@@ -433,7 +435,7 @@ function RoomNotificationsGroupComp({
               onClick={handleMarkAsRead}
               before={<Icon size="100" src={Icons.CheckTwice} />}
             >
-              <Text size="T200">Mark as Read</Text>
+              <Text size="T200">{t('pages:client.inbox.mark_as_read')}</Text>
             </Chip>
           )}
         </Box>
@@ -480,13 +482,13 @@ function RoomNotificationsGroupComp({
                         src={
                           senderAvatarMxc
                             ? mxcUrlToHttp(
-                                mx,
-                                senderAvatarMxc,
-                                useAuthentication,
-                                48,
-                                48,
-                                'crop'
-                              ) ?? undefined
+                              mx,
+                              senderAvatarMxc,
+                              useAuthentication,
+                              48,
+                              48,
+                              'crop'
+                            ) ?? undefined
                             : undefined
                         }
                         alt={displayName}
@@ -519,7 +521,7 @@ function RoomNotificationsGroupComp({
                       variant="Secondary"
                       radii="400"
                     >
-                      <Text size="T200">Open</Text>
+                      <Text size="T200">{t('pages:client.inbox.open')}</Text>
                     </Chip>
                   </Box>
                 </Box>
@@ -557,6 +559,7 @@ const useNotificationsSearchParams = (
 const DEFAULT_REFRESH_MS = 7000;
 
 export function Notifications() {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const [hideActivity] = useSetting(settingsAtom, 'hideActivity');
   const [mediaAutoLoad] = useSetting(settingsAtom, 'mediaAutoLoad');
@@ -647,7 +650,7 @@ export function Notifications() {
           <Box alignItems="Center" gap="200">
             {screenSize !== ScreenSize.Mobile && <Icon size="400" src={Icons.Message} />}
             <Text size="H3" truncate>
-              Notification Messages
+              {t('pages:client.inbox.notification_messages')}
             </Text>
           </Box>
           <Box grow="Yes" basis="No" />
@@ -661,7 +664,7 @@ export function Notifications() {
               <Box direction="Column" gap="200">
                 <Box ref={scrollTopAnchorRef} direction="Column" gap="100">
                   <span data-spacing-node />
-                  <Text size="L400">Filter</Text>
+                  <Text size="L400">{t('pages:client.inbox.filter')}</Text>
                   <Box gap="200">
                     <Chip
                       onClick={() => setOnlyHighlighted(false)}
@@ -670,7 +673,7 @@ export function Notifications() {
                       before={!onlyHighlight && <Icon size="100" src={Icons.Check} />}
                       outlined
                     >
-                      <Text size="T200">All Notifications</Text>
+                      <Text size="T200">{t('pages:client.inbox.all_notifications')}</Text>
                     </Chip>
                     <Chip
                       onClick={() => setOnlyHighlighted(true)}
@@ -679,7 +682,7 @@ export function Notifications() {
                       before={onlyHighlight && <Icon size="100" src={Icons.Check} />}
                       outlined
                     >
-                      <Text size="T200">Highlighted</Text>
+                      <Text size="T200">{t('pages:client.inbox.highlighted')}</Text>
                     </Chip>
                   </Box>
                 </Box>
@@ -694,7 +697,7 @@ export function Notifications() {
                     radii="Pill"
                     outlined
                     size="300"
-                    aria-label="Scroll to Top"
+                    aria-label={t('pages:client.inbox.scroll_to_top')}
                   >
                     <Icon src={Icons.ChevronTop} size="300" />
                   </IconButton>
@@ -747,9 +750,9 @@ export function Notifications() {
                       direction="Column"
                       gap="200"
                     >
-                      <Text>No Notifications</Text>
+                      <Text>{t('pages:client.inbox.no_notifications')}</Text>
                       <Text size="T200">
-                        You don&apos;t have any new notifications to display yet.
+                        {t('pages:client.inbox.you_dont_have_any_new_notifications')}
                       </Text>
                     </Box>
                   )}

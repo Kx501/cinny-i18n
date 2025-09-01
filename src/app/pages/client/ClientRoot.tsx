@@ -15,6 +15,7 @@ import {
 } from 'folds';
 import { HttpApiEvent, HttpApiEventHandlerMap, MatrixClient } from 'matrix-js-sdk';
 import FocusTrap from 'focus-trap-react';
+import { useTranslation } from 'react-i18next';
 import React, { MouseEventHandler, ReactNode, useCallback, useEffect, useState } from 'react';
 import {
   clearCacheAndReload,
@@ -40,17 +41,20 @@ import { SyncStatus } from './SyncStatus';
 import { AuthMetadataProvider } from '../../hooks/useAuthMetadata';
 
 function ClientRootLoading() {
+  const { t } = useTranslation();
+
   return (
     <SplashScreen>
       <Box direction="Column" grow="Yes" alignItems="Center" justifyContent="Center" gap="400">
         <Spinner variant="Secondary" size="600" />
-        <Text>Heating up</Text>
+        <Text>{t('pages:heating_up')}</Text>
       </Box>
     </SplashScreen>
   );
 }
 
 function ClientRootOptions({ mx }: { mx?: MatrixClient }) {
+  const { t } = useTranslation();
   const [menuAnchor, setMenuAnchor] = useState<RectCords>();
 
   const handleToggle: MouseEventHandler<HTMLButtonElement> = (evt) => {
@@ -95,7 +99,7 @@ function ClientRootOptions({ mx }: { mx?: MatrixClient }) {
                 {mx && (
                   <MenuItem onClick={() => clearCacheAndReload(mx)} size="300" radii="300">
                     <Text as="span" size="T300" truncate>
-                      Clear Cache and Reload
+                      {t('pages:client.clear_cache_and_reload')}
                     </Text>
                   </MenuItem>
                 )}
@@ -113,7 +117,7 @@ function ClientRootOptions({ mx }: { mx?: MatrixClient }) {
                   fill="None"
                 >
                   <Text as="span" size="T300" truncate>
-                    Logout
+                    {t('pages:client.logout')}
                   </Text>
                 </MenuItem>
               </Box>
@@ -145,6 +149,7 @@ type ClientRootProps = {
   children: ReactNode;
 };
 export function ClientRoot({ children }: ClientRootProps) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const { baseUrl } = getSecret();
 
@@ -189,14 +194,14 @@ export function ClientRoot({ children }: ClientRootProps) {
             <Dialog>
               <Box direction="Column" gap="400" style={{ padding: config.space.S400 }}>
                 {loadState.status === AsyncStatus.Error && (
-                  <Text>{`Failed to load. ${loadState.error.message}`}</Text>
+                  <Text>{t('pages:client.failed_to_load', { message: loadState.error.message })}</Text>
                 )}
                 {startState.status === AsyncStatus.Error && (
-                  <Text>{`Failed to start. ${startState.error.message}`}</Text>
+                  <Text>{t('pages:client.failed_to_start', { message: startState.error.message })}</Text>
                 )}
                 <Button variant="Critical" onClick={mx ? () => startMatrix(mx) : loadMatrix}>
                   <Text as="span" size="B400">
-                    Retry
+                    {t('pages:client.retry')}
                   </Text>
                 </Button>
               </Box>

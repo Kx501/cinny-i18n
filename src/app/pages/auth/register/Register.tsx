@@ -38,7 +38,7 @@ export function Register() {
   return (
     <Box direction="Column" gap="500">
       <Text size="H2" priority="400">
-        {t('pages:auth.register.title_register')}
+        {t('pages:auth.register.register')}
       </Text>
       {registerFlows.status === RegisterFlowStatus.RegistrationDisabled && !sso && (
         <Text style={{ color: color.Critical.Main }} size="T300">
@@ -93,7 +93,7 @@ export function Register() {
         </>
       )}
       <Text align="Center">
-        {t('pages:auth.register.already_have_an_account')} <Link to={getLoginPath(server)}>{t('pages:auth.register.cta_login')}</Link>
+        {t('pages:auth.register.already_have_an_account')} <Link to={getLoginPath(server)}>{t('pages:auth.register.login')}</Link>
       </Text>
     </Box>
   );

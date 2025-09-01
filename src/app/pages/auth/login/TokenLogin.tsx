@@ -33,7 +33,7 @@ function LoginTokenError({ message }: { message: string }) {
     >
       <Icon size="300" filled src={Icons.Warning} />
       <Box direction="Column" gap="100">
-        <Text size="L400">{t('pages:auth.login.token_login_title')}</Text>
+        <Text size="L400">{t('pages:auth.login.token_login')}</Text>
         <Text size="T300">
           <b>{message}</b>
         </Text>
@@ -74,13 +74,13 @@ export function TokenLogin({ token }: TokenLoginProps) {
             <LoginTokenError message={t('pages:auth.login.invalid_login_token')} />
           )}
           {loginState.error.errcode === LoginError.UserDeactivated && (
-            <LoginTokenError message={t('pages:auth.login.account_has_been_deactivated')} />
+            <LoginTokenError message={t('pages:auth.login.this_account_has_been_deactivated')} />
           )}
           {loginState.error.errcode === LoginError.InvalidRequest && (
-            <LoginTokenError message={t('pages:auth.login.failed_to_login_request_invalid')} />
+            <LoginTokenError message={t('pages:auth.login.failed_to_login_part_of_your')} />
           )}
           {loginState.error.errcode === LoginError.RateLimited && (
-            <LoginTokenError message={t('pages:auth.login.failed_to_login_rate_limited')} />
+            <LoginTokenError message={t('pages:auth.login.failed_to_login_your_login_request')} />
           )}
           {loginState.error.errcode === LoginError.Unknown && (
             <LoginTokenError message={t('pages:auth.login.failed_to_login_unknown')} />

@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Box, Icon, Icons, Text, Scroll, IconButton } from 'folds';
 import { useAtomValue } from 'jotai';
+import { useTranslation } from 'react-i18next';
 import { Page, PageContent, PageContentCenter, PageHeader } from '../../../components/page';
 import { MessageSearch } from '../../../features/message-search';
 import { useSpace } from '../../../hooks/useSpace';
@@ -13,6 +14,7 @@ import { ScreenSize, useScreenSizeContext } from '../../../hooks/useScreenSize';
 import { BackRouteHandler } from '../../../components/BackRouteHandler';
 
 export function SpaceSearch() {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const scrollRef = useRef<HTMLDivElement>(null);
   const space = useSpace();
@@ -44,7 +46,7 @@ export function SpaceSearch() {
           <Box justifyContent="Center" alignItems="Center" gap="200">
             {screenSize !== ScreenSize.Mobile && <Icon size="400" src={Icons.Search} />}
             <Text size="H3" truncate>
-              Message Search
+              {t('pages:client.space.message_search')}
             </Text>
           </Box>
           <Box grow="Yes" basis="No" />
