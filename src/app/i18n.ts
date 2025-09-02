@@ -38,10 +38,9 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init<HttpBackendOptions>({
     debug: false,
-    fallbackLng: 'en',
+    fallbackLng: 'en-US',
     supportedLngs: SUPPORTED_LANGUAGES.map(lang => lang.code),
     ns: NAMESPACES,
-    defaultNS: 'common',
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
