@@ -7,8 +7,6 @@ import {
   createRoutesFromElements,
   redirect,
 } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-
 import { ClientConfig } from '../hooks/useClientConfig';
 import { AuthLayout, Login, Register, ResetPassword } from './auth';
 import {
@@ -73,8 +71,6 @@ import { getFallbackSession } from '../state/sessions';
 export const createRouter = (clientConfig: ClientConfig, screenSize: ScreenSize) => {
   const { hashRouter } = clientConfig;
   const mobile = screenSize === ScreenSize.Mobile;
-  const { t } = useTranslation();
-
   const routes = createRoutesFromElements(
     <Route>
       <Route
@@ -166,7 +162,7 @@ export const createRouter = (clientConfig: ClientConfig, screenSize: ScreenSize)
         >
           {mobile ? null : <Route index element={<WelcomePage />} />}
           <Route path={_CREATE_PATH} element={<HomeCreateRoom />} />
-          <Route path={_JOIN_PATH} element={<p>{t('pages:client.join')}</p>} />
+          <Route path={_JOIN_PATH} element={<p>join</p>} />
           <Route path={_SEARCH_PATH} element={<HomeSearch />} />
           <Route
             path={_ROOM_PATH}
@@ -292,7 +288,7 @@ export const createRouter = (clientConfig: ClientConfig, screenSize: ScreenSize)
           <Route path={_INVITES_PATH} element={<Invites />} />
         </Route>
       </Route>
-      <Route path="/*" element={<p>{t('pages:page_not_found')}</p>} />
+      <Route path="/*" element={<p>Page not found</p>} />
     </Route>
   );
 

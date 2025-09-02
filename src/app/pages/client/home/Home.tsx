@@ -103,8 +103,8 @@ const HomeMenu = forwardRef<HTMLDivElement, HomeMenuProps>(({ requestClose }, re
 });
 
 function HomeHeader() {
+  const { t } = useTranslation();
   const [menuAnchor, setMenuAnchor] = useState<RectCords>();
-
   const handleOpenMenu: MouseEventHandler<HTMLButtonElement> = (evt) => {
     const cords = evt.currentTarget.getBoundingClientRect();
     setMenuAnchor((currentState) => {
@@ -119,7 +119,7 @@ function HomeHeader() {
         <Box alignItems="Center" grow="Yes" gap="300">
           <Box grow="Yes">
             <Text size="H4" truncate>
-              Home
+              {t('pages:client.home.home')}
             </Text>
           </Box>
           <Box>

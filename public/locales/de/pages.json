@@ -85,15 +85,8 @@
 		"failed_to_connect_homeserver": "Verbindung zum Homeserver fehlgeschlagen. Entweder ist der Homeserver down oder Ihr Internet.",
 		"retry": "Wiederholen",
 		"continue": "Weiter",
-		"options": "Optionen",
 		"clear_cache_and_reload": "Cache löschen & neu laden",
-		"clear_all_your_locally_stored": "Löschen Sie alle Ihre lokal gespeicherten Daten und laden Sie sie vom Server neu.",
-		"clear_cache": "Cache löschen",
-		"credits": "Credits",
 		"logout": "Abmelden",
-		"about": "Über",
-		"cinny": "Cinny",
-		"join": "Beitreten",
 		"home": {
 			"no_rooms": "Keine Räume",
 			"you_do_not_have_any": "Sie haben noch keine Räume.",
@@ -190,6 +183,5 @@
 	"continue": "Weiter",
 	"missing_browser_feature": "Browser-Funktion fehlt",
 	"no_indexeddb_support": "Keine IndexedDB-Unterstützung gefunden. Diese Anwendung benötigt IndexedDB, um Sitzungsdaten lokal zu speichern. Bitte stellen Sie sicher, dass Ihr Browser IndexedDB unterstützt und aktiviert ist.",
-	"what_is_indexeddb": "Was ist IndexedDB?",
-	"page_not_found": "Seite nicht gefunden"
+	"what_is_indexeddb": "Was ist IndexedDB?"
 }
