@@ -22,6 +22,7 @@ import FocusTrap from 'focus-trap-react';
 import { BackupProgressStatus, backupRestoreProgressAtom } from '../state/backupRestore';
 import { InfoCard } from './info-card';
 import { AsyncStatus, useAsyncCallback } from '../hooks/useAsyncCallback';
+import { useTranslation } from 'react-i18next';
 import {
   useKeyBackupInfo,
   useKeyBackupStatus,
@@ -35,6 +36,7 @@ type BackupStatusProps = {
   enabled: boolean;
 };
 function BackupStatus({ enabled }: BackupStatusProps) {
+  const { t } = useTranslation();
   return (
     <Box as="span" gap="100" alignItems="Center">
       <Badge variant={enabled ? 'Success' : 'Critical'} fill="Solid" size="200" radii="Pill" />
@@ -43,7 +45,7 @@ function BackupStatus({ enabled }: BackupStatusProps) {
         size="L400"
         style={{ color: enabled ? color.Success.Main : color.Critical.Main }}
       >
-        {enabled ? 'Connected' : 'Disconnected'}
+        {enabled ? t('components:connected') : t('components:disconnected')}
       </Text>
     </Box>
   );
@@ -52,11 +54,12 @@ type BackupSyncingProps = {
   count: number;
 };
 function BackupSyncing({ count }: BackupSyncingProps) {
+  const { t } = useTranslation();
   return (
     <Box as="span" gap="100" alignItems="Center">
       <Spinner size="50" variant="Primary" fill="Soft" />
       <Text as="span" size="L400" style={{ color: color.Primary.Main }}>
-        Syncing ({count})
+        {t('components:syncing')} ({count})
       </Text>
     </Box>
   );
@@ -81,10 +84,11 @@ type BackupProgressProps = {
   downloaded: number;
 };
 function BackupProgress({ total, downloaded }: BackupProgressProps) {
+  const { t } = useTranslation();
   return (
     <Box grow="Yes" gap="200" alignItems="Center">
       <Badge variant="Secondary" fill="Solid" radii="300">
-        <Text size="L400">Restoring: {`${Math.round(percent(0, total, downloaded))}%`}</Text>
+        <Text size="L400">{t('components:restoring')}: {`${Math.round(percent(0, total, downloaded))}%`}</Text>
       </Badge>
       <Box grow="Yes" direction="Column">
         <ProgressBar variant="Secondary" size="300" min={0} max={total} value={downloaded} />
@@ -103,6 +107,7 @@ type BackupTrustInfoProps = {
   backupInfo: KeyBackupInfo;
 };
 function BackupTrustInfo({ crypto, backupInfo }: BackupTrustInfoProps) {
+  const { t } = useTranslation();
   const trust = useKeyBackupTrust(crypto, backupInfo);
 
   if (!trust) return null;
@@ -111,20 +116,20 @@ function BackupTrustInfo({ crypto, backupInfo }: BackupTrustInfoProps) {
     <Box direction="Column">
       {trust.matchesDecryptionKey ? (
         <Text size="T200" style={{ color: color.Success.Main }}>
-          <b>Backup has trusted decryption key.</b>
+          <b>{t('components:backup_has_trusted_decryption_key')}</b>
         </Text>
       ) : (
         <Text size="T200" style={{ color: color.Critical.Main }}>
-          <b>Backup does not have trusted decryption key!</b>
+          <b>{t('components:backup_does_not_have_trusted')}</b>
         </Text>
       )}
       {trust.trusted ? (
         <Text size="T200" style={{ color: color.Success.Main }}>
-          <b>Backup has trusted by signature.</b>
+          <b>{t('components:backup_has_trusted_by_signature')}</b>
         </Text>
       ) : (
         <Text size="T200" style={{ color: color.Critical.Main }}>
-          <b>Backup does not have trusted signature!</b>
+          <b>{t('components:backup_does_not_have_trusted_signature')}</b>
         </Text>
       )}
     </Box>
@@ -165,10 +170,11 @@ export function BackupRestoreTile({ crypto }: BackupRestoreTileProps) {
     restoreBackup();
   };
 
+  const { t } = useTranslation();
   return (
     <InfoCard
       variant="Surface"
-      title="Encryption Backup"
+      title={t('components:encryption_backup')}
       after={
         <Box alignItems="Center" gap="200">
           {remainingSession === 0 ? (
@@ -212,12 +218,12 @@ export function BackupRestoreTile({ crypto }: BackupRestoreTileProps) {
                     <Box direction="Column" gap="200">
                       <InfoCard
                         variant="SurfaceVariant"
-                        title="Backup Details"
+                        title={t('components:backup_details')}
                         description={
                           <>
-                            <span>Version: {backupInfo?.version ?? 'NIL'}</span>
+                            <span>{t('components:version')}: {backupInfo?.version ?? t('components:nil')}</span>
                             <br />
-                            <span>Keys: {backupInfo?.count ?? 'NIL'}</span>
+                            <span>{t('components:keys')}: {backupInfo?.count ?? t('components:nil')}</span>
                           </>
                         }
                       />
@@ -234,7 +240,7 @@ export function BackupRestoreTile({ crypto }: BackupRestoreTileProps) {
                       }
                       before={<Icon size="100" src={Icons.Download} />}
                     >
-                      <Text size="B300">Restore Backup</Text>
+                      <Text size="B300">{t('components:restore_backup')}</Text>
                     </Button>
                   </Box>
                 </Menu>
@@ -251,7 +257,7 @@ export function BackupRestoreTile({ crypto }: BackupRestoreTileProps) {
       )}
       {!backupEnabled && backupInfo === null && (
         <Text size="T200" style={{ color: color.Critical.Main }}>
-          <b>No backup present on server!</b>
+          <b>{t('components:no_backup_present_on_server')}</b>
         </Text>
       )}
       {!syncFailure && !backupEnabled && backupInfo && (

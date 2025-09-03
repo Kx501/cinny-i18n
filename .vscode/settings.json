@@ -79,4 +79,7 @@
   "i18n-ally.translate.saveAsCandidates": true,
   "i18n-ally.pathMatcher": "{locale}/{namespace}.json",
   "i18n-ally.extract.keyPrefix": "{fileNameWithoutExt}",
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
 }

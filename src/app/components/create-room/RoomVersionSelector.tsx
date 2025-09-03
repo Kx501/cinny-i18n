@@ -12,6 +12,7 @@ import {
   Text,
   toRem,
 } from 'folds';
+import { useTranslation } from 'react-i18next';
 import FocusTrap from 'focus-trap-react';
 import { SettingTile } from '../setting-tile';
 import { SequenceCard } from '../sequence-card';
@@ -28,6 +29,7 @@ export function RoomVersionSelector({
   onChange: (value: string) => void;
   disabled?: boolean;
 }) {
+  const { t } = useTranslation();
   const [menuCords, setMenuCords] = useState<RectCords>();
 
   const handleMenu: MouseEventHandler<HTMLButtonElement> = (evt) => {
@@ -47,7 +49,7 @@ export function RoomVersionSelector({
       gap="500"
     >
       <SettingTile
-        title="Version"
+        title={t('components:create-room.version')}
         after={
           <PopOut
             anchor={menuCords}
@@ -73,7 +75,7 @@ export function RoomVersionSelector({
                     gap="200"
                     style={{ padding: config.space.S200, maxWidth: toRem(300) }}
                   >
-                    <Text size="L400">Versions</Text>
+                    <Text size="L400">{t('components:create-room.versions')}</Text>
                     <Box wrap="Wrap" gap="100">
                       {versions.map((version) => (
                         <Chip

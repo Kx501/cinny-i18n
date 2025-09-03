@@ -20,6 +20,7 @@ import { MatrixError } from 'matrix-js-sdk';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { AsyncStatus, useAsyncCallback } from '../../hooks/useAsyncCallback';
 import { stopPropagation } from '../../utils/keyboard';
+import { useTranslation } from 'react-i18next';
 
 type LeaveSpacePromptProps = {
   roomId: string;
@@ -28,6 +29,7 @@ type LeaveSpacePromptProps = {
 };
 export function LeaveSpacePrompt({ roomId, onDone, onCancel }: LeaveSpacePromptProps) {
   const mx = useMatrixClient();
+  const { t } = useTranslation();
 
   const [leaveState, leaveRoom] = useAsyncCallback<undefined, MatrixError, []>(
     useCallback(async () => {
@@ -66,7 +68,7 @@ export function LeaveSpacePrompt({ roomId, onDone, onCancel }: LeaveSpacePromptP
               size="500"
             >
               <Box grow="Yes">
-                <Text size="H4">Leave Space</Text>
+                <Text size="H4">{t('components:leave-space-prompt.leave_space')}</Text>
               </Box>
               <IconButton size="300" onClick={onCancel} radii="300">
                 <Icon src={Icons.Cross} />
@@ -74,10 +76,10 @@ export function LeaveSpacePrompt({ roomId, onDone, onCancel }: LeaveSpacePromptP
             </Header>
             <Box style={{ padding: config.space.S400 }} direction="Column" gap="400">
               <Box direction="Column" gap="200">
-                <Text priority="400">Are you sure you want to leave this space?</Text>
+                <Text priority="400">{t('components:leave-space-prompt.are_you_sure_leave_space')}</Text>
                 {leaveState.status === AsyncStatus.Error && (
                   <Text style={{ color: color.Critical.Main }} size="T300">
-                    Failed to leave space! {leaveState.error.message}
+                    {t('components:leave-space-prompt.failed_to_leave_space')} {leaveState.error.message}
                   </Text>
                 )}
               </Box>
@@ -96,7 +98,7 @@ export function LeaveSpacePrompt({ roomId, onDone, onCancel }: LeaveSpacePromptP
                 }
               >
                 <Text size="B400">
-                  {leaveState.status === AsyncStatus.Loading ? 'Leaving...' : 'Leave'}
+                  {leaveState.status === AsyncStatus.Loading ? t('components:leave-space-prompt.leaving') : t('components:leave-space-prompt.leave')}
                 </Text>
               </Button>
             </Box>

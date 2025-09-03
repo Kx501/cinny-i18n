@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Box, Chip, Icon, IconButton, Icons, Text, color, config, toRem } from 'folds';
+import { useTranslation } from 'react-i18next';
 import { UploadCard, UploadCardError, UploadCardProgress } from './UploadCard';
 import { UploadStatus, UploadSuccess, useBindUploadAtom } from '../../state/upload';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
@@ -15,6 +16,7 @@ import { useMediaConfig } from '../../hooks/useMediaConfig';
 
 type ImagePreviewProps = { fileItem: TUploadItem; onSpoiler: (marked: boolean) => void };
 function ImagePreview({ fileItem, onSpoiler }: ImagePreviewProps) {
+  const { t } = useTranslation();
   const { originalFile, metadata } = fileItem;
   const fileUrl = useObjectURL(originalFile);
 
@@ -54,7 +56,7 @@ function ImagePreview({ fileItem, onSpoiler }: ImagePreviewProps) {
           before={<Icon src={Icons.EyeBlind} size="50" />}
           onClick={() => onSpoiler(!metadata.markedAsSpoiler)}
         >
-          <Text size="B300">Spoiler</Text>
+          <Text size="B300">{t('components:message.spoiler')}</Text>
         </Chip>
       </Box>
     </Box>

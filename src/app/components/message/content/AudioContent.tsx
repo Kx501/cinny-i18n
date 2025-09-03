@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React, { ReactNode, useCallback, useRef, useState } from 'react';
 import { Badge, Chip, Icon, IconButton, Icons, ProgressBar, Spinner, Text, toRem } from 'folds';
+import { useTranslation } from 'react-i18next';
 import { EncryptedAttachmentInfo } from 'browser-encrypt-attachment';
 import { Range } from 'react-range';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
@@ -49,6 +50,7 @@ export function AudioContent({
   encInfo,
   renderMediaControl,
 }: AudioContentProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
 
@@ -144,7 +146,7 @@ export function AudioContent({
             )
           }
         >
-          <Text size="B300">{playing ? 'Pause' : 'Play'}</Text>
+          <Text size="B300">{playing ? t('components:message.pause') : t('components:message.play')}</Text>
         </Chip>
 
         <Text size="T200">{`${secondsToMinutesAndSeconds(

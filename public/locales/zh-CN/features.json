@@ -1,1 +1,15 @@
-{}
+{
+	"settings": {
+		"general": "常规",
+		"account": "账户",
+		"notifications": "通知",
+		"devices": "设备",
+		"emojis_stickers": "表情符号和贴纸",
+		"developer_tools": "开发者工具",
+		"about": "关于",
+		"settings": "设置",
+		"logout": "退出登录",
+		"block_messages": "屏蔽消息",
+		"block_messages_description": "此选项已移至\"账户 > 屏蔽用户\"部分。"
+	}
+}

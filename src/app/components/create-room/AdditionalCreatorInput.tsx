@@ -15,6 +15,7 @@ import {
   Text,
   toRem,
 } from 'folds';
+import { useTranslation } from 'react-i18next';
 import { isKeyHotkey } from 'is-hotkey';
 import FocusTrap from 'focus-trap-react';
 import React, {
@@ -83,6 +84,7 @@ export function AdditionalCreatorInput({
   onRemove,
   disabled,
 }: AdditionalCreatorInputProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const [menuCords, setMenuCords] = useState<RectCords>();
   const directUsers = useDirectUsers();
@@ -150,8 +152,8 @@ export function AdditionalCreatorInput({
 
   return (
     <SettingTile
-      title="Founders"
-      description="Special privileged users can be assigned during creation. These users have elevated control and can only be modified during a upgrade."
+      title={t('components:create-room.founders')}
+      description={t('components:create-room.special_privileged_users_can_be_assigned')}
     >
       <Box shrink="No" direction="Column" gap="100">
         <Box gap="200" wrap="Wrap">
@@ -201,7 +203,7 @@ export function AdditionalCreatorInput({
                           variant="Background"
                           radii="300"
                           outlined
-                          placeholder="@username:server"
+                          placeholder={t('components:create-room.username_server')}
                           onChange={handleCreatorChange}
                           onKeyDown={handleCreatorKeyDown}
                         />
@@ -213,7 +215,7 @@ export function AdditionalCreatorInput({
                         onClick={handleEnterClick}
                         disabled={!validUserId}
                       >
-                        <Text size="B400">Enter</Text>
+                        <Text size="B400">{t('components:create-room.enter')}</Text>
                       </Button>
                     </Box>
                     <Line size="300" />
@@ -244,8 +246,8 @@ export function AdditionalCreatorInput({
                                     <b>
                                       {queryHighlighRegex
                                         ? highlightText(queryHighlighRegex, [
-                                            getMxIdLocalPart(userId) ?? userId,
-                                          ])
+                                          getMxIdLocalPart(userId) ?? userId,
+                                        ])
                                         : getMxIdLocalPart(userId)}
                                     </b>
                                   </Text>
@@ -263,10 +265,10 @@ export function AdditionalCreatorInput({
                           gap="100"
                         >
                           <Text size="H6" align="Center">
-                            No Suggestions
+                            {t('components:create-room.no_suggestions')}
                           </Text>
                           <Text size="T200" align="Center">
-                            Please provide the user ID and hit Enter.
+                            {t('components:create-room.please_provide_the_user_id')}
                           </Text>
                         </Box>
                       )}

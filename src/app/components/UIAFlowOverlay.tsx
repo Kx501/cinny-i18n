@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Overlay,
   OverlayBackdrop,
@@ -26,6 +27,7 @@ export function UIAFlowOverlay({
   children,
   onCancel,
 }: UIAFlowOverlayProps) {
+  const { t } = useTranslation();
   return (
     <Overlay open backdrop={<OverlayBackdrop />}>
       <FocusTrap focusTrapOptions={{ initialFocus: false, escapeDeactivates: false }}>
@@ -46,7 +48,7 @@ export function UIAFlowOverlay({
             <TooltipProvider
               tooltip={
                 <Tooltip variant="Critical">
-                  <Text>Exit</Text>
+                  <Text>{t('components:exit')}</Text>
                 </Tooltip>
               }
               position="Top"

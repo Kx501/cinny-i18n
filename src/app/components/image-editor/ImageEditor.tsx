@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Box, Chip, Header, Icon, IconButton, Icons, Text, as } from 'folds';
+import { useTranslation } from 'react-i18next';
 import * as css from './ImageEditor.css';
 
 export type ImageEditorProps = {
@@ -11,6 +12,7 @@ export type ImageEditorProps = {
 
 export const ImageEditor = as<'div', ImageEditorProps>(
   ({ className, name, url, requestClose, ...props }, ref) => {
+    const { t } = useTranslation();
     const handleApply = () => {
       //
     };
@@ -28,12 +30,12 @@ export const ImageEditor = as<'div', ImageEditorProps>(
               <Icon size="50" src={Icons.ArrowLeft} />
             </IconButton>
             <Text size="T300" truncate>
-              Image Editor
+              {t('components:image-editor.image_editor')}
             </Text>
           </Box>
           <Box shrink="No" alignItems="Center" gap="200">
             <Chip variant="Primary" radii="300" onClick={handleApply}>
-              <Text size="B300">Save</Text>
+              <Text size="B300">{t('components:image-editor.save')}</Text>
             </Chip>
           </Box>
         </Header>

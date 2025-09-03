@@ -15,6 +15,7 @@ import {
   as,
 } from 'folds';
 import FileSaver from 'file-saver';
+import { useTranslation } from 'react-i18next';
 import { EncryptedAttachmentInfo } from 'browser-encrypt-attachment';
 import FocusTrap from 'focus-trap-react';
 import { IFileInfo } from '../../../../types/matrix/common';
@@ -37,34 +38,37 @@ import {
 import { useMediaAuthentication } from '../../../hooks/useMediaAuthentication';
 import { ModalWide } from '../../../styles/Modal.css';
 
-const renderErrorButton = (retry: () => void, text: string) => (
-  <TooltipProvider
-    tooltip={
-      <Tooltip variant="Critical">
-        <Text>Failed to load file!</Text>
-      </Tooltip>
-    }
-    position="Top"
-    align="Center"
-  >
-    {(triggerRef) => (
-      <Button
-        ref={triggerRef}
-        size="400"
-        variant="Critical"
-        fill="Soft"
-        outlined
-        radii="300"
-        onClick={retry}
-        before={<Icon size="100" src={Icons.Warning} filled />}
-      >
-        <Text size="B400" truncate>
-          {text}
-        </Text>
-      </Button>
-    )}
-  </TooltipProvider>
-);
+const renderErrorButton = (retry: () => void, text: string) => {
+  const { t } = useTranslation();
+  return (
+    <TooltipProvider
+      tooltip={
+        <Tooltip variant="Critical">
+          <Text>{t('components:failed_to_load_file')}</Text>
+        </Tooltip>
+      }
+      position="Top"
+      align="Center"
+    >
+      {(triggerRef) => (
+        <Button
+          ref={triggerRef}
+          size="400"
+          variant="Critical"
+          fill="Soft"
+          outlined
+          radii="300"
+          onClick={retry}
+          before={<Icon size="100" src={Icons.Warning} filled />}
+        >
+          <Text size="B400" truncate>
+            {text}
+          </Text>
+        </Button>
+      )}
+    </TooltipProvider>
+  );
+}
 
 type RenderTextViewerProps = {
   name: string;
@@ -81,6 +85,7 @@ type ReadTextFileProps = {
 };
 export function ReadTextFile({ body, mimeType, url, encInfo, renderViewer }: ReadTextFileProps) {
   const mx = useMatrixClient();
+  const { t } = useTranslation();
   const useAuthentication = useMediaAuthentication();
   const [textViewer, setTextViewer] = useState(false);
 
@@ -129,7 +134,7 @@ export function ReadTextFile({ body, mimeType, url, encInfo, renderViewer }: Rea
         </Overlay>
       )}
       {textState.status === AsyncStatus.Error ? (
-        renderErrorButton(loadText, 'Open File')
+        renderErrorButton(loadText, t('components:open_file'))
       ) : (
         <Button
           variant="Secondary"
@@ -149,7 +154,7 @@ export function ReadTextFile({ body, mimeType, url, encInfo, renderViewer }: Rea
           }
         >
           <Text size="B400" truncate>
-            Open File
+            {t('components:message.open_file')}
           </Text>
         </Button>
       )}
@@ -171,6 +176,7 @@ export type ReadPdfFileProps = {
 };
 export function ReadPdfFile({ body, mimeType, url, encInfo, renderViewer }: ReadPdfFileProps) {
   const mx = useMatrixClient();
+  const { t } = useTranslation();
   const useAuthentication = useMediaAuthentication();
   const [pdfViewer, setPdfViewer] = useState(false);
 
@@ -214,7 +220,7 @@ export function ReadPdfFile({ body, mimeType, url, encInfo, renderViewer }: Read
         </Overlay>
       )}
       {pdfState.status === AsyncStatus.Error ? (
-        renderErrorButton(loadPdf, 'Open PDF')
+        renderErrorButton(loadPdf, t('components:open_pdf'))
       ) : (
         <Button
           variant="Secondary"
@@ -232,7 +238,7 @@ export function ReadPdfFile({ body, mimeType, url, encInfo, renderViewer }: Read
           }
         >
           <Text size="B400" truncate>
-            Open PDF
+            {t('components:message.content.open_pdf')}
           </Text>
         </Button>
       )}
@@ -249,6 +255,7 @@ export type DownloadFileProps = {
 };
 export function DownloadFile({ body, mimeType, url, info, encInfo }: DownloadFileProps) {
   const mx = useMatrixClient();
+  const { t } = useTranslation();
   const useAuthentication = useMediaAuthentication();
 
   const [downloadState, download] = useAsyncCallback(
@@ -265,7 +272,7 @@ export function DownloadFile({ body, mimeType, url, info, encInfo }: DownloadFil
   );
 
   return downloadState.status === AsyncStatus.Error ? (
-    renderErrorButton(download, `Retry Download (${bytesToSize(info.size ?? 0)})`)
+    renderErrorButton(download, `${t('components:retry_download')} (${bytesToSize(info.size ?? 0)})`)
   ) : (
     <Button
       variant="Secondary"
@@ -286,7 +293,7 @@ export function DownloadFile({ body, mimeType, url, info, encInfo }: DownloadFil
         )
       }
     >
-      <Text size="B400" truncate>{`Download (${bytesToSize(info.size ?? 0)})`}</Text>
+      <Text size="B400" truncate>{`${t('components:download')} (${bytesToSize(info.size ?? 0)})`}</Text>
     </Button>
   );
 }

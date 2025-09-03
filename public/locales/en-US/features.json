@@ -1,1 +1,15 @@
-{}
+{
+	"settings": {
+		"general": "General",
+		"account": "Account",
+		"notifications": "Notifications",
+		"devices": "Devices",
+		"emojis_stickers": "Emojis & Stickers",
+		"developer_tools": "Developer Tools",
+		"about": "About",
+		"settings": "Settings",
+		"logout": "Logout",
+		"block_messages": "Block Messages",
+		"block_messages_description": "This option has been moved to \"Account > Block Users\" section."
+	}
+}

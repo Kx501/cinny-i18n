@@ -20,6 +20,7 @@ import {
   Text,
   toRem,
 } from 'folds';
+import { useTranslation } from 'react-i18next';
 import React, { MouseEventHandler, useCallback, useState } from 'react';
 import FocusTrap from 'focus-trap-react';
 import { isKeyHotkey } from 'is-hotkey';
@@ -50,6 +51,7 @@ type SelfDemoteAlertProps = {
   onChange: (power: number) => void;
 };
 function SelfDemoteAlert({ power, onCancel, onChange }: SelfDemoteAlertProps) {
+  const { t } = useTranslation();
   return (
     <Overlay open backdrop={<OverlayBackdrop />}>
       <OverlayCenter>
@@ -68,7 +70,7 @@ function SelfDemoteAlert({ power, onCancel, onChange }: SelfDemoteAlertProps) {
               size="500"
             >
               <Box grow="Yes">
-                <Text size="H4">Self Demotion</Text>
+                <Text size="H4">{t('components:user-profile.self_demotion')}</Text>
               </Box>
               <IconButton size="300" onClick={onCancel} radii="300">
                 <Icon src={Icons.Cross} />
@@ -83,7 +85,7 @@ function SelfDemoteAlert({ power, onCancel, onChange }: SelfDemoteAlertProps) {
               </Box>
               <Box direction="Column" gap="200">
                 <Button type="submit" variant="Warning" onClick={() => onChange(power)}>
-                  <Text size="B400">Demote</Text>
+                  <Text size="B400">{t('components:user-profile.demote')}</Text>
                 </Button>
               </Box>
             </Box>
@@ -100,6 +102,7 @@ type SharedPowerAlertProps = {
   onChange: (power: number) => void;
 };
 function SharedPowerAlert({ power, onCancel, onChange }: SharedPowerAlertProps) {
+  const { t } = useTranslation();
   return (
     <Overlay open backdrop={<OverlayBackdrop />}>
       <OverlayCenter>
@@ -118,7 +121,7 @@ function SharedPowerAlert({ power, onCancel, onChange }: SharedPowerAlertProps) 
               size="500"
             >
               <Box grow="Yes">
-                <Text size="H4">Shared Power</Text>
+                <Text size="H4">{t('components:user-profile.shared_power')}</Text>
               </Box>
               <IconButton size="300" onClick={onCancel} radii="300">
                 <Icon src={Icons.Cross} />
@@ -133,7 +136,7 @@ function SharedPowerAlert({ power, onCancel, onChange }: SharedPowerAlertProps) 
               </Box>
               <Box direction="Column" gap="200">
                 <Button type="submit" variant="Warning" onClick={() => onChange(power)}>
-                  <Text size="B400">Promote</Text>
+                  <Text size="B400">{t('components:user-profile.promote')}</Text>
                 </Button>
               </Box>
             </Box>
@@ -216,7 +219,7 @@ export function PowerChip({ userId }: { userId: string }) {
     setSharedPower(undefined);
     changePower(power);
   };
-
+  const { t } = useTranslation();
   return (
     <>
       <PopOut
@@ -309,7 +312,7 @@ export function PowerChip({ userId }: { userId: string }) {
                     close();
                   }}
                 >
-                  <Text size="B300">Manage Powers</Text>
+                  <Text size="B300">{t('components:user-profile.manage_powers')}</Text>
                 </MenuItem>
               </div>
             </Menu>

@@ -24,6 +24,7 @@ import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
 import { useOpenUserRoomProfile } from '../../state/hooks/userRoomProfile';
 import { useSpaceOptionally } from '../../hooks/useSpace';
 import { getMouseEventCords } from '../../utils/dom';
+import { useTranslation } from 'react-i18next';
 
 export type EventReadersProps = {
   room: Room;
@@ -37,6 +38,7 @@ export const EventReaders = as<'div', EventReadersProps>(
     const latestEventReaders = useRoomEventReaders(room, eventId);
     const openProfile = useOpenUserRoomProfile();
     const space = useSpaceOptionally();
+    const { t } = useTranslation();
 
     const getName = (userId: string) =>
       getMemberDisplayName(room, userId) ?? getMxIdLocalPart(userId) ?? userId;
@@ -50,7 +52,7 @@ export const EventReaders = as<'div', EventReadersProps>(
       >
         <Header className={css.Header} variant="Surface" size="600">
           <Box grow="Yes">
-            <Text size="H3">Seen by</Text>
+            <Text size="H3">{t('components:event-readers.seen_by')}</Text>
           </Box>
           <IconButton size="300" onClick={requestClose}>
             <Icon src={Icons.Cross} />

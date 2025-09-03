@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { Menu, Box, Text, Chip } from 'folds';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
 import * as css from './styles.css';
 import { PickerColumn } from './PickerColumn';
 import { hour12to24, hour24to12, hoursToMs, inSameDay, minutesToMs } from '../../utils/time';
@@ -15,6 +16,7 @@ type TimePickerProps = {
 };
 export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
   ({ min, max, value, onChange }, ref) => {
+    const { t } = useTranslation();
     const [hour24Clock] = useSetting(settingsAtom, 'hour24Clock');
 
     const hour24 = dayjs(value).hour();
@@ -62,9 +64,28 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
     return (
       <Menu className={css.PickerMenu} ref={ref}>
         <Box direction="Row" gap="200" className={css.PickerContainer}>
-          <PickerColumn title="Hour">
+          <PickerColumn title={t('components:time-date.hour')}>
             {hour24Clock
               ? Array.from(Array(24).keys()).map((hour) => (
+                <Chip
+                  key={hour}
+                  size="500"
+                  variant={hour === selectedHour ? 'Primary' : 'Background'}
+                  fill="None"
+                  radii="300"
+                  aria-selected={hour === selectedHour}
+                  onClick={() => handleHour(hour)}
+                  disabled={(minDay && hour < minHour24) || (maxDay && hour > maxHour24)}
+                >
+                  <Text size="T300">{hour < 10 ? `0${hour}` : hour}</Text>
+                </Chip>
+              ))
+              : Array.from(Array(12).keys())
+                .map((i) => {
+                  if (i === 0) return 12;
+                  return i;
+                })
+                .map((hour) => (
                   <Chip
                     key={hour}
                     size="500"
@@ -73,35 +94,16 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     radii="300"
                     aria-selected={hour === selectedHour}
                     onClick={() => handleHour(hour)}
-                    disabled={(minDay && hour < minHour24) || (maxDay && hour > maxHour24)}
+                    disabled={
+                      (minDay && hour12to24(hour, selectedPM) < minHour24) ||
+                      (maxDay && hour12to24(hour, selectedPM) > maxHour24)
+                    }
                   >
                     <Text size="T300">{hour < 10 ? `0${hour}` : hour}</Text>
                   </Chip>
-                ))
-              : Array.from(Array(12).keys())
-                  .map((i) => {
-                    if (i === 0) return 12;
-                    return i;
-                  })
-                  .map((hour) => (
-                    <Chip
-                      key={hour}
-                      size="500"
-                      variant={hour === selectedHour ? 'Primary' : 'Background'}
-                      fill="None"
-                      radii="300"
-                      aria-selected={hour === selectedHour}
-                      onClick={() => handleHour(hour)}
-                      disabled={
-                        (minDay && hour12to24(hour, selectedPM) < minHour24) ||
-                        (maxDay && hour12to24(hour, selectedPM) > maxHour24)
-                      }
-                    >
-                      <Text size="T300">{hour < 10 ? `0${hour}` : hour}</Text>
-                    </Chip>
-                  ))}
+                ))}
           </PickerColumn>
-          <PickerColumn title="Minutes">
+          <PickerColumn title={t('components:time-date.minutes')}>
             {Array.from(Array(60).keys()).map((minute) => (
               <Chip
                 key={minute}
@@ -121,7 +123,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
             ))}
           </PickerColumn>
           {!hour24Clock && (
-            <PickerColumn title="Period">
+            <PickerColumn title={t('components:time-date.period')}>
               <Chip
                 size="500"
                 variant={!selectedPM ? 'Primary' : 'SurfaceVariant'}
@@ -131,7 +133,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                 onClick={() => handlePeriod(false)}
                 disabled={minDay && minPM}
               >
-                <Text size="T300">AM</Text>
+                <Text size="T300">{t('components:time-date.am')}</Text>
               </Chip>
               <Chip
                 size="500"
@@ -142,7 +144,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                 onClick={() => handlePeriod(true)}
                 disabled={maxDay && !maxPM}
               >
-                <Text size="T300">PM</Text>
+                <Text size="T300">{t('components:time-date.pm')}</Text>
               </Chip>
             </PickerColumn>
           )}

@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, FormEventHandler } from 'react';
 import { Dialog, Text, Box, Button, config, Input } from 'folds';
 import { AuthType } from 'matrix-js-sdk';
+import { useTranslation } from 'react-i18next';
 import { StageComponentProps } from './types';
 
 function RegistrationTokenErrorDialog({
@@ -16,6 +17,7 @@ function RegistrationTokenErrorDialog({
   onRetry: (token: string) => void;
   onCancel: () => void;
 }) {
+  const { t } = useTranslation();
   const handleFormSubmit: FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
     const { retryTokenInput } = evt.target as HTMLFormElement & {
@@ -38,7 +40,7 @@ function RegistrationTokenErrorDialog({
           <Text size="H4">{title}</Text>
           <Text>{message}</Text>
           <Text as="label" size="L400" style={{ paddingTop: config.space.S400 }}>
-            Registration Token
+            {t('components:uia-stages.registration_token')}
           </Text>
           <Input
             name="retryTokenInput"
@@ -51,12 +53,12 @@ function RegistrationTokenErrorDialog({
         </Box>
         <Button variant="Critical" type="submit">
           <Text as="span" size="B400">
-            Retry
+            {t('components:uia-stages.retry')}
           </Text>
         </Button>
         <Button variant="Critical" fill="None" outlined type="button" onClick={onCancel}>
           <Text as="span" size="B400">
-            Cancel
+            {t('components:uia-stages.cancel')}
           </Text>
         </Button>
       </Box>
@@ -72,6 +74,7 @@ export function RegistrationTokenStageDialog({
 }: StageComponentProps & {
   token?: string;
 }) {
+  const { t } = useTranslation();
   const { errorCode, error, session } = stageData;
 
   const handleSubmit = useCallback(
@@ -94,7 +97,7 @@ export function RegistrationTokenStageDialog({
       <RegistrationTokenErrorDialog
         defaultToken={token}
         title={errorCode}
-        message={error ?? 'Invalid registration token provided.'}
+        message={error ?? t('components:uia-stages.invalid_registration_token')}
         onRetry={handleSubmit}
         onCancel={onCancel}
       />
@@ -105,8 +108,8 @@ export function RegistrationTokenStageDialog({
     return (
       <RegistrationTokenErrorDialog
         defaultToken={token}
-        title="Registration Token"
-        message="Please submit registration token provided by you homeserver admin."
+        title={t('components:uia-stages.registration_token')}
+        message={t('components:uia-stages.please_submit_registration_token')}
         onRetry={handleSubmit}
         onCancel={onCancel}
       />
