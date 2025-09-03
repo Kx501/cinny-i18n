@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Text, Icon, Icons, Button, MenuItem } from 'folds';
 import { SequenceCard } from '../../../components/sequence-card';
 import { SequenceCardStyle } from '../styles.css';
@@ -13,6 +14,7 @@ type AccountDataProps = {
   onSelect: (type: string | null) => void;
 };
 export function AccountData({ expand, onExpandToggle, onSelect }: AccountDataProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const [accountDataTypes, setAccountDataKeys] = useState(() =>
     Array.from(mx.store.accountData.keys())
@@ -27,7 +29,7 @@ export function AccountData({ expand, onExpandToggle, onSelect }: AccountDataPro
 
   return (
     <Box direction="Column" gap="100">
-      <Text size="L400">Account Data</Text>
+      <Text size="L400">{t('features:settings.developer-tools.account_data')}</Text>
       <SequenceCard
         className={SequenceCardStyle}
         variant="SurfaceVariant"
@@ -35,8 +37,8 @@ export function AccountData({ expand, onExpandToggle, onSelect }: AccountDataPro
         gap="400"
       >
         <SettingTile
-          title="Global"
-          description="Data stored in your global account data."
+          title={t('features:settings.developer-tools.global')}
+          description={t('features:settings.developer-tools.data_stored_in')}
           after={
             <Button
               onClick={() => onExpandToggle(!expand)}
@@ -49,15 +51,15 @@ export function AccountData({ expand, onExpandToggle, onSelect }: AccountDataPro
                 <Icon src={expand ? Icons.ChevronTop : Icons.ChevronBottom} size="100" filled />
               }
             >
-              <Text size="B300">{expand ? 'Collapse' : 'Expand'}</Text>
+              <Text size="B300">{expand ? t('features:settings.developer-tools.collapse') : t('features:settings.developer-tools.expand')}</Text>
             </Button>
           }
         />
         {expand && (
           <Box direction="Column" gap="100">
             <Box justifyContent="SpaceBetween">
-              <Text size="L400">Events</Text>
-              <Text size="L400">Total: {accountDataTypes.length}</Text>
+              <Text size="L400">{t('features:settings.developer-tools.events')}</Text>
+              <Text size="L400">{t('features:settings.developer-tools.total')}: {accountDataTypes.length}</Text>
             </Box>
             <CutoutCard>
               <MenuItem
@@ -70,7 +72,7 @@ export function AccountData({ expand, onExpandToggle, onSelect }: AccountDataPro
               >
                 <Box grow="Yes">
                   <Text size="T200" truncate>
-                    Add New
+                    {t('features:settings.developer-tools.add_new')}
                   </Text>
                 </Box>
               </MenuItem>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Text, IconButton, Icon, Icons, Scroll } from 'folds';
 import { Page, PageContent, PageHeader } from '../../../components/page';
 import { MatrixId } from './MatrixId';
@@ -10,13 +11,14 @@ type AccountProps = {
   requestClose: () => void;
 };
 export function Account({ requestClose }: AccountProps) {
+  const { t } = useTranslation();
   return (
     <Page>
       <PageHeader outlined={false}>
         <Box grow="Yes" gap="200">
           <Box grow="Yes" alignItems="Center" gap="200">
             <Text size="H3" truncate>
-              Account
+              {t('features:settings.account.account')}
             </Text>
           </Box>
           <Box shrink="No">

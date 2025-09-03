@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Button, config, Menu, Spinner, Text } from 'folds';
 import { AuthDict, IMyDevice, MatrixError } from 'matrix-js-sdk';
 import { SequenceCard } from '../../../components/sequence-card';
@@ -22,6 +23,7 @@ type OtherDevicesProps = {
   showVerification?: boolean;
 };
 export function OtherDevices({ devices, refreshDeviceList, showVerification }: OtherDevicesProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const crypto = mx.getCrypto();
   const authMetadata = useAuthMetadata();
@@ -104,7 +106,7 @@ export function OtherDevices({ devices, refreshDeviceList, showVerification }: O
   return devices.length > 0 ? (
     <>
       <Box direction="Column" gap="100">
-        <Text size="L400">Others</Text>
+        <Text size="L400">{t('features:settings.devices.others')}</Text>
         {authMetadata && (
           <SequenceCard
             className={SequenceCardStyle}
@@ -113,8 +115,8 @@ export function OtherDevices({ devices, refreshDeviceList, showVerification }: O
             gap="400"
           >
             <SettingTile
-              title="Device Dashboard"
-              description="Manage your devices on OIDC dashboard."
+              title={t('features:settings.devices.device_dashboard')}
+              description={t('features:settings.devices.manage_your_devices')}
               after={
                 <Button
                   size="300"
@@ -124,7 +126,7 @@ export function OtherDevices({ devices, refreshDeviceList, showVerification }: O
                   outlined
                   onClick={handleDashboardOIDC}
                 >
-                  <Text size="B300">Open</Text>
+                  <Text size="B300">{t('features:settings.devices.open')}</Text>
                 </Button>
               }
             />
@@ -198,11 +200,11 @@ export function OtherDevices({ devices, refreshDeviceList, showVerification }: O
             <Box grow="Yes" direction="Column">
               {deleteError ? (
                 <Text size="T200">
-                  <b>Failed to logout devices! Please try again. {deleteError.message}</b>
+                  <b>{t('features:settings.devices.failed_to_logout')} {deleteError.message}</b>
                 </Text>
               ) : (
                 <Text size="T200">
-                  <b>Logout from selected devices. ({deleted.size} selected)</b>
+                  <b>{t('features:settings.devices.logout_from_selected')} ({deleted.size} {t('features:settings.devices.selected')})</b>
                 </Text>
               )}
               {authData && (
@@ -210,7 +212,7 @@ export function OtherDevices({ devices, refreshDeviceList, showVerification }: O
                   authData={authData}
                   unsupported={() => (
                     <Text size="T200">
-                      Authentication steps to perform this action are not supported by client.
+                      {t('features:settings.devices.authentication_steps')}
                     </Text>
                   )}
                 >
@@ -234,7 +236,7 @@ export function OtherDevices({ devices, refreshDeviceList, showVerification }: O
                 disabled={deleting}
                 onClick={handleCancelDelete}
               >
-                <Text size="B300">Cancel</Text>
+                <Text size="B300">{t('features:settings.devices.cancel')}</Text>
               </Button>
               <Button
                 size="300"
@@ -244,7 +246,7 @@ export function OtherDevices({ devices, refreshDeviceList, showVerification }: O
                 before={deleting && <Spinner variant="Critical" fill="Solid" size="100" />}
                 onClick={() => deleteDevices()}
               >
-                <Text size="B300">Logout</Text>
+                <Text size="B300">{t('features:settings.devices.logout')}</Text>
               </Button>
             </Box>
           </Box>

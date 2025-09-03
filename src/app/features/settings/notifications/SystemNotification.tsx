@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Text, Switch, Button, color, Spinner } from 'folds';
 import { IPusherRequest } from 'matrix-js-sdk';
 import { SequenceCard } from '../../../components/sequence-card';
@@ -12,6 +13,7 @@ import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 
 function EmailNotification() {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const [result, refreshResult] = useEmailNotifications();
 
@@ -53,21 +55,21 @@ function EmailNotification() {
 
   return (
     <SettingTile
-      title="Email Notification"
+      title={t('features:settings.notifications.email_notification')}
       description={
         <>
           {result && !result.email && (
             <Text as="span" style={{ color: color.Critical.Main }} size="T200">
-              Your account does not have any email attached.
+              {t('features:settings.notifications.your_account_does_not_have_any_email')}
             </Text>
           )}
-          {result && result.email && <>Send notification to your email. {`("${result.email}")`}</>}
+          {result && result.email && <>{t('features:settings.notifications.send_notification_to_your_email')} {`("${result.email}")`}</>}
           {result === null && (
             <Text as="span" style={{ color: color.Critical.Main }} size="T200">
-              Unexpected Error!
+              {t('features:settings.notifications.unexpected_error')}
             </Text>
           )}
-          {result === undefined && 'Send notification to your email.'}
+          {result === undefined && t('features:settings.notifications.send_notification_to_your_email')}
         </>
       }
       after={
@@ -85,6 +87,7 @@ function EmailNotification() {
 }
 
 export function SystemNotification() {
+  const { t } = useTranslation();
   const notifPermission = usePermissionState('notifications', getNotificationState());
   const [showNotifications, setShowNotifications] = useSetting(settingsAtom, 'showNotifications');
   const [isNotificationSounds, setIsNotificationSounds] = useSetting(
@@ -98,7 +101,7 @@ export function SystemNotification() {
 
   return (
     <Box direction="Column" gap="100">
-      <Text size="L400">System</Text>
+      <Text size="L400">{t('features:settings.notifications.system')}</Text>
       <SequenceCard
         className={SequenceCardStyle}
         variant="SurfaceVariant"
@@ -106,22 +109,22 @@ export function SystemNotification() {
         gap="400"
       >
         <SettingTile
-          title="Desktop Notifications"
+          title={t('features:settings.notifications.desktop_notifications')}
           description={
             notifPermission === 'denied' ? (
               <Text as="span" style={{ color: color.Critical.Main }} size="T200">
                 {'Notification' in window
-                  ? 'Notification permission is blocked. Please allow notification permission from browser address bar.'
-                  : 'Notifications are not supported by the system.'}
+                  ? t('features:settings.notifications.notification_permission_is_blocked')
+                  : t('features:settings.notifications.notifications_are_not_supported')}
               </Text>
             ) : (
-              <span>Show desktop notifications when message arrive.</span>
+              <span>{t('features:settings.notifications.show_desktop_notifications')}</span>
             )
           }
           after={
             notifPermission === 'prompt' ? (
               <Button size="300" radii="300" onClick={requestNotificationPermission}>
-                <Text size="B300">Enable</Text>
+                <Text size="B300">{t('features:settings.notifications.enable')}</Text>
               </Button>
             ) : (
               <Switch
@@ -140,8 +143,8 @@ export function SystemNotification() {
         gap="400"
       >
         <SettingTile
-          title="Notification Sound"
-          description="Play sound when new message arrive."
+          title={t('features:settings.notifications.notification_sound')}
+          description={t('features:settings.notifications.play_sound_when_new')}
           after={<Switch value={isNotificationSounds} onChange={setIsNotificationSounds} />}
         />
       </SequenceCard>
