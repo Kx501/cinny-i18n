@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, color, Spinner, Switch, Text } from 'folds';
 import { JoinRule, MatrixError } from 'matrix-js-sdk';
 import { RoomJoinRulesEventContent } from 'matrix-js-sdk/lib/types';
@@ -18,6 +19,7 @@ type RoomPublishProps = {
   permissions: RoomPermissionsAPI;
 };
 export function RoomPublish({ permissions }: RoomPublishProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const room = useRoom();
 
@@ -46,11 +48,11 @@ export function RoomPublish({ permissions }: RoomPublishProps) {
       gap="400"
     >
       <SettingTile
-        title="Publish to Directory"
+        title={t('features:common-settings.general.publish_to_directory')}
         description={
           room.isSpaceRoom()
-            ? 'List the space in the public directory to make it discoverable by others.'
-            : 'List the room in the public directory to make it discoverable by others.'
+            ? t('features:common-settings.general.list_space_in_public_directory')
+            : t('features:common-settings.general.list_room_in_public_directory')
         }
         after={
           <Box gap="200" alignItems="Center">

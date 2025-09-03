@@ -1,4 +1,5 @@
 import React, { FormEventHandler, MouseEventHandler, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Text,
@@ -58,6 +59,7 @@ type EditPowerProps = {
   onClose: () => void;
 };
 function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const room = useRoom();
   const roomToParents = useAtomValue(roomToParentsAtom);
@@ -120,7 +122,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
       <Box direction="Column" gap="300">
         <Box gap="200">
           <Box shrink="No" direction="Column" gap="100">
-            <Text size="L400">Color</Text>
+            <Text size="L400">{t('features:common-settings.permissions.color')}</Text>
             <Box gap="200">
               <HexColorPickerPopOut
                 picker={<HexColorPicker color={tagColor} onChange={setTagColor} />}
@@ -137,14 +139,14 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
                     radii="300"
                     before={<PowerColorBadge color={tagColor} />}
                   >
-                    <Text size="B300">Pick</Text>
+                    <Text size="B300">{t('features:common-settings.permissions.pick')}</Text>
                   </Button>
                 )}
               </HexColorPickerPopOut>
             </Box>
           </Box>
           <Box grow="Yes" direction="Column" gap="100">
-            <Text size="L400">Name</Text>
+            <Text size="L400">{t('features:common-settings.permissions.name')}</Text>
             <Input
               name="nameInput"
               defaultValue={tag?.name}
@@ -156,7 +158,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
             />
           </Box>
           <Box style={{ maxWidth: toRem(74) }} grow="Yes" direction="Column" gap="100">
-            <Text size="L400">Power</Text>
+            <Text size="L400">{t('features:common-settings.permissions.power')}</Text>
             <Input
               defaultValue={power}
               name="powerInput"
@@ -174,7 +176,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
         </Box>
       </Box>
       <Box direction="Column" gap="100">
-        <Text size="L400">Icon</Text>
+        <Text size="L400">{t('features:common-settings.permissions.icon')}</Text>
         {iconUploadAtom && !tagIconSrc ? (
           <CompactUploadCardRenderer
             uploadAtom={iconUploadAtom}
@@ -194,7 +196,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
                   fill="None"
                   radii="300"
                 >
-                  <Text size="B300">Remove</Text>
+                  <Text size="B300">{t('features:common-settings.permissions.remove')}</Text>
                 </Button>
               </>
             ) : (
@@ -238,7 +240,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
                         radii="300"
                         before={<Icon size="50" src={Icons.SmilePlus} />}
                       >
-                        <Text size="B300">Pick</Text>
+                        <Text size="B300">{t('features:common-settings.permissions.pick')}</Text>
                       </Button>
                     </PopOut>
                   )}
@@ -251,7 +253,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
                   fill="None"
                   radii="300"
                 >
-                  <Text size="B300">Import</Text>
+                  <Text size="B300">{t('features:common-settings.permissions.import')}</Text>
                 </Button>
               </>
             )}
@@ -267,7 +269,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
           radii="300"
           disabled={uploadingIcon}
         >
-          <Text size="B300">Save</Text>
+          <Text size="B300">{t('features:common-settings.permissions.save')}</Text>
         </Button>
         <Button
           type="button"
@@ -277,7 +279,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
           radii="300"
           onClick={onClose}
         >
-          <Text size="B300">Cancel</Text>
+          <Text size="B300">{t('features:common-settings.permissions.cancel')}</Text>
         </Button>
       </Box>
     </Box>
@@ -289,6 +291,7 @@ type PowersEditorProps = {
   requestClose: () => void;
 };
 export function PowersEditor({ powerLevels, requestClose }: PowersEditorProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
   const room = useRoom();
@@ -365,7 +368,7 @@ export function PowersEditor({ powerLevels, requestClose }: PowersEditorProps) {
               onClick={requestClose}
               before={<Icon size="100" src={Icons.ArrowLeft} />}
             >
-              <Text size="T300">Permissions</Text>
+              <Text size="T300">{t('features:common-settings.permissions.permissions')}</Text>
             </Chip>
           </Box>
           <Box shrink="No">
@@ -381,7 +384,7 @@ export function PowersEditor({ powerLevels, requestClose }: PowersEditorProps) {
             <Box direction="Column" gap="700">
               <Box direction="Column" gap="100">
                 <Box alignItems="Baseline" gap="200" justifyContent="SpaceBetween">
-                  <Text size="L400">Power Levels</Text>
+                  <Text size="L400">{t('features:common-settings.permissions.power_levels')}</Text>
                   <BetaNoticeBadge />
                 </Box>
                 <SequenceCard
@@ -391,8 +394,8 @@ export function PowersEditor({ powerLevels, requestClose }: PowersEditorProps) {
                   gap="400"
                 >
                   <SettingTile
-                    title="New Power Level"
-                    description="Create a new power level."
+                    title={t('features:common-settings.permissions.new_power_level')}
+                    description={t('features:common-settings.permissions.create_a_new_power_level')}
                     after={
                       !createTag && (
                         <Button
@@ -404,7 +407,7 @@ export function PowersEditor({ powerLevels, requestClose }: PowersEditorProps) {
                           outlined
                           disabled={applyingChanges}
                         >
-                          <Text size="B300">Create</Text>
+                          <Text size="B300">{t('features:common-settings.permissions.create')}</Text>
                         </Button>
                       )
                     }
@@ -506,7 +509,7 @@ export function PowersEditor({ powerLevels, requestClose }: PowersEditorProps) {
                                       disabled={applyingChanges}
                                       onClick={() => setEdit(true)}
                                     >
-                                      <Text size="B300">Edit</Text>
+                                      <Text size="B300">{t('features:common-settings.permissions.edit')}</Text>
                                     </Chip>
                                   </Box>
                                 )

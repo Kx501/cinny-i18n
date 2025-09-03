@@ -7,9 +7,6 @@ import { trimTrailingSlash } from './utils/common';
 // 定义命名空间列表
 export const NAMESPACES = [
   'common',
-  'atoms',
-  'molecules',
-  'organisms',
   'components',
   'features',
   'pages',

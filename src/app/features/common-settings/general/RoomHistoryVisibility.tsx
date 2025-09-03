@@ -1,4 +1,5 @@
 import React, { MouseEventHandler, useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   color,
@@ -26,16 +27,18 @@ import { useStateEvent } from '../../../hooks/useStateEvent';
 import { stopPropagation } from '../../../utils/keyboard';
 import { RoomPermissionsAPI } from '../../../hooks/useRoomPermissions';
 
-const useVisibilityStr = () =>
-  useMemo(
+const useVisibilityStr = () => {
+  const { t } = useTranslation();
+  return useMemo(
     () => ({
-      [HistoryVisibility.Invited]: 'After Invite',
-      [HistoryVisibility.Joined]: 'After Join',
-      [HistoryVisibility.Shared]: 'All Messages',
-      [HistoryVisibility.WorldReadable]: 'All Messages (Guests)',
+      [HistoryVisibility.Invited]: t('features:common-settings.general.after_invite'),
+      [HistoryVisibility.Joined]: t('features:common-settings.general.after_join'),
+      [HistoryVisibility.Shared]: t('features:common-settings.general.all_messages'),
+      [HistoryVisibility.WorldReadable]: t('features:common-settings.general.all_messages_guests'),
     }),
-    []
+    [t]
   );
+};
 
 const useVisibilityMenu = () =>
   useMemo(
@@ -52,6 +55,7 @@ type RoomHistoryVisibilityProps = {
   permissions: RoomPermissionsAPI;
 };
 export function RoomHistoryVisibility({ permissions }: RoomHistoryVisibilityProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const room = useRoom();
 
@@ -96,8 +100,8 @@ export function RoomHistoryVisibility({ permissions }: RoomHistoryVisibilityProp
       gap="400"
     >
       <SettingTile
-        title="Message History Visibility"
-        description="Changes to history visibility will only apply to future messages. The visibility of existing history will have no effect."
+        title={t('features:common-settings.general.message_history_visibility')}
+        description={t('features:common-settings.general.changes_to_history_visibility')}
         after={
           <PopOut
             anchor={menuAnchor}

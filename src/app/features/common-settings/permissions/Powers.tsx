@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, MouseEventHandler, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import FocusTrap from 'focus-trap-react';
 import {
   Box,
@@ -108,6 +109,7 @@ type PowersProps = {
   onEdit?: () => void;
 };
 export function Powers({ powerLevels, permissionGroups, onEdit }: PowersProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
   const room = useRoom();
@@ -127,8 +129,8 @@ export function Powers({ powerLevels, permissionGroups, onEdit }: PowersProps) {
           gap="400"
         >
           <SettingTile
-            title="Founders"
-            description="Founding members has all permissions and can only be changed during upgrade."
+            title={t('features:common-settings.permissions.founders')}
+            description={t('features:common-settings.permissions.founding_members_has_all_permissions')}
           />
 
           <SettingTile>
@@ -155,8 +157,8 @@ export function Powers({ powerLevels, permissionGroups, onEdit }: PowersProps) {
         gap="400"
       >
         <SettingTile
-          title="Power Levels"
-          description="Manage and customize incremental power levels for users."
+          title={t('features:common-settings.permissions.power_levels')}
+          description={t('features:common-settings.permissions.manage_and_customize_incremental')}
           after={
             onEdit && (
               <Box gap="200">
@@ -168,7 +170,7 @@ export function Powers({ powerLevels, permissionGroups, onEdit }: PowersProps) {
                   outlined
                   onClick={onEdit}
                 >
-                  <Text size="B300">Edit</Text>
+                  <Text size="B300">{t('features:common-settings.permissions.edit')}</Text>
                 </Button>
               </Box>
             )

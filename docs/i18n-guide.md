@@ -9,7 +9,6 @@
 ```
 public/locales/
 ├── en-US/                         # 英文翻译文件
-│   ├── common.json             # 通用翻译（按钮、状态、时间等）
 │   ├── atoms.json              # app/atoms/ 组件翻译
 │   ├── molecules.json          # app/molecules/ 组件翻译
 │   ├── organisms.json          # app/organisms/ 组件翻译
@@ -120,9 +119,6 @@ import { trimTrailingSlash } from './utils/common';
 // 定义命名空间列表
 export const NAMESPACES = [
   'common',
-  'atoms',
-  'molecules', 
-  'organisms',
   'components',
   'features',
   'pages',
@@ -143,10 +139,9 @@ i18n
   .use(initReactI18next)
   .init({
     debug: false,
-    fallbackLng: 'en',
+    fallbackLng: 'en-US',
     supportedLngs: SUPPORTED_LANGUAGES.map(lang => lang.code),
     ns: NAMESPACES,
-    defaultNS: 'common',
     interpolation: {
       escapeValue: false,
     },
