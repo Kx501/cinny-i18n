@@ -27,6 +27,7 @@ import {
   config,
 } from 'folds';
 import { MatrixClient, Room, RoomMember } from 'matrix-js-sdk';
+import { useTranslation } from 'react-i18next';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import classNames from 'classnames';
 
@@ -65,7 +66,7 @@ type MemberDrawerHeaderProps = {
 };
 function MemberDrawerHeader({ room }: MemberDrawerHeaderProps) {
   const setPeopleDrawer = useSetSetting(settingsAtom, 'isPeopleDrawer');
-
+  const { t } = useTranslation();
   return (
     <Header className={css.MembersDrawerHeader} variant="Background" size="600">
       <Box grow="Yes" alignItems="Center" gap="200">
@@ -346,9 +347,8 @@ export function MembersDrawer({ room, members }: MembersDrawerProps) {
                         }}
                         after={<Icon size="50" src={Icons.Cross} />}
                       >
-                        <Text size="B300">{`${result.items.length || 'No'} ${
-                          result.items.length === 1 ? 'Result' : 'Results'
-                        }`}</Text>
+                        <Text size="B300">{`${result.items.length || 'No'} ${result.items.length === 1 ? 'Result' : 'Results'
+                          }`}</Text>
                       </Chip>
                     )
                   }

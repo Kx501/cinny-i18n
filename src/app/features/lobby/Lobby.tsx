@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { JoinRule, RestrictedAllowType, Room } from 'matrix-js-sdk';
 import { RoomJoinRulesEventContent } from 'matrix-js-sdk/lib/types';
 import { IHierarchyRoom } from 'matrix-js-sdk/lib/@types/spaces';
+import { useTranslation } from 'react-i18next';
 import produce from 'immer';
 import { useSpace } from '../../hooks/useSpace';
 import { Page, PageContent, PageContentCenter, PageHeroSection } from '../../components/page';
@@ -149,6 +150,7 @@ const useCanDropLobbyItem = (
 };
 
 export function Lobby() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const mx = useMatrixClient();
   const mDirects = useAtomValue(mDirectAtom);
@@ -526,7 +528,7 @@ export function Lobby() {
                         radii="Pill"
                         before={<Spinner variant="Secondary" fill="Soft" size="100" />}
                       >
-                        <Text size="L400">Reordering</Text>
+                        <Text size="L400">{t('features:lobby.reordering')}</Text>
                       </Chip>
                     </Box>
                   )}

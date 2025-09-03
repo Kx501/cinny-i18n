@@ -14,6 +14,7 @@ import {
   Text,
   TextArea,
 } from 'folds';
+import { useTranslation } from 'react-i18next';
 import { SettingTile } from '../../components/setting-tile';
 import { SequenceCard } from '../../components/sequence-card';
 import {
@@ -53,7 +54,7 @@ type CreateRoomFormProps = {
 export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormProps) {
   const mx = useMatrixClient();
   const alive = useAlive();
-
+  const { t } = useTranslation();
   const capabilities = useCapabilities();
   const roomVersions = capabilities['m.room_versions'];
   const [selectedRoomVersion, selectRoomVersion] = useState(roomVersions?.default ?? '1');
@@ -137,7 +138,7 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
   return (
     <Box as="form" onSubmit={handleSubmit} grow="Yes" direction="Column" gap="500">
       <Box direction="Column" gap="100">
-        <Text size="L400">Access</Text>
+        <Text size="L400">{t('features:create-room.access')}</Text>
         <CreateRoomKindSelector
           value={kind}
           onSelect={setKind}
@@ -147,7 +148,7 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
         />
       </Box>
       <Box shrink="No" direction="Column" gap="100">
-        <Text size="L400">Name</Text>
+        <Text size="L400">{t('features:create-room.name')}</Text>
         <Input
           required
           before={<Icon size="100" src={getCreateRoomKindToIcon(kind)} />}
@@ -161,7 +162,7 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
         />
       </Box>
       <Box shrink="No" direction="Column" gap="100">
-        <Text size="L400">Topic (Optional)</Text>
+        <Text size="L400">{t('features:create-room.topic_optional')}</Text>
         <TextArea
           name="topicTextAria"
           size="500"
@@ -175,7 +176,7 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
 
       <Box shrink="No" direction="Column" gap="100">
         <Box gap="200" alignItems="End">
-          <Text size="L400">Options</Text>
+          <Text size="L400">{t('features:create-room.options')}</Text>
           <Box grow="Yes" justifyContent="End">
             <Chip
               radii="Pill"
@@ -183,7 +184,7 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
               onClick={() => setAdvance(!advance)}
               type="button"
             >
-              <Text size="T200">Advance Options</Text>
+              <Text size="T200">{t('features:create-room.advance_options')}</Text>
             </Chip>
           </Box>
         </Box>
@@ -210,8 +211,8 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
               gap="500"
             >
               <SettingTile
-                title="End-to-End Encryption"
-                description="Once this feature is enabled, it can't be disabled after the room is created."
+                title={t('features:create-room.end_to_end_encryption')}
+                description={t('features:create-room.once_this_feature_is_enabled')}
                 after={
                   <Switch
                     variant="Primary"
@@ -230,8 +231,8 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
                 gap="500"
               >
                 <SettingTile
-                  title="Knock to Join"
-                  description="Anyone can send request to join this room."
+                  title={t('features:create-room.knock_to_join')}
+                  description={t('features:create-room.anyone_can_send_request_to_join_this_room')}
                   after={
                     <Switch
                       variant="Primary"
@@ -253,8 +254,8 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
           gap="500"
         >
           <SettingTile
-            title="Allow Federation"
-            description="Users from other servers can join."
+            title={t('features:create-room.allow_federation')}
+            description={t('features:create-room.users_from_other_servers_can_join')}
             after={
               <Switch
                 variant="Primary"
@@ -281,9 +282,7 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
           <Text size="T300" style={{ color: color.Critical.Main }}>
             <b>
               {error instanceof MatrixError && error.name === ErrorCode.M_LIMIT_EXCEEDED
-                ? `Server rate-limited your request for ${millisecondsToMinutes(
-                    (error.data.retry_after_ms as number | undefined) ?? 0
-                  )} minutes!`
+                ? t('features:create-room.server_rate_limited', { minutes: millisecondsToMinutes((error.data.retry_after_ms as number | undefined) ?? 0) })
                 : error.message}
             </b>
           </Text>
@@ -298,7 +297,7 @@ export function CreateRoomForm({ defaultKind, space, onCreate }: CreateRoomFormP
           disabled={disabled}
           before={loading && <Spinner variant="Primary" fill="Solid" size="200" />}
         >
-          <Text size="B500">Create</Text>
+          <Text size="B500">{t('features:create-room.create')}</Text>
         </Button>
       </Box>
     </Box>

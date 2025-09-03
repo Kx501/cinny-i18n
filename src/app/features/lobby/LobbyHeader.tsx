@@ -16,6 +16,7 @@ import {
   config,
   toRem,
 } from 'folds';
+import { useTranslation } from 'react-i18next';
 import FocusTrap from 'focus-trap-react';
 import { PageHeader } from '../../components/page';
 import { useSetSetting } from '../../state/hooks/settings';
@@ -45,6 +46,7 @@ type LobbyMenuProps = {
 };
 const LobbyMenu = forwardRef<HTMLDivElement, LobbyMenuProps>(
   ({ powerLevels, requestClose }, ref) => {
+    const { t } = useTranslation();
     const mx = useMatrixClient();
     const space = useSpace();
     const creators = useRoomCreators(space);
@@ -87,7 +89,7 @@ const LobbyMenu = forwardRef<HTMLDivElement, LobbyMenuProps>(
             disabled={!canInvite}
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Invite
+              {t('features:lobby.invite')}
             </Text>
           </MenuItem>
           <MenuItem
@@ -97,7 +99,7 @@ const LobbyMenu = forwardRef<HTMLDivElement, LobbyMenuProps>(
             radii="300"
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Space Settings
+              {t('features:lobby.space_settings')}
             </Text>
           </MenuItem>
         </Box>
@@ -116,7 +118,7 @@ const LobbyMenu = forwardRef<HTMLDivElement, LobbyMenuProps>(
                   aria-pressed={promptLeave}
                 >
                   <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-                    Leave Space
+                    {t('features:lobby.leave_space')}
                   </Text>
                 </MenuItem>
                 {promptLeave && (
@@ -140,6 +142,7 @@ type LobbyHeaderProps = {
   powerLevels: IPowerLevels;
 };
 export function LobbyHeader({ showProfile, powerLevels }: LobbyHeaderProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
   const space = useSpace();
@@ -213,7 +216,7 @@ export function LobbyHeader({ showProfile, powerLevels }: LobbyHeaderProps) {
               offset={4}
               tooltip={
                 <Tooltip>
-                  <Text>Members</Text>
+                  <Text>{t('features:lobby.members')}</Text>
                 </Tooltip>
               }
             >
@@ -230,7 +233,7 @@ export function LobbyHeader({ showProfile, powerLevels }: LobbyHeaderProps) {
             offset={4}
             tooltip={
               <Tooltip>
-                <Text>More Options</Text>
+                <Text>{t('features:lobby.more_options')}</Text>
               </Tooltip>
             }
           >

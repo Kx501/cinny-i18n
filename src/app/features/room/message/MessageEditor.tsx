@@ -21,6 +21,7 @@ import {
 } from 'folds';
 import { Editor, Transforms } from 'slate';
 import { ReactEditor } from 'slate-react';
+import { useTranslation } from 'react-i18next';
 import { IContent, IMentions, MatrixEvent, RelationType, Room } from 'matrix-js-sdk';
 import { isKeyHotkey } from 'is-hotkey';
 import {
@@ -69,7 +70,7 @@ export const MessageEditor = as<'div', MessageEditorProps>(
     const [globalToolbar] = useSetting(settingsAtom, 'editorToolbar');
     const [isMarkdown] = useSetting(settingsAtom, 'isMarkdown');
     const [toolbar, setToolbar] = useState(globalToolbar);
-
+    const { t } = useTranslation();
     const [autocompleteQuery, setAutocompleteQuery] =
       useState<AutocompleteQuery<AutocompletePrefix>>();
 
@@ -252,8 +253,8 @@ export const MessageEditor = as<'div', MessageEditorProps>(
         )}
         <CustomEditor
           editor={editor}
-          placeholder="Edit message..."
-          onKeyDown={handleKeyDown}
+          placeholder={t('features:room.message.edit_message')}
+          onKeyDown={handleKeyDown as any}
           onKeyUp={handleKeyUp}
           bottom={
             <>
@@ -276,10 +277,10 @@ export const MessageEditor = as<'div', MessageEditorProps>(
                       ) : undefined
                     }
                   >
-                    <Text size="B300">Save</Text>
+                    <Text size="B300">{t('features:room.message.save')}</Text>
                   </Chip>
                   <Chip onClick={onCancel} variant="SurfaceVariant" radii="Pill">
-                    <Text size="B300">Cancel</Text>
+                    <Text size="B300">{t('features:room.message.cancel')}</Text>
                   </Chip>
                 </Box>
                 <Box gap="Inherit">

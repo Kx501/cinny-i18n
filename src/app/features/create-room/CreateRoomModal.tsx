@@ -13,6 +13,7 @@ import {
   Scroll,
   Text,
 } from 'folds';
+import { useTranslation } from 'react-i18next';
 import FocusTrap from 'focus-trap-react';
 import { useAllJoinedRoomsSet, useGetRoom } from '../../hooks/useGetRoom';
 import { SpaceProvider } from '../../hooks/useSpace';
@@ -30,7 +31,7 @@ type CreateRoomModalProps = {
 function CreateRoomModal({ state }: CreateRoomModalProps) {
   const { spaceId } = state;
   const closeDialog = useCloseCreateRoomModal();
-
+  const { t } = useTranslation();
   const allJoinedRooms = useAllJoinedRoomsSet();
   const getRoom = useGetRoom(allJoinedRooms);
   const space = spaceId ? getRoom(spaceId) : undefined;
@@ -57,7 +58,7 @@ function CreateRoomModal({ state }: CreateRoomModalProps) {
                   }}
                 >
                   <Box grow="Yes">
-                    <Text size="H4">New Room</Text>
+                    <Text size="H4">{t('features:create-room.create_room')}</Text>
                   </Box>
                   <Box shrink="No">
                     <IconButton size="300" radii="300" onClick={closeDialog}>

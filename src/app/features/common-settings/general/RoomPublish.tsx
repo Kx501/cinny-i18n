@@ -51,8 +51,8 @@ export function RoomPublish({ permissions }: RoomPublishProps) {
         title={t('features:common-settings.general.publish_to_directory')}
         description={
           room.isSpaceRoom()
-            ? t('features:common-settings.general.list_space_in_public_directory')
-            : t('features:common-settings.general.list_room_in_public_directory')
+            ? t('features:common-settings.general.list_the_space_in_the_public')
+            : t('features:common-settings.general.list_the_room_in_the_public')
         }
         after={
           <Box gap="200" alignItems="Center">

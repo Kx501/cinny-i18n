@@ -34,6 +34,7 @@ import FocusTrap from 'focus-trap-react';
 import { useHover, useFocusWithin } from 'react-aria';
 import { MatrixEvent, Room } from 'matrix-js-sdk';
 import { Relations } from 'matrix-js-sdk/lib/models/relations';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { RoomPinnedEventsEventContent } from 'matrix-js-sdk/lib/types';
 import {
@@ -136,7 +137,7 @@ export const MessageAllReactionItem = as<
     setOpen(false);
     onClose?.();
   };
-
+  const { t } = useTranslation();
   return (
     <>
       <Overlay
@@ -176,7 +177,7 @@ export const MessageAllReactionItem = as<
         aria-pressed={open}
       >
         <Text className={css.MessageMenuItemText} as="span" size="T300" truncate>
-          View Reactions
+          {t('features:room.message.view_reactions')}
         </Text>
       </MenuItem>
     </>
@@ -197,7 +198,7 @@ export const MessageReadReceiptItem = as<
     setOpen(false);
     onClose?.();
   };
-
+  const { t } = useTranslation();
   return (
     <>
       <Overlay open={open} backdrop={<OverlayBackdrop />}>
@@ -226,7 +227,7 @@ export const MessageReadReceiptItem = as<
         aria-pressed={open}
       >
         <Text className={css.MessageMenuItemText} as="span" size="T300" truncate>
-          Read Receipts
+          {t('features:room.message.read_receipts')}
         </Text>
       </MenuItem>
     </>
@@ -246,9 +247,9 @@ export const MessageSourceCodeItem = as<
   const getContent = (evt: MatrixEvent) =>
     evt.isEncrypted()
       ? {
-          [`<== DECRYPTED_EVENT ==>`]: evt.getEffectiveEvent(),
-          [`<== ORIGINAL_EVENT ==>`]: evt.event,
-        }
+        [`<== DECRYPTED_EVENT ==>`]: evt.getEffectiveEvent(),
+        [`<== ORIGINAL_EVENT ==>`]: evt.event,
+      }
       : evt.event;
 
   const getText = (): string => {
@@ -275,7 +276,7 @@ export const MessageSourceCodeItem = as<
     setOpen(false);
     onClose?.();
   };
-
+  const { t } = useTranslation();
   return (
     <>
       <Overlay open={open} backdrop={<OverlayBackdrop />}>
@@ -309,7 +310,7 @@ export const MessageSourceCodeItem = as<
         aria-pressed={open}
       >
         <Text className={css.MessageMenuItemText} as="span" size="T300" truncate>
-          View Source
+          {t('features:room.message.view_source')}
         </Text>
       </MenuItem>
     </>
@@ -334,7 +335,7 @@ export const MessageCopyLinkItem = as<
     copyToClipboard(getMatrixToRoomEvent(roomIdOrAlias, eventId, viaServers));
     onClose?.();
   };
-
+  const { t } = useTranslation();
   return (
     <MenuItem
       size="300"
@@ -345,7 +346,7 @@ export const MessageCopyLinkItem = as<
       ref={ref}
     >
       <Text className={css.MessageMenuItemText} as="span" size="T300" truncate>
-        Copy Link
+        {t('features:room.message.copy_link')}
       </Text>
     </MenuItem>
   );
@@ -374,7 +375,7 @@ export const MessagePinItem = as<
     mx.sendStateEvent(room.roomId, StateEvent.RoomPinnedEvents as any, pinContent);
     onClose?.();
   };
-
+  const { t } = useTranslation();
   return (
     <MenuItem
       size="300"
@@ -385,7 +386,7 @@ export const MessagePinItem = as<
       ref={ref}
     >
       <Text className={css.MessageMenuItemText} as="span" size="T300" truncate>
-        {isPinned ? 'Unpin Message' : 'Pin Message'}
+        {isPinned ? t('features:room.message.unpin_message') : t('features:room.message.pin_message')}
       </Text>
     </MenuItem>
   );
@@ -429,7 +430,7 @@ export const MessageDeleteItem = as<
     setOpen(false);
     onClose?.();
   };
-
+  const { t } = useTranslation();
   return (
     <>
       <Overlay open={open} backdrop={<OverlayBackdrop />}>
@@ -452,7 +453,7 @@ export const MessageDeleteItem = as<
                 size="500"
               >
                 <Box grow="Yes">
-                  <Text size="H4">Delete Message</Text>
+                  <Text size="H4">{t('features:room.message.delete_message')}</Text>
                 </Box>
                 <IconButton size="300" onClick={handleClose} radii="300">
                   <Icon src={Icons.Cross} />
@@ -466,19 +467,19 @@ export const MessageDeleteItem = as<
                 gap="400"
               >
                 <Text priority="400">
-                  This action is irreversible! Are you sure that you want to delete this message?
+                  {t('features:room.message.this_action_is_irreversible')}
                 </Text>
                 <Box direction="Column" gap="100">
                   <Text size="L400">
-                    Reason{' '}
+                    {t('features:room.message.reason')} {' '}
                     <Text as="span" size="T200">
-                      (optional)
+                      {t('features:room.message.optional')}
                     </Text>
                   </Text>
                   <Input name="reasonInput" variant="Background" />
                   {deleteState.status === AsyncStatus.Error && (
                     <Text style={{ color: color.Critical.Main }} size="T300">
-                      Failed to delete message! Please try again.
+                      {t('features:room.message.failed_to_delete_message')}
                     </Text>
                   )}
                 </Box>
@@ -493,7 +494,7 @@ export const MessageDeleteItem = as<
                   aria-disabled={deleteState.status === AsyncStatus.Loading}
                 >
                   <Text size="B400">
-                    {deleteState.status === AsyncStatus.Loading ? 'Deleting...' : 'Delete'}
+                    {deleteState.status === AsyncStatus.Loading ? t('features:room.message.deleting') : t('features:room.message.delete')}
                   </Text>
                 </Button>
               </Box>
@@ -513,7 +514,7 @@ export const MessageDeleteItem = as<
         ref={ref}
       >
         <Text className={css.MessageMenuItemText} as="span" size="T300" truncate>
-          Delete
+          {t('features:room.message.delete')}
         </Text>
       </Button>
     </>
@@ -552,14 +553,14 @@ export const MessageReportItem = as<
     const reasonInput = target?.reasonInput as HTMLInputElement | undefined;
     const reason = reasonInput && reasonInput.value.trim();
     if (reasonInput) reasonInput.value = '';
-    reportMessage(eventId, reason ? -100 : -50, reason || 'No reason provided');
+    reportMessage(eventId, reason ? -100 : -50, reason || t('features:room.message.no_reason_provided'));
   };
 
   const handleClose = () => {
     setOpen(false);
     onClose?.();
   };
-
+  const { t } = useTranslation();
   return (
     <>
       <Overlay open={open} backdrop={<OverlayBackdrop />}>
@@ -582,7 +583,7 @@ export const MessageReportItem = as<
                 size="500"
               >
                 <Box grow="Yes">
-                  <Text size="H4">Report Message</Text>
+                  <Text size="H4">{t('features:room.message.report_message')}</Text>
                 </Box>
                 <IconButton size="300" onClick={handleClose} radii="300">
                   <Icon src={Icons.Cross} />
@@ -596,20 +597,19 @@ export const MessageReportItem = as<
                 gap="400"
               >
                 <Text priority="400">
-                  Report this message to server, which may then notify the appropriate people to
-                  take action.
+                  {t('features:room.message.report_this_message_to_server')}
                 </Text>
                 <Box direction="Column" gap="100">
-                  <Text size="L400">Reason</Text>
+                  <Text size="L400">{t('features:room.message.reason')}</Text>
                   <Input name="reasonInput" variant="Background" required />
                   {reportState.status === AsyncStatus.Error && (
                     <Text style={{ color: color.Critical.Main }} size="T300">
-                      Failed to report message! Please try again.
+                      {t('features:room.message.failed_to_report_message')}
                     </Text>
                   )}
                   {reportState.status === AsyncStatus.Success && (
                     <Text style={{ color: color.Success.Main }} size="T300">
-                      Message has been reported to server.
+                      {t('features:room.message.message_has_been_reported')}
                     </Text>
                   )}
                 </Box>
@@ -627,7 +627,7 @@ export const MessageReportItem = as<
                   }
                 >
                   <Text size="B400">
-                    {reportState.status === AsyncStatus.Loading ? 'Reporting...' : 'Report'}
+                    {reportState.status === AsyncStatus.Loading ? t('features:room.message.reporting') : t('features:room.message.report')}
                   </Text>
                 </Button>
               </Box>
@@ -647,7 +647,7 @@ export const MessageReportItem = as<
         ref={ref}
       >
         <Text className={css.MessageMenuItemText} as="span" size="T300" truncate>
-          Report
+          {t('features:room.message.report')}
         </Text>
       </Button>
     </>
@@ -872,7 +872,7 @@ export const Message = as<'div', MessageProps>(
     };
 
     const isThreadedMessage = mEvent.threadRootId !== undefined;
-
+    const { t } = useTranslation();
     return (
       <MessageBase
         className={classNames(css.MessageBase, className)}
@@ -995,7 +995,7 @@ export const Message = as<'div', MessageProps>(
                                 size="T300"
                                 truncate
                               >
-                                Add Reaction
+                                {t('features:room.message.add_reaction')}
                               </Text>
                             </MenuItem>
                           )}
@@ -1022,7 +1022,7 @@ export const Message = as<'div', MessageProps>(
                               size="T300"
                               truncate
                             >
-                              Reply
+                              {t('features:room.message.reply')}
                             </Text>
                           </MenuItem>
                           {!isThreadedMessage && (
@@ -1042,7 +1042,7 @@ export const Message = as<'div', MessageProps>(
                                 size="T300"
                                 truncate
                               >
-                                Reply in Thread
+                                {t('features:room.message.reply_in_thread')}
                               </Text>
                             </MenuItem>
                           )}
@@ -1063,7 +1063,7 @@ export const Message = as<'div', MessageProps>(
                                 size="T300"
                                 truncate
                               >
-                                Edit Message
+                                {t('features:room.message.edit_message')}
                               </Text>
                             </MenuItem>
                           )}
@@ -1088,26 +1088,26 @@ export const Message = as<'div', MessageProps>(
                         </Box>
                         {((!mEvent.isRedacted() && canDelete) ||
                           mEvent.getSender() !== mx.getUserId()) && (
-                          <>
-                            <Line size="300" />
-                            <Box direction="Column" gap="100" className={css.MessageMenuGroup}>
-                              {!mEvent.isRedacted() && canDelete && (
-                                <MessageDeleteItem
-                                  room={room}
-                                  mEvent={mEvent}
-                                  onClose={closeMenu}
-                                />
-                              )}
-                              {mEvent.getSender() !== mx.getUserId() && (
-                                <MessageReportItem
-                                  room={room}
-                                  mEvent={mEvent}
-                                  onClose={closeMenu}
-                                />
-                              )}
-                            </Box>
-                          </>
-                        )}
+                            <>
+                              <Line size="300" />
+                              <Box direction="Column" gap="100" className={css.MessageMenuGroup}>
+                                {!mEvent.isRedacted() && canDelete && (
+                                  <MessageDeleteItem
+                                    room={room}
+                                    mEvent={mEvent}
+                                    onClose={closeMenu}
+                                  />
+                                )}
+                                {mEvent.getSender() !== mx.getUserId() && (
+                                  <MessageReportItem
+                                    room={room}
+                                    mEvent={mEvent}
+                                    onClose={closeMenu}
+                                  />
+                                )}
+                              </Box>
+                            </>
+                          )}
                       </Menu>
                     </FocusTrap>
                   }
@@ -1255,26 +1255,26 @@ export const Event = as<'div', EventProps>(
                         </Box>
                         {((!mEvent.isRedacted() && canDelete && !stateEvent) ||
                           (mEvent.getSender() !== mx.getUserId() && !stateEvent)) && (
-                          <>
-                            <Line size="300" />
-                            <Box direction="Column" gap="100" className={css.MessageMenuGroup}>
-                              {!mEvent.isRedacted() && canDelete && (
-                                <MessageDeleteItem
-                                  room={room}
-                                  mEvent={mEvent}
-                                  onClose={closeMenu}
-                                />
-                              )}
-                              {mEvent.getSender() !== mx.getUserId() && (
-                                <MessageReportItem
-                                  room={room}
-                                  mEvent={mEvent}
-                                  onClose={closeMenu}
-                                />
-                              )}
-                            </Box>
-                          </>
-                        )}
+                            <>
+                              <Line size="300" />
+                              <Box direction="Column" gap="100" className={css.MessageMenuGroup}>
+                                {!mEvent.isRedacted() && canDelete && (
+                                  <MessageDeleteItem
+                                    room={room}
+                                    mEvent={mEvent}
+                                    onClose={closeMenu}
+                                  />
+                                )}
+                                {mEvent.getSender() !== mx.getUserId() && (
+                                  <MessageReportItem
+                                    room={room}
+                                    mEvent={mEvent}
+                                    onClose={closeMenu}
+                                  />
+                                )}
+                              </Box>
+                            </>
+                          )}
                       </Menu>
                     </FocusTrap>
                   }

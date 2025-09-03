@@ -1,136 +1,138 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StateEvent } from '../../../../types/matrix/room';
 import { PermissionGroup } from '../../common-settings/permissions';
 
 export const usePermissionGroups = (): PermissionGroup[] => {
   const groups: PermissionGroup[] = useMemo(() => {
+    const { t } = useTranslation();
     const messagesGroup: PermissionGroup = {
-      name: 'Manage',
+      name: t('features:space-settings.permissions.manage'),
       items: [
         {
           location: {
             state: true,
             key: StateEvent.SpaceChild,
           },
-          name: 'Manage space rooms',
+          name: t('features:space-settings.permissions.manage_space_rooms'),
         },
         {
           location: {},
-          name: 'Message Events',
+          name: t('features:space-settings.permissions.message_events'),
         },
       ],
     };
 
     const moderationGroup: PermissionGroup = {
-      name: 'Moderation',
+      name: t('features:space-settings.permissions.moderation'),
       items: [
         {
           location: {
             action: true,
             key: 'invite',
           },
-          name: 'Invite',
+          name: t('features:space-settings.permissions.invite'),
         },
         {
           location: {
             action: true,
             key: 'kick',
           },
-          name: 'Kick',
+          name: t('features:space-settings.permissions.kick'),
         },
         {
           location: {
             action: true,
             key: 'ban',
           },
-          name: 'Ban',
+          name: t('features:space-settings.permissions.ban'),
         },
       ],
     };
 
     const roomOverviewGroup: PermissionGroup = {
-      name: 'Space Overview',
+      name: t('features:space-settings.permissions.space_overview'),
       items: [
         {
           location: {
             state: true,
             key: StateEvent.RoomAvatar,
           },
-          name: 'Space Avatar',
+          name: t('features:space-settings.permissions.space_avatar'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomName,
           },
-          name: 'Space Name',
+          name: t('features:space-settings.permissions.space_name'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomTopic,
           },
-          name: 'Space Topic',
+          name: t('features:space-settings.permissions.space_topic'),
         },
       ],
     };
 
     const roomSettingsGroup: PermissionGroup = {
-      name: 'Settings',
+      name: t('features:space-settings.permissions.settings'),
       items: [
         {
           location: {
             state: true,
             key: StateEvent.RoomJoinRules,
           },
-          name: 'Change Space Access',
+          name: t('features:space-settings.permissions.change_space_access'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomCanonicalAlias,
           },
-          name: 'Publish Address',
+          name: t('features:space-settings.permissions.publish_address'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomPowerLevels,
           },
-          name: 'Change All Permission',
+          name: t('features:space-settings.permissions.change_all_permission'),
         },
         {
           location: {
             state: true,
             key: StateEvent.PowerLevelTags,
           },
-          name: 'Edit Power Levels',
+          name: t('features:space-settings.permissions.edit_power_levels'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomTombstone,
           },
-          name: 'Upgrade Space',
+          name: t('features:space-settings.permissions.upgrade_space'),
         },
         {
           location: {
             state: true,
           },
-          name: 'Other Settings',
+          name: t('features:space-settings.permissions.other_settings'),
         },
       ],
     };
 
     const otherSettingsGroup: PermissionGroup = {
-      name: 'Other',
+      name: t('features:space-settings.permissions.other'),
       items: [
         {
           location: {
             state: true,
             key: StateEvent.RoomServerAcl,
           },
-          name: 'Change Server ACLs',
+          name: t('features:space-settings.permissions.change_server_acls'),
         },
       ],
     };

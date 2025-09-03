@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Icon, IconButton, Icons, Text, as } from 'folds';
 import { Room } from 'matrix-js-sdk';
 import classNames from 'classnames';
@@ -16,6 +17,7 @@ export type RoomViewTypingProps = {
 };
 export const RoomViewTyping = as<'div', RoomViewTypingProps>(
   ({ className, room, ...props }, ref) => {
+    const { t } = useTranslation();
     const setTypingMembers = useSetAtom(roomIdToTypingMembersAtom);
     const mx = useMatrixClient();
     const typingMembers = useRoomTypingMember(room.roomId);
@@ -58,7 +60,7 @@ export const RoomViewTyping = as<'div', RoomViewTypingProps>(
               <>
                 <b>{typingNames[0]}</b>
                 <Text as="span" size="Inherit" priority="300">
-                  {' is typing...'}
+                  {t('features:room.is_typing')}
                 </Text>
               </>
             )}

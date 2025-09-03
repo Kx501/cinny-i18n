@@ -18,6 +18,7 @@ import {
   Spinner,
 } from 'folds';
 import { useFocusWithin, useHover } from 'react-aria';
+import { useTranslation } from 'react-i18next';
 import FocusTrap from 'focus-trap-react';
 import { NavItem, NavItemContent, NavItemOptions, NavLink } from '../../components/nav';
 import { UnreadBadge, UnreadBadgeCenter } from '../../components/unread-badge';
@@ -60,6 +61,7 @@ type RoomNavItemMenuProps = {
 const RoomNavItemMenu = forwardRef<HTMLDivElement, RoomNavItemMenuProps>(
   ({ room, requestClose, notificationMode }, ref) => {
     const mx = useMatrixClient();
+    const { t } = useTranslation();
     const [hideActivity] = useSetting(settingsAtom, 'hideActivity');
     const unread = useRoomUnread(room.roomId, roomToUnreadAtom);
     const powerLevels = usePowerLevels(room);
@@ -113,7 +115,7 @@ const RoomNavItemMenu = forwardRef<HTMLDivElement, RoomNavItemMenuProps>(
             disabled={!unread}
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Mark as Read
+              {t('features:room-nav.mark_as_read')}
             </Text>
           </MenuItem>
           <RoomNotificationModeSwitcher roomId={room.roomId} value={notificationMode}>
@@ -132,7 +134,7 @@ const RoomNavItemMenu = forwardRef<HTMLDivElement, RoomNavItemMenuProps>(
                 onClick={handleOpen}
               >
                 <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-                  Notifications
+                  {t('features:room-nav.notifications')}
                 </Text>
               </MenuItem>
             )}
@@ -151,7 +153,7 @@ const RoomNavItemMenu = forwardRef<HTMLDivElement, RoomNavItemMenuProps>(
             disabled={!canInvite}
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Invite
+              {t('features:room-nav.invite')}
             </Text>
           </MenuItem>
           <MenuItem
@@ -161,7 +163,7 @@ const RoomNavItemMenu = forwardRef<HTMLDivElement, RoomNavItemMenuProps>(
             radii="300"
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Copy Link
+              {t('features:room-nav.copy_link')}
             </Text>
           </MenuItem>
           <MenuItem
@@ -171,7 +173,7 @@ const RoomNavItemMenu = forwardRef<HTMLDivElement, RoomNavItemMenuProps>(
             radii="300"
           >
             <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-              Room Settings
+              {t('features:room-nav.room_settings')}
             </Text>
           </MenuItem>
         </Box>
@@ -190,7 +192,7 @@ const RoomNavItemMenu = forwardRef<HTMLDivElement, RoomNavItemMenuProps>(
                   aria-pressed={promptLeave}
                 >
                   <Text style={{ flexGrow: 1 }} as="span" size="T300" truncate>
-                    Leave Room
+                    {t('features:room-nav.leave_room')}
                   </Text>
                 </MenuItem>
                 {promptLeave && (

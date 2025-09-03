@@ -19,6 +19,7 @@ import {
   toRem,
 } from 'folds';
 import { Opts as LinkifyOpts } from 'linkifyjs';
+import { useTranslation } from 'react-i18next';
 import { HTMLReactParserOptions } from 'html-react-parser';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useRoomPinnedEvents } from '../../../hooks/useRoomPinnedEvents';
@@ -199,7 +200,7 @@ function PinnedMessage({
               src={
                 senderAvatarMxc
                   ? mxcUrlToHttp(mx, senderAvatarMxc, useAuthentication, 48, 48, 'crop') ??
-                    undefined
+                  undefined
                   : undefined
               }
               alt={displayName}
@@ -249,6 +250,7 @@ type RoomPinMenuProps = {
 };
 export const RoomPinMenu = forwardRef<HTMLDivElement, RoomPinMenuProps>(
   ({ room, requestClose }, ref) => {
+    const { t } = useTranslation();
     const mx = useMatrixClient();
     const userId = mx.getUserId()!;
     const powerLevels = usePowerLevelsContext();
@@ -454,7 +456,7 @@ export const RoomPinMenu = forwardRef<HTMLDivElement, RoomPinMenuProps>(
         <Box grow="Yes" direction="Column">
           <Header className={css.PinMenuHeader} size="500">
             <Box grow="Yes">
-              <Text size="H5">Pinned Messages</Text>
+              <Text size="H5">{t('features:room.room-pin-menu.pinned_messages')}</Text>
             </Box>
             <Box shrink="No">
               <IconButton size="300" onClick={requestClose} radii="300">
@@ -527,10 +529,10 @@ export const RoomPinMenu = forwardRef<HTMLDivElement, RoomPinMenuProps>(
                       alignItems="Center"
                     >
                       <Text size="H4" align="Center">
-                        No Pinned Messages
+                        {t('features:room.room-pin-menu.no_pinned_messages')}
                       </Text>
                       <Text size="T400" align="Center">
-                        Users with sufficient power level can pin a messages from its context menu.
+                        {t('features:room.room-pin-menu.users_with_sufficient_power_level')}
                       </Text>
                     </Box>
                   </Box>

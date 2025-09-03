@@ -14,6 +14,7 @@ import {
   as,
   config,
 } from 'folds';
+import { useTranslation } from 'react-i18next';
 import { MatrixEvent, Room, RoomMember } from 'matrix-js-sdk';
 import { Relations } from 'matrix-js-sdk/lib/models/relations';
 import { getMemberDisplayName } from '../../../utils/room';
@@ -39,6 +40,7 @@ export const ReactionViewer = as<'div', ReactionViewerProps>(
   ({ className, room, initialKey, relations, requestClose, ...props }, ref) => {
     const mx = useMatrixClient();
     const useAuthentication = useMediaAuthentication();
+    const { t } = useTranslation();
     const reactions = useRelations(
       relations,
       useCallback((rel) => [...(rel.getSortedAnnotationsByKey() ?? [])], [])
@@ -98,7 +100,7 @@ export const ReactionViewer = as<'div', ReactionViewerProps>(
         <Box grow="Yes" direction="Column">
           <Header className={css.Header} variant="Surface" size="600">
             <Box grow="Yes">
-              <Text size="H3" truncate>{`Reacted with :${selectedShortcode}:`}</Text>
+              <Text size="H3" truncate>{`${t('features:room.reaction-viewer.reacted_with', { selectedShortcode })}`}</Text>
             </Box>
             <IconButton size="300" onClick={requestClose}>
               <Icon src={Icons.Cross} />
@@ -117,14 +119,14 @@ export const ReactionViewer = as<'div', ReactionViewerProps>(
                   const avatarMxcUrl = member?.getMxcAvatarUrl();
                   const avatarUrl = avatarMxcUrl
                     ? mx.mxcUrlToHttp(
-                        avatarMxcUrl,
-                        100,
-                        100,
-                        'crop',
-                        undefined,
-                        false,
-                        useAuthentication
-                      )
+                      avatarMxcUrl,
+                      100,
+                      100,
+                      'crop',
+                      undefined,
+                      false,
+                      useAuthentication
+                    )
                     : undefined;
 
                   return (

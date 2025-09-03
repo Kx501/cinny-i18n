@@ -4,6 +4,7 @@ import { useAtomValue } from 'jotai';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { SearchOrderBy } from 'matrix-js-sdk';
 import { PageHero, PageHeroEmpty, PageHeroSection } from '../../components/page';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
@@ -50,6 +51,7 @@ export function MessageSearch({
   senders,
   scrollRef,
 }: MessageSearchProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const mDirects = useAtomValue(mDirectAtom);
   const allRooms = useRooms(mx, allRoomsAtom, mDirects);
@@ -229,8 +231,8 @@ export function MessageSearch({
           <PageHeroSection>
             <PageHero
               icon={<Icon size="600" src={Icons.Message} />}
-              title="Search Messages"
-              subTitle="Find helpful messages in your community by searching with related keywords."
+              title={t('features:message-search.search_messages')}
+              subTitle={t('features:message-search.find_helpful_messages')}
             />
           </PageHeroSection>
         </PageHeroEmpty>
@@ -245,24 +247,24 @@ export function MessageSearch({
         >
           <Icon size="200" src={Icons.Info} />
           <Text>
-            No results found for <b>{`"${msgSearchParams.term}"`}</b>
+            {t('features:message-search.no_results_found_for', { term: msgSearchParams.term })}
           </Text>
         </Box>
       )}
 
       {((msgSearchParams.term && status === 'pending') ||
         (groups.length > 0 && vItems.length === 0)) && (
-        <Box direction="Column" gap="100">
-          {[...Array(8).keys()].map((key) => (
-            <SequenceCard variant="SurfaceVariant" key={key} style={{ minHeight: toRem(80) }} />
-          ))}
-        </Box>
-      )}
+          <Box direction="Column" gap="100">
+            {[...Array(8).keys()].map((key) => (
+              <SequenceCard variant="SurfaceVariant" key={key} style={{ minHeight: toRem(80) }} />
+            ))}
+          </Box>
+        )}
 
       {vItems.length > 0 && (
         <Box direction="Column" gap="300">
           <Box direction="Column" gap="200">
-            <Text size="H5">{`Results for "${msgSearchParams.term}"`}</Text>
+            <Text size="H5">{t('features:message-search.results_for', { term: msgSearchParams.term })}</Text>
             <Line size="300" variant="Surface" />
           </Box>
           <div

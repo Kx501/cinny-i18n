@@ -1,195 +1,197 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MessageEvent, StateEvent } from '../../../../types/matrix/room';
 import { PermissionGroup } from '../../common-settings/permissions';
 
 export const usePermissionGroups = (): PermissionGroup[] => {
   const groups: PermissionGroup[] = useMemo(() => {
+    const { t } = useTranslation();
     const messagesGroup: PermissionGroup = {
-      name: 'Messages',
+      name: t('features:room-settings.permissions.messages'),
       items: [
         {
           location: {
             key: MessageEvent.RoomMessage,
           },
-          name: 'Send Messages',
+          name: t('features:room-settings.permissions.send_messages'),
         },
         {
           location: {
             key: MessageEvent.Sticker,
           },
-          name: 'Send Stickers',
+          name: t('features:room-settings.permissions.send_stickers'),
         },
         {
           location: {
             key: MessageEvent.Reaction,
           },
-          name: 'Send Reactions',
+          name: t('features:room-settings.permissions.send_reactions'),
         },
         {
           location: {
             notification: true,
             key: 'room',
           },
-          name: 'Ping @room',
+          name: t('features:room-settings.permissions.ping_room'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomPinnedEvents,
           },
-          name: 'Pin Messages',
+          name: t('features:room-settings.permissions.pin_messages'),
         },
         {
           location: {},
-          name: 'Other Message Events',
+          name: t('features:room-settings.permissions.other_message_events'),
         },
       ],
     };
 
     const moderationGroup: PermissionGroup = {
-      name: 'Moderation',
+      name: t('features:room-settings.permissions.moderation'),
       items: [
         {
           location: {
             action: true,
             key: 'invite',
           },
-          name: 'Invite',
+          name: t('features:room-settings.permissions.invite'),
         },
         {
           location: {
             action: true,
             key: 'kick',
           },
-          name: 'Kick',
+          name: t('features:room-settings.permissions.kick'),
         },
         {
           location: {
             action: true,
             key: 'ban',
           },
-          name: 'Ban',
+          name: t('features:room-settings.permissions.ban'),
         },
         {
           location: {
             action: true,
             key: 'redact',
           },
-          name: 'Delete Others Messages',
+          name: t('features:room-settings.permissions.delete_others_messages'),
         },
         {
           location: {
             key: MessageEvent.RoomRedaction,
           },
-          name: 'Delete Self Messages',
+          name: t('features:room-settings.permissions.delete_self_messages'),
         },
       ],
     };
 
     const roomOverviewGroup: PermissionGroup = {
-      name: 'Room Overview',
+      name: t('features:room-settings.permissions.room_overview'),
       items: [
         {
           location: {
             state: true,
             key: StateEvent.RoomAvatar,
           },
-          name: 'Room Avatar',
+          name: t('features:room-settings.permissions.room_avatar'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomName,
           },
-          name: 'Room Name',
+          name: t('features:room-settings.permissions.room_name'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomTopic,
           },
-          name: 'Room Topic',
+          name: t('features:room-settings.permissions.room_topic'),
         },
       ],
     };
 
     const roomSettingsGroup: PermissionGroup = {
-      name: 'Settings',
+      name: t('features:room-settings.permissions.settings'),
       items: [
         {
           location: {
             state: true,
             key: StateEvent.RoomJoinRules,
           },
-          name: 'Change Room Access',
+          name: t('features:room-settings.permissions.change_room_access'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomCanonicalAlias,
           },
-          name: 'Publish Address',
+          name: t('features:room-settings.permissions.publish_address'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomPowerLevels,
           },
-          name: 'Change All Permission',
+          name: t('features:room-settings.permissions.change_all_permission'),
         },
         {
           location: {
             state: true,
             key: StateEvent.PowerLevelTags,
           },
-          name: 'Edit Power Levels',
+          name: t('features:room-settings.permissions.edit_power_levels'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomEncryption,
           },
-          name: 'Enable Encryption',
+          name: t('features:room-settings.permissions.enable_encryption'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomHistoryVisibility,
           },
-          name: 'History Visibility',
+          name: t('features:room-settings.permissions.history_visibility'),
         },
         {
           location: {
             state: true,
             key: StateEvent.RoomTombstone,
           },
-          name: 'Upgrade Room',
+          name: t('features:room-settings.permissions.upgrade_room'),
         },
         {
           location: {
             state: true,
           },
-          name: 'Other Settings',
+          name: t('features:room-settings.permissions.other_settings'),
         },
       ],
     };
 
     const otherSettingsGroup: PermissionGroup = {
-      name: 'Other',
+      name: t('features:room-settings.permissions.other'),
       items: [
         {
           location: {
             state: true,
             key: StateEvent.RoomServerAcl,
           },
-          name: 'Change Server ACLs',
+          name: t('features:room-settings.permissions.change_server_acls'),
         },
         {
           location: {
             state: true,
             key: 'im.vector.modular.widgets',
           },
-          name: 'Modify Widgets',
+          name: t('features:room-settings.permissions.modify_widgets'),
         },
       ],
     };

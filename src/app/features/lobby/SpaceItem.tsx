@@ -16,6 +16,7 @@ import {
   RectCords,
   config,
 } from 'folds';
+import { useTranslation } from 'react-i18next';
 import FocusTrap from 'focus-trap-react';
 import classNames from 'classnames';
 import { MatrixError, Room } from 'matrix-js-sdk';
@@ -57,6 +58,7 @@ type InaccessibleSpaceProfileProps = {
   suggested?: boolean;
 };
 function InaccessibleSpaceProfile({ roomId, suggested }: InaccessibleSpaceProfileProps) {
+  const { t } = useTranslation();
   return (
     <Chip
       as="span"
@@ -78,15 +80,15 @@ function InaccessibleSpaceProfile({ roomId, suggested }: InaccessibleSpaceProfil
     >
       <Box alignItems="Center" gap="200">
         <Text size="H4" truncate>
-          Unknown
+          {t('features:lobby.unknown')}
         </Text>
 
         <Badge variant="Secondary" fill="Soft" radii="Pill" outlined>
-          <Text size="L400">Inaccessible</Text>
+          <Text size="L400">{t('features:lobby.inaccessible')}</Text>
         </Badge>
         {suggested && (
           <Badge variant="Success" fill="Soft" radii="Pill" outlined>
-            <Text size="L400">Suggested</Text>
+            <Text size="L400">{t('features:lobby.suggested')}</Text>
           </Badge>
         )}
       </Box>
@@ -109,7 +111,7 @@ function UnjoinedSpaceProfile({
   suggested,
 }: UnjoinedSpaceProfileProps) {
   const mx = useMatrixClient();
-
+  const { t } = useTranslation();
   const [joinState, join] = useAsyncCallback<Room, MatrixError, []>(
     useCallback(() => mx.joinRoom(roomId, { viaServers: via }), [mx, roomId, via])
   );
@@ -142,11 +144,11 @@ function UnjoinedSpaceProfile({
     >
       <Box alignItems="Center" gap="200">
         <Text size="H4" truncate>
-          {name || 'Unknown'}
+          {name || t('features:lobby.unknown')}
         </Text>
         {suggested && (
           <Badge variant="Success" fill="Soft" radii="Pill" outlined>
-            <Text size="L400">Suggested</Text>
+            <Text size="L400">{t('features:lobby.suggested')}</Text>
           </Badge>
         )}
         {joinState.status === AsyncStatus.Error && (
@@ -179,6 +181,7 @@ function SpaceProfile({
   categoryId,
   handleClose,
 }: SpaceProfileProps) {
+  const { t } = useTranslation();
   return (
     <Chip
       data-category-id={categoryId}
@@ -208,7 +211,7 @@ function SpaceProfile({
         </Text>
         {suggested && (
           <Badge variant="Success" fill="Soft" radii="Pill" outlined>
-            <Text size="L400">Suggested</Text>
+            <Text size="L400">{t('features:lobby.suggested')}</Text>
           </Badge>
         )}
       </Box>
@@ -222,6 +225,7 @@ type RootSpaceProfileProps = {
   handleClose?: MouseEventHandler<HTMLButtonElement>;
 };
 function RootSpaceProfile({ closed, categoryId, handleClose }: RootSpaceProfileProps) {
+  const { t } = useTranslation();
   return (
     <Chip
       data-category-id={categoryId}
@@ -233,7 +237,7 @@ function RootSpaceProfile({ closed, categoryId, handleClose }: RootSpaceProfileP
     >
       <Box alignItems="Center" gap="200">
         <Text size="H4" truncate>
-          Rooms
+          {t('features:lobby.rooms')}
         </Text>
       </Box>
     </Chip>
@@ -241,6 +245,7 @@ function RootSpaceProfile({ closed, categoryId, handleClose }: RootSpaceProfileP
 }
 
 function AddRoomButton({ item }: { item: HierarchyItem }) {
+  const { t } = useTranslation();
   const [cords, setCords] = useState<RectCords>();
   const openCreateRoomModal = useOpenCreateRoomModal();
   const [addExisting, setAddExisting] = useState(false);
@@ -283,10 +288,10 @@ function AddRoomButton({ item }: { item: HierarchyItem }) {
               fill="None"
               onClick={handleCreateRoom}
             >
-              <Text size="T300">New Room</Text>
+              <Text size="T300">{t('features:lobby.new_room')}</Text>
             </MenuItem>
             <MenuItem size="300" radii="300" fill="None" onClick={handleAddExisting}>
-              <Text size="T300">Existing Room</Text>
+              <Text size="T300">{t('features:lobby.existing_room')}</Text>
             </MenuItem>
           </Menu>
         </FocusTrap>
@@ -299,7 +304,7 @@ function AddRoomButton({ item }: { item: HierarchyItem }) {
         onClick={handleAddRoom}
         aria-pressed={!!cords}
       >
-        <Text size="B300">Add Room</Text>
+        <Text size="B300">{t('features:lobby.add_room')}</Text>
       </Chip>
       {addExisting && (
         <AddExistingModal parentId={item.roomId} requestClose={() => setAddExisting(false)} />
@@ -309,6 +314,7 @@ function AddRoomButton({ item }: { item: HierarchyItem }) {
 }
 
 function AddSpaceButton({ item }: { item: HierarchyItem }) {
+  const { t } = useTranslation();
   const [cords, setCords] = useState<RectCords>();
   const openCreateSpaceModal = useOpenCreateSpaceModal();
   const [addExisting, setAddExisting] = useState(false);
@@ -350,10 +356,10 @@ function AddSpaceButton({ item }: { item: HierarchyItem }) {
               fill="None"
               onClick={handleCreateSpace}
             >
-              <Text size="T300">New Space</Text>
+              <Text size="T300">{t('features:lobby.new_space')}</Text>
             </MenuItem>
             <MenuItem size="300" radii="300" fill="None" onClick={handleAddExisting}>
-              <Text size="T300">Existing Space</Text>
+              <Text size="T300">{t('features:lobby.existing_space')}</Text>
             </MenuItem>
           </Menu>
         </FocusTrap>
@@ -366,7 +372,7 @@ function AddSpaceButton({ item }: { item: HierarchyItem }) {
         onClick={handleAddSpace}
         aria-pressed={!!cords}
       >
-        <Text size="B300">Add Space</Text>
+        <Text size="B300">{t('features:lobby.add_space')}</Text>
       </Chip>
       {addExisting && (
         <AddExistingModal space parentId={item.roomId} requestClose={() => setAddExisting(false)} />
@@ -413,6 +419,7 @@ export const SpaceItemCard = as<'div', SpaceItemCardProps>(
     },
     ref
   ) => {
+    const { t } = useTranslation();
     const mx = useMatrixClient();
     const useAuthentication = useMediaAuthentication();
     const { roomId, content } = item;
@@ -473,7 +480,7 @@ export const SpaceItemCard = as<'div', SpaceItemCardProps>(
                     avatarUrl={
                       summary?.avatar_url
                         ? mxcUrlToHttp(mx, summary.avatar_url, useAuthentication, 96, 96, 'crop') ??
-                          undefined
+                        undefined
                         : undefined
                     }
                     suggested={content.suggested}
