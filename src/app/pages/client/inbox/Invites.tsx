@@ -331,7 +331,7 @@ function InviteCard({
         </Box>
         {invite.reason && (
           <Text size="T200" priority="300">
-            Reason: {invite.reason}
+            {t('pages:client.inbox.reason')} {invite.reason}
           </Text>
         )}
       </Box>

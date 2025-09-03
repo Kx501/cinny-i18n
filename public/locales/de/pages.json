@@ -159,6 +159,7 @@
 			"decline": "Ablehnen",
 			"accept": "Akzeptieren",
 			"from": "Von:",
+			"reason": "Grund: ",
 			"spam": "Spam",
 			"no_spam_invites": "Keine Spam-Einladungen",
 			"count_spam_invites": "{{count}} Spam-Einladungen",

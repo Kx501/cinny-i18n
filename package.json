@@ -76,10 +76,6 @@
     "ua-parser-js": "1.0.35"
   },
   "devDependencies": {
-    "@babel/generator": "7.28.3",
-    "@babel/parser": "7.28.3",
-    "@babel/traverse": "7.28.3",
-    "@babel/types": "7.28.2",
     "@esbuild-plugins/node-globals-polyfill": "0.2.3",
     "@rollup/plugin-inject": "5.0.3",
     "@rollup/plugin-wasm": "6.1.1",
