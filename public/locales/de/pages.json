@@ -1,5 +1,6 @@
 {
 	"auth": {
+		"cinny": "Cinny",
 		"homeserver": "Homeserver",
 		"looking_for_homeserver": "Suche nach Homeserver...",
 		"failed_to_find_homeserver": "Homeserver konnte nicht gefunden werden.",
@@ -87,16 +88,26 @@
 		"continue": "Weiter",
 		"clear_cache_and_reload": "Cache löschen & neu laden",
 		"logout": "Abmelden",
+		"invitation": "Einladung",
+		"failed_to_load": "Laden fehlgeschlagen. {{message}}",
+		"failed_to_start": "Starten fehlgeschlagen. {{message}}",
+		"connecting": "Verbinde...",
+		"connection_lost_reconnecting": "Verbindung verloren! Verbinde neu...",
+		"connection_lost": "Verbindung verloren!",
 		"home": {
+			"home": "Startseite",
+			"mark_as_read": "Als gelesen markieren",
 			"no_rooms": "Keine Räume",
 			"you_do_not_have_any": "Sie haben noch keine Räume.",
-			"create_room": "Raum erstellen",
 			"explore_community_rooms": "Community-Räume erkunden",
 			"join_with_address": "Mit Adresse beitreten",
 			"rooms": "Räume",
-			"message_search": "Nachrichtensuche"
+			"message_search": "Nachrichtensuche",
+			"create_room": "Raum erstellen",
+			"build_a_room_for_real_time_conversations": "Erstellen Sie einen Raum für Echtzeit-Unterhaltungen."
 		},
 		"direct": {
+			"mark_as_read": "Als gelesen markieren",
 			"direct_messages": "Direktnachrichten",
 			"no_direct_messages": "Keine Direktnachrichten",
 			"no_direct_messages_yet": "Sie haben noch keine Direktnachrichten.",
@@ -134,7 +145,10 @@
 			"results_for_term": "Ergebnisse für \"{{term}}\"",
 			"previous_page": "Vorherige Seite",
 			"next_page": "Nächste Seite",
-			"no_communities_found": "Keine Communities gefunden!"
+			"no_communities_found": "Keine Communities gefunden!",
+			"all": "Alle",
+			"spaces": "Räume",
+			"rooms": "Räume"
 		},
 		"inbox": {
 			"inbox": "Posteingang",
@@ -151,6 +165,7 @@
 			"primary": "Primär",
 			"public": "Öffentlich",
 			"no_invites": "Keine Einladungen",
+			"invites_detected_as_spam_appear_here": "Als Spam erkannte Einladungen erscheinen hier.",
 			"when_someone_you_share_a_room": "Wenn jemand, mit dem Sie einen Raum teilen, Ihnen eine Einladung sendet, wird sie hier angezeigt.",
 			"invites_from_people_outside": "Einladungen von Personen außerhalb Ihrer Räume werden hier angezeigt.",
 			"decline_all": "Alle ablehnen",
@@ -158,24 +173,53 @@
 			"hide_all": "Alle ausblenden",
 			"decline": "Ablehnen",
 			"accept": "Akzeptieren",
-			"from": "Von:",
+			"from": "Von: ",
 			"reason": "Grund: ",
 			"spam": "Spam",
 			"no_spam_invites": "Keine Spam-Einladungen",
 			"count_spam_invites": "{{count}} Spam-Einladungen",
 			"some_of_the_following_invites": "Einige der folgenden Einladungen können schädliche Inhalte enthalten oder von gesperrten Benutzern gesendet worden sein.",
 			"report_all": "Alle melden",
-			"block_all": "Alle blockieren"
+			"block_all": "Alle blockieren",
+			"open": "Öffnen",
+			"encrypted": "Verschlüsselt",
+			"direct_message": "Direktnachricht",
+			"space": "Raum",
+			"event": "Ereignis",
+			"room_tombstone": "Raum-Tombstone.",
+			"unknown": "Unbekannt"
 		},
 		"space": {
 			"lobby": "Lobby",
 			"message_search": "Nachrichtensuche",
-			"rooms": "Räume"
+			"rooms": "Räume",
+			"space_upgraded": "Raum aktualisiert",
+			"this_space_has_been_replaced": "Dieser Raum wurde ersetzt und ist nicht mehr aktiv.",
+			"failed_to_join_replacement_space": "Beitritt zum Ersatzraum fehlgeschlagen!",
+			"open_new_space": "Neuen Raum öffnen",
+			"join_new_space": "Neuem Raum beitreten",
+			"mark_as_read": "Als gelesen markieren",
+			"invite": "Einladen",
+			"copy_link": "Link kopieren",
+			"space_settings": "Raum-Einstellungen",
+			"event_timeline": "Ereignis-Zeitleiste",
+			"leave_space": "Raum verlassen"
 		},
 		"sidebar": {
 			"home": "Startseite",
 			"explore_community": "Community erkunden",
-			"inbox": "Posteingang"
+			"mark_as_read": "Als gelesen markieren",
+			"direct_messages": "Direktnachrichten",
+			"create_space": "Raum erstellen",
+			"inbox": "Posteingang",
+			"add_space": "Raum hinzufügen",
+			"user_settings": "Benutzereinstellungen",
+			"unverified_device": "Nicht verifiziertes Gerät",
+			"unverified_devices": "Nicht verifizierte Geräte",
+			"join_with_address": "Mit Adresse beitreten",
+			"build_a_space_for_your_community": "Erstellen Sie einen Raum für Ihre Community.",
+			"become_a_part_of_existing_community": "Werden Sie Teil einer bestehenden Community.",
+			"search": "Suchen"
 		}
 	},
 	"heating_up": "Wird aufgewärmt",

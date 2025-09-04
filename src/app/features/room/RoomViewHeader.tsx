@@ -257,6 +257,7 @@ const RoomMenu = forwardRef<HTMLDivElement, RoomMenuProps>(({ room, requestClose
 });
 
 export function RoomViewHeader() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const mx = useMatrixClient();
   const useAuthentication = useMediaAuthentication();
@@ -378,7 +379,7 @@ export function RoomViewHeader() {
               offset={4}
               tooltip={
                 <Tooltip>
-                  <Text>Search</Text>
+                  <Text>{t('features:room.search')}</Text>
                 </Tooltip>
               }
             >
@@ -394,7 +395,7 @@ export function RoomViewHeader() {
             offset={4}
             tooltip={
               <Tooltip>
-                <Text>Pinned Messages</Text>
+                <Text>{t('features:room.pinned_messages')}</Text>
               </Tooltip>
             }
           >
@@ -451,7 +452,7 @@ export function RoomViewHeader() {
               offset={4}
               tooltip={
                 <Tooltip>
-                  <Text>{peopleDrawer ? 'Hide Members' : 'Show Members'}</Text>
+                  <Text>{peopleDrawer ? t('features:room.hide_members') : t('features:room.show_members')}</Text>
                 </Tooltip>
               }
             >
@@ -468,7 +469,7 @@ export function RoomViewHeader() {
             offset={4}
             tooltip={
               <Tooltip>
-                <Text>More Options</Text>
+                <Text>{t('features:room.more_options')}</Text>
               </Tooltip>
             }
           >

@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DateFormat } from '../state/settings';
 
 export type DateFormatItem = {
@@ -6,8 +7,10 @@ export type DateFormatItem = {
   format: DateFormat;
 };
 
-export const useDateFormatItems = (): DateFormatItem[] =>
-  useMemo(
+export const useDateFormatItems = (): DateFormatItem[] => {
+  const { t } = useTranslation();
+  
+  return useMemo(
     () => [
       {
         format: 'D MMM YYYY',
@@ -27,8 +30,9 @@ export const useDateFormatItems = (): DateFormatItem[] =>
       },
       {
         format: '',
-        name: 'Custom',
+        name: t('hooks:custom'),
       },
     ],
-    []
+    [t]
   );
+};

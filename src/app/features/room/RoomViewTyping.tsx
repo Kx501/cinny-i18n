@@ -68,11 +68,11 @@ export const RoomViewTyping = as<'div', RoomViewTypingProps>(
               <>
                 <b>{typingNames[0]}</b>
                 <Text as="span" size="Inherit" priority="300">
-                  {' and '}
+                  {` ${t('features:room.and')} `}
                 </Text>
                 <b>{typingNames[1]}</b>
                 <Text as="span" size="Inherit" priority="300">
-                  {' are typing...'}
+                  {t('features:room.are_typing')}
                 </Text>
               </>
             )}
@@ -84,11 +84,11 @@ export const RoomViewTyping = as<'div', RoomViewTypingProps>(
                 </Text>
                 <b>{typingNames[1]}</b>
                 <Text as="span" size="Inherit" priority="300">
-                  {' and '}
+                  {` ${t('features:room.and')} `}
                 </Text>
                 <b>{typingNames[2]}</b>
                 <Text as="span" size="Inherit" priority="300">
-                  {' are typing...'}
+                  {t('features:room.are_typing')}
                 </Text>
               </>
             )}
@@ -104,16 +104,16 @@ export const RoomViewTyping = as<'div', RoomViewTypingProps>(
                 </Text>
                 <b>{typingNames[2]}</b>
                 <Text as="span" size="Inherit" priority="300">
-                  {' and '}
+                  {` ${t('features:room.and')} `}
                 </Text>
-                <b>{typingNames.length - 3} others</b>
+                <b>{typingNames.length - 3} {t('features:room.others')}</b>
                 <Text as="span" size="Inherit" priority="300">
-                  {' are typing...'}
+                  {t('features:room.are_typing')}
                 </Text>
               </>
             )}
           </Text>
-          <IconButton title="Drop Typing Status" size="300" radii="Pill" onClick={handleDropAll}>
+          <IconButton title={t('features:room.drop_typing_status')} size="300" radii="Pill" onClick={handleDropAll}>
             <Icon size="50" src={Icons.Cross} />
           </IconButton>
         </Box>

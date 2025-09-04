@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Icon,
@@ -33,6 +34,7 @@ export type RoomViewFollowingProps = {
 };
 export const RoomViewFollowing = as<'div', RoomViewFollowingProps>(
   ({ className, room, ...props }, ref) => {
+    const { t } = useTranslation();
     const mx = useMatrixClient();
     const [open, setOpen] = useState(false);
     const latestEvent = useRoomLatestRenderedEvent(room);
@@ -83,7 +85,7 @@ export const RoomViewFollowing = as<'div', RoomViewFollowingProps>(
                   <>
                     <b>{names[0]}</b>
                     <Text as="span" size="Inherit" priority="300">
-                      {' is following the conversation.'}
+                      {t('features:room.is_following_conversation')}
                     </Text>
                   </>
                 )}
@@ -91,11 +93,11 @@ export const RoomViewFollowing = as<'div', RoomViewFollowingProps>(
                   <>
                     <b>{names[0]}</b>
                     <Text as="span" size="Inherit" priority="300">
-                      {' and '}
+                      {` ${t('features:room.and')} `}
                     </Text>
                     <b>{names[1]}</b>
                     <Text as="span" size="Inherit" priority="300">
-                      {' are following the conversation.'}
+                      {t('features:room.are_following_conversation')}
                     </Text>
                   </>
                 )}
@@ -107,11 +109,11 @@ export const RoomViewFollowing = as<'div', RoomViewFollowingProps>(
                     </Text>
                     <b>{names[1]}</b>
                     <Text as="span" size="Inherit" priority="300">
-                      {' and '}
+                      {` ${t('features:room.and')} `}
                     </Text>
                     <b>{names[2]}</b>
                     <Text as="span" size="Inherit" priority="300">
-                      {' are following the conversation.'}
+                      {t('features:room.are_following_conversation')}
                     </Text>
                   </>
                 )}
@@ -127,11 +129,11 @@ export const RoomViewFollowing = as<'div', RoomViewFollowingProps>(
                     </Text>
                     <b>{names[2]}</b>
                     <Text as="span" size="Inherit" priority="300">
-                      {' and '}
+                      {` ${t('features:room.and')} `}
                     </Text>
-                    <b>{names.length - 3} others</b>
+                    <b>{names.length - 3} {t('features:room.others')}</b>
                     <Text as="span" size="Inherit" priority="300">
-                      {' are following the conversation.'}
+                      {t('features:room.are_following_conversation')}
                     </Text>
                   </>
                 )}

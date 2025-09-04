@@ -75,7 +75,7 @@ export function CommandAutocomplete({
     <AutocompleteMenu
       headerContent={
         <Box grow="Yes" direction="Row" gap="200" justifyContent="SpaceBetween">
-          <Text size="L400">{t('features:room.command-autocomplete.commands')}</Text>
+          <Text size="L400">{t('features:room.command')}</Text>
         </Box>
       }
       requestClose={requestClose}

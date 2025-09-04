@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Button, Spinner, Text, color } from 'folds';
 
 import * as css from './RoomTombstone.css';
@@ -11,6 +12,7 @@ import { getViaServers } from '../../plugins/via-servers';
 
 type RoomTombstoneProps = { roomId: string; body?: string; replacementRoomId: string };
 export function RoomTombstone({ roomId, body, replacementRoomId }: RoomTombstoneProps) {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const { navigateRoom } = useRoomNavigate();
 
@@ -33,18 +35,18 @@ export function RoomTombstone({ roomId, body, replacementRoomId }: RoomTombstone
   return (
     <RoomInputPlaceholder alignItems="Center" gap="600" className={css.RoomTombstone}>
       <Box direction="Column" grow="Yes">
-        <Text size="T400">{body || 'This room has been replaced and is no longer active.'}</Text>
+        <Text size="T400">{body || t('features:room.this_room_has_been_replaced')}</Text>
         {joinState.status === AsyncStatus.Error && (
           <Text style={{ color: color.Critical.Main }} size="T200">
-            {(joinState.error as any)?.message ?? 'Failed to join replacement room!'}
+            {(joinState.error as any)?.message ?? t('features:room.failed_to_join_replacement_room')}
           </Text>
         )}
       </Box>
       <Box shrink="No">
         {replacementRoom?.getMyMembership() === Membership.Join ||
-        joinState.status === AsyncStatus.Success ? (
+          joinState.status === AsyncStatus.Success ? (
           <Button onClick={handleOpen} size="300" variant="Success" fill="Solid" radii="300">
-            <Text size="B300">Open New Room</Text>
+            <Text size="B300">{t('features:room.open_new_room')}</Text>
           </Button>
         ) : (
           <Button
@@ -60,7 +62,7 @@ export function RoomTombstone({ roomId, body, replacementRoomId }: RoomTombstone
             }
             disabled={joinState.status === AsyncStatus.Loading}
           >
-            <Text size="B300">Join New Room</Text>
+            <Text size="B300">{t('features:room.join_new_room')}</Text>
           </Button>
         )}
       </Box>

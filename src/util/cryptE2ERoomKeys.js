@@ -1,6 +1,7 @@
 // https://github.com/matrix-org/matrix-react-sdk/blob/e78a1adb6f1af2ea425b0bae9034fb7344a4b2e8/src/utils/MegolmExportEncryption.js
 
 const subtleCrypto = window.crypto.subtle || window.crypto.webkitSubtle;
+import { useTranslation } from 'react-i18next';
 
 /**
  * Make an Error object which has a friendlyText property which is already
@@ -11,13 +12,14 @@ const subtleCrypto = window.crypto.subtle || window.crypto.webkitSubtle;
  * @returns {Error}
  */
 function friendlyError(msg, friendlyText) {
+  const { t } = useTranslation();
   const e = new Error(msg);
   e.friendlyText = friendlyText;
   return e;
 }
 
 function cryptoFailMsg() {
-  return 'Your browser does not support the required cryptography extensions';
+  return t('util:your_browser_does_not_support');
 }
 /**
  * Derive the AES and HMAC-SHA-256 keys for the file
@@ -196,7 +198,7 @@ function packMegolmKeyFile(data) {
   let o = 0;
   let i;
   for (i = 1; i <= nLines; i += 1) {
-    lines[i] = encodeBase64(data.subarray(o, o+LINE_LENGTH));
+    lines[i] = encodeBase64(data.subarray(o, o + LINE_LENGTH));
     o += LINE_LENGTH;
   }
   lines[i] = TRAILER_LINE;
@@ -309,7 +311,7 @@ export async function encryptMegolmKeyFile(data, password, options) {
   }
 
   const cipherArray = new Uint8Array(ciphertext);
-  const bodyLength = (1+salt.length+iv.length+4+cipherArray.length+32);
+  const bodyLength = (1 + salt.length + iv.length + 4 + cipherArray.length + 32);
   const resultBuffer = new Uint8Array(bodyLength);
   let idx = 0;
   resultBuffer[idx++] = 1; // version

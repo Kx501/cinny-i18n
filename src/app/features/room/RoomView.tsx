@@ -1,4 +1,5 @@
 import React, { useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Text, config } from 'folds';
 import { EventType, Room } from 'matrix-js-sdk';
 import { ReactEditor } from 'slate-react';
@@ -57,6 +58,7 @@ const shouldFocusMessageField = (evt: KeyboardEvent): boolean => {
 };
 
 export function RoomView({ room, eventId }: { room: Room; eventId?: string }) {
+  const { t } = useTranslation();
   const roomInputRef = useRef<HTMLDivElement>(null);
   const roomViewRef = useRef<HTMLDivElement>(null);
 
@@ -130,7 +132,7 @@ export function RoomView({ room, eventId }: { room: Room; eventId?: string }) {
                   alignItems="Center"
                   justifyContent="Center"
                 >
-                  <Text align="Center">You do not have permission to post in this room</Text>
+                  <Text align="Center">{t('features:room.no_permission_to_post')}</Text>
                 </RoomInputPlaceholder>
               )}
             </>
