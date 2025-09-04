@@ -24,6 +24,7 @@ public/locales/
 - **直接截断**：从原文开头开始截断，确保键名唯一性
 - **空格处理**：原文开头或结尾的空格用下划线替代
 - **重名处理**：当上一层键名与下一层分组名相同时，键名前面加下划线（如 `settings` 分组和 `settings` 键 → `_settings`）
+- **键名复用**：键名只能在相同分组内复用
 
 **示例转换**：
 
@@ -80,7 +81,7 @@ function RoomComponent() {
     <div>
       <h1>{t('features:room.new_messages')}</h1>
       <button>{t('features:room.jump_to_unread')}</button>
-      <p>{t('hooks:desktop')}</p>
+      <p>{t('features:room.desktop')}</p>
     </div>
   );
 }
@@ -101,7 +102,7 @@ function RoomComponent({ isSpace }) {
 ## 最佳实践
 
 - **键命名**：使用小写字母和下划线，基于原文生成，开头或结尾的空格用下划线替代
-- **组织原则**：按功能分组（`features`、`pages`、`hooks` 等），保持简洁，统一格式
+- **组织原则**：按文件目录分组（`features`、`pages`、`hooks` 等），保持简洁，统一格式
 - **变量使用**：使用有意义的变量名（`{{type}}` 而不是 `{{value}}`），双大括号插值
 
 ## 常见操作

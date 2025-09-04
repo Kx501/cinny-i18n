@@ -24,6 +24,7 @@ Each translation file is a namespace (e.g., `features.json` → namespace `featu
 - **Direct truncation**: Truncate from the beginning of the original text to ensure key uniqueness
 - **Space handling**: Replace leading or trailing spaces with underscores
 - **Duplicate handling**: When the parent key name is the same as the child group name, prefix the key with an underscore (e.g., `settings` group and `settings` key → `_settings`)
+- **Key name reuse**: Key names can only be reused within the same group
 
 **Example conversions**:
 
@@ -80,7 +81,7 @@ function RoomComponent() {
     <div>
       <h1>{t('features:room.new_messages')}</h1>
       <button>{t('features:room.jump_to_unread')}</button>
-      <p>{t('hooks:desktop')}</p>
+      <p>{t('features.room.desktop')}</p>
     </div>
   );
 }
@@ -101,7 +102,7 @@ function RoomComponent({ isSpace }) {
 ## Best Practices
 
 - **Key naming**: Use lowercase letters and underscores, generate based on original text, replace leading/trailing spaces with underscores
-- **Organization principles**: Group by functionality (`components`, `features`, `hooks`, `pages`, `util`, etc.), keep it simple, maintain consistent format
+- **Organization principles**: Group by table of contents (`components`, `features`, `hooks`, `pages`, `util`, etc.), keep it simple, maintain consistent format
 - **Variable usage**: Use meaningful variable names (`{{type}}` instead of `{{value}}`), double curly brace interpolation
 
 ## Common Operations
