@@ -25,7 +25,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { isKeyHotkey } from 'is-hotkey';
 import { useAtom, useAtomValue } from 'jotai';
 import { Room } from 'matrix-js-sdk';
@@ -411,9 +411,15 @@ export function Search({ requestClose }: SearchProps) {
             <Line size="300" />
             <Box shrink="No" justifyContent="Center" style={{ padding: config.space.S200 }}>
               <Text size="T200" priority="300">
-                {t('features:search.type_for_rooms', {
-                  hotkey: `${isMacOS() ? KeySymbol.Command : 'Ctrl'} + k`
-                })}
+                <Trans
+                  i18nKey="features:search.type_for_rooms"
+                  values={{
+                    hotkey: `${isMacOS() ? KeySymbol.Command : 'Ctrl'} + k`
+                  }}
+                  components={{
+                    b: <b />
+                  }}
+                />
               </Text>
             </Box>
           </Modal>

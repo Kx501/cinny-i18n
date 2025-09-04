@@ -356,6 +356,7 @@
             "current_version": "Current version: {version}."
         },
         "permissions": {
+            "75": "75",
             "founders": "Founders",
             "founding_members_has_all_permissions": "Founding members has all permissions and can only be changed during upgrade.",
             "manage_and_customize_incremental": "Manage and customize incremental power levels for users.",
@@ -381,7 +382,8 @@
             "power_levels": "Power Levels",
             "new_power_level": "New Power Level",
             "create_a_new_power_level": "Create a new power level.",
-            "create": "Create"
+            "create": "Create",
+            "bot": "Bot"
         },
         "members": {
             "members": "Members",
@@ -474,7 +476,7 @@
         "no_rooms": "No Rooms",
         "no_match_found_for": "No match found for \"{query}\".",
         "you_do_not_have_any_rooms": "You do not have any rooms to display yet.",
-        "type_for_rooms": "Type <b>#</b> for rooms, <b>@</b> for DMs and <b>*</b> for spaces. Hotkey: <b>{hotkey}</b>"
+        "type_for_rooms": "Type <b>#</b> for rooms, <b>@</b> for DMs and <b>*</b> for spaces. Hotkey: <b>{{hotkey}}</b>"
     },
     "add-existing": {
         "add_existing": "Add Existing",
@@ -498,7 +500,8 @@
         "end_to_end_encryption": "End-to-End Encryption",
         "once_this_feature_is_enabled": "Once this feature is enabled, it can't be disabled after the room is created.",
         "server_rate_limited": "Server rate-limited your request for {minutes} minutes!",
-        "create": "Create"
+        "create": "Create",
+        "username_server": "@username:server"
     },
     "create-room": {
         "create_room": "Create Room",

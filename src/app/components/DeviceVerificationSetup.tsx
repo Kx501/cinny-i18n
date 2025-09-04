@@ -25,7 +25,7 @@ import { ActionUIA, ActionUIAFlowsLoader } from './ActionUIA';
 import { useMatrixClient } from '../hooks/useMatrixClient';
 import { useAlive } from '../hooks/useAlive';
 import { UseStateProvider } from './UseStateProvider';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 
 type UIACallback<T> = (
   authDict: AuthDict | null
@@ -184,7 +184,12 @@ function SetupVerification({ onComplete }: SetupVerificationProps) {
   return (
     <Box as="form" onSubmit={handleSubmit} direction="Column" gap="400">
       <Text size="T300">
-        {t('components:generate_a_recovery_key')}
+        <Trans
+          i18nKey="components:generate_a_recovery_key"
+          components={{
+            b: <b />
+          }}
+        />
       </Text>
       <Box direction="Column" gap="100">
         <Text size="L400">{t('components:passphrase_optional')}</Text>
@@ -361,7 +366,12 @@ export const DeviceVerificationReset = forwardRef<HTMLDivElement, DeviceVerifica
               <Text size="H1">✋🧑‍🚒🤚</Text>
               <Text size="T300">{t('components:resetting_device_verification_is_permanent')}</Text>
               <Text size="T300">
-                {t('components:anyone_you_have_verified_with')}
+                <Trans
+                  i18nKey="components:anyone_you_have_verified_with"
+                  components={{
+                    b: <b />
+                  }}
+                />
               </Text>
             </Box>
             <Button variant="Critical" onClick={() => setReset(true)}>

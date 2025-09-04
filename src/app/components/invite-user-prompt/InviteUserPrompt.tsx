@@ -196,7 +196,7 @@ export function InviteUserPrompt({ room, requestClose }: InviteUserProps) {
                       ref={inputRef}
                       onChange={handleSearchChange}
                       onKeyDown={handleKeyDown}
-                      placeholder="@username:server"
+                      placeholder={t('components:invite-user-prompt.username_server')}
                       name="userIdInput"
                       variant="Background"
                       disabled={inviting}
@@ -244,8 +244,8 @@ export function InviteUserPrompt({ room, requestClose }: InviteUserProps) {
                                           <b>
                                             {queryHighlighRegex
                                               ? highlightText(queryHighlighRegex, [
-                                                  username ?? userId,
-                                                ])
+                                                username ?? userId,
+                                              ])
                                               : username}
                                           </b>
                                         </Text>

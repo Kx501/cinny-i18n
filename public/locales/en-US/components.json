@@ -108,7 +108,8 @@
 		"invite_user": "Invite User",
 		"user_id": "User ID",
 		"reason_optional": "Reason (Optional)",
-		"invite": "Invite"
+		"invite": "Invite",
+		"username_server": "@username:server"
 	},
 	"create-room": {
 		"restricted": "Restricted",
@@ -267,7 +268,8 @@
 		"exit_formatting": "Exit Formatting",
 		"exit_ctrl": "Exit {hyper}",
 		"enable_markdown": "Enable Markdown",
-		"disable_markdown": "Disable Markdown"
+		"disable_markdown": "Disable Markdown",
+		"send_a_message": "Send a message..."
 	},
 	"pdf-viewer": {
 		"zoom_out": "Zoom Out",

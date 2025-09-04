@@ -108,7 +108,8 @@
 		"invite_user": "Benutzer einladen",
 		"user_id": "Benutzer-ID",
 		"reason_optional": "Grund (Optional)",
-		"invite": "Einladen"
+		"invite": "Einladen",
+		"username_server": "@Benutzername:Server"
 	},
 	"create-room": {
 		"restricted": "Eingeschränkt",
@@ -266,7 +267,8 @@
 		"exit_formatting": "Formatierung beenden",
 		"exit_ctrl": "Beenden {hyper}",
 		"enable_markdown": "Markdown aktivieren",
-		"disable_markdown": "Markdown deaktivieren"
+		"disable_markdown": "Markdown deaktivieren",
+		"send_a_message": "Eine Nachricht senden..."
 	},
 	"device-verification": {},
 	"pdf-viewer": {

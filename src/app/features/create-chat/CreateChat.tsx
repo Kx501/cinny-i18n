@@ -80,7 +80,7 @@ export function CreateChat({ defaultUserId }: CreateChatProps) {
         <Text size="L400">{t('features:create-chat.user_id')}</Text>
         <Input
           defaultValue={defaultUserId}
-          placeholder="@username:server"
+          placeholder={t('features:create-chat.username_server')}
           name="userIdInput"
           variant="SurfaceVariant"
           size="500"

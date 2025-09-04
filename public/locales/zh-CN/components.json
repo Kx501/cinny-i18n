@@ -109,7 +109,8 @@
 		"invite_user": "邀请用户",
 		"user_id": "用户ID",
 		"reason_optional": "原因（可选）",
-		"invite": "邀请"
+		"invite": "邀请",
+		"username_server": "@u用户名:服务器"
 	},
 	"create-room": {
 		"restricted": "受限",
@@ -267,7 +268,8 @@
 		"exit_formatting": "退出格式",
 		"exit_ctrl": "退出 {hyper}",
 		"enable_markdown": "启用 Markdown",
-		"disable_markdown": "禁用 Markdown"
+		"disable_markdown": "禁用 Markdown",
+		"send_a_message": "发送消息..."
 	},
 	"pdf-viewer": {
 		"zoom_out": "缩小",

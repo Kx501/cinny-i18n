@@ -356,6 +356,7 @@
 			"current_version": "Aktuelle Version: {version}."
 		},
 		"permissions": {
+			"75": "75",
 			"founders": "Gründer",
 			"founding_members_has_all_permissions": "Gründungsmitglieder haben alle Berechtigungen und können nur während des Upgrades geändert werden.",
 			"manage_and_customize_incremental": "Verwalten und anpassen der inkrementellen Berechtigungsstufen für Benutzer.",
@@ -381,7 +382,8 @@
 			"power_levels": "Berechtigungsstufen",
 			"new_power_level": "Neue Berechtigungsstufe",
 			"create_a_new_power_level": "Erstellen Sie eine neue Berechtigungsstufe.",
-			"create": "Erstellen"
+			"create": "Erstellen",
+			"bot": "Bot"
 		},
 		"members": {
 			"members": "Mitglieder",
@@ -474,7 +476,7 @@
 		"no_rooms": "Keine Räume",
 		"no_match_found_for": "Keine Übereinstimmung für \"{query}\" gefunden.",
 		"you_do_not_have_any_rooms": "Sie haben noch keine Räume zum Anzeigen.",
-		"type_for_rooms": "Geben Sie <b>#</b> für Räume, <b>@</b> für DMs und <b>*</b> für Spaces ein. Tastenkombination: <b>{hotkey}</b>"
+		"type_for_rooms": "Geben Sie <b>#</b> für Räume, <b>@</b> für DMs und <b>*</b> für Spaces ein. Tastenkombination: <b>{{hotkey}}</b>"
 	},
 	"add-existing": {
 		"add_existing": "Bestehende hinzufügen",
@@ -594,7 +596,8 @@
 		"end_to_end_encryption": "Ende-zu-Ende-Verschlüsselung",
 		"once_this_feature_is_enabled": "Sobald diese Funktion aktiviert ist, kann sie nach der Raumerstellung nicht mehr deaktiviert werden.",
 		"server_rate_limited": "Server hat Ihre Anfrage für {minutes} Minuten begrenzt!",
-		"create": "Erstellen"
+		"create": "Erstellen",
+		"username_server": "@Benutzername:Server"
 	},
 	"create-room": {
 		"create_room": "Raum erstellen",

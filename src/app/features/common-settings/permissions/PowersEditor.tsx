@@ -150,7 +150,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
             <Input
               name="nameInput"
               defaultValue={tag?.name}
-              placeholder="Bot"
+              placeholder={t('features:common-settings.permissions.bot')}
               size="300"
               variant="Secondary"
               radii="300"
@@ -166,7 +166,7 @@ function EditPower({ maxPower, power, tag, onSave, onClose }: EditPowerProps) {
               variant={typeof power === 'number' ? 'SurfaceVariant' : 'Secondary'}
               radii="300"
               type="number"
-              placeholder="75"
+              placeholder={t('features:common-settings.permissions.75')}
               max={supportCreators ? undefined : maxPower}
               outlined={typeof power === 'number'}
               readOnly={typeof power === 'number'}
