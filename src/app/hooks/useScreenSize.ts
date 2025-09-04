@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useElementSizeObserver } from './useElementSizeObserver';
 
 export const TABLET_BREAKPOINT = 1124;
@@ -27,13 +28,24 @@ export const useScreenSize = (): ScreenSize => {
   return size;
 };
 
+export const useScreenSizeLabels = (): Record<ScreenSize, string> => {
+  const { t } = useTranslation();
+
+  return {
+    [ScreenSize.Desktop]: t('hooks:desktop'),
+    [ScreenSize.Tablet]: t('hooks:tablet'),
+    [ScreenSize.Mobile]: t('hooks:mobile'),
+  };
+};
+
 const ScreenSizeContext = createContext<ScreenSize | null>(null);
 export const ScreenSizeProvider = ScreenSizeContext.Provider;
 
 export const useScreenSizeContext = (): ScreenSize => {
+  const { t } = useTranslation();
   const screenSize = useContext(ScreenSizeContext);
   if (screenSize === null) {
-    throw new Error('Screen size not provided!');
+    throw new Error(t('hooks:screen_size_not_provided'));
   }
   return screenSize;
 };

@@ -1352,7 +1352,6 @@ export function RoomTimeline({ room, eventId, roomInputRef, editor }: RoomTimeli
             dateFormatString={dateFormatString}
           />
         );
-
         return (
           <Event
             key={mEvent.getId()}
@@ -1374,7 +1373,7 @@ export function RoomTimeline({ room, eventId, roomInputRef, editor }: RoomTimeli
                 <Box grow="Yes" direction="Column">
                   <Text size="T300" priority="300">
                     <b>{senderName}</b>
-                    {' changed room name'}
+                    {t('features:room._changed_room_name_')}
                   </Text>
                 </Box>
               }
@@ -1395,7 +1394,6 @@ export function RoomTimeline({ room, eventId, roomInputRef, editor }: RoomTimeli
             dateFormatString={dateFormatString}
           />
         );
-
         return (
           <Event
             key={mEvent.getId()}
@@ -1417,7 +1415,7 @@ export function RoomTimeline({ room, eventId, roomInputRef, editor }: RoomTimeli
                 <Box grow="Yes" direction="Column">
                   <Text size="T300" priority="300">
                     <b>{senderName}</b>
-                    {' changed room topic'}
+                    {t('features:room._changed_room_topic_')}
                   </Text>
                 </Box>
               }
@@ -1438,7 +1436,6 @@ export function RoomTimeline({ room, eventId, roomInputRef, editor }: RoomTimeli
             dateFormatString={dateFormatString}
           />
         );
-
         return (
           <Event
             key={mEvent.getId()}
@@ -1460,7 +1457,7 @@ export function RoomTimeline({ room, eventId, roomInputRef, editor }: RoomTimeli
                 <Box grow="Yes" direction="Column">
                   <Text size="T300" priority="300">
                     <b>{senderName}</b>
-                    {' changed room avatar'}
+                    {t('features:room._changed_room_avatar_')}
                   </Text>
                 </Box>
               }
@@ -1483,7 +1480,6 @@ export function RoomTimeline({ room, eventId, roomInputRef, editor }: RoomTimeli
           dateFormatString={dateFormatString}
         />
       );
-
       return (
         <Event
           key={mEvent.getId()}
@@ -1505,9 +1501,9 @@ export function RoomTimeline({ room, eventId, roomInputRef, editor }: RoomTimeli
               <Box grow="Yes" direction="Column">
                 <Text size="T300" priority="300">
                   <b>{senderName}</b>
-                  {' sent '}
+                  {t('features:room._sent_')}
                   <code className={customHtmlCss.Code}>{mEvent.getType()}</code>
-                  {' state event'}
+                  {t('features:room._state_event')}
                 </Text>
               </Box>
             }
@@ -1555,9 +1551,9 @@ export function RoomTimeline({ room, eventId, roomInputRef, editor }: RoomTimeli
               <Box grow="Yes" direction="Column">
                 <Text size="T300" priority="300">
                   <b>{senderName}</b>
-                  {' sent '}
+                  {t('features:room._sent_')}
                   <code className={customHtmlCss.Code}>{mEvent.getType()}</code>
-                  {' event'}
+                  {t('features:room._event')}
                 </Text>
               </Box>
             }

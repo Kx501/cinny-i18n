@@ -1,4 +1,4 @@
-# Cinny
+# Cinny-i18n
 <p>
     <a href="https://github.com/ajbura/cinny/releases">
         <img alt="GitHub release downloads" src="https://img.shields.io/github/downloads/ajbura/cinny/total?logo=github&style=social"></a>
@@ -12,8 +12,12 @@
         <img alt="Sponsor Cinny" src="https://img.shields.io/opencollective/all/cinny?logo=opencollective&style=social"></a>
 </p>
 
+A fork of [Cinny](https://github.com/ajbura/cinny) with enhanced internationalization support.
+
 A Matrix client focusing primarily on simple, elegant and secure interface. The main goal is to have an instant messaging application that is easy on people and has a modern touch.
-- [Roadmap](https://github.com/orgs/cinnyapp/projects/1)
+
+- [Original Cinny Repository](https://github.com/ajbura/cinny)
+- [i18n Documentation](./docs/i18n-guide.md)
 - [Contributing](./CONTRIBUTING.md)
 
 <img align="center" src="https://raw.githubusercontent.com/cinnyapp/cinny-site/main/assets/preview2-light.png" height="380">

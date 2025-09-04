@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MessageLayout } from '../state/settings';
 
 export type MessageLayoutItem = {
@@ -6,21 +7,24 @@ export type MessageLayoutItem = {
   layout: MessageLayout;
 };
 
-export const useMessageLayoutItems = (): MessageLayoutItem[] =>
-  useMemo(
+export const useMessageLayoutItems = (): MessageLayoutItem[] => {
+  const { t } = useTranslation();
+
+  return useMemo(
     () => [
       {
         layout: MessageLayout.Modern,
-        name: 'Modern',
+        name: t('hooks:modern'),
       },
       {
         layout: MessageLayout.Compact,
-        name: 'Compact',
+        name: t('hooks:compact'),
       },
       {
         layout: MessageLayout.Bubble,
-        name: 'Bubble',
+        name: t('hooks:bubble'),
       },
     ],
-    []
+    [t]
   );
+};

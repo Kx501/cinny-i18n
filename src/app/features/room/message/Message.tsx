@@ -131,13 +131,13 @@ export const MessageAllReactionItem = as<
     onClose?: () => void;
   }
 >(({ room, relations, onClose, ...props }, ref) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
     onClose?.();
   };
-  const { t } = useTranslation();
   return (
     <>
       <Overlay
@@ -192,13 +192,13 @@ export const MessageReadReceiptItem = as<
     onClose?: () => void;
   }
 >(({ room, eventId, onClose, ...props }, ref) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
     onClose?.();
   };
-  const { t } = useTranslation();
   return (
     <>
       <Overlay open={open} backdrop={<OverlayBackdrop />}>
@@ -242,6 +242,7 @@ export const MessageSourceCodeItem = as<
     onClose?: () => void;
   }
 >(({ room, mEvent, onClose, ...props }, ref) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const getContent = (evt: MatrixEvent) =>
@@ -276,7 +277,6 @@ export const MessageSourceCodeItem = as<
     setOpen(false);
     onClose?.();
   };
-  const { t } = useTranslation();
   return (
     <>
       <Overlay open={open} backdrop={<OverlayBackdrop />}>
@@ -325,6 +325,7 @@ export const MessageCopyLinkItem = as<
     onClose?: () => void;
   }
 >(({ room, mEvent, onClose, ...props }, ref) => {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
 
   const handleCopy = () => {
@@ -335,7 +336,6 @@ export const MessageCopyLinkItem = as<
     copyToClipboard(getMatrixToRoomEvent(roomIdOrAlias, eventId, viaServers));
     onClose?.();
   };
-  const { t } = useTranslation();
   return (
     <MenuItem
       size="300"
@@ -360,6 +360,7 @@ export const MessagePinItem = as<
     onClose?: () => void;
   }
 >(({ room, mEvent, onClose, ...props }, ref) => {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const pinnedEvents = useRoomPinnedEvents(room);
   const isPinned = pinnedEvents.includes(mEvent.getId() ?? '');
@@ -375,7 +376,6 @@ export const MessagePinItem = as<
     mx.sendStateEvent(room.roomId, StateEvent.RoomPinnedEvents as any, pinContent);
     onClose?.();
   };
-  const { t } = useTranslation();
   return (
     <MenuItem
       size="300"
@@ -400,6 +400,7 @@ export const MessageDeleteItem = as<
     onClose?: () => void;
   }
 >(({ room, mEvent, onClose, ...props }, ref) => {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const [open, setOpen] = useState(false);
 
@@ -430,7 +431,6 @@ export const MessageDeleteItem = as<
     setOpen(false);
     onClose?.();
   };
-  const { t } = useTranslation();
   return (
     <>
       <Overlay open={open} backdrop={<OverlayBackdrop />}>
@@ -529,6 +529,7 @@ export const MessageReportItem = as<
     onClose?: () => void;
   }
 >(({ room, mEvent, onClose, ...props }, ref) => {
+  const { t } = useTranslation();
   const mx = useMatrixClient();
   const [open, setOpen] = useState(false);
 
@@ -560,7 +561,6 @@ export const MessageReportItem = as<
     setOpen(false);
     onClose?.();
   };
-  const { t } = useTranslation();
   return (
     <>
       <Overlay open={open} backdrop={<OverlayBackdrop />}>
@@ -871,8 +871,8 @@ export const Message = as<'div', MessageProps>(
       }, 100);
     };
 
-    const isThreadedMessage = mEvent.threadRootId !== undefined;
     const { t } = useTranslation();
+    const isThreadedMessage = mEvent.threadRootId !== undefined;
     return (
       <MessageBase
         className={classNames(css.MessageBase, className)}

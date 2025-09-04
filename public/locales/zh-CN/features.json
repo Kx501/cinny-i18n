@@ -579,6 +579,12 @@
 		"enter": "输入"
 	},
 	"room": {
+		"_changed_room_name_": " 更改了房间名称",
+		"_changed_room_topic_": " 更改了房间主题",
+		"_changed_room_avatar_": " 更改了房间头像",
+		"_sent_": " 发送了 ",
+		"_state_event": " 状态事件",
+		"_event": " 事件",
 		"mark_as_read": "标记为已读",
 		"notifications": "通知",
 		"invite": "邀请",

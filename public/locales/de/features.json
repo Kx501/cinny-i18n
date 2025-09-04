@@ -492,6 +492,12 @@
 		"apply_changes": "Änderungen anwenden"
 	},
 	"room": {
+		"_changed_room_name_": " hat den Raumnamen geändert",
+		"_changed_room_topic_": " hat den Raumthema geändert",
+		"_changed_room_avatar_": " hat das Raumavatar geändert",
+		"_sent_": " hat gesendet ",
+		"_state_event": " Statusereignis",
+		"_event": " Ereignis",
 		"mark_as_read": "Als gelesen markieren",
 		"notifications": "Benachrichtigungen",
 		"invite": "Einladen",

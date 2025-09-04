@@ -1,5 +1,6 @@
 import { lightTheme } from 'folds';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { onDarkFontWeight, onLightFontWeight } from '../../config.css';
 import { butterTheme, darkTheme, silverTheme } from '../../colors.css';
 import { settingsAtom } from '../state/settings';
@@ -44,16 +45,19 @@ export const useThemes = (): Theme[] => {
   return themes;
 };
 
-export const useThemeNames = (): Record<string, string> =>
-  useMemo(
+export const useThemeNames = (): Record<string, string> => {
+  const { t } = useTranslation();
+
+  return useMemo(
     () => ({
-      [LightTheme.id]: 'Light',
-      [SilverTheme.id]: 'Silver',
-      [DarkTheme.id]: 'Dark',
-      [ButterTheme.id]: 'Butter',
+      [LightTheme.id]: t('hooks:light'),
+      [SilverTheme.id]: t('hooks:silver'),
+      [DarkTheme.id]: t('hooks:dark'),
+      [ButterTheme.id]: t('hooks:butter'),
     }),
-    []
+    [t]
   );
+};
 
 export const useSystemThemeKind = (): ThemeKind => {
   const darkModeQueryList = useMemo(() => window.matchMedia('(prefers-color-scheme: dark)'), []);
@@ -101,9 +105,10 @@ const ThemeContext = createContext<Theme | null>(null);
 export const ThemeContextProvider = ThemeContext.Provider;
 
 export const useTheme = (): Theme => {
+  const { t } = useTranslation();
   const theme = useContext(ThemeContext);
   if (!theme) {
-    throw new Error('No theme provided!');
+    throw new Error(t('hooks:no_theme_provided'));
   }
 
   return theme;

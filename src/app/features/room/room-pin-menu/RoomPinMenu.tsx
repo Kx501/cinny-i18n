@@ -112,6 +112,7 @@ function PinnedMessage({
   hour24Clock,
   dateFormatString,
 }: PinnedMessageProps) {
+  const { t } = useTranslation();
   const pinnedEvent = useRoomEvent(room, eventId);
   const useAuthentication = useMediaAuthentication();
   const mx = useMatrixClient();
@@ -139,7 +140,6 @@ function PinnedMessage({
     evt.stopPropagation();
     unpin();
   };
-  const { t } = useTranslation();
   const renderOptions = () => (
     <Box shrink="No" gap="200" alignItems="Center">
       <Chip data-event-id={eventId} onClick={handleOpenClick} variant="Secondary" radii="Pill">

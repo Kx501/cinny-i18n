@@ -42,7 +42,7 @@ export function HomeSearch() {
           <PageContent>
             <PageContentCenter>
               <MessageSearch
-                defaultRoomsFilterName="Home"
+                defaultRoomsFilterName={t('pages:client.home.home')}
                 allowGlobal
                 rooms={rooms}
                 scrollRef={scrollRef}

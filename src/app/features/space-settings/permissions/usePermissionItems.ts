@@ -4,8 +4,8 @@ import { StateEvent } from '../../../../types/matrix/room';
 import { PermissionGroup } from '../../common-settings/permissions';
 
 export const usePermissionGroups = (): PermissionGroup[] => {
+  const { t } = useTranslation();
   const groups: PermissionGroup[] = useMemo(() => {
-    const { t } = useTranslation();
     const messagesGroup: PermissionGroup = {
       name: t('features:space-settings.permissions.manage'),
       items: [
@@ -144,7 +144,7 @@ export const usePermissionGroups = (): PermissionGroup[] => {
       roomSettingsGroup,
       otherSettingsGroup,
     ];
-  }, []);
+  }, [t]);
 
   return groups;
 };

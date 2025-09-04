@@ -9,7 +9,7 @@ export type DateFormatItem = {
 
 export const useDateFormatItems = (): DateFormatItem[] => {
   const { t } = useTranslation();
-  
+
   return useMemo(
     () => [
       {

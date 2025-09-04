@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { IconSrc, Icons } from 'folds';
 import { MatrixEvent } from 'matrix-js-sdk';
+import { useTranslation } from 'react-i18next';
 import { IMemberContent, Membership } from '../../types/matrix/room';
 import { getMxIdLocalPart } from '../utils/matrix';
 import { isMembershipChanged } from '../utils/room';
@@ -13,6 +14,8 @@ export type ParsedResult = {
 export type MemberEventParser = (mEvent: MatrixEvent) => ParsedResult;
 
 export const useMemberEventParser = (): MemberEventParser => {
+  const { t } = useTranslation();
+
   const parseMemberEvent: MemberEventParser = (mEvent) => {
     const content = mEvent.getContent<IMemberContent>();
     const prevContent = mEvent.getPrevContent() as IMemberContent;
@@ -23,7 +26,7 @@ export const useMemberEventParser = (): MemberEventParser => {
     if (!senderId || !userId)
       return {
         icon: Icons.User,
-        body: 'Broken membership event',
+        body: t('hooks:broken_membership_event'),
       };
 
     const senderName = getMxIdLocalPart(senderId);
@@ -40,9 +43,9 @@ export const useMemberEventParser = (): MemberEventParser => {
             body: (
               <>
                 <b>{senderName}</b>
-                {' accepted '}
+                {t('hooks:_accepted_')}
                 <b>{userName}</b>
-                {`'s join request `}
+                {t('hooks:s_join_request_')}
                 {reason}
               </>
             ),
@@ -54,7 +57,7 @@ export const useMemberEventParser = (): MemberEventParser => {
           body: (
             <>
               <b>{senderName}</b>
-              {' invited '}
+              {t('hooks:_invited_')}
               <b>{userName}</b> {reason}
             </>
           ),
@@ -67,7 +70,7 @@ export const useMemberEventParser = (): MemberEventParser => {
           body: (
             <>
               <b>{userName}</b>
-              {' request to join room '}
+              {t('hooks:_request_to_join_room_')}
               {reason}
             </>
           ),
@@ -80,7 +83,7 @@ export const useMemberEventParser = (): MemberEventParser => {
           body: (
             <>
               <b>{userName}</b>
-              {' joined the room'}
+              {t('hooks:_joined_the_room_')}
             </>
           ),
         };
@@ -94,15 +97,15 @@ export const useMemberEventParser = (): MemberEventParser => {
               senderId === userId ? (
                 <>
                   <b>{userName}</b>
-                  {' rejected the invitation '}
+                  {t('hooks:_rejected_the_invitation_')}
                   {reason}
                 </>
               ) : (
                 <>
                   <b>{senderName}</b>
-                  {' rejected '}
+                  {t('hooks:_rejected_')}
                   <b>{userName}</b>
-                  {`'s join request `}
+                  {t('hooks:s_join_request_')}
                   {reason}
                 </>
               ),
@@ -116,15 +119,15 @@ export const useMemberEventParser = (): MemberEventParser => {
               senderId === userId ? (
                 <>
                   <b>{userName}</b>
-                  {' revoked joined request '}
+                  {t('hooks:_revoked_joined_request_')}
                   {reason}
                 </>
               ) : (
                 <>
                   <b>{senderName}</b>
-                  {' revoked '}
+                  {t('hooks:_revoked_')}
                   <b>{userName}</b>
-                  {`'s invite `}
+                  {t('hooks:s_invite_')}
                   {reason}
                 </>
               ),
@@ -137,7 +140,7 @@ export const useMemberEventParser = (): MemberEventParser => {
             body: (
               <>
                 <b>{senderName}</b>
-                {' unbanned '}
+                {t('hooks:_unbanned_')}
                 <b>{userName}</b> {reason}
               </>
             ),
@@ -150,13 +153,13 @@ export const useMemberEventParser = (): MemberEventParser => {
             senderId === userId ? (
               <>
                 <b>{userName}</b>
-                {' left the room '}
+                {t('hooks:_left_the_room_')}
                 {reason}
               </>
             ) : (
               <>
                 <b>{senderName}</b>
-                {' kicked '}
+                {t('hooks:_kicked_')}
                 <b>{userName}</b> {reason}
               </>
             ),
@@ -169,7 +172,7 @@ export const useMemberEventParser = (): MemberEventParser => {
           body: (
             <>
               <b>{senderName}</b>
-              {' banned '}
+              {t('hooks:_banned_')}
               <b>{userName}</b> {reason}
             </>
           ),
@@ -189,13 +192,13 @@ export const useMemberEventParser = (): MemberEventParser => {
           typeof content.displayname === 'string' ? (
             <>
               <b>{prevUserName}</b>
-              {' changed display name to '}
+              {t('hooks:_changed_display_name_to_')}
               <b>{userName}</b>
             </>
           ) : (
             <>
               <b>{prevUserName}</b>
-              {' removed their display name '}
+              {t('hooks:_removed_their_display_name_')}
             </>
           ),
       };
@@ -207,12 +210,12 @@ export const useMemberEventParser = (): MemberEventParser => {
           content.avatar_url && typeof content.avatar_url === 'string' ? (
             <>
               <b>{userName}</b>
-              {' changed their avatar'}
+              {t('hooks:_changed_their_avatar_')}
             </>
           ) : (
             <>
               <b>{userName}</b>
-              {' removed their avatar '}
+              {t('hooks:_removed_their_avatar_')}
             </>
           ),
       };
@@ -220,7 +223,7 @@ export const useMemberEventParser = (): MemberEventParser => {
 
     return {
       icon: Icons.User,
-      body: 'Membership event with no changes',
+      body: t('hooks:membership_event_with_no_changes'),
     };
   };
 

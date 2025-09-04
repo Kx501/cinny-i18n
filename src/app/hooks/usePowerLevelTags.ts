@@ -1,5 +1,6 @@
 import { Room } from 'matrix-js-sdk';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPowerLevels } from './usePowerLevels';
 import { useStateEvent } from './useStateEvent';
 import { MemberPowerTag, StateEvent } from '../../types/matrix/room';
@@ -45,64 +46,66 @@ export const getUsedPowers = (powerLevels: IPowerLevels): Set<number> => {
   return powers;
 };
 
-const DEFAULT_TAGS: PowerLevelTags = {
+const getDefaultTags = (t: (key: string) => string): PowerLevelTags => ({
   9001: {
-    name: 'Goku',
+    name: t('hooks:goku'),
     color: '#ff6a00',
   },
   150: {
-    name: 'Manager',
+    name: t('hooks:manager'),
     color: '#ff6a7f',
   },
   101: {
-    name: 'Founder',
+    name: t('hooks:founder'),
     color: '#0000ff',
   },
   100: {
-    name: 'Admin',
+    name: t('hooks:admin'),
     color: '#0088ff',
   },
   50: {
-    name: 'Moderator',
+    name: t('hooks:moderator'),
     color: '#1fd81f',
   },
   0: {
-    name: 'Member',
+    name: t('hooks:member'),
     color: '#91cfdf',
   },
   [-1]: {
-    name: 'Muted',
+    name: t('hooks:muted'),
     color: '#888888',
   },
-};
+});
 
-const generateFallbackTag = (powerLevelTags: PowerLevelTags, power: number): MemberPowerTag => {
+const generateFallbackTag = (powerLevelTags: PowerLevelTags, power: number, t: (key: string) => string): MemberPowerTag => {
   const highToLow = sortPowers(getPowers(powerLevelTags));
 
   const tagPower = highToLow.find((p) => p < power);
   const tag = typeof tagPower === 'number' ? powerLevelTags[tagPower] : undefined;
 
   return {
-    name: tag ? `${tag.name} ${power}` : `Team ${power}`,
+    name: tag ? `${tag.name} ${power}` : `${t('hooks:team')} ${power}`,
   };
 };
 
 export const usePowerLevelTags = (room: Room, powerLevels: IPowerLevels): PowerLevelTags => {
   const tagsEvent = useStateEvent(room, StateEvent.PowerLevelTags);
+  const { t } = useTranslation();
 
   const powerLevelTags: PowerLevelTags = useMemo(() => {
     const content = tagsEvent?.getContent<PowerLevelTags>();
     const powerToTags: PowerLevelTags = { ...content };
+    const defaultTags = getDefaultTags(t);
 
     const powers = getUsedPowers(powerLevels);
     Array.from(powers).forEach((power) => {
       if (powerToTags[power]?.name === undefined) {
-        powerToTags[power] = DEFAULT_TAGS[power] ?? generateFallbackTag(DEFAULT_TAGS, power);
+        powerToTags[power] = defaultTags[power] ?? generateFallbackTag(defaultTags, power, t);
       }
     });
 
     return powerToTags;
-  }, [powerLevels, tagsEvent]);
+  }, [powerLevels, tagsEvent, t]);
 
   return powerLevelTags;
 };
@@ -112,5 +115,5 @@ export const getPowerLevelTag = (
   powerLevel: number
 ): MemberPowerTag => {
   const tag: MemberPowerTag | undefined = powerLevelTags[powerLevel];
-  return tag ?? generateFallbackTag(powerLevelTags, powerLevel);
+  return tag ?? { name: `Team ${powerLevel}` };
 };
