@@ -94,6 +94,7 @@
 		"connecting": "Verbinde...",
 		"connection_lost_reconnecting": "Verbindung verloren! Verbinde neu...",
 		"connection_lost": "Verbindung verloren!",
+		"unknown": "Unbekannt",
 		"home": {
 			"home": "Startseite",
 			"mark_as_read": "Als gelesen markieren",

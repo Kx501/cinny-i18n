@@ -76,6 +76,13 @@
 	"okay": "Okay",
 	"verification_has_been_canceled": "Die Verifizierung wurde abgebrochen.",
 	"unexpected_error_verification_is_started": "Unerwarteter Fehler! Die Verifizierung wurde gestartet, aber der Verifizierer fehlt.",
+	"invite_only": "Nur auf Einladung",
+	"knock_invite": "Klopfen & Einladen",
+	"space_members_or_knock": "Raum-Mitglieder oder Klopfen",
+	"space_members": "Raum-Mitglieder",
+	"public": "Öffentlich",
+	"unsupported": "Nicht unterstützt",
+	"verify": "Verifizieren",
 	"user-profile": {
 		"copy_server": "Server kopieren",
 		"explore_community": "Community erkunden",
@@ -173,7 +180,11 @@
 		"name": "Name",
 		"attribution": "Zuschreibung",
 		"save": "Speichern",
-		"cancel": "Abbrechen"
+		"cancel": "Abbrechen",
+		"unknown": "Unbekannt",
+		"both": "Beides",
+		"sticker": "Aufkleber",
+		"emoji": "Emoji"
 	},
 	"room-card": {
 		"cancel": "Abbrechen",
@@ -199,7 +210,15 @@
 		"search_results": "Suchergebnisse",
 		"no_results_found": "Keine Ergebnisse gefunden.",
 		"no_sticker_packs": "Keine Aufkleber-Pakete!",
-		"add_stickers_from_user_room": "Fügen Sie Aufkleber aus Benutzer-, Raum- oder Raumeinstellungen hinzu."
+		"add_stickers_from_user_room": "Fügen Sie Aufkleber aus Benutzer-, Raum- oder Raumeinstellungen hinzu.",
+		"smileys_people": "Smileys & Personen",
+		"animals_nature": "Tiere & Natur",
+		"food_drinks": "Essen & Trinken",
+		"activity": "Aktivität",
+		"travel_places": "Reisen & Orte",
+		"objects": "Gegenstände",
+		"symbols": "Symbole",
+		"flags": "Flaggen"
 	},
 	"message": {
 		"content": {
@@ -217,7 +236,8 @@
 		"open_file": "Datei öffnen",
 		"play": "Abspielen",
 		"pause": "Pause",
-		"spoiler": "Spoiler"
+		"spoiler": "Spoiler",
+		"unknown": "Unbekannt"
 	},
 	"time-date": {
 		"hour": "Stunde",
@@ -247,7 +267,10 @@
 		"enter_public_address": "Geben Sie die öffentliche Adresse ein, um der Community beizutreten. Adressen sehen so aus:",
 		"address": "Adresse",
 		"invalid_address": "Ungültige Adresse",
-		"open": "Öffnen"
+		"open": "Öffnen",
+		"community_server": "#community:server",
+		"https_matrix_to_community_server": "https://matrix.to/#/#community:server",
+		"https_matrix_to": "https://matrix.to/#/!xYzAj?via=server"
 	},
 	"leave-room-prompt": {
 		"leave_room": "Raum verlassen",
@@ -267,6 +290,9 @@
 		"seen_by": "Gesehen von"
 	},
 	"editor": {
+		"autocomplete": {
+			"unknown_room": "Unbekanntes Raum"
+		},
 		"heading_1": "Überschrift 1",
 		"heading_2": "Überschrift 2",
 		"heading_3": "Überschrift 3",

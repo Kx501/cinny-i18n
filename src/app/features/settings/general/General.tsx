@@ -60,8 +60,7 @@ type LanguageSelectorProps = {
 
 function LanguageSelector({ disabled }: LanguageSelectorProps) {
   const { i18n } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [menuCords, setMenuCords] = useState<RectCords>();
 
   // Get current language - directly calculate from i18n.language, let React automatically respond to changes
   const currentLanguage = SUPPORTED_LANGUAGES.find(
@@ -70,54 +69,26 @@ function LanguageSelector({ disabled }: LanguageSelectorProps) {
     (lang) => i18n.language.startsWith(lang.code)
   ) || SUPPORTED_LANGUAGES[0];
 
-  // Listen for language change events
-  useEffect(() => {
-    const handleLanguageChanged = () => {
-      // Force re-render when language changes
-    };
-
-    i18n.on('languageChanged', handleLanguageChanged);
-
-    return () => {
-      i18n.off('languageChanged', handleLanguageChanged);
-    };
-  }, [i18n]);
-
   // Handle menu open/close
   const handleMenuToggle: MouseEventHandler<HTMLButtonElement> = (evt) => {
-    evt.stopPropagation();
-    setIsOpen(!isOpen);
+    if (menuCords) {
+      setMenuCords(undefined);
+    } else {
+      setMenuCords(evt.currentTarget.getBoundingClientRect());
+    }
   };
 
   // Handle language selection
   const handleLanguageSelect = (languageCode: string) => {
-    setIsOpen(false);
+    setMenuCords(undefined);
     i18n.changeLanguage(languageCode).catch((error) => {
       console.error('Language change failed:', error);
     });
   };
 
-  // Handle clicking outside to close menu
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
-
   return (
-    <Box style={{ position: 'relative' }}>
+    <>
       <Button
-        ref={buttonRef}
         size="300"
         variant="Primary"
         outlined
@@ -125,46 +96,57 @@ function LanguageSelector({ disabled }: LanguageSelectorProps) {
         radii="300"
         disabled={disabled}
         onClick={handleMenuToggle}
-        onMouseDown={(e) => e.stopPropagation()}
         after={<Icon size="300" src={Icons.ChevronBottom} />}
       >
         <Text size="T300">{currentLanguage.nativeName}</Text>
       </Button>
-
-      {isOpen && (
-        <Box
-          style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            zIndex: 1000,
-            marginTop: '4px',
-          }}
-        >
-          <Menu>
-            <Box direction="Column" gap="100" style={{ padding: config.space.S100 }}>
-              {SUPPORTED_LANGUAGES.map((language) => (
-                <MenuItem
-                  key={language.code}
-                  size="300"
-                  variant={language.code === currentLanguage.code ? 'Primary' : 'Surface'}
-                  radii="300"
-                  onMouseDown={(e) => e.stopPropagation()}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleLanguageSelect(language.code);
-                  }}
-                >
-                  <Text size="T300">{language.nativeName}</Text>
-                </MenuItem>
-              ))}
-            </Box>
-          </Menu>
-        </Box>
-      )}
-    </Box>
+      <PopOut
+        anchor={menuCords}
+        offset={5}
+        position="Bottom"
+        align="End"
+        content={
+          <FocusTrap
+            focusTrapOptions={{
+              initialFocus: false,
+              onDeactivate: () => setMenuCords(undefined),
+              clickOutsideDeactivates: true,
+              isKeyForward: (evt: KeyboardEvent) =>
+                evt.key === 'ArrowDown' || evt.key === 'ArrowRight',
+              isKeyBackward: (evt: KeyboardEvent) =>
+                evt.key === 'ArrowUp' || evt.key === 'ArrowLeft',
+              escapeDeactivates: stopPropagation,
+            }}
+          >
+            <Menu>
+              <Scroll
+                style={{
+                  maxHeight: '300px',
+                }}
+                variant="Surface"
+                size="300"
+                visibility="Hover"
+                hideTrack
+              >
+                <Box direction="Column" gap="100" style={{ padding: config.space.S100 }}>
+                  {SUPPORTED_LANGUAGES.map((language) => (
+                    <MenuItem
+                      key={language.code}
+                      size="300"
+                      variant={language.code === currentLanguage.code ? 'Primary' : 'Surface'}
+                      radii="300"
+                      onClick={() => handleLanguageSelect(language.code)}
+                    >
+                      <Text size="T300" style={{ whiteSpace: 'nowrap' }}>{language.nativeName}</Text>
+                    </MenuItem>
+                  ))}
+                </Box>
+              </Scroll>
+            </Menu>
+          </FocusTrap>
+        }
+      />
+    </>
   );
 }
 

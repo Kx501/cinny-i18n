@@ -13,7 +13,7 @@ public/locales/
 │   ├── pages.json            # Page translations
 │   └── util.json             # Utility translations
 ├── zh-CN/                    # Chinese translation files
-└── de/                       # German translation files
+└── de-DE/                    # German translation files
 ```
 
 ## Translation Key Naming Convention

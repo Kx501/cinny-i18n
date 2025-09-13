@@ -192,7 +192,7 @@ export function SecretStorageRecoveryKey({
             before={loading && <Spinner size="200" variant="Success" fill="Solid" />}
           >
             <Text as="span" size="B400">
-              Verify
+              {t('components:verify')}
             </Text>
           </Button>
         </Box>

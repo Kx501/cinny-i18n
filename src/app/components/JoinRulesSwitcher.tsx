@@ -15,6 +15,7 @@ import {
 } from 'folds';
 import { JoinRule } from 'matrix-js-sdk';
 import FocusTrap from 'focus-trap-react';
+import { useTranslation } from 'react-i18next';
 import { stopPropagation } from '../utils/keyboard';
 
 export type ExtraJoinRules = 'knock_restricted';
@@ -47,18 +48,20 @@ export const useSpaceJoinRuleIcon = (): JoinRuleIcons =>
   );
 
 type JoinRuleLabels = Record<ExtendedJoinRules, string>;
-export const useRoomJoinRuleLabel = (): JoinRuleLabels =>
-  useMemo(
+export const useRoomJoinRuleLabel = (): JoinRuleLabels => {
+  const { t } = useTranslation();
+  return useMemo(
     () => ({
-      [JoinRule.Invite]: 'Invite Only',
-      [JoinRule.Knock]: 'Knock & Invite',
-      knock_restricted: 'Space Members or Knock',
-      [JoinRule.Restricted]: 'Space Members',
-      [JoinRule.Public]: 'Public',
-      [JoinRule.Private]: 'Invite Only',
+      [JoinRule.Invite]: t('components:invite_only'),
+      [JoinRule.Knock]: t('components:knock_invite'),
+      knock_restricted: t('components:space_members_or_knock'),
+      [JoinRule.Restricted]: t('components:space_members'),
+      [JoinRule.Public]: t('components:public'),
+      [JoinRule.Private]: t('components:invite_only'),
     }),
-    []
+    [t]
   );
+};
 
 type JoinRulesSwitcherProps<T extends ExtendedJoinRules[]> = {
   icons: JoinRuleIcons;
@@ -78,6 +81,7 @@ export function JoinRulesSwitcher<T extends ExtendedJoinRules[]>({
   disabled,
   changing,
 }: JoinRulesSwitcherProps<T>) {
+  const { t } = useTranslation();
   const [cords, setCords] = useState<RectCords>();
 
   const handleOpenMenu: MouseEventHandler<HTMLButtonElement> = (evt) => {
@@ -148,7 +152,7 @@ export function JoinRulesSwitcher<T extends ExtendedJoinRules[]>({
         onClick={handleOpenMenu}
         disabled={disabled}
       >
-        <Text size="B300">{labels[value] ?? 'Unsupported'}</Text>
+        <Text size="B300">{labels[value] ?? t('components:unsupported')}</Text>
       </Button>
     </PopOut>
   );

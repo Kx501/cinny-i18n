@@ -17,7 +17,7 @@ A fork of [Cinny](https://github.com/ajbura/cinny) with enhanced internationaliz
 A Matrix client focusing primarily on simple, elegant and secure interface. The main goal is to have an instant messaging application that is easy on people and has a modern touch.
 
 - [Original Cinny Repository](https://github.com/ajbura/cinny)
-- [i18n Documentation](./docs/i18n-guide.md) ([中文](./docs/i18n-guide-zh.md))
+- [i18n Guide Documentation](./docs/i18n-guide.md) ([中文](./docs/i18n-guide-zh.md))
 - [Contributing](./CONTRIBUTING.md)
 
 ## Translation Status
@@ -25,10 +25,10 @@ A Matrix client focusing primarily on simple, elegant and secure interface. The 
 This fork includes enhanced internationalization support with the following language coverage:
 
 - **English (en-US)**: Complete - Original language
-- **Chinese Simplified (zh-CN)**: Complete - Machine translated and manually reviewed
-- **German (de)**: Complete - Machine translated
+- **Chinese Simplified (zh-CN)**: Complete - Machine translated
+- **German (de-DE)**: Complete - Machine translated
 
-**Note**: Chinese and German translations are primarily machine-translated using AI tools and have been manually reviewed for accuracy. Some translations may need further refinement based on user feedback.
+**Note**: Chinese and German translations are primarily machine-translated using AI tools. Some translations may need further refinement based on user feedback. Exception and error messages are not translated and remain in English.
 
 <img align="center" src="https://raw.githubusercontent.com/cinnyapp/cinny-site/main/assets/preview2-light.png" height="380">
 

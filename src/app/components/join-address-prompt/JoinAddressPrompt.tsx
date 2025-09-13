@@ -100,9 +100,9 @@ export function JoinAddressPrompt({ onOpen, onCancel }: JoinAddressProps) {
                   {t('components:join-address-prompt.enter_public_address')}
                 </Text>
                 <Text as="ul" size="T200" priority="300" style={{ paddingLeft: config.space.S400 }}>
-                  <li>#community:server</li>
-                  <li>https://matrix.to/#/#community:server</li>
-                  <li>https://matrix.to/#/!xYzAj?via=server</li>
+                  <li>{t('components:join-address-prompt.community_server')}</li>
+                  <li>{t('components:join-address-prompt.https_matrix_to_community_server')}</li>
+                  <li>{t('components:join-address-prompt.https_matrix_to')}</li>
                 </Text>
               </Box>
               <Box direction="Column" gap="100">
@@ -112,7 +112,7 @@ export function JoinAddressPrompt({ onOpen, onCancel }: JoinAddressProps) {
                   autoFocus
                   name="addressInput"
                   variant="Background"
-                  placeholder="#community:server"
+                  placeholder={t('components:join-address-prompt.community_server')}
                   required
                 />
                 {invalid && (

@@ -131,6 +131,7 @@ function InviteNotifications() {
 }
 
 function MessageNotifications() {
+  const { t } = useTranslation();
   const audioRef = useRef<HTMLAudioElement>(null);
   const notifRef = useRef<Notification>();
   const unreadCacheRef = useRef<Map<string, UnreadInfo>>(new Map());
@@ -158,7 +159,7 @@ function MessageNotifications() {
       const noti = new window.Notification(roomName, {
         icon: roomAvatar,
         badge: roomAvatar,
-        body: `New inbox notification from ${username}`,
+        body: `${t('pages:client.new_inbox_notification_from')} ${username}`,
         silent: true,
       });
 
@@ -218,7 +219,7 @@ function MessageNotifications() {
         const avatarMxc =
           room.getAvatarFallbackMember()?.getMxcAvatarUrl() ?? room.getMxcAvatarUrl();
         notify({
-          roomName: room.name ?? 'Unknown',
+          roomName: room.name ?? t('pages:client.unknown'),
           roomAvatar: avatarMxc
             ? mxcUrlToHttp(mx, avatarMxc, useAuthentication, 96, 96, 'crop') ?? undefined
             : undefined,

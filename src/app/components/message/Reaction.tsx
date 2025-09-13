@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Text, as } from 'folds';
 import classNames from 'classnames';
 import { MatrixClient, MatrixEvent, Room } from 'matrix-js-sdk';
+import { useTranslation } from 'react-i18next';
 import * as css from './Reaction.css';
 import { getHexcodeForEmoji, getShortcodeFor } from '../../plugins/emoji';
 import { getMemberDisplayName } from '../../utils/room';
@@ -52,6 +53,7 @@ type ReactionTooltipMsgProps = {
 };
 
 export function ReactionTooltipMsg({ room, reaction, events }: ReactionTooltipMsgProps) {
+  const { t } = useTranslation();
   const shortCodeEvt = events.find(eventWithShortcode);
   const shortcode =
     shortCodeEvt?.getContent().shortcode ??
@@ -59,9 +61,9 @@ export function ReactionTooltipMsg({ room, reaction, events }: ReactionTooltipMs
     reaction;
   const names = events.map(
     (ev: MatrixEvent) =>
-      getMemberDisplayName(room, ev.getSender() ?? 'Unknown') ??
-      getMxIdLocalPart(ev.getSender() ?? 'Unknown') ??
-      'Unknown'
+      getMemberDisplayName(room, ev.getSender() ?? t('components:message.unknown')) ??
+      getMxIdLocalPart(ev.getSender() ?? t('components:message.unknown')) ??
+      t('components:message.unknown')
   );
 
   return (

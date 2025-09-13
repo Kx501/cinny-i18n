@@ -32,13 +32,14 @@ type ImagePackAvatarProps = {
   name?: string;
 };
 function ImagePackAvatar({ url, name }: ImagePackAvatarProps) {
+  const { t } = useTranslation();
   return (
     <Avatar size="500" className={ContainerColor({ variant: 'Secondary' })}>
       {url ? (
-        <AvatarImage src={url} alt={name ?? 'Unknown'} />
+        <AvatarImage src={url} alt={name ?? t('components:image-pack-view.unknown')} />
       ) : (
         <AvatarFallback>
-          <Text size="H2">{nameInitials(name ?? 'Unknown')}</Text>
+          <Text size="H2">{nameInitials(name ?? t('components:image-pack-view.unknown'))}</Text>
         </AvatarFallback>
       )}
     </Avatar>
@@ -63,7 +64,7 @@ export function ImagePackProfile({ meta, canEdit, onEdit }: ImagePackProfileProp
       <Box grow="Yes" direction="Column" gap="300">
         <Box direction="Column" gap="100">
           <Text className={BreakWord} size="H5">
-            {meta.name ?? 'Unknown'}
+            {meta.name ?? t('components:image-pack-view.unknown')}
           </Text>
           {meta.attribution && (
             <Text className={BreakWord} size="T200">
@@ -173,27 +174,27 @@ export function ImagePackProfileEdit({ meta, onCancel, onSave }: ImagePackProfil
               </Button>
               {!avatar && meta.avatar && (
                 <Button
-                type="button"
-                size="300"
-                variant="Success"
-                fill="None"
-                radii="300"
-                onClick={() => setAvatar(meta.avatar)}
-              >
-                <Text size="B300">{t('components:image-pack-view.reset')}</Text>
-              </Button>
+                  type="button"
+                  size="300"
+                  variant="Success"
+                  fill="None"
+                  radii="300"
+                  onClick={() => setAvatar(meta.avatar)}
+                >
+                  <Text size="B300">{t('components:image-pack-view.reset')}</Text>
+                </Button>
               )}
               {avatar && (
                 <Button
-                type="button"
-                size="300"
-                variant="Critical"
-                fill="None"
-                radii="300"
-                onClick={() => setAvatar(undefined)}
-              >
-                <Text size="B300">{t('components:image-pack-view.remove')}</Text>
-              </Button>
+                  type="button"
+                  size="300"
+                  variant="Critical"
+                  fill="None"
+                  radii="300"
+                  onClick={() => setAvatar(undefined)}
+                >
+                  <Text size="B300">{t('components:image-pack-view.remove')}</Text>
+                </Button>
               )}
             </Box>
           )}

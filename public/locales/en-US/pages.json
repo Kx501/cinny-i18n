@@ -94,6 +94,7 @@
 		"connecting": "Connecting...",
 		"connection_lost_reconnecting": "Connection Lost! Reconnecting...",
 		"connection_lost": "Connection Lost!",
+		"unknown": "Unknown",
 		"home": {
 			"home": "Home",
 			"mark_as_read": "Mark as Read",

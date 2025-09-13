@@ -76,6 +76,13 @@
 	"okay": "Okay",
 	"verification_has_been_canceled": "Verification has been canceled.",
 	"unexpected_error_verification_is_started": "Unexpected Error! Verification is started but verifier is missing.",
+	"invite_only": "Invite Only",
+	"knock_invite": "Knock & Invite",
+	"space_members_or_knock": "Space Members or Knock",
+	"space_members": "Space Members",
+	"public": "Public",
+	"unsupported": "Unsupported",
+	"verify": "Verify",
 	"user-profile": {
 		"copy_server": "Copy Server",
 		"explore_community": "Explore Community",
@@ -173,7 +180,11 @@
 		"name": "Name",
 		"attribution": "Attribution",
 		"save": "Save",
-		"cancel": "Cancel"
+		"cancel": "Cancel",
+		"unknown": "Unknown",
+		"both": "Both",
+		"sticker": "Sticker",
+		"emoji": "Emoji"
 	},
 	"room-card": {
 		"cancel": "Cancel",
@@ -199,7 +210,15 @@
 		"search_results": "Search Results",
 		"no_results_found": "No Results found",
 		"no_sticker_packs": "No Sticker Packs!",
-		"add_stickers_from_user_room": "Add stickers from user, room or space settings."
+		"add_stickers_from_user_room": "Add stickers from user, room or space settings.",
+		"smileys_people": "Smileys & People",
+		"animals_nature": "Animals & Nature",
+		"food_drinks": "Food & Drinks",
+		"activity": "Activity",
+		"travel_places": "Travel & Places",
+		"objects": "Objects",
+		"symbols": "Symbols",
+		"flags": "Flags"
 	},
 	"message": {
 		"content": {
@@ -217,7 +236,8 @@
 		"open_file": "Open File",
 		"play": "Play",
 		"pause": "Pause",
-		"spoiler": "Spoiler"
+		"spoiler": "Spoiler",
+		"unknown": "Unknown"
 	},
 	"time-date": {
 		"hour": "Hour",
@@ -247,7 +267,10 @@
 		"enter_public_address": "Enter public address to join the community. Addresses looks like:",
 		"address": "Address",
 		"invalid_address": "Invalid Address",
-		"open": "Open"
+		"open": "Open",
+		"community_server": "#community:server",
+		"https_matrix_to_community_server": "https://matrix.to/#/#community:server",
+		"https_matrix_to": "https://matrix.to/#/!xYzAj?via=server"
 	},
 	"leave-room-prompt": {
 		"leave_room": "Leave Room",
@@ -268,6 +291,9 @@
 		"seen_by": "Seen by"
 	},
 	"editor": {
+		"autocomplete": {
+			"unknown_room": "Unknown Room"
+		},
 		"heading_1": "Heading 1",
 		"heading_2": "Heading 2",
 		"heading_3": "Heading 3",

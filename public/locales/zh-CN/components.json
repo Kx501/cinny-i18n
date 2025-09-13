@@ -76,6 +76,13 @@
 	"okay": "好的",
 	"verification_has_been_canceled": "验证已取消。",
 	"unexpected_error_verification_is_started": "意外错误！验证已开始但缺少验证器。",
+	"invite_only": "仅邀请",
+	"knock_invite": "申请和邀请",
+	"space_members_or_knock": "空间成员或申请",
+	"space_members": "空间成员",
+	"public": "公开",
+	"unsupported": "不支持",
+	"verify": "验证",
 	"user-profile": {
 		"copy_server": "复制服务器",
 		"explore_community": "探索社区",
@@ -120,7 +127,6 @@
 		"open_old_room": "打开旧房间",
 		"join_old_room": "加入旧房间"
 	},
-	"user-avatar": {},
 	"invite-user-prompt": {
 		"invite_user": "邀请用户",
 		"user_id": "用户ID",
@@ -174,7 +180,11 @@
 		"name": "名称",
 		"attribution": "归属",
 		"save": "保存",
-		"cancel": "取消"
+		"cancel": "取消",
+		"unknown": "未知",
+		"both": "两者",
+		"sticker": "贴纸",
+		"emoji": "表情符号"
 	},
 	"room-card": {
 		"cancel": "取消",
@@ -196,11 +206,19 @@
 		"unknown_pack": "未知包",
 		"unknown": "未知",
 		"search": "搜索",
-		"search_or_text_reaction": "搜索或文本反应",
+		"search_or_text_reaction": "搜索或反应文字",
 		"search_results": "搜索结果",
 		"no_results_found": "未找到结果。",
 		"no_sticker_packs": "没有贴纸包！",
-		"add_stickers_from_user_room": "从用户、房间或空间设置添加贴纸。"
+		"add_stickers_from_user_room": "从用户、房间或空间设置添加贴纸。",
+		"smileys_people": "表情与人物",
+		"animals_nature": "动物与自然",
+		"food_drinks": "食物与饮品",
+		"activity": "活动",
+		"travel_places": "旅行与地点",
+		"objects": "物品",
+		"symbols": "符号",
+		"flags": "旗帜"
 	},
 	"message": {
 		"content": {
@@ -218,7 +236,8 @@
 		"open_file": "打开文件",
 		"play": "播放",
 		"pause": "暂停",
-		"spoiler": "剧透"
+		"spoiler": "剧透",
+		"unknown": "未知"
 	},
 	"time-date": {
 		"hour": "小时",
@@ -248,7 +267,10 @@
 		"enter_public_address": "输入公共地址以加入社区。地址看起来像：",
 		"address": "地址",
 		"invalid_address": "无效地址",
-		"open": "打开"
+		"open": "打开",
+		"community_server": "#community:server",
+		"https_matrix_to_community_server": "https://matrix.to/#/#community:server",
+		"https_matrix_to": "https://matrix.to/#/!xYzAj?via=server"
 	},
 	"leave-room-prompt": {
 		"leave_room": "离开房间",
@@ -268,6 +290,9 @@
 		"seen_by": "已查看者"
 	},
 	"editor": {
+		"autocomplete": {
+			"unknown_room": "未知房间"
+		},
 		"heading_1": "标题 1",
 		"heading_2": "标题 2",
 		"heading_3": "标题 3",

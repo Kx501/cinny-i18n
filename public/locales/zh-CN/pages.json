@@ -94,6 +94,7 @@
 		"connecting": "正在连接...",
 		"connection_lost_reconnecting": "连接丢失！正在重新连接...",
 		"connection_lost": "连接丢失！",
+		"unknown": "未知",
 		"home": {
 			"home": "首页",
 			"mark_as_read": "标记为已读",

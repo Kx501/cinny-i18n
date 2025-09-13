@@ -13,7 +13,7 @@ public/locales/
 │   ├── hooks.json            # Hook翻译
 │   ├── pages.json            # 页面翻译
 │   └── util.json             # 工具翻译
-└── de/                       # 德文翻译文件
+└── de-DE/                    # 德文翻译文件
 ```
 
 ## 翻译键命名规范
