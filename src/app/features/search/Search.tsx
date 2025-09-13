@@ -443,9 +443,8 @@ export function SearchModalRenderer() {
             return;
           }
 
-          // means some menu or modal window is open
-          const lastNode = document.body.lastElementChild;
-          if (lastNode && !lastNode.hasAttribute('data-last-node')) {
+          const portalContainer = document.getElementById('portalContainer');
+          if (portalContainer && portalContainer.children.length > 0) {
             return;
           }
           setOpen(true);

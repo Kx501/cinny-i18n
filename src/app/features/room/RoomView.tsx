@@ -81,9 +81,8 @@ export function RoomView({ room, eventId }: { room: Room; eventId?: string }) {
     useCallback(
       (evt) => {
         if (editableActiveElement()) return;
-        // means some menu or modal window is open
-        const lastNode = document.body.lastElementChild;
-        if (lastNode && !lastNode.hasAttribute('data-last-node')) {
+        const portalContainer = document.getElementById('portalContainer');
+        if (portalContainer && portalContainer.children.length > 0) {
           return;
         }
         if (shouldFocusMessageField(evt) || isKeyHotkey('mod+v', evt)) {
