@@ -321,7 +321,7 @@
 		"sso_login": "SSO 登录",
 		"to_perform_this_action": "要执行此操作，您需要通过 SSO 登录来验证身份。",
 		"registration_token": "注册令牌",
-		"please_submit_registration_token": "请提交由您的家庭服务器管理员提供的注册令牌。",
+		"please_submit_registration_token": "请提交由您的主服务器管理员提供的注册令牌。",
 		"invalid_registration_token": "提供的注册令牌无效。",
 		"failed_to_submit_terms": "提交条款和条件接受失败。",
 		"failed_to_register": "注册失败。"
