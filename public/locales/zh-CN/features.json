@@ -178,6 +178,8 @@
 			"enable": "启用",
 			"reset": "重置",
 			"last_activity": "最后活动：",
+			"today": "今天",
+			"yesterday": "昨天",
 			"device_id": "设备ID：",
 			"ip_address": "IP地址：",
 			"device_key": "设备密钥：",

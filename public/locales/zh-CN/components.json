@@ -237,7 +237,8 @@
 		"play": "播放",
 		"pause": "暂停",
 		"spoiler": "剧透",
-		"unknown": "未知"
+		"unknown": "未知",
+		"yesterday": "昨天"
 	},
 	"time-date": {
 		"hour": "小时",

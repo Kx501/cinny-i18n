@@ -178,6 +178,8 @@
             "enable": "Enable",
             "reset": "Reset",
             "last_activity": "Last activity:",
+            "today": "Today",
+            "yesterday": "Yesterday",
             "device_id": "Device ID:",
             "ip_address": "IP Address:",
             "device_key": "Device Key:",

@@ -231,7 +231,8 @@
 			"broken_message": "Beschädigte Nachricht",
 			"empty_message": "Leere Nachricht",
 			"edited": " (bearbeitet)",
-			"open_pdf": "PDF öffnen"
+			"open_pdf": "PDF öffnen",
+			"yesterday": "Gestern"
 		},
 		"open_file": "Datei öffnen",
 		"play": "Abspielen",
