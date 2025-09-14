@@ -237,7 +237,8 @@
 		"play": "Play",
 		"pause": "Pause",
 		"spoiler": "Spoiler",
-		"unknown": "Unknown"
+		"unknown": "Unknown",
+		"yesterday": "Yesterday"
 	},
 	"time-date": {
 		"hour": "Hour",

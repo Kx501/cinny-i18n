@@ -132,7 +132,7 @@
 		"user_id": "用户ID",
 		"reason_optional": "原因（可选）",
 		"invite": "邀请",
-		"username_server": "@u用户名:服务器"
+		"username_server": "@用户名:服务器"
 	},
 	"create-room": {
 		"restricted": "受限",
@@ -237,7 +237,8 @@
 		"play": "播放",
 		"pause": "暂停",
 		"spoiler": "剧透",
-		"unknown": "未知"
+		"unknown": "未知",
+		"yesterday": "昨天"
 	},
 	"time-date": {
 		"hour": "小时",

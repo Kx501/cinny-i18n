@@ -178,6 +178,8 @@
 			"enable": "Aktivieren",
 			"reset": "Zurücksetzen",
 			"last_activity": "Letzte Aktivität:",
+			"today": "Heute",
+			"yesterday": "Gestern",
 			"device_id": "Geräte-ID:",
 			"ip_address": "IP-Adresse:",
 			"device_key": "Geräteschlüssel:",

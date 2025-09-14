@@ -1,4 +1,5 @@
 import React, { ComponentProps } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Text, as } from 'folds';
 import { timeDayMonYear, timeHourMinute, today, yesterday } from '../../utils/time';
 
@@ -21,8 +22,10 @@ export type TimeProps = {
  * @param {string} dateFormatString - Format string for the date part.
  * @returns {React.ReactElement} A <Text as="time"> element with the formatted date/time.
  */
+
 export const Time = as<'span', TimeProps & ComponentProps<typeof Text>>(
   ({ compact, hour24Clock, dateFormatString, ts, ...props }, ref) => {
+    const { t } = useTranslation();
     const formattedTime = timeHourMinute(ts, hour24Clock);
 
     let time = '';
@@ -31,7 +34,7 @@ export const Time = as<'span', TimeProps & ComponentProps<typeof Text>>(
     } else if (today(ts)) {
       time = formattedTime;
     } else if (yesterday(ts)) {
-      time = `Yesterday ${formattedTime}`;
+      time = `${t('components:message.yesterday')} ${formattedTime}`;
     } else {
       time = `${timeDayMonYear(ts, dateFormatString)} ${formattedTime}`;
     }
