@@ -114,7 +114,8 @@
 			"no_direct_messages_yet": "您还没有任何私信。",
 			"direct_message": "私信",
 			"create_chat": "创建聊天",
-			"chats": "聊天"
+			"chats": "聊天",
+			"start_a_private_encrypted_chat": "输入用户 ID 以开始私密加密聊天。"
 		},
 		"create": {
 			"create_space": "创建空间",

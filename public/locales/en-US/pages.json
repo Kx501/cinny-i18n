@@ -114,7 +114,8 @@
 			"no_direct_messages_yet": "You do not have any direct messages yet.",
 			"direct_message": "Direct Message",
 			"create_chat": "Create Chat",
-			"chats": "Chats"
+			"chats": "Chats",
+			"start_a_private_encrypted_chat": "Start a private, encrypted chat by entering a user ID."
 		},
 		"create": {
 			"create_space": "Create Space",

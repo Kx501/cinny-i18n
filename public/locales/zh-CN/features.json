@@ -500,7 +500,7 @@
 		"please_enter_a_valid_user_id": "请输入有效的用户ID。",
 		"options": "选项",
 		"end_to_end_encryption": "端到端加密",
-		"once_this_feature_is_enabled": "一旦启用此功能，在房间创建后就不能禁用了。",
+		"once_this_feature_is_enabled": "一旦启用此功能，在房间创建后将不能禁用。",
 		"server_rate_limited": "服务器限制了您的请求，限制了 {minutes} 分钟！",
 		"create": "创建",
 		"username_server": "@用户名:服务器"
@@ -512,7 +512,7 @@
 		"options": "选项",
 		"advance_options": "高级选项",
 		"end_to_end_encryption": "端到端加密",
-		"once_this_feature_is_enabled": "一旦启用此功能，在房间创建后就不能禁用了。",
+		"once_this_feature_is_enabled": "一旦启用此功能，在房间创建后将不能禁用。",
 		"knock_to_join": "申请加入",
 		"anyone_can_send_request_to_join_this_room": "任何人都可以发送请求加入此房间。",
 		"allow_federation": "允许联邦",
