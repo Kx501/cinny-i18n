@@ -209,13 +209,11 @@ export function RenderMessageContent({
         <MVideo
           content={getContent()}
           renderAsFile={renderFile}
-          renderVideoContent={({ body, info, mimeType, url, encInfo }) => (
+          renderVideoContent={({ body, info, ...props }) => (
             <VideoContent
               body={body}
               info={info}
-              mimeType={mimeType}
-              url={url}
-              encInfo={encInfo}
+              {...props}
               renderThumbnail={
                 mediaAutoLoad
                   ? () => (

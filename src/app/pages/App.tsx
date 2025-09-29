@@ -11,11 +11,13 @@ import { ConfigConfigError, ConfigConfigLoading } from './ConfigConfig';
 import { FeatureCheck } from './FeatureCheck';
 import { createRouter } from './Router';
 import { ScreenSizeProvider, useScreenSize } from '../hooks/useScreenSize';
+import { useCompositionEndTracking } from '../hooks/useComposingCheck';
 
 const queryClient = new QueryClient();
 
 function App() {
   const screenSize = useScreenSize();
+  useCompositionEndTracking();
 
   const portalContainer = document.getElementById('portalContainer') ?? undefined;
 

@@ -2,655 +2,371 @@ import React, {
   ChangeEventHandler,
   FocusEventHandler,
   MouseEventHandler,
-  UIEventHandler,
   ReactNode,
-  memo,
+  RefObject,
   useCallback,
   useEffect,
   useMemo,
   useRef,
 } from 'react';
-import {
-  Badge,
-  Box,
-  Chip,
-  Icon,
-  IconButton,
-  Icons,
-  Input,
-  Line,
-  Scroll,
-  Text,
-  Tooltip,
-  TooltipProvider,
-  as,
-  config,
-  toRem,
-} from 'folds';
+import { useTranslation } from 'react-i18next';
+import { Box, config, Icons, Scroll } from 'folds';
 import FocusTrap from 'focus-trap-react';
 import { isKeyHotkey } from 'is-hotkey';
-import classNames from 'classnames';
-import { MatrixClient, Room } from 'matrix-js-sdk';
-import { atom, useAtomValue, useSetAtom } from 'jotai';
-import { useTranslation } from 'react-i18next';
-import * as css from './EmojiBoard.css';
-import { EmojiGroupId, IEmoji, IEmojiGroup, emojiGroups, emojis } from '../../plugins/emoji';
-import { IEmojiGroupLabels, useEmojiGroupLabels } from './useEmojiGroupLabels';
-import { IEmojiGroupIcons, useEmojiGroupIcons } from './useEmojiGroupIcons';
+import { Room } from 'matrix-js-sdk';
+import { atom, PrimitiveAtom, useAtom, useSetAtom } from 'jotai';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { IEmoji, emojiGroups, emojis } from '../../plugins/emoji';
+import { useEmojiGroupLabels } from './useEmojiGroupLabels';
+import { useEmojiGroupIcons } from './useEmojiGroupIcons';
 import { preventScrollWithArrowKey, stopPropagation } from '../../utils/keyboard';
 import { useRelevantImagePacks } from '../../hooks/useImagePacks';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { useRecentEmoji } from '../../hooks/useRecentEmoji';
 import { isUserId, mxcUrlToHttp } from '../../utils/matrix';
-import { editableActiveElement, isIntersectingScrollView, targetFromEvent } from '../../utils/dom';
+import { editableActiveElement, targetFromEvent } from '../../utils/dom';
 import { useAsyncSearch, UseAsyncSearchOptions } from '../../hooks/useAsyncSearch';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useThrottle } from '../../hooks/useThrottle';
 import { addRecentEmoji } from '../../plugins/recent-emoji';
-import { mobileOrTablet } from '../../utils/user-agent';
 import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
 import { ImagePack, ImageUsage, PackImageReader } from '../../plugins/custom-emoji';
 import { getEmoticonSearchStr } from '../../plugins/utils';
+import {
+  SearchInput,
+  EmojiBoardTabs,
+  SidebarStack,
+  SidebarDivider,
+  Sidebar,
+  NoStickerPacks,
+  createPreviewDataAtom,
+  Preview,
+  PreviewData,
+  EmojiItem,
+  StickerItem,
+  CustomEmojiItem,
+  ImageGroupIcon,
+  GroupIcon,
+  getEmojiItemInfo,
+  EmojiGroup,
+  EmojiBoardLayout,
+} from './components';
+import { EmojiBoardTab, EmojiType } from './types';
+import { VirtualTile } from '../virtualizer';
 
 const RECENT_GROUP_ID = 'recent_group';
 const SEARCH_GROUP_ID = 'search_group';
 
-export enum EmojiBoardTab {
-  Emoji = 'Emoji',
-  Sticker = 'Sticker',
-}
-
-enum EmojiType {
-  Emoji = 'emoji',
-  CustomEmoji = 'customEmoji',
-  Sticker = 'sticker',
-}
-
-export type EmojiItemInfo = {
-  type: EmojiType;
-  data: string;
-  shortcode: string;
-  label: string;
+type EmojiGroupItem = {
+  id: string;
+  name: string;
+  items: Array<IEmoji | PackImageReader>;
+};
+type StickerGroupItem = {
+  id: string;
+  name: string;
+  items: Array<PackImageReader>;
 };
 
-const getDOMGroupId = (id: string): string => `EmojiBoardGroup-${id}`;
-
-const getEmojiItemInfo = (element: Element): EmojiItemInfo | undefined => {
-  const type = element.getAttribute('data-emoji-type') as EmojiType | undefined;
-  const data = element.getAttribute('data-emoji-data');
-  const label = element.getAttribute('title');
-  const shortcode = element.getAttribute('data-emoji-shortcode');
-
-  if (type && data && shortcode && label)
-    return {
-      type,
-      data,
-      shortcode,
-      label,
-    };
-  return undefined;
-};
-
-const activeGroupIdAtom = atom<string | undefined>(undefined);
-
-function Sidebar({ children }: { children: ReactNode }) {
-  return (
-    <Box className={css.Sidebar} shrink="No">
-      <Scroll size="0">
-        <Box className={css.SidebarContent} direction="Column" alignItems="Center" gap="100">
-          {children}
-        </Box>
-      </Scroll>
-    </Box>
-  );
-}
-
-const SidebarStack = as<'div'>(({ className, children, ...props }, ref) => (
-  <Box
-    className={classNames(css.SidebarStack, className)}
-    direction="Column"
-    alignItems="Center"
-    gap="100"
-    {...props}
-    ref={ref}
-  >
-    {children}
-  </Box>
-));
-function SidebarDivider() {
-  return <Line className={css.SidebarDivider} size="300" variant="Surface" />;
-}
-
-function Header({ children }: { children: ReactNode }) {
-  return (
-    <Box className={css.Header} direction="Column" shrink="No">
-      {children}
-    </Box>
-  );
-}
-
-function Content({ children }: { children: ReactNode }) {
-  return <Box grow="Yes">{children}</Box>;
-}
-
-function Footer({ children }: { children: ReactNode }) {
-  return (
-    <Box shrink="No" className={css.Footer} gap="300" alignItems="Center">
-      {children}
-    </Box>
-  );
-}
-
-const EmojiBoardLayout = as<
-  'div',
-  {
-    header: ReactNode;
-    sidebar?: ReactNode;
-    footer?: ReactNode;
-    children: ReactNode;
-  }
->(({ className, header, sidebar, footer, children, ...props }, ref) => (
-  <Box
-    display="InlineFlex"
-    className={classNames(css.Base, className)}
-    direction="Row"
-    {...props}
-    ref={ref}
-  >
-    <Box direction="Column" grow="Yes">
-      {header}
-      {children}
-      {footer}
-    </Box>
-    <Line size="300" direction="Vertical" />
-    {sidebar}
-  </Box>
-));
-
-function EmojiBoardTabs({
-  tab,
-  onTabChange,
-}: {
-  tab: EmojiBoardTab;
-  onTabChange: (tab: EmojiBoardTab) => void;
-}) {
+const useGroups = (
+  tab: EmojiBoardTab,
+  imagePacks: ImagePack[]
+): [EmojiGroupItem[], StickerGroupItem[]] => {
+  const mx = useMatrixClient();
   const { t } = useTranslation();
-  return (
-    <Box gap="100">
-      <Badge
-        className={css.EmojiBoardTab}
-        as="button"
-        variant="Secondary"
-        fill={tab === EmojiBoardTab.Sticker ? 'Solid' : 'None'}
-        size="500"
-        onClick={() => onTabChange(EmojiBoardTab.Sticker)}
-      >
-        <Text as="span" size="L400">
-          {t('components:emoji-board.sticker')}
-        </Text>
-      </Badge>
-      <Badge
-        className={css.EmojiBoardTab}
-        as="button"
-        variant="Secondary"
-        fill={tab === EmojiBoardTab.Emoji ? 'Solid' : 'None'}
-        size="500"
-        onClick={() => onTabChange(EmojiBoardTab.Emoji)}
-      >
-        <Text as="span" size="L400">
-          {t('components:emoji-board.emoji')}
-        </Text>
-      </Badge>
-    </Box>
-  );
-}
 
-export function SidebarBtn<T extends string>({
-  active,
-  label,
-  id,
-  onItemClick,
-  children,
-}: {
-  active?: boolean;
-  label: string;
-  id: T;
-  onItemClick: (id: T) => void;
-  children: ReactNode;
-}) {
+  const recentEmojis = useRecentEmoji(mx, 21);
+  const labels = useEmojiGroupLabels();
+
+  const emojiGroupItems = useMemo(() => {
+    const g: EmojiGroupItem[] = [];
+    if (tab !== EmojiBoardTab.Emoji) return g;
+
+    g.push({
+      id: RECENT_GROUP_ID,
+      name: t('components:emoji-board.recent'),
+      items: recentEmojis,
+    });
+
+    imagePacks.forEach((pack) => {
+      let label = pack.meta.name;
+      if (!label) label = isUserId(pack.id) ? t('components:emoji-board.personal_pack') : mx.getRoom(pack.id)?.name;
+
+      g.push({
+        id: pack.id,
+        name: label ?? t('components:emoji-board.unknown'),
+        items: pack
+          .getImages(ImageUsage.Emoticon)
+          .sort((a, b) => a.shortcode.localeCompare(b.shortcode)),
+      });
+    });
+
+    emojiGroups.forEach((group) => {
+      g.push({
+        id: group.id,
+        name: labels[group.id],
+        items: group.emojis,
+      });
+    });
+
+    return g;
+  }, [mx, recentEmojis, labels, imagePacks, tab]);
+
+  const stickerGroupItems = useMemo(() => {
+    const g: StickerGroupItem[] = [];
+    if (tab !== EmojiBoardTab.Sticker) return g;
+
+    imagePacks.forEach((pack) => {
+      let label = pack.meta.name;
+      if (!label) label = isUserId(pack.id) ? t('components:emoji-board.personal_pack') : mx.getRoom(pack.id)?.name;
+
+      g.push({
+        id: pack.id,
+        name: label ?? t('components:emoji-board.unknown'),
+        items: pack
+          .getImages(ImageUsage.Sticker)
+          .sort((a, b) => a.shortcode.localeCompare(b.shortcode)),
+      });
+    });
+
+    return g;
+  }, [mx, imagePacks, tab]);
+
+  return [emojiGroupItems, stickerGroupItems];
+};
+
+const useItemRenderer = (tab: EmojiBoardTab) => {
+  const mx = useMatrixClient();
+  const useAuthentication = useMediaAuthentication();
+
+  const renderItem = (emoji: IEmoji | PackImageReader, index: number) => {
+    if ('unicode' in emoji) {
+      return <EmojiItem key={emoji.unicode + index} emoji={emoji} />;
+    }
+    if (tab === EmojiBoardTab.Sticker) {
+      return (
+        <StickerItem
+          key={emoji.shortcode + index}
+          mx={mx}
+          useAuthentication={useAuthentication}
+          image={emoji}
+        />
+      );
+    }
+    return (
+      <CustomEmojiItem
+        key={emoji.shortcode + index}
+        mx={mx}
+        useAuthentication={useAuthentication}
+        image={emoji}
+      />
+    );
+  };
+
+  return renderItem;
+};
+
+type EmojiSidebarProps = {
+  activeGroupAtom: PrimitiveAtom<string | undefined>;
+  packs: ImagePack[];
+  onScrollToGroup: (groupId: string) => void;
+};
+function EmojiSidebar({ activeGroupAtom, packs, onScrollToGroup }: EmojiSidebarProps) {
+  const mx = useMatrixClient();
+  const { t } = useTranslation();
+  const useAuthentication = useMediaAuthentication();
+
+  const [activeGroupId, setActiveGroupId] = useAtom(activeGroupAtom);
+  const usage = ImageUsage.Emoticon;
+  const labels = useEmojiGroupLabels();
+  const icons = useEmojiGroupIcons();
+
+  const handleScrollToGroup = (groupId: string) => {
+    setActiveGroupId(groupId);
+    onScrollToGroup(groupId);
+  };
+
   return (
-    <TooltipProvider
-      delay={500}
-      position="Left"
-      tooltip={
-        <Tooltip id={`SidebarStackItem-${id}-label`}>
-          <Text size="T300">{label}</Text>
-        </Tooltip>
-      }
-    >
-      {(ref) => (
-        <IconButton
-          aria-pressed={active}
-          aria-labelledby={`SidebarStackItem-${id}-label`}
-          ref={ref}
-          onClick={() => onItemClick(id)}
-          size="400"
-          radii="300"
-          variant="Surface"
-        >
-          {children}
-        </IconButton>
+    <Sidebar>
+      <SidebarStack>
+        <GroupIcon
+          active={activeGroupId === RECENT_GROUP_ID}
+          id={RECENT_GROUP_ID}
+          label={t('components:emoji-board.recent')}
+          icon={Icons.RecentClock}
+          onClick={handleScrollToGroup}
+        />
+      </SidebarStack>
+      {packs.length > 0 && (
+        <SidebarStack>
+          <SidebarDivider />
+          {packs.map((pack) => {
+            let label = pack.meta.name;
+            if (!label) label = isUserId(pack.id) ? t('components:emoji-board.personal_pack') : mx.getRoom(pack.id)?.name;
+
+            const url =
+              mxcUrlToHttp(mx, pack.getAvatarUrl(usage) ?? '', useAuthentication) ||
+              pack.meta.avatar;
+
+            return (
+              <ImageGroupIcon
+                key={pack.id}
+                active={activeGroupId === pack.id}
+                id={pack.id}
+                label={label ?? t('components:emoji-board.unknown_pack')}
+                url={url}
+                onClick={handleScrollToGroup}
+              />
+            );
+          })}
+        </SidebarStack>
       )}
-    </TooltipProvider>
+      <SidebarStack
+        style={{
+          position: 'sticky',
+          bottom: '-67%',
+          zIndex: 1,
+        }}
+      >
+        <SidebarDivider />
+        {emojiGroups.map((group) => (
+          <GroupIcon
+            key={group.id}
+            active={activeGroupId === group.id}
+            id={group.id}
+            label={labels[group.id]}
+            icon={icons[group.id]}
+            onClick={handleScrollToGroup}
+          />
+        ))}
+      </SidebarStack>
+    </Sidebar>
   );
 }
 
-export const EmojiGroup = as<
-  'div',
-  {
-    id: string;
-    label: string;
-    children: ReactNode;
-  }
->(({ className, id, label, children, ...props }, ref) => (
-  <Box
-    id={getDOMGroupId(id)}
-    data-group-id={id}
-    className={classNames(css.EmojiGroup, className)}
-    direction="Column"
-    gap="200"
-    {...props}
-    ref={ref}
-  >
-    <Text id={`EmojiGroup-${id}-label`} as="label" className={css.EmojiGroupLabel} size="O400">
-      {label}
-    </Text>
-    <div aria-labelledby={`EmojiGroup-${id}-label`} className={css.EmojiGroupContent}>
-      <Box wrap="Wrap" justifyContent="Center">
+type StickerSidebarProps = {
+  activeGroupAtom: PrimitiveAtom<string | undefined>;
+  packs: ImagePack[];
+  onScrollToGroup: (groupId: string) => void;
+};
+function StickerSidebar({ activeGroupAtom, packs, onScrollToGroup }: StickerSidebarProps) {
+  const mx = useMatrixClient();
+  const { t } = useTranslation();
+  const useAuthentication = useMediaAuthentication();
+
+  const [activeGroupId, setActiveGroupId] = useAtom(activeGroupAtom);
+  const usage = ImageUsage.Sticker;
+
+  const handleScrollToGroup = (groupId: string) => {
+    setActiveGroupId(groupId);
+    onScrollToGroup(groupId);
+  };
+
+  return (
+    <Sidebar>
+      <SidebarStack>
+        {packs.map((pack) => {
+          let label = pack.meta.name;
+          if (!label) label = isUserId(pack.id) ? t('components:emoji-board.personal_pack') : mx.getRoom(pack.id)?.name;
+
+          const url =
+            mxcUrlToHttp(mx, pack.getAvatarUrl(usage) ?? '', useAuthentication) || pack.meta.avatar;
+
+          return (
+            <ImageGroupIcon
+              key={pack.id}
+              active={activeGroupId === pack.id}
+              id={pack.id}
+              label={label ?? t('components:emoji-board.unknown_pack')}
+              url={url}
+              onClick={handleScrollToGroup}
+            />
+          );
+        })}
+      </SidebarStack>
+    </Sidebar>
+  );
+}
+
+type EmojiGroupHolderProps = {
+  contentScrollRef: RefObject<HTMLDivElement>;
+  previewAtom: PrimitiveAtom<PreviewData | undefined>;
+  children?: ReactNode;
+  onGroupItemClick: MouseEventHandler;
+};
+function EmojiGroupHolder({
+  contentScrollRef,
+  previewAtom,
+  onGroupItemClick,
+  children,
+}: EmojiGroupHolderProps) {
+  const setPreviewData = useSetAtom(previewAtom);
+
+  const handleEmojiPreview = useCallback(
+    (element: HTMLButtonElement) => {
+      const emojiInfo = getEmojiItemInfo(element);
+      if (!emojiInfo) return;
+
+      setPreviewData({
+        key: emojiInfo.data,
+        shortcode: emojiInfo.shortcode,
+      });
+    },
+    [setPreviewData]
+  );
+
+  const throttleEmojiHover = useThrottle(handleEmojiPreview, {
+    wait: 200,
+    immediate: true,
+  });
+
+  const handleEmojiHover: MouseEventHandler = (evt) => {
+    const targetEl = targetFromEvent(evt.nativeEvent, 'button') as HTMLButtonElement | undefined;
+    if (!targetEl) return;
+    throttleEmojiHover(targetEl);
+  };
+
+  const handleEmojiFocus: FocusEventHandler = (evt) => {
+    const targetEl = evt.target as HTMLButtonElement;
+    handleEmojiPreview(targetEl);
+  };
+
+  return (
+    <Scroll ref={contentScrollRef} size="400" onKeyDown={preventScrollWithArrowKey} hideTrack>
+      <Box
+        onClick={onGroupItemClick}
+        onMouseMove={handleEmojiHover}
+        onFocus={handleEmojiFocus}
+        direction="Column"
+      >
         {children}
       </Box>
-    </div>
-  </Box>
-));
-
-export function EmojiItem({
-  label,
-  type,
-  data,
-  shortcode,
-  children,
-}: {
-  label: string;
-  type: EmojiType;
-  data: string;
-  shortcode: string;
-  children: ReactNode;
-}) {
-  return (
-    <Box
-      as="button"
-      className={css.EmojiItem}
-      type="button"
-      alignItems="Center"
-      justifyContent="Center"
-      title={label}
-      aria-label={`${label} emoji`}
-      data-emoji-type={type}
-      data-emoji-data={data}
-      data-emoji-shortcode={shortcode}
-    >
-      {children}
-    </Box>
+    </Scroll>
   );
 }
 
-export function StickerItem({
-  label,
-  type,
-  data,
-  shortcode,
-  children,
-}: {
-  label: string;
-  type: EmojiType;
-  data: string;
-  shortcode: string;
-  children: ReactNode;
-}) {
-  return (
-    <Box
-      as="button"
-      className={css.StickerItem}
-      type="button"
-      alignItems="Center"
-      justifyContent="Center"
-      title={label}
-      aria-label={`${label} sticker`}
-      data-emoji-type={type}
-      data-emoji-data={data}
-      data-emoji-shortcode={shortcode}
-    >
-      {children}
-    </Box>
-  );
-}
-
-function RecentEmojiSidebarStack({ onItemClick }: { onItemClick: (id: string) => void }) {
-  const { t } = useTranslation();
-  const activeGroupId = useAtomValue(activeGroupIdAtom);
-
-  return (
-    <SidebarStack>
-      <SidebarBtn
-        active={activeGroupId === RECENT_GROUP_ID}
-        id={RECENT_GROUP_ID}
-        label={t('components:emoji-board.recent')}
-        onItemClick={() => onItemClick(RECENT_GROUP_ID)}
-      >
-        <Icon src={Icons.RecentClock} filled={activeGroupId === RECENT_GROUP_ID} />
-      </SidebarBtn>
-    </SidebarStack>
-  );
-}
-
-function ImagePackSidebarStack({
-  mx,
-  packs,
-  usage,
-  onItemClick,
-  useAuthentication,
-}: {
-  mx: MatrixClient;
-  packs: ImagePack[];
-  usage: ImageUsage;
-  onItemClick: (id: string) => void;
-  useAuthentication?: boolean;
-}) {
-  const activeGroupId = useAtomValue(activeGroupIdAtom);
-  const { t } = useTranslation();
-  return (
-    <SidebarStack>
-      {usage === ImageUsage.Emoticon && <SidebarDivider />}
-      {packs.map((pack) => {
-        let label = pack.meta.name;
-        if (!label) label = isUserId(pack.id) ? t('components:emoji-board.personal_pack') : mx.getRoom(pack.id)?.name;
-        return (
-          <SidebarBtn
-            active={activeGroupId === pack.id}
-            key={pack.id}
-            id={pack.id}
-            label={label || t('components:emoji-board.unknown_pack')}
-            onItemClick={onItemClick}
-          >
-            <img
-              style={{
-                width: toRem(24),
-                height: toRem(24),
-                objectFit: 'contain',
-              }}
-              src={
-                mxcUrlToHttp(mx, pack.getAvatarUrl(usage) ?? '', useAuthentication) ||
-                pack.meta.avatar
-              }
-              alt={label || t('components:emoji-board.unknown_pack')}
-            />
-          </SidebarBtn>
-        );
-      })}
-    </SidebarStack>
-  );
-}
-
-function NativeEmojiSidebarStack({
-  groups,
-  icons,
-  labels,
-  onItemClick,
-}: {
-  groups: IEmojiGroup[];
-  icons: IEmojiGroupIcons;
-  labels: IEmojiGroupLabels;
-  onItemClick: (id: EmojiGroupId) => void;
-}) {
-  const activeGroupId = useAtomValue(activeGroupIdAtom);
-  return (
-    <SidebarStack className={css.NativeEmojiSidebarStack}>
-      <SidebarDivider />
-      {groups.map((group) => (
-        <SidebarBtn
-          key={group.id}
-          active={activeGroupId === group.id}
-          id={group.id}
-          label={labels[group.id]}
-          onItemClick={onItemClick}
-        >
-          <Icon src={icons[group.id]} filled={activeGroupId === group.id} />
-        </SidebarBtn>
-      ))}
-    </SidebarStack>
-  );
-}
-
-export function RecentEmojiGroup({
-  label,
-  id,
-  emojis: recentEmojis,
-}: {
-  label: string;
-  id: string;
-  emojis: IEmoji[];
-}) {
-  return (
-    <EmojiGroup key={id} id={id} label={label}>
-      {recentEmojis.map((emoji) => (
-        <EmojiItem
-          key={emoji.unicode}
-          label={emoji.label}
-          type={EmojiType.Emoji}
-          data={emoji.unicode}
-          shortcode={emoji.shortcode}
-        >
-          {emoji.unicode}
-        </EmojiItem>
-      ))}
-    </EmojiGroup>
-  );
-}
-
-export function SearchEmojiGroup({
-  mx,
-  tab,
-  label,
-  id,
-  emojis: searchResult,
-  useAuthentication,
-}: {
-  mx: MatrixClient;
-  tab: EmojiBoardTab;
-  label: string;
-  id: string;
-  emojis: Array<PackImageReader | IEmoji>;
-  useAuthentication?: boolean;
-}) {
-  return (
-    <EmojiGroup key={id} id={id} label={label}>
-      {tab === EmojiBoardTab.Emoji
-        ? searchResult.map((emoji) =>
-          'unicode' in emoji ? (
-            <EmojiItem
-              key={emoji.unicode}
-              label={emoji.label}
-              type={EmojiType.Emoji}
-              data={emoji.unicode}
-              shortcode={emoji.shortcode}
-            >
-              {emoji.unicode}
-            </EmojiItem>
-          ) : (
-            <EmojiItem
-              key={emoji.shortcode}
-              label={emoji.body || emoji.shortcode}
-              type={EmojiType.CustomEmoji}
-              data={emoji.url}
-              shortcode={emoji.shortcode}
-            >
-              <img
-                loading="lazy"
-                className={css.CustomEmojiImg}
-                alt={emoji.body || emoji.shortcode}
-                src={mxcUrlToHttp(mx, emoji.url, useAuthentication) ?? emoji.url}
-              />
-            </EmojiItem>
-          )
-        )
-        : searchResult.map((emoji) =>
-          'unicode' in emoji ? null : (
-            <StickerItem
-              key={emoji.shortcode}
-              label={emoji.body || emoji.shortcode}
-              type={EmojiType.Sticker}
-              data={emoji.url}
-              shortcode={emoji.shortcode}
-            >
-              <img
-                loading="lazy"
-                className={css.StickerImg}
-                alt={emoji.body || emoji.shortcode}
-                src={mxcUrlToHttp(mx, emoji.url, useAuthentication) ?? emoji.url}
-              />
-            </StickerItem>
-          )
-        )}
-    </EmojiGroup>
-  );
-}
-
-export const CustomEmojiGroups = memo(
-  ({
-    mx,
-    groups,
-    useAuthentication,
-  }: {
-    mx: MatrixClient;
-    groups: ImagePack[];
-    useAuthentication?: boolean;
-  }) => {
-    const { t } = useTranslation();
-    return (
-      <>
-        {groups.map((pack) => (
-          <EmojiGroup key={pack.id} id={pack.id} label={pack.meta.name || t('components:emoji-board.unknown')}>
-            {pack
-              .getImages(ImageUsage.Emoticon)
-              .sort((a, b) => a.shortcode.localeCompare(b.shortcode))
-              .map((image) => (
-                <EmojiItem
-                  key={image.shortcode}
-                  label={image.body || image.shortcode}
-                  type={EmojiType.CustomEmoji}
-                  data={image.url}
-                  shortcode={image.shortcode}
-                >
-                  <img
-                    loading="lazy"
-                    className={css.CustomEmojiImg}
-                    alt={image.body || image.shortcode}
-                    src={mxcUrlToHttp(mx, image.url, useAuthentication) ?? image.url}
-                  />
-                </EmojiItem>
-              ))}
-          </EmojiGroup>
-        ))}
-      </>
-    );
-  }
-);
-
-export const StickerGroups = memo(
-  ({
-    mx,
-    groups,
-    useAuthentication,
-  }: {
-    mx: MatrixClient;
-    groups: ImagePack[];
-    useAuthentication?: boolean;
-  }) => {
-    const { t } = useTranslation();
-    return (
-      <>
-        {groups.length === 0 && (
-          <Box
-            style={{ padding: `${toRem(60)} ${config.space.S500}` }}
-            alignItems="Center"
-            justifyContent="Center"
-            direction="Column"
-            gap="300"
-          >
-            <Icon size="600" src={Icons.Sticker} />
-            <Box direction="Inherit">
-              <Text align="Center">{t('components:emoji-board.no_sticker_packs')}</Text>
-              <Text priority="300" align="Center" size="T200">
-                {t('components:emoji-board.add_stickers_from_user_room')}
-              </Text>
-            </Box>
-          </Box>
-        )}
-        {groups.map((pack) => (
-          <EmojiGroup key={pack.id} id={pack.id} label={pack.meta.name || t('components:emoji-board.unknown')}>
-            {pack
-              .getImages(ImageUsage.Sticker)
-              .sort((a, b) => a.shortcode.localeCompare(b.shortcode))
-              .map((image) => (
-                <StickerItem
-                  key={image.shortcode}
-                  label={image.body || image.shortcode}
-                  type={EmojiType.Sticker}
-                  data={image.url}
-                  shortcode={image.shortcode}
-                >
-                  <img
-                    loading="lazy"
-                    className={css.StickerImg}
-                    alt={image.body || image.shortcode}
-                    src={mxcUrlToHttp(mx, image.url, useAuthentication) ?? image.url}
-                  />
-                </StickerItem>
-              ))}
-          </EmojiGroup>
-        ))}
-      </>
-    );
-  }
-);
-
-export const NativeEmojiGroups = memo(
-  ({ groups, labels }: { groups: IEmojiGroup[]; labels: IEmojiGroupLabels }) => (
-    <>
-      {groups.map((emojiGroup) => (
-        <EmojiGroup key={emojiGroup.id} id={emojiGroup.id} label={labels[emojiGroup.id]}>
-          {emojiGroup.emojis.map((emoji) => (
-            <EmojiItem
-              key={emoji.unicode}
-              label={emoji.label}
-              type={EmojiType.Emoji}
-              data={emoji.unicode}
-              shortcode={emoji.shortcode}
-            >
-              {emoji.unicode}
-            </EmojiItem>
-          ))}
-        </EmojiGroup>
-      ))}
-    </>
-  )
-);
+const DefaultEmojiPreview: PreviewData = { key: '🙂', shortcode: 'slight_smile' };
 
 const SEARCH_OPTIONS: UseAsyncSearchOptions = {
   limit: 1000,
   matchOptions: {
     contain: true,
   },
+};
+
+const VIRTUAL_OVER_SCAN = 2;
+
+type EmojiBoardProps = {
+  tab?: EmojiBoardTab;
+  onTabChange?: (tab: EmojiBoardTab) => void;
+  imagePackRooms: Room[];
+  requestClose: () => void;
+  returnFocusOnDeactivate?: boolean;
+  onEmojiSelect?: (unicode: string, shortcode: string) => void;
+  onCustomEmojiSelect?: (mxc: string, shortcode: string) => void;
+  onStickerSelect?: (mxc: string, shortcode: string, label: string) => void;
+  allowTextCustomEmoji?: boolean;
+  addToRecentEmoji?: boolean;
 };
 
 export function EmojiBoard({
@@ -664,34 +380,23 @@ export function EmojiBoard({
   onStickerSelect,
   allowTextCustomEmoji,
   addToRecentEmoji = true,
-}: {
-  tab?: EmojiBoardTab;
-  onTabChange?: (tab: EmojiBoardTab) => void;
-  imagePackRooms: Room[];
-  requestClose: () => void;
-  returnFocusOnDeactivate?: boolean;
-  onEmojiSelect?: (unicode: string, shortcode: string) => void;
-  onCustomEmojiSelect?: (mxc: string, shortcode: string) => void;
-  onStickerSelect?: (mxc: string, shortcode: string, label: string) => void;
-  allowTextCustomEmoji?: boolean;
-  addToRecentEmoji?: boolean;
-}) {
-  const emojiTab = tab === EmojiBoardTab.Emoji;
-  const stickerTab = tab === EmojiBoardTab.Sticker;
-  const usage = emojiTab ? ImageUsage.Emoticon : ImageUsage.Sticker;
-
-  const setActiveGroupId = useSetAtom(activeGroupIdAtom);
+}: EmojiBoardProps) {
   const mx = useMatrixClient();
-  const useAuthentication = useMediaAuthentication();
-  const emojiGroupLabels = useEmojiGroupLabels();
-  const emojiGroupIcons = useEmojiGroupIcons();
-  const imagePacks = useRelevantImagePacks(usage, imagePackRooms);
-  const recentEmojis = useRecentEmoji(mx, 21);
   const { t } = useTranslation();
 
-  const contentScrollRef = useRef<HTMLDivElement>(null);
-  const emojiPreviewRef = useRef<HTMLDivElement>(null);
-  const emojiPreviewTextRef = useRef<HTMLParagraphElement>(null);
+  const emojiTab = tab === EmojiBoardTab.Emoji;
+  const usage = emojiTab ? ImageUsage.Emoticon : ImageUsage.Sticker;
+
+  const previewAtom = useMemo(
+    () => createPreviewDataAtom(emojiTab ? DefaultEmojiPreview : undefined),
+    [emojiTab]
+  );
+  const activeGroupIdAtom = useMemo(() => atom<string | undefined>(undefined), []);
+  const setActiveGroupId = useSetAtom(activeGroupIdAtom);
+  const imagePacks = useRelevantImagePacks(usage, imagePackRooms);
+  const [emojiGroupItems, stickerGroupItems] = useGroups(tab, imagePacks);
+  const groups = emojiTab ? emojiGroupItems : stickerGroupItems;
+  const renderItem = useItemRenderer(tab);
 
   const searchList = useMemo(() => {
     let list: Array<PackImageReader | IEmoji> = [];
@@ -720,94 +425,73 @@ export function EmojiBoard({
     { wait: 200 }
   );
 
-  const syncActiveGroupId = useCallback(() => {
-    const targetEl = contentScrollRef.current;
-    if (!targetEl) return;
-    const groupEls = Array.from(targetEl.querySelectorAll('div[data-group-id]')) as HTMLElement[];
-    const groupEl = groupEls.find((el) => isIntersectingScrollView(targetEl, el));
-    const groupId = groupEl?.getAttribute('data-group-id') ?? undefined;
-    setActiveGroupId(groupId);
-  }, [setActiveGroupId]);
-
-  const handleOnScroll: UIEventHandler<HTMLDivElement> = useThrottle(syncActiveGroupId, {
-    wait: 500,
+  const contentScrollRef = useRef<HTMLDivElement>(null);
+  const virtualBaseRef = useRef<HTMLDivElement>(null);
+  const virtualizer = useVirtualizer({
+    count: groups.length,
+    getScrollElement: () => contentScrollRef.current,
+    estimateSize: () => 40,
+    overscan: VIRTUAL_OVER_SCAN,
   });
+  const vItems = virtualizer.getVirtualItems();
 
-  const handleScrollToGroup = (groupId: string) => {
-    setActiveGroupId(groupId);
-    const groupElement = document.getElementById(getDOMGroupId(groupId));
-    groupElement?.scrollIntoView();
-  };
-
-  const handleEmojiClick: MouseEventHandler = (evt) => {
+  const handleGroupItemClick: MouseEventHandler = (evt) => {
     const targetEl = targetFromEvent(evt.nativeEvent, 'button');
-    if (!targetEl) return;
-    const emojiInfo = getEmojiItemInfo(targetEl);
+    const emojiInfo = targetEl && getEmojiItemInfo(targetEl);
     if (!emojiInfo) return;
+
     if (emojiInfo.type === EmojiType.Emoji) {
       onEmojiSelect?.(emojiInfo.data, emojiInfo.shortcode);
-      if (!evt.altKey && !evt.shiftKey) {
-        if (addToRecentEmoji) {
-          addRecentEmoji(mx, emojiInfo.data);
-        }
-        requestClose();
+      if (!evt.altKey && !evt.shiftKey && addToRecentEmoji) {
+        addRecentEmoji(mx, emojiInfo.data);
       }
     }
     if (emojiInfo.type === EmojiType.CustomEmoji) {
       onCustomEmojiSelect?.(emojiInfo.data, emojiInfo.shortcode);
-      if (!evt.altKey && !evt.shiftKey) requestClose();
     }
     if (emojiInfo.type === EmojiType.Sticker) {
       onStickerSelect?.(emojiInfo.data, emojiInfo.shortcode, emojiInfo.label);
-      if (!evt.altKey && !evt.shiftKey) requestClose();
     }
+    if (!evt.altKey && !evt.shiftKey) requestClose();
   };
 
-  const handleEmojiPreview = useCallback(
-    (element: HTMLButtonElement) => {
-      const emojiInfo = getEmojiItemInfo(element);
-      if (!emojiInfo || !emojiPreviewTextRef.current) return;
-      if (emojiInfo.type === EmojiType.Emoji && emojiPreviewRef.current) {
-        emojiPreviewRef.current.textContent = emojiInfo.data;
-      } else if (emojiInfo.type === EmojiType.CustomEmoji && emojiPreviewRef.current) {
-        const img = document.createElement('img');
-        img.className = css.CustomEmojiImg;
-        img.setAttribute(
-          'src',
-          mxcUrlToHttp(mx, emojiInfo.data, useAuthentication) || emojiInfo.data
-        );
-        img.setAttribute('alt', emojiInfo.shortcode);
-        emojiPreviewRef.current.textContent = '';
-        emojiPreviewRef.current.appendChild(img);
-      }
-      emojiPreviewTextRef.current.textContent = `:${emojiInfo.shortcode}:`;
-    },
-    [mx, useAuthentication]
-  );
-
-  const throttleEmojiHover = useThrottle(handleEmojiPreview, {
-    wait: 200,
-    immediate: true,
-  });
-
-  const handleEmojiHover: MouseEventHandler = (evt) => {
-    const targetEl = targetFromEvent(evt.nativeEvent, 'button') as HTMLButtonElement | undefined;
-    if (!targetEl) return;
-    throttleEmojiHover(targetEl);
+  const handleTextCustomEmojiSelect = (textEmoji: string) => {
+    onCustomEmojiSelect?.(textEmoji, textEmoji);
+    requestClose();
   };
 
-  const handleEmojiFocus: FocusEventHandler = (evt) => {
-    const targetEl = evt.target as HTMLButtonElement;
-    handleEmojiPreview(targetEl);
+  const handleScrollToGroup = (groupId: string) => {
+    const groupIndex = groups.findIndex((group) => group.id === groupId);
+    virtualizer.scrollToIndex(groupIndex, { align: 'start' });
   };
 
-  // Reset scroll top on search and tab change
+  // sync active sidebar tab with scroll
   useEffect(() => {
-    syncActiveGroupId();
-    contentScrollRef.current?.scrollTo({
-      top: 0,
-    });
-  }, [result, emojiTab, syncActiveGroupId]);
+    const scrollElement = contentScrollRef.current;
+    if (scrollElement) {
+      const scrollTop = scrollElement.offsetTop + scrollElement.scrollTop;
+      const offsetTop = virtualBaseRef.current?.offsetTop ?? 0;
+      const inViewVItem = vItems.find((vItem) => scrollTop < offsetTop + vItem.end);
+
+      const group = inViewVItem ? groups[inViewVItem?.index] : undefined;
+      setActiveGroupId(group?.id);
+    }
+  }, [vItems, groups, setActiveGroupId, result?.query]);
+
+  // reset scroll position on search
+  useEffect(() => {
+    const scrollElement = contentScrollRef.current;
+    if (scrollElement) {
+      scrollElement.scrollTo({ top: 0 });
+    }
+  }, [result?.query]);
+
+  // reset scroll position on tab change
+  useEffect(() => {
+    if (groups.length > 0) {
+      virtualizer.scrollToIndex(0, { align: 'start' });
+    }
+  }, [tab, virtualizer, groups]);
 
   return (
     <FocusTrap
@@ -826,137 +510,76 @@ export function EmojiBoard({
     >
       <EmojiBoardLayout
         header={
-          <Header>
-            <Box direction="Column" gap="200">
-              {onTabChange && <EmojiBoardTabs tab={tab} onTabChange={onTabChange} />}
-              <Input
-                data-emoji-board-search
-                variant="SurfaceVariant"
-                size="400"
-                placeholder={allowTextCustomEmoji ? t('components:emoji-board.search_or_text_reaction') : t('components:emoji-board.search')}
-                maxLength={50}
-                after={
-                  allowTextCustomEmoji && result?.query ? (
-                    <Chip
-                      variant="Primary"
-                      radii="Pill"
-                      after={<Icon src={Icons.ArrowRight} size="50" />}
-                      outlined
-                      onClick={() => {
-                        const searchInput = document.querySelector<HTMLInputElement>(
-                          '[data-emoji-board-search="true"]'
-                        );
-                        const textReaction = searchInput?.value.trim();
-                        if (!textReaction) return;
-                        onCustomEmojiSelect?.(textReaction, textReaction);
-                        requestClose();
-                      }}
-                    >
-                      <Text size="L400">React</Text>
-                    </Chip>
-                  ) : (
-                    <Icon src={Icons.Search} size="50" />
-                  )
-                }
-                onChange={handleOnChange}
-                autoFocus={!mobileOrTablet()}
-              />
-            </Box>
-          </Header>
+          <Box direction="Column" gap="200">
+            {onTabChange && <EmojiBoardTabs tab={tab} onTabChange={onTabChange} />}
+            <SearchInput
+              key={tab}
+              query={result?.query}
+              onChange={handleOnChange}
+              allowTextCustomEmoji={allowTextCustomEmoji}
+              onTextCustomEmojiSelect={handleTextCustomEmojiSelect}
+            />
+          </Box>
         }
         sidebar={
-          <Sidebar>
-            {emojiTab && recentEmojis.length > 0 && (
-              <RecentEmojiSidebarStack onItemClick={handleScrollToGroup} />
-            )}
-            {imagePacks.length > 0 && (
-              <ImagePackSidebarStack
-                mx={mx}
-                usage={usage}
-                packs={imagePacks}
-                onItemClick={handleScrollToGroup}
-                useAuthentication={useAuthentication}
-              />
-            )}
-            {emojiTab && (
-              <NativeEmojiSidebarStack
-                groups={emojiGroups}
-                icons={emojiGroupIcons}
-                labels={emojiGroupLabels}
-                onItemClick={handleScrollToGroup}
-              />
-            )}
-          </Sidebar>
-        }
-        footer={
           emojiTab ? (
-            <Footer>
-              <Box
-                display="InlineFlex"
-                ref={emojiPreviewRef}
-                className={css.EmojiPreview}
-                alignItems="Center"
-                justifyContent="Center"
-              >
-                😃
-              </Box>
-              <Text ref={emojiPreviewTextRef} size="H5" truncate>
-                :smiley:
-              </Text>
-            </Footer>
+            <EmojiSidebar
+              activeGroupAtom={activeGroupIdAtom}
+              packs={imagePacks}
+              onScrollToGroup={handleScrollToGroup}
+            />
           ) : (
-            imagePacks.length > 0 && (
-              <Footer>
-                <Text ref={emojiPreviewTextRef} size="H5" truncate>
-                  :smiley:
-                </Text>
-              </Footer>
-            )
+            <StickerSidebar
+              activeGroupAtom={activeGroupIdAtom}
+              packs={imagePacks}
+              onScrollToGroup={handleScrollToGroup}
+            />
           )
         }
       >
-        <Content>
-          <Scroll
-            ref={contentScrollRef}
-            size="400"
-            onScroll={handleOnScroll}
-            onKeyDown={preventScrollWithArrowKey}
-            hideTrack
+        <Box grow="Yes">
+          <EmojiGroupHolder
+            key={tab}
+            contentScrollRef={contentScrollRef}
+            previewAtom={previewAtom}
+            onGroupItemClick={handleGroupItemClick}
           >
-            <Box
-              onClick={handleEmojiClick}
-              onMouseMove={handleEmojiHover}
-              onFocus={handleEmojiFocus}
-              direction="Column"
-              gap="200"
+            {searchedItems && (
+              <EmojiGroup
+                id={SEARCH_GROUP_ID}
+                label={searchedItems.length ? t('components:emoji-board.search_results') : t('components:emoji-board.no_results_found')}
+              >
+                {searchedItems.map(renderItem)}
+              </EmojiGroup>
+            )}
+            <div
+              ref={virtualBaseRef}
+              style={{
+                position: 'relative',
+                height: virtualizer.getTotalSize(),
+              }}
             >
-              {searchedItems && (
-                <SearchEmojiGroup
-                  mx={mx}
-                  tab={tab}
-                  id={SEARCH_GROUP_ID}
-                  label={searchedItems.length ? t('components:emoji-board.search_results') : t('components:emoji-board.no_results_found')}
-                  emojis={searchedItems}
-                  useAuthentication={useAuthentication}
-                />
-              )}
-              {emojiTab && recentEmojis.length > 0 && (
-                <RecentEmojiGroup id={RECENT_GROUP_ID} label={t('components:emoji-board.recent')} emojis={recentEmojis} />
-              )}
-              {emojiTab && (
-                <CustomEmojiGroups
-                  mx={mx}
-                  groups={imagePacks}
-                  useAuthentication={useAuthentication}
-                />
-              )}
-              {stickerTab && (
-                <StickerGroups mx={mx} groups={imagePacks} useAuthentication={useAuthentication} />
-              )}
-              {emojiTab && <NativeEmojiGroups groups={emojiGroups} labels={emojiGroupLabels} />}
-            </Box>
-          </Scroll>
-        </Content>
+              {vItems.map((vItem) => {
+                const group = groups[vItem.index];
+
+                return (
+                  <VirtualTile
+                    virtualItem={vItem}
+                    style={{ paddingTop: config.space.S200 }}
+                    ref={virtualizer.measureElement}
+                    key={vItem.index}
+                  >
+                    <EmojiGroup key={group.id} id={group.id} label={group.name}>
+                      {group.items.map(renderItem)}
+                    </EmojiGroup>
+                  </VirtualTile>
+                );
+              })}
+            </div>
+            {tab === EmojiBoardTab.Sticker && groups.length === 0 && <NoStickerPacks />}
+          </EmojiGroupHolder>
+        </Box>
+        <Preview previewAtom={previewAtom} />
       </EmojiBoardLayout>
     </FocusTrap>
   );

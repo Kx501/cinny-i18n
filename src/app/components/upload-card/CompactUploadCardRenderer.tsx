@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Chip, Icon, IconButton, Icons, Text, color } from 'folds';
+import { useTranslation, Trans } from 'react-i18next';
 import { UploadCard, UploadCardError, CompactUploadCardProgress } from './UploadCard';
 import { TUploadAtom, UploadStatus, UploadSuccess, useBindUploadAtom } from '../../state/upload';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
@@ -20,6 +21,7 @@ export function CompactUploadCardRenderer({
   onComplete,
 }: CompactUploadCardRendererProps) {
   const mx = useMatrixClient();
+  const { t } = useTranslation();
   const mediaConfig = useMediaConfig();
   const allowSize = mediaConfig['m.upload.size'] || Infinity;
 
@@ -54,17 +56,17 @@ export function CompactUploadCardRenderer({
             <Chip
               as="button"
               onClick={startUpload}
-              aria-label="Retry Upload"
+              aria-label={t('components:upload-card.retry_upload')}
               variant="Critical"
               radii="Pill"
               outlined
             >
-              <Text size="B300">Retry</Text>
+              <Text size="B300">{t('components:upload-card.retry')}</Text>
             </Chip>
           )}
           <IconButton
             onClick={removeUpload}
-            aria-label="Cancel Upload"
+            aria-label={t('components:upload-card.cancel_upload')}
             variant="SurfaceVariant"
             radii="Pill"
             size="300"
@@ -97,9 +99,11 @@ export function CompactUploadCardRenderer({
           {upload.status === UploadStatus.Idle && fileSizeExceeded && (
             <UploadCardError>
               <Text size="T200">
-                The file size exceeds the limit. Maximum allowed size is{' '}
-                <b>{bytesToSize(allowSize)}</b>, but the uploaded file is{' '}
-                <b>{bytesToSize(file.size)}</b>.
+                <Trans
+                  i18nKey="components:upload-card.the_file_size_exceeds_the_limit"
+                  values={{ max: bytesToSize(allowSize), size: bytesToSize(file.size) }}
+                  components={{ b: <b /> }}
+                />
               </Text>
             </UploadCardError>
           )}

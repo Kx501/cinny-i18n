@@ -199,18 +199,12 @@
 		"failed_to_join_unknown_error": "Failed to join. Unknown Error."
 	},
 	"emoji-board": {
-		"sticker": "Sticker",
-		"emoji": "Emoji",
-		"recent": "Recent",
 		"personal_pack": "Personal Pack",
 		"unknown_pack": "Unknown Pack",
+		"recent": "Recent",
 		"unknown": "Unknown",
-		"search": "Search",
-		"search_or_text_reaction": "Search or Text Reaction",
 		"search_results": "Search Results",
 		"no_results_found": "No Results found",
-		"no_sticker_packs": "No Sticker Packs!",
-		"add_stickers_from_user_room": "Add stickers from user, room or space settings.",
 		"smileys_people": "Smileys & People",
 		"animals_nature": "Animals & Nature",
 		"food_drinks": "Food & Drinks",
@@ -218,7 +212,16 @@
 		"travel_places": "Travel & Places",
 		"objects": "Objects",
 		"symbols": "Symbols",
-		"flags": "Flags"
+		"flags": "Flags",
+		"components": {
+			"sticker": "Sticker",
+			"emoji": "Emoji",
+			"search": "Search",
+			"search_or_text_reaction": "Search or Text Reaction",
+			"react": "React",
+			"no_sticker_packs": "No Sticker Packs!",
+			"add_stickers_from_user_room": "Add stickers from user, room or space settings."
+		}
 	},
 	"message": {
 		"content": {
@@ -231,12 +234,17 @@
 			"broken_message": "Broken message",
 			"empty_message": "Empty message",
 			"edited": " (edited)",
-			"open_pdf": "Open PDF"
+			"open_pdf": "Open PDF",
+			"view": "View",
+			"retry": "Retry",
+			"failed_to_load_image": "Failed to load image!",
+			"watch": "Watch",
+			"failed_to_load_video": "Failed to load video!",
+			"spoiler": "Spoiler"
 		},
 		"open_file": "Open File",
 		"play": "Play",
 		"pause": "Pause",
-		"spoiler": "Spoiler",
 		"unknown": "Unknown",
 		"yesterday": "Yesterday"
 	},
@@ -287,6 +295,13 @@
 	"image-editor": {
 		"image_editor": "Image Editor",
 		"save": "Save"
+	},
+	"upload-card": {
+		"spoiler": "Spoiler",
+		"retry_upload": "Retry Upload",
+		"retry": "Retry",
+		"cancel_upload": "Cancel Upload",
+		"the_file_size_exceeds_the_limit": "The file size exceeds the limit. Maximum allowed size is <b>{{max}}</b>, but the uploaded file is <b>{{size}}</b>."
 	},
 	"event-readers": {
 		"seen_by": "Seen by"

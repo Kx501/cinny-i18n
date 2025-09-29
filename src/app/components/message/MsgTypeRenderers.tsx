@@ -224,6 +224,8 @@ type RenderVideoContentProps = {
   mimeType: string;
   url: string;
   encInfo?: IEncryptedFile;
+  markedAsSpoiler?: boolean;
+  spoilerReason?: string;
 };
 type MVideoProps = {
   content: IVideoContent;
@@ -274,6 +276,8 @@ export function MVideo({ content, renderAsFile, renderVideoContent, outlined }: 
           mimeType: safeMimeType,
           url: mxcUrl,
           encInfo: content.file,
+          markedAsSpoiler: content[MATRIX_SPOILER_PROPERTY_NAME],
+          spoilerReason: content[MATRIX_SPOILER_REASON_PROPERTY_NAME],
         })}
       </AttachmentBox>
     </Attachment>

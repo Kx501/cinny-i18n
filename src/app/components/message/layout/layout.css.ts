@@ -120,6 +120,7 @@ export const CompactHeader = style([
 export const AvatarBase = style({
   paddingTop: toRem(4),
   transition: 'transform 200ms cubic-bezier(0, 0.8, 0.67, 0.97)',
+  display: 'flex',
   alignSelf: 'start',
 
   selectors: {
@@ -133,14 +134,31 @@ export const ModernBefore = style({
   minWidth: toRem(36),
 });
 
-export const BubbleBefore = style([ModernBefore]);
+export const BubbleBefore = style({
+  minWidth: toRem(36),
+});
 
 export const BubbleContent = style({
   maxWidth: toRem(800),
   padding: config.space.S200,
   backgroundColor: color.SurfaceVariant.Container,
   color: color.SurfaceVariant.OnContainer,
-  borderRadius: config.radii.R400,
+  borderRadius: config.radii.R500,
+  position: 'relative',
+});
+
+export const BubbleContentArrowLeft = style({
+  borderTopLeftRadius: 0,
+});
+
+export const BubbleLeftArrow = style({
+  width: toRem(9),
+  height: toRem(8),
+
+  position: 'absolute',
+  top: 0,
+  left: toRem(-8),
+  zIndex: 1,
 });
 
 export const Username = style({

@@ -82,7 +82,7 @@ export const getVideoMsgContent = async (
   item: TUploadItem,
   mxc: string
 ): Promise<IContent> => {
-  const { file, originalFile, encInfo } = item;
+  const { file, originalFile, encInfo, metadata } = item;
 
   const [videoError, videoEl] = await to(loadVideoElement(getVideoFileUrl(originalFile)));
   if (videoError) console.warn(videoError);
@@ -91,6 +91,7 @@ export const getVideoMsgContent = async (
     msgtype: MsgType.Video,
     filename: file.name,
     body: file.name,
+    [MATRIX_SPOILER_PROPERTY_NAME]: metadata.markedAsSpoiler,
   };
   if (videoEl) {
     const [thumbError, thumbContent] = await to(

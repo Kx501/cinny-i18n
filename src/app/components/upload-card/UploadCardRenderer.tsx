@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { Box, Chip, Icon, IconButton, Icons, Text, color, config, toRem } from 'folds';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { UploadCard, UploadCardError, UploadCardProgress } from './UploadCard';
 import { UploadStatus, UploadSuccess, useBindUploadAtom } from '../../state/upload';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
@@ -14,8 +14,54 @@ import {
 import { useObjectURL } from '../../hooks/useObjectURL';
 import { useMediaConfig } from '../../hooks/useMediaConfig';
 
-type ImagePreviewProps = { fileItem: TUploadItem; onSpoiler: (marked: boolean) => void };
-function ImagePreview({ fileItem, onSpoiler }: ImagePreviewProps) {
+type PreviewImageProps = {
+  fileItem: TUploadItem;
+};
+function PreviewImage({ fileItem }: PreviewImageProps) {
+  const { originalFile, metadata } = fileItem;
+  const fileUrl = useObjectURL(originalFile);
+
+  return (
+    <img
+      style={{
+        objectFit: 'contain',
+        width: '100%',
+        height: toRem(152),
+        filter: metadata.markedAsSpoiler ? 'blur(44px)' : undefined,
+      }}
+      alt={originalFile.name}
+      src={fileUrl}
+    />
+  );
+}
+
+type PreviewVideoProps = {
+  fileItem: TUploadItem;
+};
+function PreviewVideo({ fileItem }: PreviewVideoProps) {
+  const { originalFile, metadata } = fileItem;
+  const fileUrl = useObjectURL(originalFile);
+
+  return (
+    // eslint-disable-next-line jsx-a11y/media-has-caption
+    <video
+      style={{
+        objectFit: 'contain',
+        width: '100%',
+        height: toRem(152),
+        filter: metadata.markedAsSpoiler ? 'blur(44px)' : undefined,
+      }}
+      src={fileUrl}
+    />
+  );
+}
+
+type MediaPreviewProps = {
+  fileItem: TUploadItem;
+  onSpoiler: (marked: boolean) => void;
+  children: ReactNode;
+};
+function MediaPreview({ fileItem, onSpoiler, children }: MediaPreviewProps) {
   const { t } = useTranslation();
   const { originalFile, metadata } = fileItem;
   const fileUrl = useObjectURL(originalFile);
@@ -29,16 +75,7 @@ function ImagePreview({ fileItem, onSpoiler }: ImagePreviewProps) {
         position: 'relative',
       }}
     >
-      <img
-        style={{
-          objectFit: 'contain',
-          width: '100%',
-          height: toRem(152),
-          filter: fileItem.metadata.markedAsSpoiler ? 'blur(44px)' : undefined,
-        }}
-        src={fileUrl}
-        alt={originalFile.name}
-      />
+      {children}
       <Box
         justifyContent="End"
         style={{
@@ -56,7 +93,7 @@ function ImagePreview({ fileItem, onSpoiler }: ImagePreviewProps) {
           before={<Icon src={Icons.EyeBlind} size="50" />}
           onClick={() => onSpoiler(!metadata.markedAsSpoiler)}
         >
-          <Text size="B300">{t('components:message.spoiler')}</Text>
+          <Text size="B300">{t('components:upload-card.spoiler')}</Text>
         </Chip>
       </Box>
     </Box>
@@ -78,6 +115,7 @@ export function UploadCardRenderer({
   onComplete,
 }: UploadCardRendererProps) {
   const mx = useMatrixClient();
+  const { t } = useTranslation();
   const mediaConfig = useMediaConfig();
   const allowSize = mediaConfig['m.upload.size'] || Infinity;
 
@@ -116,17 +154,17 @@ export function UploadCardRenderer({
             <Chip
               as="button"
               onClick={startUpload}
-              aria-label="Retry Upload"
+              aria-label={t('components:upload-card.retry_upload')}
               variant="Critical"
               radii="Pill"
               outlined
             >
-              <Text size="B300">Retry</Text>
+              <Text size="B300">{t('components:upload-card.retry')}</Text>
             </Chip>
           )}
           <IconButton
             onClick={removeUpload}
-            aria-label="Cancel Upload"
+            aria-label={t('components:upload-card.cancel_upload')}
             variant="SurfaceVariant"
             radii="Pill"
             size="300"
@@ -138,7 +176,14 @@ export function UploadCardRenderer({
       bottom={
         <>
           {fileItem.originalFile.type.startsWith('image') && (
-            <ImagePreview fileItem={fileItem} onSpoiler={handleSpoiler} />
+            <MediaPreview fileItem={fileItem} onSpoiler={handleSpoiler}>
+              <PreviewImage fileItem={fileItem} />
+            </MediaPreview>
+          )}
+          {fileItem.originalFile.type.startsWith('video') && (
+            <MediaPreview fileItem={fileItem} onSpoiler={handleSpoiler}>
+              <PreviewVideo fileItem={fileItem} />
+            </MediaPreview>
           )}
           {upload.status === UploadStatus.Idle && !fileSizeExceeded && (
             <UploadCardProgress sentBytes={0} totalBytes={file.size} />
@@ -154,9 +199,11 @@ export function UploadCardRenderer({
           {upload.status === UploadStatus.Idle && fileSizeExceeded && (
             <UploadCardError>
               <Text size="T200">
-                The file size exceeds the limit. Maximum allowed size is{' '}
-                <b>{bytesToSize(allowSize)}</b>, but the uploaded file is{' '}
-                <b>{bytesToSize(file.size)}</b>.
+                <Trans
+                  i18nKey="components:upload-card.the_file_size_exceeds_the_limit"
+                  values={{ max: bytesToSize(allowSize), size: bytesToSize(file.size) }}
+                  components={{ b: <b /> }}
+                />
               </Text>
             </UploadCardError>
           )}

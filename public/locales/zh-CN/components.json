@@ -199,18 +199,12 @@
 		"failed_to_join_unknown_error": "加入失败。未知错误。"
 	},
 	"emoji-board": {
-		"sticker": "贴纸",
-		"emoji": "表情符号",
-		"recent": "最近",
 		"personal_pack": "个人包",
 		"unknown_pack": "未知包",
+		"recent": "最近",
 		"unknown": "未知",
-		"search": "搜索",
-		"search_or_text_reaction": "搜索或反应文字",
 		"search_results": "搜索结果",
 		"no_results_found": "未找到结果。",
-		"no_sticker_packs": "没有贴纸包！",
-		"add_stickers_from_user_room": "从用户、房间或空间设置添加贴纸。",
 		"smileys_people": "表情与人物",
 		"animals_nature": "动物与自然",
 		"food_drinks": "食物与饮品",
@@ -218,7 +212,16 @@
 		"travel_places": "旅行与地点",
 		"objects": "物品",
 		"symbols": "符号",
-		"flags": "旗帜"
+		"flags": "旗帜",
+		"components": {
+			"sticker": "贴纸",
+			"emoji": "表情符号",
+			"search": "搜索",
+			"search_or_text_reaction": "搜索或反应文字",
+			"react": "发表反应",
+			"no_sticker_packs": "没有贴纸包！",
+			"add_stickers_from_user_room": "从用户、房间或空间设置添加贴纸。"
+		}
 	},
 	"message": {
 		"content": {
@@ -231,12 +234,17 @@
 			"broken_message": "损坏的消息",
 			"empty_message": "空消息",
 			"edited": " （已编辑）",
-			"open_pdf": "打开PDF"
+			"open_pdf": "打开PDF",
+			"view": "查看",
+			"retry": "重试",
+			"failed_to_load_image": "图片加载失败！",
+			"watch": "观看",
+			"failed_to_load_video": "视频加载失败！",
+			"spoiler": "剧透"
 		},
 		"open_file": "打开文件",
 		"play": "播放",
 		"pause": "暂停",
-		"spoiler": "剧透",
 		"unknown": "未知",
 		"yesterday": "昨天"
 	},
@@ -286,6 +294,13 @@
 	"image-editor": {
 		"image_editor": "图片编辑器",
 		"save": "保存"
+	},
+	"upload-card": {
+		"spoiler": "剧透",
+		"retry_upload": "重试上传",
+		"retry": "重试",
+		"cancel_upload": "取消上传",
+		"the_file_size_exceeds_the_limit": "文件大小超过限制。最大允许大小为<b>{{max}}</b>，而上传的文件为<b>{{size}}</b>。"
 	},
 	"event-readers": {
 		"seen_by": "已查看者"

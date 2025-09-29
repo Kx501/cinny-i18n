@@ -4,6 +4,9 @@ import { DefaultReset, config, toRem } from 'folds';
 export const MessageBase = style({
   position: 'relative',
 });
+export const MessageBaseBubbleCollapsed = style({
+  paddingTop: 0,
+});
 
 export const MessageOptionsBase = style([
   DefaultReset,
@@ -20,6 +23,10 @@ export const MessageOptionsBar = style([
     padding: config.space.S100,
   },
 ]);
+
+export const BubbleAvatarBase = style({
+  paddingTop: 0,
+});
 
 export const MessageAvatar = style({
   cursor: 'pointer',

@@ -91,6 +91,7 @@
 		"invitation": "Invitation",
 		"failed_to_load": "Failed to load. {{message}}",
 		"failed_to_start": "Failed to start. {{message}}",
+		"new_inbox_notification_from": "New inbox notification from {{username}}",
 		"connecting": "Connecting...",
 		"connection_lost_reconnecting": "Connection Lost! Reconnecting...",
 		"connection_lost": "Connection Lost!",

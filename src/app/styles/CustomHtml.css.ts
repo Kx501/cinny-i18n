@@ -1,6 +1,7 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { color, config, DefaultReset, toRem } from 'folds';
+import { ContainerColor } from './ContainerColor.css';
 
 export const MarginSpaced = style({
   marginBottom: config.space.S200,
@@ -92,11 +93,14 @@ export const CodeBlock = style([
     overflow: 'hidden',
   },
 ]);
-export const CodeBlockHeader = style({
-  padding: `0 ${config.space.S200} 0 ${config.space.S300}`,
-  borderBottomWidth: config.borderWidth.B300,
-  gap: config.space.S200,
-});
+export const CodeBlockHeader = style([
+  ContainerColor({ variant: 'Surface' }),
+  {
+    padding: `0 ${config.space.S200} 0 ${config.space.S300}`,
+    borderBottomWidth: config.borderWidth.B300,
+    gap: config.space.S200,
+  },
+]);
 export const CodeBlockInternal = style([
   CodeFont,
   {

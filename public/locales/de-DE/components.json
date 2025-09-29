@@ -199,18 +199,12 @@
 		"failed_to_join_unknown_error": "Beitritt fehlgeschlagen. Unbekannter Fehler."
 	},
 	"emoji-board": {
-		"sticker": "Aufkleber",
-		"emoji": "Emoji",
-		"recent": "Kürzlich",
 		"personal_pack": "Persönliches Paket",
 		"unknown_pack": "Unbekanntes Paket",
+		"recent": "Kürzlich",
 		"unknown": "Unbekannt",
-		"search": "Suchen",
-		"search_or_text_reaction": "Suchen oder Text-Reaktion",
 		"search_results": "Suchergebnisse",
 		"no_results_found": "Keine Ergebnisse gefunden.",
-		"no_sticker_packs": "Keine Aufkleber-Pakete!",
-		"add_stickers_from_user_room": "Fügen Sie Aufkleber aus Benutzer-, Raum- oder Raumeinstellungen hinzu.",
 		"smileys_people": "Smileys & Personen",
 		"animals_nature": "Tiere & Natur",
 		"food_drinks": "Essen & Trinken",
@@ -218,7 +212,16 @@
 		"travel_places": "Reisen & Orte",
 		"objects": "Gegenstände",
 		"symbols": "Symbole",
-		"flags": "Flaggen"
+		"flags": "Flaggen",
+		"components": {
+			"sticker": "Aufkleber",
+			"emoji": "Emoji",
+			"search": "Suchen",
+			"search_or_text_reaction": "Suchen oder Text-Reaktion",
+			"react": "Reagieren",
+			"no_sticker_packs": "Keine Aufkleber-Pakete!",
+			"add_stickers_from_user_room": "Fügen Sie Aufkleber aus Benutzer-, Raum- oder Raumeinstellungen hinzu."
+		}
 	},
 	"message": {
 		"content": {
@@ -232,13 +235,18 @@
 			"empty_message": "Leere Nachricht",
 			"edited": " (bearbeitet)",
 			"open_pdf": "PDF öffnen",
-			"yesterday": "Gestern"
+			"view": "Anzeigen",
+			"retry": "Wiederholen",
+			"failed_to_load_image": "Bild konnte nicht geladen werden!",
+			"watch": "Ansehen",
+			"failed_to_load_video": "Video konnte nicht geladen werden!",
+			"spoiler": "Spoiler"
 		},
 		"open_file": "Datei öffnen",
 		"play": "Abspielen",
 		"pause": "Pause",
-		"spoiler": "Spoiler",
-		"unknown": "Unbekannt"
+		"unknown": "Unbekannt",
+		"yesterday": "Gestern"
 	},
 	"time-date": {
 		"hour": "Stunde",
@@ -286,6 +294,13 @@
 	"image-editor": {
 		"image_editor": "Bild-Editor",
 		"save": "Speichern"
+	},
+	"upload-card": {
+		"spoiler": "Spoiler",
+		"retry_upload": "Wiederholung des Uploads",
+		"retry": "Wiederholung",
+		"cancel_upload": "Upload abbrechen",
+		"the_file_size_exceeds_the_limit": "The file size exceeds the limit. Maximum allowed size is <b>{{max}}</b>, but the uploaded file is <b>{{size}}</b>."
 	},
 	"event-readers": {
 		"seen_by": "Gesehen von"

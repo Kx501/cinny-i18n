@@ -91,6 +91,7 @@
 		"invitation": "Einladung",
 		"failed_to_load": "Laden fehlgeschlagen. {{message}}",
 		"failed_to_start": "Starten fehlgeschlagen. {{message}}",
+		"new_inbox_notification_from": "Neue Benachrichtigung im Posteingang von {{Benutzername}}",
 		"connecting": "Verbinde...",
 		"connection_lost_reconnecting": "Verbindung verloren! Verbinde neu...",
 		"connection_lost": "Verbindung verloren!",

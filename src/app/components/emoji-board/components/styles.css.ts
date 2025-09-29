@@ -1,5 +1,9 @@
 import { style } from '@vanilla-extract/css';
-import { DefaultReset, FocusOutline, color, config, toRem } from 'folds';
+import { toRem, color, config, DefaultReset, FocusOutline } from 'folds';
+
+/**
+ * Layout
+ */
 
 export const Base = style({
   maxWidth: toRem(432),
@@ -12,6 +16,15 @@ export const Base = style({
   boxShadow: config.shadow.E200,
   overflow: 'hidden',
 });
+
+export const Header = style({
+  padding: config.space.S300,
+  paddingBottom: 0,
+});
+
+/**
+ * Sidebar
+ */
 
 export const Sidebar = style({
   width: toRem(54),
@@ -29,26 +42,21 @@ export const SidebarStack = style({
   backgroundColor: color.Surface.Container,
 });
 
-export const NativeEmojiSidebarStack = style({
-  position: 'sticky',
-  bottom: '-67%',
-  zIndex: 1,
-});
-
 export const SidebarDivider = style({
   width: toRem(18),
 });
 
-export const Header = style({
-  padding: config.space.S300,
-  paddingBottom: 0,
+export const SidebarBtnImg = style({
+  width: toRem(24),
+  height: toRem(24),
+  objectFit: 'contain',
 });
 
-export const EmojiBoardTab = style({
-  cursor: 'pointer',
-});
+/**
+ * Preview
+ */
 
-export const Footer = style({
+export const Preview = style({
   padding: config.space.S200,
   margin: config.space.S300,
   marginTop: 0,
@@ -59,7 +67,30 @@ export const Footer = style({
   color: color.SurfaceVariant.OnContainer,
 });
 
+export const PreviewEmoji = style([
+  DefaultReset,
+  {
+    width: toRem(32),
+    height: toRem(32),
+    fontSize: toRem(32),
+    lineHeight: toRem(32),
+  },
+]);
+export const PreviewImg = style([
+  DefaultReset,
+  {
+    width: toRem(32),
+    height: toRem(32),
+    objectFit: 'contain',
+  },
+]);
+
+/**
+ * Group
+ */
+
 export const EmojiGroup = style({
+  position: 'relative',
   padding: `${config.space.S300} 0`,
 });
 
@@ -82,15 +113,9 @@ export const EmojiGroupContent = style([
   },
 ]);
 
-export const EmojiPreview = style([
-  DefaultReset,
-  {
-    width: toRem(32),
-    height: toRem(32),
-    fontSize: toRem(32),
-    lineHeight: toRem(32),
-  },
-]);
+/**
+ * Item
+ */
 
 export const EmojiItem = style([
   DefaultReset,

@@ -723,6 +723,7 @@ export const Message = as<'div', MessageProps>(
     const mx = useMatrixClient();
     const useAuthentication = useMediaAuthentication();
     const senderId = mEvent.getSender() ?? '';
+
     const [hover, setHover] = useState(false);
     const { hoverProps } = useHover({ onHoverChange: setHover });
     const { focusWithinProps } = useFocusWithin({ onFocusWithinChange: setHover });
@@ -790,7 +791,9 @@ export const Message = as<'div', MessageProps>(
     );
 
     const avatarJSX = !collapse && messageLayout !== MessageLayout.Compact && (
-      <AvatarBase>
+      <AvatarBase
+        className={messageLayout === MessageLayout.Bubble ? css.BubbleAvatarBase : undefined}
+      >
         <Avatar
           className={css.MessageAvatar}
           as="button"
@@ -875,7 +878,9 @@ export const Message = as<'div', MessageProps>(
     const isThreadedMessage = mEvent.threadRootId !== undefined;
     return (
       <MessageBase
-        className={classNames(css.MessageBase, className)}
+        className={classNames(css.MessageBase, className, {
+          [css.MessageBaseBubbleCollapsed]: messageLayout === MessageLayout.Bubble && collapse,
+        })}
         tabIndex={0}
         space={messageSpacing}
         collapse={collapse}
@@ -1132,8 +1137,7 @@ export const Message = as<'div', MessageProps>(
           </CompactLayout>
         )}
         {messageLayout === MessageLayout.Bubble && (
-          <BubbleLayout before={avatarJSX} onContextMenu={handleContextMenu}>
-            {headerJSX}
+          <BubbleLayout before={avatarJSX} header={headerJSX} onContextMenu={handleContextMenu}>
             {msgContentJSX}
           </BubbleLayout>
         )}
