@@ -51,7 +51,10 @@ export const useMemberSort = (index: number, memberSort: MemberSortItem[]): Memb
   return item;
 };
 
-export const useMemberPowerSort = (creators: Set<string>): MemberSortFn => {
+export const useMemberPowerSort = (
+  creators: Set<string>,
+  getPowerLevel: (userId: string) => number
+): MemberSortFn => {
   const sort: MemberSortFn = useCallback(
     (a, b) => {
       if (creators.has(a.userId) && creators.has(b.userId)) {
@@ -60,7 +63,7 @@ export const useMemberPowerSort = (creators: Set<string>): MemberSortFn => {
       if (creators.has(a.userId)) return -1;
       if (creators.has(b.userId)) return 1;
 
-      return b.powerLevel - a.powerLevel;
+      return getPowerLevel(b.userId) - getPowerLevel(a.userId);
     },
     [creators]
   );
