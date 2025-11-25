@@ -1,0 +1,69 @@
+name: Build and Deploy to Local Server
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy via SSH+rsync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.0
+      
+      - name: Setup node
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 20.12.2
+          cache: 'npm'  # Cache npm dependencies to speed up builds
+      
+      - name: Install dependencies
+        run: npm ci  # Use ci instead of install to ensure dependency consistency
+      
+      - name: Replace configuration files with environment variables
+        env:
+          # Build config environment variables (optional, will keep defaults if not provided)
+          BUILD_BASE: ${{ secrets.BUILD_BASE || '/' }}
+          
+          # App config environment variables - complete file content
+          CONFIG_CONTENT: ${{ secrets.CONFIG_CONTENT }}
+        run: |
+          # Replace build.config.ts with environment variables
+          echo "export default {" > build.config.ts
+          echo "  base: '$BUILD_BASE'," >> build.config.ts
+          echo '};' >> build.config.ts
+          echo "Updated build.config.ts with base: $BUILD_BASE"
+          
+          # Replace config.json if CONFIG_CONTENT is provided, otherwise use the repository's default
+          if [ ! -z "$CONFIG_CONTENT" ]; then
+            echo "$CONFIG_CONTENT" > config.json
+            echo "Updated config.json with custom content from CONFIG_CONTENT secret"
+          else
+            echo "No CONFIG_CONTENT provided, using repository's default config.json"
+          fi
+      
+      - name: Build app
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+        run: npm run build
+      
+      - name: Deploy via SSH with rsync
+        env:
+          DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          DEPLOY_HOST: ${{ secrets.SSH_HOST }}
+          DEPLOY_USER: ${{ secrets.SSH_USER }}
+          DEPLOY_PORT: ${{ secrets.SSH_PORT || '22' }}
+          DEPLOY_PATH: ${{ secrets.SSH_TARGET_DIR || '~/cinny-deploy' }}
+        run: |
+          echo "$DEPLOY_KEY" > deploy_key
+          chmod 600 deploy_key
+          rsync -avz --delete --update \
+            -e "ssh -i deploy_key -p $DEPLOY_PORT -o StrictHostKeyChecking=no" \
+            ./dist/ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+      
+      - name: Output deployment status
+        if: success()
+        run: |
+          echo "✅ Build and deployment completed!"
