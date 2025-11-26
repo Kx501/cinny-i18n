@@ -273,7 +273,7 @@
 	},
 	"join-address-prompt": {
 		"join_address": "使用地址加入",
-		"enter_public_address": "输入社区公共地址以加入。地址格式如下：",
+		"enter_public_address": "输入社区公开地址。地址格式如下：",
 		"address": "地址",
 		"invalid_address": "无效地址",
 		"open": "打开",
