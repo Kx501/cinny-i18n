@@ -287,7 +287,7 @@
 			"no_packs": "Keine Pakete",
 			"there_are_no_emoji": "Derzeit sind keine Emoji- oder Aufkleberpakete zum Anzeigen verfügbar.",
 			"failed_to_remove_packs": "Pakete konnten nicht entfernt werden! Bitte versuchen Sie es erneut.",
-			"delete_selected_packs": "Ausgewählte Pakete löschen. ({count} ausgewählt)",
+			"delete_selected_packs": "Ausgewählte Pakete löschen. ({{count}} ausgewählt)",
 			"cancel": "Abbrechen",
 			"delete": "Löschen"
 		},
@@ -355,7 +355,7 @@
 			"open_new_room": "Neuen Raum öffnen",
 			"this_space_has_been_replaced": "Dieser Raum wurde ersetzt!",
 			"this_room_has_been_replaced": "Dieser Raum wurde ersetzt!",
-			"current_version": "Aktuelle Version: {version}."
+			"current_version": "Aktuelle Version: {{version}}."
 		},
 		"permissions": {
 			"75": "75",
@@ -393,7 +393,7 @@
 			"no_results": "Keine Ergebnisse",
 			"results": "Ergebnisse",
 			"scroll_to_top": "Nach oben scrollen",
-			"no_members": "Keine \"{filter}\" Mitglieder"
+			"no_members": "Keine \"{{filter}}\" Mitglieder"
 		}
 	},
 	"room-settings": {
@@ -476,7 +476,7 @@
 		"search": "Suchen",
 		"no_match_found": "Keine Übereinstimmung gefunden",
 		"no_rooms": "Keine Räume",
-		"no_match_found_for": "Keine Übereinstimmung für \"{query}\" gefunden.",
+		"no_match_found_for": "Keine Übereinstimmung für \"{{query}}\" gefunden.",
 		"you_do_not_have_any_rooms": "Sie haben noch keine Räume zum Anzeigen.",
 		"type_for_rooms": "Geben Sie <b>#</b> für Räume, <b>@</b> für DMs und <b>*</b> für Spaces ein. Tastenkombination: <b>{{hotkey}}</b>"
 	},
@@ -484,14 +484,14 @@
 		"add_existing": "Bestehende hinzufügen",
 		"search": "Suchen",
 		"no_match_found": "Keine Übereinstimmung gefunden",
-		"no_match_found_for": "Keine Übereinstimmung für \"{query}\" gefunden.",
+		"no_match_found_for": "Keine Übereinstimmung für \"{{query}}\" gefunden.",
 		"no_rooms": "Keine Räume",
 		"no_spaces": "Keine Räume",
 		"you_do_not_have_any_rooms": "Sie haben noch keine Räume zum Anzeigen.",
 		"spaces": "Räume",
 		"rooms": "Räume",
 		"failed_to_apply_changes": "Änderungen konnten nicht angewendet werden! Bitte versuchen Sie es erneut.",
-		"apply_when_ready": "Anwenden, wenn bereit. ({selected} ausgewählt)",
+		"apply_when_ready": "Anwenden, wenn bereit. ({{selected}} ausgewählt)",
 		"reset": "Zurücksetzen",
 		"apply_changes": "Änderungen anwenden"
 	},
@@ -532,13 +532,13 @@
 		"result": "Ergebnis",
 		"results": "Ergebnisse",
 		"scroll_to_top": "Nach oben scrollen",
-		"no_members": "Keine \"{filter}\" Mitglieder",
+		"no_members": "Keine \"{{filter}}\" Mitglieder",
 		"new_messages": "Neue Nachrichten",
 		"today": "Heute",
 		"yesterday": "Gestern",
 		"no_permission_to_post": "Sie haben keine Berechtigung, in diesem Raum zu posten",
 		"open": "Öffnen",
-		"drop_files_in": "Dateien in \"{roomName}\" ablegen",
+		"drop_files_in": "Dateien in \"{{roomName}}\" ablegen",
 		"drag_and_drop_files": "Dateien hier ablegen oder für Auswahldialog klicken",
 		"send_a_message": "Nachricht senden...",
 		"command": "Befehl",
@@ -583,7 +583,7 @@
 			"cancel": "Abbrechen"
 		},
 		"reaction-viewer": {
-			"reacted_with": "Reagiert mit :{selectedShortcode}:"
+			"reacted_with": "Reagiert mit :{{selectedShortcode}}:"
 		},
 		"room-pin-menu": {
 			"pinned_messages": "Angeheftete Nachrichten",
@@ -597,7 +597,7 @@
 		"options": "Optionen",
 		"end_to_end_encryption": "Ende-zu-Ende-Verschlüsselung",
 		"once_this_feature_is_enabled": "Sobald diese Funktion aktiviert ist, kann sie nach der Raumerstellung nicht mehr deaktiviert werden.",
-		"server_rate_limited": "Server hat Ihre Anfrage für {minutes} Minuten begrenzt!",
+		"server_rate_limited": "Server hat Ihre Anfrage für {{minutes}} Minuten begrenzt!",
 		"create": "Erstellen",
 		"username_server": "@Benutzername:Server"
 	},
@@ -613,7 +613,7 @@
 		"anyone_can_send_request_to_join_this_room": "Jeder kann eine Anfrage senden, um diesem Raum beizutreten.",
 		"allow_federation": "Föderation erlauben",
 		"users_from_other_servers_can_join": "Benutzer von anderen Servern können beitreten.",
-		"server_rate_limited": "Server hat Ihre Anfrage für {minutes} Minuten begrenzt!",
+		"server_rate_limited": "Server hat Ihre Anfrage für {{minutes}} Minuten begrenzt!",
 		"create": "Erstellen",
 		"access": "Zugriff"
 	},
@@ -626,7 +626,7 @@
 		"anyone_can_send_request_to_join_this_space": "Jeder kann eine Anfrage senden, um diesem Raum beizutreten.",
 		"allow_federation": "Föderation erlauben",
 		"users_from_other_servers_can_join": "Benutzer von anderen Servern können beitreten.",
-		"server_rate_limited": "Server hat Ihre Anfrage für {minutes} Minuten begrenzt!",
+		"server_rate_limited": "Server hat Ihre Anfrage für {{minutes}} Minuten begrenzt!",
 		"create": "Erstellen",
 		"access": "Zugriff"
 	},
@@ -661,12 +661,12 @@
 	"message-search": {
 		"search_messages": "Nachrichten suchen",
 		"find_helpful_messages": "Finden Sie hilfreiche Nachrichten in Ihrer Community, indem Sie mit verwandten Schlüsselwörtern suchen.",
-		"no_results_found_for": "Keine Ergebnisse für \"{term}\" gefunden.",
-		"results_for": "Ergebnisse für \"{term}\".",
+		"no_results_found_for": "Keine Ergebnisse für \"{{term}}\" gefunden.",
+		"results_for": "Ergebnisse für \"{{term}}\".",
 		"filter": "Filter",
 		"global": "Global",
 		"rooms": "Räume",
-		"rooms_for": "Räume für \"{query}\".",
+		"rooms_for": "Räume für \"{{query}}\".",
 		"save": "Speichern",
 		"deselect_all": "Alle abwählen",
 		"select_rooms": "Räume auswählen",

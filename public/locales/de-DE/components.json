@@ -226,7 +226,7 @@
 	"message": {
 		"content": {
 			"this_message_has_been_deleted": "Diese Nachricht wurde gelöscht",
-			"this_message_has_been_deleted_reason": "Diese Nachricht wurde gelöscht. {reason}",
+			"this_message_has_been_deleted_reason": "Diese Nachricht wurde gelöscht. {{reason}}",
 			"unsupported_message": "Nicht unterstützte Nachricht",
 			"failed_to_load_message": "Nachricht konnte nicht geladen werden",
 			"unable_to_decrypt_message": "Nachricht kann nicht entschlüsselt werden",
@@ -323,7 +323,7 @@
 		"ordered_list": "Geordnete Liste",
 		"unordered_list": "Ungeordnete Liste",
 		"exit_formatting": "Formatierung beenden",
-		"exit_ctrl": "Beenden {hyper}",
+		"exit_ctrl": "Beenden {{hyper}}",
 		"enable_markdown": "Markdown aktivieren",
 		"disable_markdown": "Markdown deaktivieren",
 		"send_a_message": "Eine Nachricht senden..."

@@ -226,7 +226,7 @@
 	"message": {
 		"content": {
 			"this_message_has_been_deleted": "This message has been deleted",
-			"this_message_has_been_deleted_reason": "This message has been deleted. {reason}",
+			"this_message_has_been_deleted_reason": "This message has been deleted. {{reason}}",
 			"unsupported_message": "Unsupported message",
 			"failed_to_load_message": "Failed to load message",
 			"unable_to_decrypt_message": "Unable to decrypt message",
@@ -324,7 +324,7 @@
 		"ordered_list": "Ordered List",
 		"unordered_list": "Unordered List",
 		"exit_formatting": "Exit Formatting",
-		"exit_ctrl": "Exit {hyper}",
+		"exit_ctrl": "Exit {{hyper}}",
 		"enable_markdown": "Enable Markdown",
 		"disable_markdown": "Disable Markdown",
 		"send_a_message": "Send a message..."

@@ -6,7 +6,6 @@ import { trimTrailingSlash } from './utils/common';
 
 // list of namespaces
 export const NAMESPACES = [
-  'common',
   'components',
   'features',
   'pages',

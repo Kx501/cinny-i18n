@@ -287,7 +287,7 @@
             "no_packs": "No Packs",
             "there_are_no_emoji": "There are no emoji or sticker packs to display at the moment.",
             "failed_to_remove_packs": "Failed to remove packs! Please try again.",
-            "delete_selected_packs": "Delete selected packs. ({count} selected)",
+            "delete_selected_packs": "Delete selected packs. ({{count}} selected)",
             "cancel": "Cancel",
             "delete": "Delete"
         },
@@ -355,7 +355,7 @@
             "open_new_room": "Open New Room",
             "this_space_has_been_replaced": "This space has been replaced!",
             "this_room_has_been_replaced": "This room has been replaced!",
-            "current_version": "Current version: {version}."
+            "current_version": "Current version: {{version}}."
         },
         "permissions": {
             "75": "75",
@@ -393,7 +393,7 @@
             "no_results": "No Results",
             "results": "Results",
             "scroll_to_top": "Scroll to Top",
-            "no_members": "No \"{filter}\" Members"
+            "no_members": "No \"{{filter}}\" Members"
         }
     },
     "room-settings": {
@@ -476,7 +476,7 @@
         "search": "Search",
         "no_match_found": "No Match Found",
         "no_rooms": "No Rooms",
-        "no_match_found_for": "No match found for \"{query}\".",
+        "no_match_found_for": "No match found for \"{{query}}\".",
         "you_do_not_have_any_rooms": "You do not have any rooms to display yet.",
         "type_for_rooms": "Type <b>#</b> for rooms, <b>@</b> for DMs and <b>*</b> for spaces. Hotkey: <b>{{hotkey}}</b>"
     },
@@ -484,14 +484,14 @@
         "add_existing": "Add Existing",
         "search": "Search",
         "no_match_found": "No Match Found",
-        "no_match_found_for": "No match found for \"{query}\".",
+        "no_match_found_for": "No match found for \"{{query}}\".",
         "no_rooms": "No Rooms",
         "no_spaces": "No Spaces",
         "you_do_not_have_any_rooms": "You do not have any rooms to display yet.",
         "spaces": "Spaces",
         "rooms": "Rooms",
         "failed_to_apply_changes": "Failed to apply changes! Please try again.",
-        "apply_when_ready": "Apply when ready. ({selected} Selected)",
+        "apply_when_ready": "Apply when ready. ({{selected}} Selected)",
         "reset": "Reset",
         "apply_changes": "Apply Changes"
     },
@@ -501,7 +501,7 @@
         "options": "Options",
         "end_to_end_encryption": "End-to-End Encryption",
         "once_this_feature_is_enabled": "Once this feature is enabled, it can't be disabled after the room is created.",
-        "server_rate_limited": "Server rate-limited your request for {minutes} minutes!",
+        "server_rate_limited": "Server rate-limited your request for {{minutes}} minutes!",
         "create": "Create",
         "username_server": "@username:server"
     },
@@ -517,7 +517,7 @@
         "anyone_can_send_request_to_join_this_room": "Anyone can send request to join this room.",
         "allow_federation": "Allow Federation",
         "users_from_other_servers_can_join": "Users from other servers can join.",
-        "server_rate_limited": "Server rate-limited your request for {minutes} minutes!",
+        "server_rate_limited": "Server rate-limited your request for {{minutes}} minutes!",
         "create": "Create",
         "access": "Access"
     },
@@ -530,7 +530,7 @@
         "anyone_can_send_request_to_join_this_space": "Anyone can send request to join this space.",
         "allow_federation": "Allow Federation",
         "users_from_other_servers_can_join": "Users from other servers can join.",
-        "server_rate_limited": "Server rate-limited your request for {minutes} minutes!",
+        "server_rate_limited": "Server rate-limited your request for {{minutes}} minutes!",
         "create": "Create",
         "access": "Access"
     },
@@ -565,12 +565,12 @@
     "message-search": {
         "search_messages": "Search Messages",
         "find_helpful_messages": "Find helpful messages in your community by searching with related keywords.",
-        "no_results_found_for": "No results found for \"{term}\".",
-        "results_for": "Results for \"{term}\".",
+        "no_results_found_for": "No results found for \"{{term}}\".",
+        "results_for": "Results for \"{{term}}\".",
         "filter": "Filter",
         "global": "Global",
         "rooms": "Rooms",
-        "rooms_for": "Rooms for \"{query}\".",
+        "rooms_for": "Rooms for \"{{query}}\".",
         "save": "Save",
         "deselect_all": "Deselect All",
         "select_rooms": "Select Rooms",
@@ -620,8 +620,8 @@
         "result": "Result",
         "results": "Results",
         "scroll_to_top": "Scroll to Top",
-        "no_members": "No \"{filter}\" Members",
-        "drop_files_in": "Drop Files in \"{roomName}\"",
+        "no_members": "No \"{{filter}}\" Members",
+        "drop_files_in": "Drop Files in \"{{roomName}}\"",
         "drag_and_drop_files": "Drag and drop files here or click for selection dialog",
         "send_a_message": "Send a message...",
         "new_messages": "New Messages",
@@ -671,7 +671,7 @@
             "cancel": "Cancel"
         },
         "reaction-viewer": {
-            "reacted_with": "Reacted with :{selectedShortcode}:"
+            "reacted_with": "Reacted with :{{selectedShortcode}}:"
         },
         "room-pin-menu": {
             "pinned_messages": "Pinned Messages",
