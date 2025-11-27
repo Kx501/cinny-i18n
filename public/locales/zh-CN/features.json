@@ -359,8 +359,8 @@
 		},
 		"permissions": {
 			"75": "75",
-			"founders": "创建者",
-			"founding_members_has_all_permissions": "创建者拥有所有权限，仅在升级期间可更改。",
+			"founders": "创始人",
+			"founding_members_has_all_permissions": "创始人拥有所有权限，仅在升级期间可更改。",
 			"manage_and_customize_incremental": "管理和自定义用户的增量权限级别。",
 			"edit": "编辑",
 			"users": "用户",
