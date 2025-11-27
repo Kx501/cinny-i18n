@@ -406,7 +406,7 @@
 			"general": "Allgemein",
 			"options": "Optionen",
 			"addresses": "Adressen",
-			"advance_options": "Erweiterte Optionen"
+			"advanced_options": "Erweiterte Optionen"
 		},
 		"permissions": {
 			"permissions": "Berechtigungen",
@@ -446,7 +446,7 @@
 			"general": "Allgemein",
 			"options": "Optionen",
 			"addresses": "Adressen",
-			"advance_options": "Erweiterte Optionen"
+			"advanced_options": "Erweiterte Optionen"
 		},
 		"permissions": {
 			"permissions": "Berechtigungen",
@@ -606,7 +606,7 @@
 		"name": "Name",
 		"topic_optional": "Thema (Optional)",
 		"options": "Optionen",
-		"advance_options": "Erweiterte Optionen",
+		"advanced_options": "Erweiterte Optionen",
 		"end_to_end_encryption": "Ende-zu-Ende-Verschlüsselung",
 		"once_this_feature_is_enabled": "Sobald diese Funktion aktiviert ist, kann sie nach der Raumerstellung nicht mehr deaktiviert werden.",
 		"knock_to_join": "Anklopfen zum Beitreten",
@@ -621,7 +621,7 @@
 		"name": "Name",
 		"topic_optional": "Thema (Optional)",
 		"options": "Optionen",
-		"advance_options": "Erweiterte Optionen",
+		"advanced_options": "Erweiterte Optionen",
 		"knock_to_join": "Anklopfen zum Beitreten",
 		"anyone_can_send_request_to_join_this_space": "Jeder kann eine Anfrage senden, um diesem Raum beizutreten.",
 		"allow_federation": "Föderation erlauben",

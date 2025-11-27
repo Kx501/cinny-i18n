@@ -169,7 +169,7 @@
 			"public": "公开",
 			"no_invites": "没有邀请",
 			"invites_detected_as_spam_appear_here": "被检测为垃圾邮件的邀请会显示在此处。",
-			"when_someone_you_share_a_room": "共同房间内的用户发送的邀请会显示在此处。",
+			"when_someone_you_share_a_room": "共同房间内用户发送的邀请会显示在此处。",
 			"invites_from_people_outside": "来自房间外用户的邀请会显示在此处。",
 			"decline_all": "全部拒绝",
 			"view_all": "查看全部",

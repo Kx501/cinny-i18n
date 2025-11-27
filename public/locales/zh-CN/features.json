@@ -406,7 +406,7 @@
 			"general": "常规",
 			"options": "选项",
 			"addresses": "地址",
-			"advance_options": "高级选项"
+			"advanced_options": "高级选项"
 		},
 		"permissions": {
 			"permissions": "权限",
@@ -446,7 +446,7 @@
 			"general": "常规",
 			"options": "选项",
 			"addresses": "地址",
-			"advance_options": "高级选项"
+			"advanced_options": "高级选项"
 		},
 		"permissions": {
 			"permissions": "权限",
@@ -510,7 +510,7 @@
 		"name": "名称",
 		"topic_optional": "主题（可选）",
 		"options": "选项",
-		"advance_options": "高级选项",
+		"advanced_options": "高级选项",
 		"end_to_end_encryption": "端到端加密",
 		"once_this_feature_is_enabled": "一旦启用此功能，房间创建后将无法禁用加密。",
 		"knock_to_join": "申请加入",
@@ -525,7 +525,7 @@
 		"name": "名称",
 		"topic_optional": "主题（可选）",
 		"options": "选项",
-		"advance_options": "高级选项",
+		"advanced_options": "高级选项",
 		"knock_to_join": "申请加入",
 		"anyone_can_send_request_to_join_this_space": "任何人都可以申请加入此空间。",
 		"allow_federation": "允许联邦",

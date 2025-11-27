@@ -406,7 +406,7 @@
             "general": "General",
             "options": "Options",
             "addresses": "Addresses",
-            "advance_options": "Advance Options"
+            "advanced_options": "Advance Options"
         },
         "permissions": {
             "permissions": "Permissions",
@@ -446,7 +446,7 @@
             "general": "General",
             "options": "Options",
             "addresses": "Addresses",
-            "advance_options": "Advance Options"
+            "advanced_options": "Advance Options"
         },
         "permissions": {
             "permissions": "Permissions",
@@ -510,7 +510,7 @@
         "name": "Name",
         "topic_optional": "Topic (Optional)",
         "options": "Options",
-        "advance_options": "Advance Options",
+        "advanced_options": "Advance Options",
         "end_to_end_encryption": "End-to-End Encryption",
         "once_this_feature_is_enabled": "Once this feature is enabled, it can't be disabled after the room is created.",
         "knock_to_join": "Knock to Join",
@@ -525,7 +525,7 @@
         "name": "Name",
         "topic_optional": "Topic (Optional)",
         "options": "Options",
-        "advance_options": "Advance Options",
+        "advanced_options": "Advance Options",
         "knock_to_join": "Knock to Join",
         "anyone_can_send_request_to_join_this_space": "Anyone can send request to join this space.",
         "allow_federation": "Allow Federation",

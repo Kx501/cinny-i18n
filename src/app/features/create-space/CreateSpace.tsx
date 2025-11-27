@@ -185,7 +185,7 @@ export function CreateSpaceForm({ defaultKind, space, onCreate }: CreateSpaceFor
               onClick={() => setAdvance(!advance)}
               type="button"
             >
-              <Text size="T200">{t('features:create-space.advance_options')}</Text>
+              <Text size="T200">{t('features:create-space.advanced_options')}</Text>
             </Chip>
           </Box>
         </Box>

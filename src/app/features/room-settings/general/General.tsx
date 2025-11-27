@@ -61,7 +61,7 @@ export function General({ requestClose }: GeneralProps) {
                 <RoomLocalAddresses permissions={permissions} />
               </Box>
               <Box direction="Column" gap="100">
-                <Text size="L400">{t('features:room-settings.general.advance_options')}</Text>
+                <Text size="L400">{t('features:room-settings.general.advanced_options')}</Text>
                 <RoomUpgrade permissions={permissions} requestClose={requestClose} />
               </Box>
             </Box>
