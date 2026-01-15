@@ -1,0 +1,73 @@
+name: Manual Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  manual-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    env:
+      NODE_VERSION: '20'
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: Cache build output
+        uses: actions/cache@v4
+        id: build-cache
+        with:
+          path: dist/
+          key: ${{ runner.os }}-build-${{ hashFiles('src/**', 'package-lock.json') }}
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build application
+        if: steps.build-cache.outputs.cache-hit != 'true'
+        run: npm run build
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+          
+      - name: Generate build info
+        id: build-info
+        run: |
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          echo "sha_short=$SHORT_SHA" >> $GITHUB_OUTPUT
+          echo "build_date=$BUILD_DATE" >> $GITHUB_OUTPUT
+          
+      - name: Create release tarball
+        run: |
+          mkdir -p release
+          cp -r dist/* release/
+          tar -czf cinny-latest.tar.gz -C release .
+          
+      - name: Upload to Latest Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: latest-build
+          name: "Latest Build - ${{ steps.build-info.outputs.sha_short }}"
+          body: |
+            ## Latest Build
+            
+            Built from commit [${{ steps.build-info.outputs.sha_short }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
+            
+            **Build time**: ${{ steps.build-info.outputs.build_date }}
+            **Branch**: ${{ github.ref_name }}
+            
+            This is a manually triggered build.
+          prerelease: true
+          draft: false
+          replace: true
+          files: cinny-latest.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
