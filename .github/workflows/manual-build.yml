@@ -47,9 +47,8 @@ jobs:
           
       - name: Create release tarball
         run: |
-          mkdir -p release
-          cp -r dist/* release/
-          tar -czf cinny-latest.tar.gz -C release .
+          tar -czf cinny-latest.tar.gz dist
+
           
       - name: Upload to Latest Release
         uses: softprops/action-gh-release@v1
@@ -67,7 +66,7 @@ jobs:
             This is a manually triggered build.
           prerelease: true
           draft: false
-          replace: true
           files: cinny-latest.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
