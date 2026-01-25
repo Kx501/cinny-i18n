@@ -478,7 +478,7 @@
 		"no_rooms": "无房间",
 		"no_match_found_for": "未找到匹配 “{{query}}” 的结果。",
 		"you_do_not_have_any_rooms": "您还没有任何房间可以显示。",
-		"type_for_rooms": "输入 <b>#</b> 搜索房间，<b>@</b> 搜索私聊，<b>*</b> 搜索空间。快捷键：<b>{{hotkey}}</b>"
+		"type_for_rooms": "输入 <b>#</b> 搜索房间，<b>@</b> 搜索私信，<b>*</b> 搜索空间。快捷键：<b>{{hotkey}}</b>"
 	},
 	"add-existing": {
 		"add_existing": "添加现有",

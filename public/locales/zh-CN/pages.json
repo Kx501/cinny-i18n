@@ -110,13 +110,13 @@
 		},
 		"direct": {
 			"mark_as_read": "标记为已读",
-			"direct_messages": "私聊",
-			"no_direct_messages": "没有私聊",
-			"no_direct_messages_yet": "您还未开始任何私聊。",
-			"direct_message": "私聊",
+			"direct_messages": "私信",
+			"no_direct_messages": "没有私信",
+			"no_direct_messages_yet": "您还未开始任何私信。",
+			"direct_message": "私信",
 			"create_chat": "创建聊天",
 			"chats": "聊天",
-			"start_a_private_encrypted_chat": "输入用户 ID 创建一个加密私聊。"
+			"start_a_private_encrypted_chat": "输入用户 ID 创建一个加密私信。"
 		},
 		"create": {
 			"create_space": "创建空间",
