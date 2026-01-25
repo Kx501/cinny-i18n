@@ -13,22 +13,40 @@ public/locales/
 │   ├── pages.json            # Page translations
 │   └── util.json             # Utility translations
 ├── zh-CN/                    # Chinese translation files
-└── de-DE/                    # German translation files
+├── de-DE/                    # German translation files
+└── .../                      # Other translation files
+
 ```
+
+## Key Concepts
+
+Before diving into the details, here are some important concepts:
+
+- **Namespace**: Each translation file (like `features.json`) represents a namespace. When using translations, you specify the namespace with a colon: `features:room.new_messages`
+- **Translation Key**: A unique identifier for each piece of text. Keys are generated from the original English text
+- **Language Code**: Standard codes like `en-US` (English, United States), `zh-CN` (Chinese, Simplified), `fr-FR` (French, France)
 
 ## Translation Key Naming Convention
 
 Each translation file is a namespace (e.g., `features.json` → namespace `features`). Key names are directly derived from the original text, cleaned and truncated:
 
+### Key Naming Rules
+
 - **Cleaning rules**: Remove special characters, convert spaces to underscores, lowercase
 - **Direct truncation**: Truncate from the beginning of the original text to ensure key uniqueness
-- **Space handling**: Replace leading or trailing spaces with underscores
 - **Duplicate handling**: When the parent key name is the same as the child group name, prefix the key with an underscore (e.g., `settings` group and `settings` key → `_settings`)
 - **Key name reuse**: Key names can only be reused within the same group
+
+### Organization Principles
+
+- **Group by namespace**: Organize translations by namespace (`components`, `features`, `hooks`, `pages`, `util`, etc.)
+- **Keep it simple**: Maintain a consistent format and structure
+- **Variable usage**: Use double curly braces `{{variable}}` as placeholders. Variable names should reflect the actual content (e.g., `{{count}}`, `{{type}}`, `{{version}}`), avoid using generic names (e.g., `{{value}}`). Variable names must be preserved exactly when translating, but the order of placeholders can be adjusted according to different language grammar conventions.
 
 **Example conversions**:
 
 **File structure example**:
+
 ```
 src/
 ├── features/
@@ -44,6 +62,7 @@ src/
 ```
 
 **Conversion result**:
+
 ```json
 // features.json
 {
@@ -66,9 +85,9 @@ src/
 }
 ```
 
-## Usage
+## How to Use Translations in Code
 
-Use the `useTranslation` hook in components:
+To display translated text in a React component, use the `useTranslation` hook:
 
 ```typescript
 import React from 'react';
@@ -81,7 +100,7 @@ function RoomComponent() {
     <div>
       <h1>{t('features:room.new_messages')}</h1>
       <button>{t('features:room.jump_to_unread')}</button>
-      <p>{t('features.room.desktop')}</p>
+      <p>{t('features:room.desktop')}</p>
     </div>
   );
 }
@@ -99,20 +118,44 @@ function RoomComponent({ isSpace }) {
 }
 ```
 
-## Best Practices
+## Adding a New Language
 
-- **Key naming**: Use lowercase letters and underscores, generate based on original text, replace leading/trailing spaces with underscores
-- **Organization principles**: Group by table of contents (`components`, `features`, `hooks`, `pages`, `util`, etc.), keep it simple, maintain consistent format
-- **Variable usage**: Use meaningful variable names (`{{type}}` instead of `{{value}}`), double curly brace interpolation
+To add support for a new language, follow these steps:
 
-## Common Operations
+### Step 1: Create Translation Files
 
-**Adding new translations**:
-1. Add key-value pairs to the corresponding language file
-2. Use `t('namespace:key')` in components
+1. Create a new directory in `public/locales/` with the language code (e.g., `fr-FR` for French)
+2. Copy all JSON files from `public/locales/en-US/` to the new directory:
+   - `components.json`
+   - `features.json`
+   - `hooks.json`
+   - `pages.json`
+   - `util.json`
+   - ...
+3. Translate all the English text in these files to your target language
 
-**Switching language**:
+### Step 2: Register the Language
+
+Add the new language to `src/app/i18n.ts` in the `SUPPORTED_LANGUAGES` array:
+
 ```typescript
-const { i18n } = useTranslation();
-i18n.changeLanguage('en-US');
+export const SUPPORTED_LANGUAGES = [
+  // ... existing languages ...
+  { code: 'fr-FR', name: 'French', nativeName: 'Français' },
+] as const;
 ```
+
+**Important**:
+
+- `code`: Use the standard language code following [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) standard (e.g., `fr-FR`, `es-ES`, `ja-JP`)
+- `name`: The English name of the language
+- `nativeName`: The name of the language in its own script (e.g., `Français` for French, `日本語` for Japanese)
+- Keep the array sorted alphabetically by the `name` field
+
+### Step 3: Verify
+
+1. Restart the development server (if running)
+2. Go to Settings > General > Language
+3. Your new language should appear in the language selector
+4. Select it to see your translations
+5. Navigate through the application to verify all translations are working
