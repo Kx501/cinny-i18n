@@ -438,7 +438,10 @@
             "other_settings": "Other Settings",
             "other": "Other",
             "change_server_acls": "Change Server ACLs",
-            "modify_widgets": "Modify Widgets"
+            "modify_widgets": "Modify Widgets",
+            "calls": "Calls",
+            "join_call": "Join Call",
+            "manage_emojis_stickers": "Manage Emojis & Stickers"
         }
     },
     "space-settings": {
@@ -507,6 +510,8 @@
     },
     "create-room": {
         "create_room": "Create Room",
+        "new_voice_room": "New Voice Room",
+        "new_chat_room": "New Chat Room",
         "name": "Name",
         "topic_optional": "Topic (Optional)",
         "options": "Options",
@@ -613,8 +618,12 @@
         "hide_members": "Hide Members",
         "show_members": "Show Members",
         "more_options": "More Options",
+        "chat": "Chat",
         "members": "Members",
         "close": "Close",
+        "live": "Live",
+        "joined_the_call": " joined the call",
+        "ended_the_call": " ended the call",
         "type_name": "Type name...",
         "no": "No",
         "result": "Result",
@@ -685,6 +694,41 @@
         "invite": "Invite",
         "copy_link": "Copy Link",
         "room_settings": "Room Settings",
-        "leave_room": "Leave Room"
+        "leave_room": "Leave Room",
+        "toggle_chat": "Toggle Chat",
+        "more_options": "More Options"
+    },
+    "call": {
+        "participant": "Participant",
+        "voice_chat_empty": "Voice chat's empty — Be the first to hop in!",
+        "you_dont_have_permission": "You don't have permission to join!",
+        "already_in_another_call": "Already in another call — End the current call to join!",
+        "collapse": "Collapse",
+        "1_other": "+1 Other",
+        "count_others": "+{{count}} Others",
+        "turn_off_microphone": "Turn Off Microphone",
+        "turn_on_microphone": "Turn On Microphone",
+        "turn_off_sound": "Turn Off Sound",
+        "turn_on_sound": "Turn On Sound",
+        "stop_camera": "Stop Camera",
+        "start_camera": "Start Camera",
+        "close_chat": "Close Chat",
+        "open_chat": "Open Chat",
+        "join": "Join",
+        "call_embed": "Call Embed"
+    },
+    "call-status": {
+        "end": "End",
+        "turn_off_microphone": "Turn Off Microphone",
+        "turn_on_microphone": "Turn On Microphone",
+        "turn_off_sound": "Turn Off Sound",
+        "turn_on_sound": "Turn On Sound",
+        "stop_camera": "Stop Camera",
+        "start_camera": "Start Camera",
+        "stop_screenshare": "Stop Screenshare",
+        "start_screenshare": "Start Screenshare",
+        "is_speaking": " is speaking...",
+        "are_speaking": " are speaking...",
+        "others": "{{count}} others"
     }
 }

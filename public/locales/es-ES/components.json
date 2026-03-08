@@ -150,6 +150,10 @@
 		"special_privileged_users_can_be_assigned": "Special privileged users can be assigned during creation. These users have elevated control and can only be modified during a upgrade.",
 		"enter": "Enter",
 		"no_suggestions": "No Suggestions",
+		"chat_room": "Chat Room",
+		"messages_photos_and_videos": "Messages, photos, and videos.",
+		"voice_room": "Voice Room",
+		"live_audio_and_video_conversations": "Live audio and video conversations.",
 		"please_provide_the_user_id": "Please provide the user ID and hit Enter.",
 		"username_server": "@username:server"
 	},
