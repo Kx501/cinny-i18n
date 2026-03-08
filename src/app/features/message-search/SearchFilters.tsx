@@ -30,7 +30,7 @@ import { useTranslation } from 'react-i18next';
 import FocusTrap from 'focus-trap-react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
-import { joinRuleToIconSrc } from '../../utils/room';
+import { getRoomIconSrc } from '../../utils/room';
 import { factoryRoomIdByAtoZ } from '../../utils/sort';
 import {
   SearchItemStrGetter,
@@ -277,9 +277,7 @@ function SelectRoomButton({ roomList, selectedRooms, onChange }: SelectRoomButto
                             before={
                               <Icon
                                 size="50"
-                                src={
-                                  joinRuleToIconSrc(Icons, room.getJoinRule(), false) ?? Icons.Hash
-                                }
+                                src={getRoomIconSrc(Icons, room.getType(), room.getJoinRule())}
                               />
                             }
                           >
@@ -396,10 +394,7 @@ export function SearchFilters({
               onClick={() => onSelectedRoomsChange(selectedRooms.filter((rId) => rId !== roomId))}
               radii="Pill"
               before={
-                <Icon
-                  size="50"
-                  src={joinRuleToIconSrc(Icons, room.getJoinRule(), false) ?? Icons.Hash}
-                />
+                <Icon size="50" src={getRoomIconSrc(Icons, room.getType(), room.getJoinRule())} />
               }
               after={<Icon size="50" src={Icons.Cross} />}
             >

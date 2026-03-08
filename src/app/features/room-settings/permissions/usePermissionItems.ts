@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { MessageEvent, StateEvent } from '../../../../types/matrix/room';
 import { PermissionGroup } from '../../common-settings/permissions';
 
-export const usePermissionGroups = (): PermissionGroup[] => {
+export const usePermissionGroups = (isCallRoom: boolean): PermissionGroup[] => {
   const { t } = useTranslation();
   const groups: PermissionGroup[] = useMemo(() => {
     const messagesGroup: PermissionGroup = {
@@ -44,6 +44,19 @@ export const usePermissionGroups = (): PermissionGroup[] => {
         {
           location: {},
           name: t('features:room-settings.permissions.other_message_events'),
+        },
+      ],
+    };
+
+    const callSettingsGroup: PermissionGroup = {
+      name: t('features:room-settings.permissions.calls'),
+      items: [
+        {
+          location: {
+            state: true,
+            key: StateEvent.GroupCallMemberPrefix,
+          },
+          name: t('features:room-settings.permissions.join_call'),
         },
       ],
     };
@@ -182,6 +195,13 @@ export const usePermissionGroups = (): PermissionGroup[] => {
         {
           location: {
             state: true,
+            key: StateEvent.PoniesRoomEmotes,
+          },
+          name: t('features:room-settings.permissions.manage_emojis_stickers'),
+        },
+        {
+          location: {
+            state: true,
             key: StateEvent.RoomServerAcl,
           },
           name: t('features:room-settings.permissions.change_server_acls'),
@@ -198,12 +218,13 @@ export const usePermissionGroups = (): PermissionGroup[] => {
 
     return [
       messagesGroup,
+      ...(isCallRoom ? [callSettingsGroup] : []),
       moderationGroup,
       roomOverviewGroup,
       roomSettingsGroup,
       otherSettingsGroup,
     ];
-  }, [t]);
+  }, [t, isCallRoom]);
 
   return groups;
 };

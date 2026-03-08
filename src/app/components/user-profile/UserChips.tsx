@@ -327,7 +327,7 @@ export function MutualRoomsChip({ userId }: { userId: string }) {
                 )}
               />
             ) : (
-              <RoomIcon size="100" joinRule={room.getJoinRule()} />
+              <RoomIcon size="100" joinRule={room.getJoinRule()} roomType={room.getType()} />
             )}
           </Avatar>
         }

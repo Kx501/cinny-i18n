@@ -24,12 +24,13 @@ import {
 } from '../../state/hooks/createRoomModal';
 import { CreateRoomModalState } from '../../state/createRoomModal';
 import { stopPropagation } from '../../utils/keyboard';
+import { CreateRoomType } from '../../components/create-room/types';
 
 type CreateRoomModalProps = {
   state: CreateRoomModalState;
 };
 function CreateRoomModal({ state }: CreateRoomModalProps) {
-  const { spaceId } = state;
+  const { spaceId, type } = state;
   const closeDialog = useCloseCreateRoomModal();
   const { t } = useTranslation();
   const allJoinedRooms = useAllJoinedRoomsSet();
@@ -58,7 +59,11 @@ function CreateRoomModal({ state }: CreateRoomModalProps) {
                   }}
                 >
                   <Box grow="Yes">
-                    <Text size="H4">{t('features:create-room.create_room')}</Text>
+                    <Text size="H4">
+                      {type === CreateRoomType.VoiceRoom
+                        ? t('features:create-room.new_voice_room')
+                        : t('features:create-room.new_chat_room')}
+                    </Text>
                   </Box>
                   <Box shrink="No">
                     <IconButton size="300" radii="300" onClick={closeDialog}>
@@ -75,7 +80,7 @@ function CreateRoomModal({ state }: CreateRoomModalProps) {
                     direction="Column"
                     gap="500"
                   >
-                    <CreateRoomForm space={space} onCreate={closeDialog} />
+                    <CreateRoomForm space={space} onCreate={closeDialog} defaultType={type} />
                   </Box>
                 </Scroll>
               </Box>

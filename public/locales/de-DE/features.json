@@ -438,7 +438,10 @@
 			"other_settings": "Andere Einstellungen",
 			"other": "Andere",
 			"change_server_acls": "Server-ACLs ändern",
-			"modify_widgets": "Widgets modifizieren"
+			"modify_widgets": "Widgets modifizieren",
+			"calls": "Anrufe",
+			"join_call": "Anruf beitreten",
+			"manage_emojis_stickers": "Emojis & Sticker verwalten"
 		}
 	},
 	"space-settings": {
@@ -525,8 +528,12 @@
 		"hide_members": "Mitglieder ausblenden",
 		"show_members": "Mitglieder anzeigen",
 		"more_options": "Weitere Optionen",
+		"chat": "Chat",
 		"members": "Mitglieder",
 		"close": "Schließen",
+		"live": "Live",
+		"joined_the_call": " ist dem Anruf beigetreten",
+		"ended_the_call": " hat den Anruf beendet",
 		"type_name": "Name eingeben...",
 		"no": "Keine",
 		"result": "Ergebnis",
@@ -603,6 +610,8 @@
 	},
 	"create-room": {
 		"create_room": "Raum erstellen",
+		"new_voice_room": "Neuer Sprachraum",
+		"new_chat_room": "Neuer Chatraum",
 		"name": "Name",
 		"topic_optional": "Thema (Optional)",
 		"options": "Optionen",
@@ -685,6 +694,41 @@
 		"invite": "Einladen",
 		"copy_link": "Link kopieren",
 		"room_settings": "Raum-Einstellungen",
-		"leave_room": "Raum verlassen"
+		"leave_room": "Raum verlassen",
+		"toggle_chat": "Chat umschalten",
+		"more_options": "Weitere Optionen"
+	},
+	"call": {
+		"participant": "Teilnehmer",
+		"voice_chat_empty": "Sprachanruf ist leer — Sei der Erste!",
+		"you_dont_have_permission": "Du hast keine Berechtigung zum Beitreten!",
+		"already_in_another_call": "Du bist bereits in einem anderen Anruf — Beende den aktuellen Anruf, um beizutreten!",
+		"collapse": "Einklappen",
+		"1_other": "+1 andere",
+		"count_others": "+{{count}} andere",
+		"turn_off_microphone": "Mikrofon ausschalten",
+		"turn_on_microphone": "Mikrofon einschalten",
+		"turn_off_sound": "Ton ausschalten",
+		"turn_on_sound": "Ton einschalten",
+		"stop_camera": "Kamera stoppen",
+		"start_camera": "Kamera starten",
+		"close_chat": "Chat schließen",
+		"open_chat": "Chat öffnen",
+		"join": "Beitreten",
+		"call_embed": "Anruf-Einbettung"
+	},
+	"call-status": {
+		"end": "Beenden",
+		"turn_off_microphone": "Mikrofon ausschalten",
+		"turn_on_microphone": "Mikrofon einschalten",
+		"turn_off_sound": "Ton ausschalten",
+		"turn_on_sound": "Ton einschalten",
+		"stop_camera": "Kamera stoppen",
+		"start_camera": "Kamera starten",
+		"stop_screenshare": "Bildschirmfreigabe beenden",
+		"start_screenshare": "Bildschirmfreigabe starten",
+		"is_speaking": " spricht...",
+		"are_speaking": " sprechen...",
+		"others": "{{count}} andere"
 	}
 }

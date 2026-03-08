@@ -150,6 +150,10 @@
 		"special_privileged_users_can_be_assigned": "Besondere privilegierte Benutzer können während der Erstellung zugewiesen werden. Diese Benutzer haben erhöhte Kontrolle und können nur während eines Upgrades geändert werden.",
 		"enter": "Eingabe",
 		"no_suggestions": "Keine Vorschläge",
+		"chat_room": "Chatraum",
+		"messages_photos_and_videos": "Nachrichten, Fotos und Videos.",
+		"voice_room": "Sprachraum",
+		"live_audio_and_video_conversations": "Live-Audio- und Videoanrufe.",
 		"please_provide_the_user_id": "Bitte geben Sie die Benutzer-ID ein und drücken Sie Enter.",
 		"username_server": "@benutzername:server"
 	},

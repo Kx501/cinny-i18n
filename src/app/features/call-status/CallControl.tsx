@@ -1,0 +1,171 @@
+import { Box, Chip, Icon, IconButton, Icons, Text, Tooltip, TooltipProvider } from 'folds';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { StatusDivider } from './components';
+import { CallEmbed, useCallControlState } from '../../plugins/call';
+
+type MicrophoneButtonProps = {
+  enabled: boolean;
+  onToggle: () => Promise<unknown>;
+};
+function MicrophoneButton({ enabled, onToggle }: MicrophoneButtonProps) {
+  const { t } = useTranslation();
+  return (
+    <TooltipProvider
+      position="Top"
+      tooltip={
+        <Tooltip>
+          <Text size="T200">{enabled ? t('features:call-status.turn_off_microphone') : t('features:call-status.turn_on_microphone')}</Text>
+        </Tooltip>
+      }
+    >
+      {(anchorRef) => (
+        <IconButton
+          ref={anchorRef}
+          variant={enabled ? 'Surface' : 'Warning'}
+          fill="Soft"
+          radii="300"
+          size="300"
+          onClick={() => onToggle()}
+          outlined
+        >
+          <Icon size="100" src={enabled ? Icons.Mic : Icons.MicMute} filled={!enabled} />
+        </IconButton>
+      )}
+    </TooltipProvider>
+  );
+}
+
+type SoundButtonProps = {
+  enabled: boolean;
+  onToggle: () => void;
+};
+function SoundButton({ enabled, onToggle }: SoundButtonProps) {
+  const { t } = useTranslation();
+  return (
+    <TooltipProvider
+      position="Top"
+      tooltip={
+        <Tooltip>
+          <Text size="T200">{enabled ? t('features:call-status.turn_off_sound') : t('features:call-status.turn_on_sound')}</Text>
+        </Tooltip>
+      }
+    >
+      {(anchorRef) => (
+        <IconButton
+          ref={anchorRef}
+          variant={enabled ? 'Surface' : 'Warning'}
+          fill="Soft"
+          radii="300"
+          size="300"
+          onClick={() => onToggle()}
+          outlined
+        >
+          <Icon
+            size="100"
+            src={enabled ? Icons.Headphone : Icons.HeadphoneMute}
+            filled={!enabled}
+          />
+        </IconButton>
+      )}
+    </TooltipProvider>
+  );
+}
+
+type VideoButtonProps = {
+  enabled: boolean;
+  onToggle: () => Promise<unknown>;
+};
+function VideoButton({ enabled, onToggle }: VideoButtonProps) {
+  const { t } = useTranslation();
+  return (
+    <TooltipProvider
+      position="Top"
+      tooltip={
+        <Tooltip>
+          <Text size="T200">{enabled ? t('features:call-status.stop_camera') : t('features:call-status.start_camera')}</Text>
+        </Tooltip>
+      }
+    >
+      {(anchorRef) => (
+        <IconButton
+          ref={anchorRef}
+          variant={enabled ? 'Success' : 'Surface'}
+          fill="Soft"
+          radii="300"
+          size="300"
+          onClick={() => onToggle()}
+          outlined
+        >
+          <Icon
+            size="100"
+            src={enabled ? Icons.VideoCamera : Icons.VideoCameraMute}
+            filled={enabled}
+          />
+        </IconButton>
+      )}
+    </TooltipProvider>
+  );
+}
+
+function ScreenShareButton() {
+  const [enabled, setEnabled] = useState(false);
+  const { t } = useTranslation();
+
+  return (
+    <TooltipProvider
+      position="Top"
+      tooltip={
+        <Tooltip>
+          <Text size="T200">{enabled ? t('features:call-status.stop_screenshare') : t('features:call-status.start_screenshare')}</Text>
+        </Tooltip>
+      }
+    >
+      {(anchorRef) => (
+        <IconButton
+          ref={anchorRef}
+          variant={enabled ? 'Success' : 'Surface'}
+          fill="Soft"
+          radii="300"
+          size="300"
+          onClick={() => setEnabled(!enabled)}
+          outlined
+        >
+          <Icon size="100" src={Icons.ScreenShare} filled={enabled} />
+        </IconButton>
+      )}
+    </TooltipProvider>
+  );
+}
+
+export function CallControl({ callEmbed }: { callEmbed: CallEmbed }) {
+  const { t } = useTranslation();
+  const { microphone, video, sound } = useCallControlState(callEmbed.control);
+
+  return (
+    <Box shrink="No" alignItems="Center" gap="300">
+      <Box alignItems="Inherit" gap="200">
+        <MicrophoneButton
+          enabled={microphone}
+          onToggle={() => callEmbed.control.toggleMicrophone()}
+        />
+        <SoundButton enabled={sound} onToggle={() => callEmbed.control.toggleSound()} />
+        <VideoButton enabled={video} onToggle={() => callEmbed.control.toggleVideo()} />
+        {false && <ScreenShareButton />}
+      </Box>
+      <StatusDivider />
+      <Chip
+        variant="Critical"
+        radii="300"
+        fill="Soft"
+        before={<Icon size="50" src={Icons.PhoneDown} filled />}
+        outlined
+        onClick={() => callEmbed.hangup()}
+      >
+        <Text as="span" size="L400">
+          {t('features:call-status.end')}
+        </Text>
+      </Chip>
+    </Box>
+  );
+}

@@ -150,6 +150,10 @@
 		"special_privileged_users_can_be_assigned": "创建时可设置拥有更高控制权的特殊权限用户，仅升级时可修改",
 		"enter": "确定",
 		"no_suggestions": "无建议",
+		"chat_room": "聊天房间",
+		"messages_photos_and_videos": "消息、图片与视频。",
+		"voice_room": "语音房间",
+		"live_audio_and_video_conversations": "实时音视频通话。",
 		"please_provide_the_user_id": "请输入用户ID后按 Enter",
 		"username_server": "@用户名:服务器"
 	},

@@ -7,9 +7,8 @@ import { useAtomValue } from 'jotai';
 import {
   ExtendedJoinRules,
   JoinRulesSwitcher,
-  useRoomJoinRuleIcon,
+  useJoinRuleIcons,
   useRoomJoinRuleLabel,
-  useSpaceJoinRuleIcon,
 } from '../../../components/JoinRulesSwitcher';
 import { SequenceCard } from '../../../components/sequence-card';
 import { SequenceCardStyle } from '../../room-settings/styles.css';
@@ -77,8 +76,7 @@ export function RoomJoinRules({ permissions }: RoomJoinRulesProps) {
     return r;
   }, [allowKnockRestricted, allowRestricted, allowKnock, space]);
 
-  const icons = useRoomJoinRuleIcon();
-  const spaceIcons = useSpaceJoinRuleIcon();
+  const icons = useJoinRuleIcons(room.getType());
   const labels = useRoomJoinRuleLabel();
 
   const [submitState, submit] = useAsyncCallback(
@@ -139,7 +137,7 @@ export function RoomJoinRules({ permissions }: RoomJoinRulesProps) {
         }
         after={
           <JoinRulesSwitcher
-            icons={room.isSpaceRoom() ? spaceIcons : icons}
+            icons={icons}
             labels={labels}
             rules={joinRules}
             value={rule}

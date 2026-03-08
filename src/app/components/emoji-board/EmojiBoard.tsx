@@ -205,8 +205,7 @@ function EmojiSidebar({ activeGroupAtom, packs, onScrollToGroup }: EmojiSidebarP
             if (!label) label = isUserId(pack.id) ? t('components:emoji-board.personal_pack') : mx.getRoom(pack.id)?.name;
 
             const url =
-              mxcUrlToHttp(mx, pack.getAvatarUrl(usage) ?? '', useAuthentication) ||
-              pack.meta.avatar;
+              mxcUrlToHttp(mx, pack.getAvatarUrl(usage) ?? '', useAuthentication) ?? undefined;
 
             return (
               <ImageGroupIcon
@@ -270,7 +269,7 @@ function StickerSidebar({ activeGroupAtom, packs, onScrollToGroup }: StickerSide
           if (!label) label = isUserId(pack.id) ? t('components:emoji-board.personal_pack') : mx.getRoom(pack.id)?.name;
 
           const url =
-            mxcUrlToHttp(mx, pack.getAvatarUrl(usage) ?? '', useAuthentication) || pack.meta.avatar;
+            mxcUrlToHttp(mx, pack.getAvatarUrl(usage) ?? '', useAuthentication) ?? undefined;
 
           return (
             <ImageGroupIcon
