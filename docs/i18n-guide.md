@@ -149,7 +149,7 @@ export const SUPPORTED_LANGUAGES = [
 
 - `code`: Use the standard language code following [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) standard (e.g., `fr-FR`, `es-ES`, `ja-JP`)
 - `name`: The English name of the language
-- `nativeName`: The name of the language in its own script (e.g., `Français` for French, `日本語` for Japanese)
+- `nativeName`: The name of the language in its own script (e.g., `Français` for French)
 - Keep the array sorted alphabetically by the `name` field
 
 ### Step 3: Verify

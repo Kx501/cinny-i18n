@@ -340,7 +340,7 @@ function LimitButton({ limit, onLimitChange }: LimitButtonProps) {
         variant="SurfaceVariant"
         after={<Icon size="100" src={Icons.ChevronBottom} />}
       >
-        <Text size="T200" truncate>{`Page Limit: ${limit}`}</Text>
+        <Text size="T200" truncate>{t('pages:client.explore.page_limit', { limit })}</Text>
       </Chip>
     </PopOut>
   );

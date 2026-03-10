@@ -142,6 +142,7 @@
 			"protocols": "Protocols",
 			"presets": "Presets",
 			"custom_limit": "Custom Limit",
+			"page_limit": "Page Limit: {{limit}}",
 			"per_page_item_limit": "Per Page Item Limit",
 			"change_limit": "Change Limit",
 			"popular_communities": "Popular Communities",

@@ -148,7 +148,7 @@ export const SUPPORTED_LANGUAGES = [
 
 - `code`：使用标准语言代码（遵循 [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) 标准，例如，`fr-FR`、`es-ES`、`ja-JP`）
 - `name`：语言的英文名称
-- `nativeName`：语言本身的名称（例如，法语用 `Français`，日语用 `日本語`）
+- `nativeName`：语言本身的名称（例如，法语用 `Français`）
 - 保持数组按 `name` 字段的字母顺序排序
 
 ### 步骤 3：验证

@@ -16,18 +16,8 @@ export const NAMESPACES = [
 // list of supported languages
 export const SUPPORTED_LANGUAGES = [
   { code: 'zh-CN', name: 'Chinese (Simplified)', nativeName: '中文 (简体)' },
-  { code: 'zh-TW', name: 'Chinese (Traditional)', nativeName: '中文 (繁體)' },
   { code: 'en-US', name: 'English', nativeName: 'English' },
-  { code: 'en-GB', name: 'English (UK)', nativeName: 'English (UK)' },
-  { code: 'fr-FR', name: 'French', nativeName: 'Français' },
-  { code: 'de-DE', name: 'German', nativeName: 'Deutsch' },
-  { code: 'ja-JP', name: 'Japanese', nativeName: '日本語' },
-  { code: 'ko-KR', name: 'Korean', nativeName: '한국어' },
-  { code: 'pt-BR', name: 'Portuguese (Brazilian)', nativeName: 'Português (Brasil)' },
-  { code: 'pt-PT', name: 'Portuguese (European)', nativeName: 'Português (Europeu)' },
-  { code: 'ru-RU', name: 'Russian', nativeName: 'Русский' },
-  { code: 'es-419', name: 'Spanish (Latin America)', nativeName: 'Español (Latinoamérica)' },
-  { code: 'es-ES', name: 'Spanish (Spain)', nativeName: 'Español (España)' },
+  { code: 'de-DE', name: 'German', nativeName: 'Deutsch' }
 ] as const;
 
 i18n

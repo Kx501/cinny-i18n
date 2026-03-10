@@ -20,7 +20,7 @@ function LivekitServerMissingMessage() {
   const { t } = useTranslation();
   return (
     <Text style={{ margin: 'auto', color: color.Critical.Main }} size="L400" align="Center">
-      {t('features:call.homeserver_no_calling')}
+      {t('features:call.your_homeserver_does_not_support_calling')}
     </Text>
   );
 }

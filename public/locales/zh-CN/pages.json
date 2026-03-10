@@ -142,6 +142,7 @@
 			"protocols": "协议",
 			"presets": "预设",
 			"custom_limit": "自定义限制",
+			"page_limit": "每页条数：{{limit}}",
 			"per_page_item_limit": "每页项目限制",
 			"change_limit": "更改限制",
 			"popular_communities": "热门社区",

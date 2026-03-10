@@ -702,7 +702,7 @@
         "participant": "Participant",
         "voice_chat_empty": "Voice chat's empty — Be the first to hop in!",
         "you_dont_have_permission": "You don't have permission to join!",
-        "homeserver_no_calling": "Your homeserver does not support calling. But you can still join call started by others.",
+        "your_homeserver_does_not_support_calling": "Your homeserver does not support calling. But you can still join call started by others.",
         "already_in_another_call": "Already in another call — End the current call to join!",
         "collapse": "Collapse",
         "1_other": "+1 Other",
