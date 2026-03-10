@@ -621,7 +621,6 @@
         "chat": "Chat",
         "members": "Members",
         "close": "Close",
-        "live": "Live",
         "joined_the_call": " joined the call",
         "ended_the_call": " ended the call",
         "type_name": "Type name...",
@@ -689,6 +688,7 @@
         }
     },
     "room-nav": {
+        "live": "Live",
         "mark_as_read": "Mark as Read",
         "notifications": "Notifications",
         "invite": "Invite",
@@ -702,6 +702,7 @@
         "participant": "Participant",
         "voice_chat_empty": "Voice chat's empty — Be the first to hop in!",
         "you_dont_have_permission": "You don't have permission to join!",
+        "homeserver_no_calling": "Your homeserver does not support calling. But you can still join call started by others.",
         "already_in_another_call": "Already in another call — End the current call to join!",
         "collapse": "Collapse",
         "1_other": "+1 Other",
@@ -715,9 +716,17 @@
         "close_chat": "Close Chat",
         "open_chat": "Open Chat",
         "join": "Join",
-        "call_embed": "Call Embed"
+        "call_embed": "Call Embed",
+        "live": "Live",
+        "grid_view": "Grid View",
+        "spotlight_view": "Spotlight View",
+        "reactions": "Reactions",
+        "settings": "Settings",
+        "stop_screenshare": "Stop Screenshare",
+        "start_screenshare": "Start Screenshare"
     },
     "call-status": {
+        "live": "Live",
         "end": "End",
         "turn_off_microphone": "Turn Off Microphone",
         "turn_on_microphone": "Turn On Microphone",

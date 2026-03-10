@@ -130,8 +130,8 @@ export function LiveChip({ count, room, members }: LiveChipProps) {
         radii="Pill"
         onClick={handleOpenMenu}
       >
-        <Text className={css.LiveChipText} as="span" size="L400">
-          {count} {t('features:room.live')}
+        <Text className={css.LiveChipText} as="span" size="L400" truncate>
+          {count} {t('features:call-status.live')}
         </Text>
       </Chip>
     </PopOut>

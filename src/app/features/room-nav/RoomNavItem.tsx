@@ -58,7 +58,8 @@ import { useCallMembers, useCallSession } from '../../hooks/useCall';
 import { useCallEmbed, useCallStart } from '../../hooks/useCallEmbed';
 import { callChatAtom } from '../../state/callEmbed';
 import { useCallPreferencesAtom } from '../../state/hooks/callPreferences';
-import { CallControlState } from '../../plugins/call/CallControlState';
+import { useAutoDiscoveryInfo } from '../../hooks/useAutoDiscoveryInfo';
+import { livekitSupport } from '../../hooks/useLivekitSupport';
 
 type RoomNavItemMenuProps = {
   room: Room;
@@ -287,8 +288,14 @@ export function RoomNavItem({
   const startCall = useCallStart(direct);
   const callEmbed = useCallEmbed();
   const callPref = useAtomValue(useCallPreferencesAtom());
+  const autoDiscoveryInfo = useAutoDiscoveryInfo();
 
   const handleStartCall: MouseEventHandler<HTMLAnchorElement> = (evt) => {
+    // Do not join if no livekit support or call is not started by others
+    if (!livekitSupport(autoDiscoveryInfo) && callMembers.length === 0) {
+      return;
+    }
+
     // Do not join if already in call
     if (callEmbed) {
       return;
@@ -296,7 +303,7 @@ export function RoomNavItem({
     // Start call in second click
     if (selected) {
       evt.preventDefault();
-      startCall(room, new CallControlState(callPref.microphone, callPref.video, callPref.sound));
+      startCall(room, callPref);
     }
   };
 
@@ -367,7 +374,7 @@ export function RoomNavItem({
             {room.isCallRoom() && callMembers.length > 0 && (
               <Badge variant="Critical" fill="Solid" size="400">
                 <Text as="span" size="L400" truncate>
-                  {callMembers.length} {t('features:room.live')}
+                  {callMembers.length} {t('features:room-nav.live')}
                 </Text>
               </Badge>
             )}

@@ -118,6 +118,39 @@ export function VideoButton({ enabled, onToggle }: VideoButtonProps) {
   );
 }
 
+type ScreenShareButtonProps = {
+  enabled: boolean;
+  onToggle: () => void;
+};
+export function ScreenShareButton({ enabled, onToggle }: ScreenShareButtonProps) {
+  const { t } = useTranslation();
+  return (
+    <TooltipProvider
+      position="Top"
+      delay={500}
+      tooltip={
+        <Tooltip>
+          <Text size="T200">{enabled ? t('features:call.stop_screenshare') : t('features:call.start_screenshare')}</Text>
+        </Tooltip>
+      }
+    >
+      {(anchorRef) => (
+        <IconButton
+          ref={anchorRef}
+          variant={enabled ? 'Success' : 'Surface'}
+          fill="Soft"
+          radii="400"
+          size="400"
+          onClick={() => onToggle()}
+          outlined
+        >
+          <Icon size="400" src={Icons.ScreenShare} filled={enabled} />
+        </IconButton>
+      )}
+    </TooltipProvider>
+  );
+}
+
 export function ChatButton() {
   const [chat, setChat] = useAtom(callChatAtom);
   const { t } = useTranslation();

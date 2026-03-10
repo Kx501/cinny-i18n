@@ -626,7 +626,6 @@
 		"open": "打开",
 		"members": "成员",
 		"close": "关闭",
-		"live": "直播",
 		"joined_the_call": " 加入了通话",
 		"ended_the_call": " 结束了通话",
 		"type_name": "输入姓名...",
@@ -689,6 +688,7 @@
 		}
 	},
 	"room-nav": {
+		"live": "直播",
 		"mark_as_read": "标记为已读",
 		"notifications": "通知",
 		"invite": "邀请",
@@ -702,6 +702,7 @@
 		"participant": "参与者",
 		"voice_chat_empty": "语音聊天暂无参与者 — 快来成为第一个加入的人吧！",
 		"you_dont_have_permission": "您没有权限加入！",
+		"homeserver_no_calling": "您的服务器暂不支持发起通话，但仍可加入他人已开始的通话。",
 		"already_in_another_call": "您已在其他通话中 — 请先结束当前通话再加入。",
 		"collapse": "收起",
 		"1_other": "+1 人",
@@ -715,9 +716,17 @@
 		"close_chat": "关闭聊天",
 		"open_chat": "打开聊天",
 		"join": "加入",
-		"call_embed": "通话嵌入"
+		"call_embed": "通话嵌入",
+		"live": "直播",
+		"grid_view": "网格视图",
+		"spotlight_view": "聚焦视图",
+		"reactions": "表情反应",
+		"settings": "设置",
+		"stop_screenshare": "停止共享屏幕",
+		"start_screenshare": "开始共享屏幕"
 	},
 	"call-status": {
+		"live": "直播",
 		"end": "结束",
 		"turn_off_microphone": "关闭麦克风",
 		"turn_on_microphone": "打开麦克风",
