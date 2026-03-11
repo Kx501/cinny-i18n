@@ -463,7 +463,11 @@ export function RoomViewHeader({ callView }: { callView?: boolean }) {
               offset={4}
               tooltip={
                 <Tooltip>
-                  <Text>{peopleDrawer ? t('features:room.hide_members') : t('features:room.show_members')}</Text>
+                  {callView ? (
+                    <Text>{t('features:room.members')}</Text>
+                  ) : (
+                    <Text>{peopleDrawer ? t('features:room.hide_members') : t('features:room.show_members')}</Text>
+                  )}
                 </Tooltip>
               }
             >

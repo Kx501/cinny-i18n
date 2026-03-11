@@ -1472,7 +1472,13 @@ export function RoomTimeline({ room, eventId, roomInputRef, editor }: RoomTimeli
         const senderId = mEvent.getSender() ?? '';
         const senderName = getMemberDisplayName(room, senderId) || getMxIdLocalPart(senderId);
 
-        const callJoined = mEvent.getContent<SessionMembershipData>().application;
+        const content = mEvent.getContent<SessionMembershipData>();
+        const prevContent = mEvent.getPrevContent();
+
+        const callJoined = content.application;
+        if (callJoined && 'application' in prevContent) {
+          return null;
+        }
 
         const timeJSX = (
           <Time
