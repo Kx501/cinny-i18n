@@ -25,7 +25,7 @@ export function SpecVersions({ baseUrl, children }: { baseUrl: string; children:
             <Dialog>
               <Box direction="Column" gap="400" style={{ padding: config.space.S400 }}>
                 <Text>
-                  {t('pages:client.failed_to_connect_homeserver')}
+                  {t('pages:client.unable_to_connect_to_the_homeserver')}
                 </Text>
                 <Button variant="Critical" onClick={retry}>
                   <Text as="span" size="B400">

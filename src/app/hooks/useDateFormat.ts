@@ -29,6 +29,10 @@ export const useDateFormatItems = (): DateFormatItem[] => {
         name: 'YYYY/MM/DD',
       },
       {
+        format: 'YYYY-MM-DD',
+        name: 'YYYY-MM-DD',
+      },
+      {
         format: '',
         name: t('hooks:custom'),
       },

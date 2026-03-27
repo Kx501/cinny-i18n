@@ -83,7 +83,7 @@
 		"source_code": "Quellcode",
 		"support": "Support",
 		"connecting_to_server": "Verbinde mit Server",
-		"failed_to_connect_homeserver": "Verbindung zum Homeserver fehlgeschlagen. Entweder ist der Homeserver down oder Ihr Internet.",
+		"unable_to_connect_to_the_homeserver": "Verbindung zum Homeserver nicht moeglich. Der Homeserver oder Ihre Internetverbindung ist moeglicherweise ausgefallen.",
 		"retry": "Wiederholen",
 		"continue": "Weiter",
 		"clear_cache_and_reload": "Cache löschen & neu laden",
