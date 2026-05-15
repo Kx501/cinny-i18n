@@ -440,7 +440,7 @@
 			"change_server_acls": "更改服务器ACL",
 			"modify_widgets": "修改小部件",
 			"calls": "通话",
-			"join_call": "加入通话",
+			"start_or_join_call": "发起或加入通话",
 			"manage_emojis_stickers": "管理表情与贴纸"
 		}
 	},
@@ -618,6 +618,10 @@
 		"hide_members": "隐藏成员",
 		"show_members": "显示成员",
 		"more_options": "更多选项",
+		"start_call": "发起通话",
+		"voice": "语音",
+		"video": "视频",
+		"call": "通话",
 		"chat": "聊天",
 		"new_messages": "新消息",
 		"today": "今天",
@@ -703,6 +707,7 @@
 		"voice_chat_empty": "语音聊天暂无参与者 — 快来成为第一个加入的人吧！",
 		"you_dont_have_permission": "您没有权限加入！",
 		"your_homeserver_does_not_support_calling": "您的服务器暂不支持发起通话，但仍可加入他人已开始的通话。",
+		"your_browser_does_not_support_webrtc_which_is_required_for_calling": "您的浏览器不支持 WebRTC，无法进行通话。",
 		"already_in_another_call": "您已在其他通话中 — 请先结束当前通话再加入。",
 		"collapse": "收起",
 		"1_other": "+1 人",

@@ -83,6 +83,11 @@
 	"public": "Öffentlich",
 	"unsupported": "Nicht unterstützt",
 	"verify": "Verifizieren",
+	"incoming_call": "Eingehender Anruf",
+	"answer": "Annehmen",
+	"reject": "Ablehnen",
+	"ignore": "Ignorieren",
+	"your_homeserver_does_not_support_calling": "Ihr Homeserver unterstützt keine Anrufe.",
 	"user-profile": {
 		"copy_server": "Server kopieren",
 		"explore_community": "Community erkunden",

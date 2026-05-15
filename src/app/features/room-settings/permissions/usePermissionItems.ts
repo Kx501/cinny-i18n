@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { MessageEvent, StateEvent } from '../../../../types/matrix/room';
 import { PermissionGroup } from '../../common-settings/permissions';
 
-export const usePermissionGroups = (isCallRoom: boolean): PermissionGroup[] => {
+export const usePermissionGroups = (): PermissionGroup[] => {
   const { t } = useTranslation();
   const groups: PermissionGroup[] = useMemo(() => {
     const messagesGroup: PermissionGroup = {
@@ -56,7 +56,7 @@ export const usePermissionGroups = (isCallRoom: boolean): PermissionGroup[] => {
             state: true,
             key: StateEvent.GroupCallMemberPrefix,
           },
-          name: t('features:room-settings.permissions.join_call'),
+          name: t('features:room-settings.permissions.start_or_join_call'),
         },
       ],
     };
@@ -218,13 +218,13 @@ export const usePermissionGroups = (isCallRoom: boolean): PermissionGroup[] => {
 
     return [
       messagesGroup,
-      ...(isCallRoom ? [callSettingsGroup] : []),
+      callSettingsGroup,
       moderationGroup,
       roomOverviewGroup,
       roomSettingsGroup,
       otherSettingsGroup,
     ];
-  }, [t, isCallRoom]);
+  }, [t]);
 
   return groups;
 };

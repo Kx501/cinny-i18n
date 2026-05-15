@@ -48,12 +48,36 @@ export class CallEmbed {
 
   private readonly disposables: Array<() => void> = [];
 
-  static getIntent(dm: boolean, ongoing: boolean): ElementCallIntent {
-    if (ongoing) {
-      return dm ? ElementCallIntent.JoinExistingDM : ElementCallIntent.JoinExisting;
+  static getIntent(dm: boolean, ongoing: boolean, video?: boolean): ElementCallIntent {
+    if (dm && ongoing) {
+      return video ? ElementCallIntent.JoinExistingDM : ElementCallIntent.JoinExistingDMVoice;
+    }
+    if (dm) {
+      return video ? ElementCallIntent.StartCallDM : ElementCallIntent.StartCallDMVoice;
     }
 
-    return dm ? ElementCallIntent.StartCallDM : ElementCallIntent.StartCall;
+    if (ongoing) {
+      return video ? ElementCallIntent.JoinExisting : ElementCallIntent.JoinExistingVoice;
+    }
+    return video ? ElementCallIntent.StartCall : ElementCallIntent.StartCallVoice;
+  }
+
+  static dmCall(intent: ElementCallIntent): boolean {
+    return (
+      intent === ElementCallIntent.JoinExistingDM ||
+      intent === ElementCallIntent.JoinExistingDMVoice ||
+      intent === ElementCallIntent.StartCallDM ||
+      intent === ElementCallIntent.StartCallDMVoice
+    );
+  }
+
+  static startingCall(intent: ElementCallIntent): boolean {
+    return (
+      intent === ElementCallIntent.StartCallDM ||
+      intent === ElementCallIntent.StartCallDMVoice ||
+      intent === ElementCallIntent.StartCall ||
+      intent === ElementCallIntent.StartCallVoice
+    );
   }
 
   static getWidget(
@@ -82,7 +106,12 @@ export class CallEmbed {
       perParticipantE2EE: room.hasEncryptionStateEvent().toString(),
       lang: 'en-EN',
       theme: themeKind,
+      header: 'none',
     });
+
+    if (!room.isCallRoom() && CallEmbed.startingCall(intent)) {
+      params.append('sendNotificationType', CallEmbed.dmCall(intent) ? 'ring' : 'notification');
+    }
 
     const widgetUrl = new URL(
       `${trimTrailingSlash(import.meta.env.BASE_URL)}/public/element-call/index.html`,

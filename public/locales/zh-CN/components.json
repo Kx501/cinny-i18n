@@ -83,6 +83,11 @@
 	"public": "公开",
 	"unsupported": "不支持",
 	"verify": "验证",
+	"incoming_call": "来电",
+	"answer": "接听",
+	"reject": "拒绝",
+	"ignore": "忽略",
+	"your_homeserver_does_not_support_calling": "您的服务器不支持通话。",
 	"user-profile": {
 		"copy_server": "复制服务器",
 		"explore_community": "探索社区",

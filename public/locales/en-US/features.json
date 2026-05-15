@@ -440,7 +440,7 @@
             "change_server_acls": "Change Server ACLs",
             "modify_widgets": "Modify Widgets",
             "calls": "Calls",
-            "join_call": "Join Call",
+            "start_or_join_call": "Start or Join Call",
             "manage_emojis_stickers": "Manage Emojis & Stickers"
         }
     },
@@ -618,6 +618,10 @@
         "hide_members": "Hide Members",
         "show_members": "Show Members",
         "more_options": "More Options",
+        "start_call": "Start Call",
+        "voice": "Voice",
+        "video": "Video",
+        "call": "Call",
         "chat": "Chat",
         "members": "Members",
         "close": "Close",
@@ -703,6 +707,7 @@
         "voice_chat_empty": "Voice chat's empty — Be the first to hop in!",
         "you_dont_have_permission": "You don't have permission to join!",
         "your_homeserver_does_not_support_calling": "Your homeserver does not support calling. But you can still join call started by others.",
+        "your_browser_does_not_support_webrtc_which_is_required_for_calling": "Your browser does not support WebRTC, which is required for calling.",
         "already_in_another_call": "Already in another call — End the current call to join!",
         "collapse": "Collapse",
         "1_other": "+1 Other",

@@ -440,7 +440,7 @@
 			"change_server_acls": "Server-ACLs ändern",
 			"modify_widgets": "Widgets modifizieren",
 			"calls": "Anrufe",
-			"join_call": "Anruf beitreten",
+			"start_or_join_call": "Anruf starten oder beitreten",
 			"manage_emojis_stickers": "Emojis & Sticker verwalten"
 		}
 	},
@@ -528,6 +528,10 @@
 		"hide_members": "Mitglieder ausblenden",
 		"show_members": "Mitglieder anzeigen",
 		"more_options": "Weitere Optionen",
+		"start_call": "Anruf starten",
+		"voice": "Sprache",
+		"video": "Video",
+		"call": "Anruf",
 		"chat": "Chat",
 		"members": "Mitglieder",
 		"close": "Schließen",
@@ -701,6 +705,7 @@
 		"participant": "Teilnehmer",
 		"voice_chat_empty": "Sprachanruf ist leer — Sei der Erste!",
 		"you_dont_have_permission": "Du hast keine Berechtigung zum Beitreten!",
+		"your_browser_does_not_support_webrtc_which_is_required_for_calling": "Ihr Browser unterstützt kein WebRTC, das für Anrufe erforderlich ist.",
 		"already_in_another_call": "Du bist bereits in einem anderen Anruf — Beende den aktuellen Anruf, um beizutreten!",
 		"collapse": "Einklappen",
 		"1_other": "+1 andere",

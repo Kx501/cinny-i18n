@@ -61,6 +61,7 @@ import { useCallPreferencesAtom } from '../../state/hooks/callPreferences';
 import { useAutoDiscoveryInfo } from '../../hooks/useAutoDiscoveryInfo';
 import { livekitSupport } from '../../hooks/useLivekitSupport';
 import { StateEvent } from '../../../types/matrix/room';
+import { webRTCSupported } from '../../utils/rtc';
 
 type RoomNavItemMenuProps = {
   room: Room;
@@ -297,13 +298,13 @@ export function RoomNavItem({
     const creators = getRoomCreatorsForRoomId(mx, room.roomId);
     const permissions = getRoomPermissionsAPI(creators, powerLevels);
 
-    const hasCallPermission = permissions.event(
+    const hasCallPermission = permissions.stateEvent(
       StateEvent.GroupCallMemberPrefix,
       mx.getSafeUserId()
     );
 
-    // Do not join if missing permissions or no livekit support and call is not started by others
-    if (!hasCallPermission || (!livekitSupport(autoDiscoveryInfo) && callMembers.length === 0)) {
+    // Do not join if missing permissions or no livekit support or no webRTC support
+    if (!hasCallPermission || !livekitSupport(autoDiscoveryInfo) || !webRTCSupported()) {
       return;
     }
 
@@ -382,7 +383,7 @@ export function RoomNavItem({
                 aria-label={notificationMode}
               />
             )}
-            {room.isCallRoom() && callMembers.length > 0 && (
+            {callMembers.length > 0 && (
               <Badge variant="Critical" fill="Solid" size="400">
                 <Text as="span" size="L400" truncate>
                   {callMembers.length} {t('features:room-nav.live')}
