@@ -88,6 +88,7 @@
 	"reject": "Ablehnen",
 	"ignore": "Ignorieren",
 	"your_homeserver_does_not_support_calling": "Ihr Homeserver unterstützt keine Anrufe.",
+	"your_browser_does_not_support_webrtc": "Ihr Browser unterstützt kein WebRTC, das für Anrufe erforderlich ist.",
 	"user-profile": {
 		"copy_server": "Server kopieren",
 		"explore_community": "Community erkunden",

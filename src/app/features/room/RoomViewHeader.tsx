@@ -331,7 +331,7 @@ function CallButton() {
         tooltip={
           <Tooltip>
             {inAnotherCall ? (
-              <Text size="L400">{t('features:call.already_in_another_call')}</Text>
+              <Text size="L400">{t('features:room.already_in_another_call')}</Text>
             ) : (
               <Text>{t('features:room.call')}</Text>
             )}

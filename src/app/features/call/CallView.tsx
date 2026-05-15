@@ -30,7 +30,7 @@ function WebRTCMissingError() {
   const { t } = useTranslation();
   return (
     <Text style={{ margin: 'auto', color: color.Critical.Main }} size="L400" align="Center">
-      {t('features:call.your_browser_does_not_support_webrtc_which_is_required_for_calling')}
+      {t('features:call.your_browser_does_not_support_webrtc')}
     </Text>
   );
 }

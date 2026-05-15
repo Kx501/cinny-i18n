@@ -88,6 +88,7 @@
 	"reject": "拒绝",
 	"ignore": "忽略",
 	"your_homeserver_does_not_support_calling": "您的服务器不支持通话。",
+	"your_browser_does_not_support_webrtc": "您的浏览器不支持 WebRTC，无法进行通话。",
 	"user-profile": {
 		"copy_server": "复制服务器",
 		"explore_community": "探索社区",

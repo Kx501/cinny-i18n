@@ -88,6 +88,7 @@
 	"reject": "Reject",
 	"ignore": "Ignore",
 	"your_homeserver_does_not_support_calling": "Your homeserver does not support calling.",
+	"your_browser_does_not_support_webrtc": "Your browser does not support WebRTC, which is required for calling.",
 	"user-profile": {
 		"copy_server": "Copy Server",
 		"explore_community": "Explore Community",

@@ -554,6 +554,7 @@
 		"command": "Befehl",
 		"jump_to_unread": "Zu ungelesen springen",
 		"jump_to_latest": "Zu neuesten springen",
+		"already_in_another_call": "Sie sind in einem anderen Anruf — Beenden Sie den aktuellen Anruf, um beizutreten!",
 		"jump-to-time": {
 			"jump_to_time": "Zur Zeit springen",
 			"time": "Zeit",
@@ -705,8 +706,8 @@
 		"participant": "Teilnehmer",
 		"voice_chat_empty": "Sprachanruf ist leer — Sei der Erste!",
 		"you_dont_have_permission": "Du hast keine Berechtigung zum Beitreten!",
-		"your_browser_does_not_support_webrtc_which_is_required_for_calling": "Ihr Browser unterstützt kein WebRTC, das für Anrufe erforderlich ist.",
-		"already_in_another_call": "Du bist bereits in einem anderen Anruf — Beende den aktuellen Anruf, um beizutreten!",
+		"your_browser_does_not_support_webrtc": "Ihr Browser unterstützt kein WebRTC, das für Anrufe erforderlich ist.",
+		"already_in_another_call": "Sie sind in einem anderen Anruf — Beenden Sie den aktuellen Anruf, um beizutreten!",
 		"collapse": "Einklappen",
 		"1_other": "+1 andere",
 		"count_others": "+{{count}} andere",

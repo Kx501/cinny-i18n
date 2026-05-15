@@ -644,6 +644,7 @@
         "command": "Command",
         "jump_to_unread": "Jump to Unread",
         "jump_to_latest": "Jump to Latest",
+        "already_in_another_call": "Already in another call — End the current call to join!",
         "jump-to-time": {
             "jump_to_time": "Jump to Time",
             "time": "Time",
@@ -707,7 +708,7 @@
         "voice_chat_empty": "Voice chat's empty — Be the first to hop in!",
         "you_dont_have_permission": "You don't have permission to join!",
         "your_homeserver_does_not_support_calling": "Your homeserver does not support calling. But you can still join call started by others.",
-        "your_browser_does_not_support_webrtc_which_is_required_for_calling": "Your browser does not support WebRTC, which is required for calling.",
+        "your_browser_does_not_support_webrtc": "Your browser does not support WebRTC, which is required for calling.",
         "already_in_another_call": "Already in another call — End the current call to join!",
         "collapse": "Collapse",
         "1_other": "+1 Other",

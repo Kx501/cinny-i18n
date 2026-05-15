@@ -644,6 +644,7 @@
 		"command": "命令",
 		"jump_to_unread": "跳转到未读",
 		"jump_to_latest": "跳转到最新",
+		"already_in_another_call": "您已在其他通话中 — 请先结束当前通话再加入。",
 		"jump-to-time": {
 			"jump_to_time": "跳转到时间",
 			"time": "时间",
@@ -707,7 +708,7 @@
 		"voice_chat_empty": "语音聊天暂无参与者 — 快来成为第一个加入的人吧！",
 		"you_dont_have_permission": "您没有权限加入！",
 		"your_homeserver_does_not_support_calling": "您的服务器暂不支持发起通话，但仍可加入他人已开始的通话。",
-		"your_browser_does_not_support_webrtc_which_is_required_for_calling": "您的浏览器不支持 WebRTC，无法进行通话。",
+		"your_browser_does_not_support_webrtc": "您的浏览器不支持 WebRTC，无法进行通话。",
 		"already_in_another_call": "您已在其他通话中 — 请先结束当前通话再加入。",
 		"collapse": "收起",
 		"1_other": "+1 人",
