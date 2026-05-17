@@ -106,7 +106,7 @@
 			"rooms": "房间",
 			"message_search": "消息搜索",
 			"create_room": "创建房间",
-			"build_a_room_for_real_time_conversations": "为实时对话构建一个房间。"
+			"build_a_room_for_real_time_conversations": "为实时对话建立一个房间。"
 		},
 		"direct": {
 			"mark_as_read": "标记为已读",
@@ -120,7 +120,7 @@
 		},
 		"create": {
 			"create_space": "创建空间",
-			"build_a_space_for_your_community": "为您的社区构建一个空间。"
+			"build_a_space_for_your_community": "为您的社区建立一个空间。"
 		},
 		"explore": {
 			"explore_community": "探索社区",
@@ -131,10 +131,10 @@
 			"failed_to_load_public_rooms": "加载公开房间失败。请重试。",
 			"view": "查看",
 			"featured_by_client": "由客户端推荐",
-			"find_and_explore_public_rooms": "查找和探索由客户端提供商推荐的公开房间和空间。",
+			"find_and_explore_public_rooms": "查找和探索由客户端提供方推荐的公开房间和空间。",
 			"featured_spaces": "推荐空间",
 			"featured_rooms": "推荐房间",
-			"no_rooms_or_spaces_featured": "客户端提供商没有推荐任何房间或空间。",
+			"no_rooms_or_spaces_featured": "客户端提供方没有推荐任何房间或空间。",
 			"search": "搜索",
 			"search_for_keyword": "搜索关键词",
 			"clear": "清除",
@@ -221,7 +221,7 @@
 			"unverified_device": "未验证设备",
 			"unverified_devices": "未验证设备",
 			"join_with_address": "使用地址加入",
-			"build_a_space_for_your_community": "为您的社区构建一个空间。",
+			"build_a_space_for_your_community": "为您的社区建立一个空间。",
 			"become_a_part_of_existing_community": "成为现有社区的一部分。",
 			"search": "搜索"
 		}
