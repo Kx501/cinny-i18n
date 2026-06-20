@@ -67,7 +67,7 @@
     "jotai": "2.6.0",
     "linkify-react": "4.3.2",
     "linkifyjs": "4.3.2",
-    "matrix-js-sdk": "41.5.0",
+    "matrix-js-sdk": "41.7.0",
     "matrix-widget-api": "1.16.1",
     "millify": "6.1.0",
     "pdfjs-dist": "4.2.67",
@@ -90,7 +90,7 @@
     "ua-parser-js": "1.0.35"
   },
   "devDependencies": {
-    "@element-hq/element-call-embedded": "0.19.1",
+    "@element-hq/element-call-embedded": "0.20.1",
     "@esbuild-plugins/node-globals-polyfill": "0.2.3",
     "@rollup/plugin-inject": "5.0.3",
     "@rollup/plugin-wasm": "6.1.1",
