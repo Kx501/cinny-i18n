@@ -48,7 +48,7 @@ export function About({ requestClose }: AboutProps) {
                   <Box direction="Column" gap="100">
                     <Box gap="100" alignItems="End">
                       <Text size="H3">Cinny</Text>
-                      <Text size="T200">v4.12.1</Text>
+                      <Text size="T200">v4.12.3</Text>
                     </Box>
                     <Text>{t('features:settings.about.yet_another_matrix')}</Text>
                   </Box>

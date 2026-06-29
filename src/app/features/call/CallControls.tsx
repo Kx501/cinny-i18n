@@ -73,6 +73,9 @@ export function CallControls({ callEmbed }: CallControlsProps) {
     setCords(undefined);
   };
 
+  const handleMicrophoneToggle = useCallback(() => callEmbed.control.toggleMicrophone(), [callEmbed]);
+  const handleVideoToggle = useCallback(() => callEmbed.control.toggleVideo(), [callEmbed]);
+
   const [hangupState, hangup] = useAsyncCallback(
     useCallback(() => callEmbed.hangup(), [callEmbed])
   );
@@ -98,13 +101,13 @@ export function CallControls({ callEmbed }: CallControlsProps) {
           <Box shrink="No" alignItems="Inherit" justifyContent="Inherit" gap="200">
             <MicrophoneButton
               enabled={microphone}
-              onToggle={() => callEmbed.control.toggleMicrophone()}
+              onToggle={handleMicrophoneToggle}
             />
             <SoundButton enabled={sound} onToggle={() => callEmbed.control.toggleSound()} />
           </Box>
           {!compact && <ControlDivider />}
           <Box shrink="No" alignItems="Inherit" justifyContent="Inherit" gap="200">
-            <VideoButton enabled={video} onToggle={() => callEmbed.control.toggleVideo()} />
+            <VideoButton enabled={video} onToggle={handleVideoToggle} />
             <ScreenShareButton
               enabled={screenshare}
               onToggle={() => callEmbed.control.toggleScreenshare()}

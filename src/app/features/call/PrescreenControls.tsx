@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Box, Button, Icon, Icons, Spinner, Text } from 'folds';
 import { useTranslation } from 'react-i18next';
 import { SequenceCard } from '../../components/sequence-card';
@@ -29,6 +29,10 @@ export function PrescreenControls({ canJoin }: PrescreenControlsProps) {
   const { microphone, video, sound, toggleMicrophone, toggleVideo, toggleSound } =
     useCallPreferences();
 
+
+  const handleMicrophoneToggle = useCallback(async () => toggleMicrophone(), [toggleMicrophone]);
+  const handleVideoToggle = useCallback(async () => toggleVideo(), [toggleVideo]);
+
   return (
     <SequenceCard
       className={css.ControlCard}
@@ -40,12 +44,12 @@ export function PrescreenControls({ canJoin }: PrescreenControlsProps) {
       wrap="Wrap"
     >
       <Box shrink="No" alignItems="Inherit" justifyContent="SpaceBetween" gap="200">
-        <MicrophoneButton enabled={microphone} onToggle={toggleMicrophone} />
+        <MicrophoneButton enabled={microphone} onToggle={handleMicrophoneToggle} />
         <SoundButton enabled={sound} onToggle={toggleSound} />
       </Box>
       <ControlDivider />
       <Box shrink="No" alignItems="Inherit" justifyContent="SpaceBetween" gap="200">
-        <VideoButton enabled={video} onToggle={toggleVideo} />
+        <VideoButton enabled={video} onToggle={handleVideoToggle} />
         <ChatButton />
       </Box>
       <Box grow="Yes" direction="Column">
